@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -38,4 +39,21 @@ public class Member {
         this.birthdate = birthdate;
     }
 
+    public boolean isRightPassword(String plainToCheck) {
+        final Optional<Authentication> maybeBasicAuth = findBasicAuthentication();
+
+        if (maybeBasicAuth.isPresent()) {
+            final BasicAuthentication auth = (BasicAuthentication) maybeBasicAuth.get();
+            return auth.isRightPassword(plainToCheck);
+        }
+
+        return false;
+    }
+
+    private Optional<Authentication> findBasicAuthentication() {
+        return authentications
+                .stream()
+                .filter(auth -> auth instanceof BasicAuthentication)
+                .findFirst();
+    }
 }

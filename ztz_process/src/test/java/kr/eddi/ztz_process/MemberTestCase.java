@@ -1,6 +1,7 @@
 package kr.eddi.ztz_process;
 
 import kr.eddi.ztz_process.service.member.MemberService;
+import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,12 @@ public class MemberTestCase {
     void memberSignUpTest() {
         MemberRegisterRequest registerRequest = new MemberRegisterRequest("he@he.com", "hehe", "김헤헤", 951107);
         service.signUp(registerRequest);
+    }
+
+    @Test
+    void memberSignInTest() {
+        MemberLoginRequest loginRequest = new MemberLoginRequest("he@he.com", "hehe");
+        service.signIn(loginRequest);
     }
 
     @Test

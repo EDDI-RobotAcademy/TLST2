@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.member;
 
+import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
 import kr.eddi.ztz_process.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,13 @@ public class MemberController {
         log.info("signUp: " + form);
 
         return service.signUp(form.toMemberRegisterRequest());
+    }
+
+    @PostMapping("/sign-in")
+    public String signIn(@RequestBody MemberLoginForm form) {
+        log.info("signIn: " + form);
+
+        return service.signIn(form.toLoginRequest());
     }
 
 }
