@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
+import CommonMainMenuTemplate from "@/components/common/CommonMainMenuTemplate";
+
+ // 글로벌 컴포넌트
+Vue.component('CommonMainMenuTemplate', CommonMainMenuTemplate)  // 글로벌 컴포넌트
+
 Vue.config.productionTip = false
 
 new Vue({
