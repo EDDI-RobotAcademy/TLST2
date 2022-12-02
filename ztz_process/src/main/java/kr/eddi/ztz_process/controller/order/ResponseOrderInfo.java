@@ -1,4 +1,4 @@
-package kr.eddi.ztz_process.entity.order;
+package kr.eddi.ztz_process.controller.order;
 
 import lombok.Builder;
 
