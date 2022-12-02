@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import CommonMenuBar from "@/components/common/CommonMenuBar";
+import CommonMenuBar from "@/components/header/MenuBar";
 
 export default {
   name: "CommonMainMenuBar",
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-a {
+ {
   text-decoration: none;
 }
 </style>
