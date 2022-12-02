@@ -100,6 +100,42 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+    @Override
+    public Boolean ModifyOrder(List<ModifyRequest> modifyRequest) {
+        List<OrderInfo> orderInfoList = new ArrayList<>();
+
+        try{
+            for (int i=0; i < modifyRequest.size(); i++){
+                Integer RequestOrderID = modifyRequest.get(i).getOrderID();
+                String RequestProductName = modifyRequest.get(i).getProductName();
+
+                Optional<OrderInfo> maybeOrder = orderRepository.findProductByIdAndName(RequestOrderID,RequestProductName);
+
+                if(maybeOrder.isEmpty()){
+                    System.out.println("해당 주문번호와 이름으로 저장된 데이터가 없습니다.");
+                    return false;
+                }
+
+                orderInfoList.add(maybeOrder.get());
+            }
+
+            for (int i = 0; i < modifyRequest.size(); i++) {
+                if(modifyRequest.get(i).getModifyCnt() == 0 ){
+                    orderRepository.deleteById(orderInfoList.get(i).getOrderNo());
+                    System.out.println("해당 상품 취소를 완료 했습니다.");
+                }else {
+                    OrderInfo orderInfo = orderInfoList.get(i);
+                    orderInfo.ModifyOrderCnt(modifyRequest.get(i).getModifyCnt());
+                    orderRepository.save(orderInfo);
+                    System.out.println("주문 갯수 수정을 완료 했습니다.");
+                }
+            }
+            return true;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
 
 
 }

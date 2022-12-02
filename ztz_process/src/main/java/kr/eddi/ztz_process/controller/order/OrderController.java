@@ -43,7 +43,11 @@ public class OrderController {
         return service.CancelAllOrder(cancelRequest);
     }
 
-        return false;
+    @PostMapping("/OrderModify")
+    public Boolean OrderModify(List<ModifyRequest> modifyRequest){
+        log.info("OrderModify" + modifyRequest);
+
+        return service.ModifyOrder(modifyRequest);
     }
 
 }

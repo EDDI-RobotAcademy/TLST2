@@ -15,5 +15,6 @@ public interface OrderService {
 
     public Boolean CancelAllOrder(CancelRequest cancelRequest);
 
+    public Boolean ModifyOrder(List<ModifyRequest> modifyRequest);
 
 }
