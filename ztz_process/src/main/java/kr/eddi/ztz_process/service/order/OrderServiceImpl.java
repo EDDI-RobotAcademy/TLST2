@@ -1,9 +1,11 @@
 package kr.eddi.ztz_process.service.order;
 
+import kr.eddi.ztz_process.controller.order.request.CancelRequest;
+import kr.eddi.ztz_process.controller.order.request.ModifyRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
-import kr.eddi.ztz_process.entity.order.ResponseOrderInfo;
+import kr.eddi.ztz_process.controller.order.ResponseOrderInfo;
 import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
-import kr.eddi.ztz_process.repository.order.OrderRequest;
+import kr.eddi.ztz_process.controller.order.request.OrderRequest;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static kr.eddi.ztz_process.utility.order.setRandomOrderNo.makeIntCustomRandom;
 
 @Service
 @Slf4j
@@ -46,16 +46,17 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Boolean registerOrderInfo(List<OrderRequest> orderRequest) {
-        orderRequest.get(0).getProductNo();
-        orderRequest.get(0).getMemberNo();//여기서도 마찬가지로 해당 데이터 들로 상품들 조회.
+        //orderRequest.get(0).getProductNo();
+        //orderRequest.get(0).getMemberNo();//여기서도 마찬가지로 해당 데이터 들로 상품들 조회.
+
         Integer setOrderNum;
         while (true){
             setOrderNum = setRandomOrderNo.makeIntCustomRandom(MINORDERNUM , MAXORDERNUM);
             Optional maybeOrderNo = orderRepository.findById(Long.valueOf(setOrderNum));
             if (maybeOrderNo.isPresent()){
-                break;
-            }else {
                 continue;
+            }else {
+                break;
             }
         }
 
@@ -64,9 +65,10 @@ public class OrderServiceImpl implements OrderService{
                 OrderInfo orderInfo = OrderInfo
                         .builder()
                         .orderID(setOrderNum)
-                        .orderCnt(orderRequest.get(0).getOrderCnt()).orderedProductName("test")
+                        .orderCnt(orderRequest.get(i).getOrderCnt())
+                        .orderedProductName("테스트상품")
                         .productPrice(10000)
-                        .productThumbnailRoute("test")
+                        .productThumbnailRoute("썸네일주소")
                         .build();
                 orderRepository.save(orderInfo);
             }
@@ -76,4 +78,28 @@ public class OrderServiceImpl implements OrderService{
             return false;
         }
     }
+
+    @Override
+    public Boolean CancelAllOrder(CancelRequest cancelRequest) {
+        List<Optional<OrderInfo>> mayBeOrder = orderRepository.findByOrderID(cancelRequest.getOrderID());
+
+        try{
+            if(mayBeOrder.get(0).isPresent()){
+                for(int i = 0; i <= mayBeOrder.size(); i++){
+                    OrderInfo orderInfo = mayBeOrder.get(i).get();
+                    orderRepository.deleteById(orderInfo.getOrderNo());
+                }
+                return true;
+            }else {
+                System.out.println("해당하는 주문 번호가 없습니다");
+                return false;
+            }
+        }catch (Exception e){
+            System.out.println("오류 발생 " + e);
+            return false;
+        }
+    }
+
+
+
 }
