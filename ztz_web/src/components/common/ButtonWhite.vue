@@ -19,7 +19,7 @@
  -->
   <v-btn
       class="ma-2"
-      color="blue lighten-1"
+      color="amber darken-3"
       outlined
       elevation="2"
       v-on="$listeners"
