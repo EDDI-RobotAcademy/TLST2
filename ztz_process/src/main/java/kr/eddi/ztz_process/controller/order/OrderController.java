@@ -1,7 +1,8 @@
 package kr.eddi.ztz_process.controller.order;
 
-import kr.eddi.ztz_process.entity.order.ResponseOrderInfo;
-import kr.eddi.ztz_process.repository.order.OrderRequest;
+import kr.eddi.ztz_process.controller.order.request.CancelRequest;
+import kr.eddi.ztz_process.controller.order.request.ModifyRequest;
+import kr.eddi.ztz_process.controller.order.request.OrderRequest;
 import kr.eddi.ztz_process.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,23 @@ public class OrderController {
 
     @PostMapping("/OrderList")
     public List<ResponseOrderInfo> orderInfoList(List<OrderRequest> orderRequest) {
-        log.info("orderInfoList");
+        log.info("orderInfoList" + orderRequest);
         return service.orderInfoList(orderRequest);
     }
 
     @PostMapping("/OrderRegister")
-    public Boolean orderRegister(){
-        log.info("orderRegister");
+    public Boolean orderRegister(List<OrderRequest> orderRequest){
+        log.info("orderRegister" + orderRequest);
+
+        return service.registerOrderInfo(orderRequest);
+    }
+
+    @PostMapping("/AllOrderCancel")
+    public Boolean AllOrderCancel(CancelRequest cancelRequest){
+        log.info("AllOrderCancel" + cancelRequest);
+
+        return service.CancelAllOrder(cancelRequest);
+    }
 
         return false;
     }
