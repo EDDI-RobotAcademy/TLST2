@@ -1,4 +1,4 @@
-package kr.eddi.ztz_process.repository.order;
+package kr.eddi.ztz_process.controller.order.request;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
