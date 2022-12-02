@@ -32,5 +32,11 @@ public class OrderTestCase {
         orderService.CancelAllOrder(cancelRequest);
     }
 
+    @Test
+    void ModifyOrderCnt(){
+        List<ModifyRequest> modifyRequest = new ArrayList<>();
+        modifyRequest.add(new ModifyRequest(1,2330,"테스트상품",0));
 
+        orderService.ModifyOrder(modifyRequest);
+    }
 }

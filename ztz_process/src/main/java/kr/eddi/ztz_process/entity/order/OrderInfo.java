@@ -48,4 +48,8 @@ public class OrderInfo {
     @UpdateTimestamp
     private Date updDate;
 
+    public void ModifyOrderCnt(Integer ModifyCnt){
+        this.orderCnt = ModifyCnt;
+    }
+
 }
