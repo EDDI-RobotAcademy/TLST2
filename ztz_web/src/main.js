@@ -3,13 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import ButtonAmber from "@/components/common/ButtonAmber";
+import ButtonGreen from "@/components/common/ButtonGreen";
 import ButtonWhite from "@/components/common/ButtonWhite";
 
 Vue.config.productionTip = false
 
-
-Vue.component('ButtonAmber', ButtonAmber)
+import "@/css/products.css";
+Vue.component('ButtonGreen', ButtonGreen)
 Vue.component('ButtonWhite', ButtonWhite)
 
 new Vue({
