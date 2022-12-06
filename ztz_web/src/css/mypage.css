@@ -1,0 +1,67 @@
+/* common css */
+ul, p, div {
+    padding: 0 ;
+    margin: 0 ;
+    font-family: AppleSDGothicNeoM00;
+    font-size: 12px;
+}
+ul{
+    list-style: none ;
+}
+.no-border-bottom {
+    border-bottom: none !important;
+}
+
+/* products list local-filter-area css*/
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+    padding : 40px 0;
+}
+
+.mypageWrap{
+    display:flex;
+    justify-content: space-evenly;
+}
+
+.profile-section {
+    width: 400px;
+}
+
+.sub-nav {
+    padding-top: 30px;
+}
+.sub-nav li {
+    margin: 10px 0;
+}
+.sub-nav li a {
+    font-size: 13px;
+    color: #222222;
+    text-decoration: none;
+}
+
+.management-section {
+    width: 800px;
+    border-left: 1px solid #eee;
+}
+
+.management-box {
+    height: 250px;
+    padding: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.first-box{
+    height: 160px !important;
+}
+
+.head-area {
+    display: flex;
+    justify-content: space-between;
+}
+.head-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 6px !important;
+}
