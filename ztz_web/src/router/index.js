@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import CommonComponentsTestView from "@/views/board/CommonComponentsTestView";
 
 Vue.use(VueRouter)
 
@@ -11,16 +10,6 @@ const routes = [
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/common-components',
-    name: 'CommonComponentsTestView',
-    component: CommonComponentsTestView
-  },
-  {
-    path: '/main-home-board',
-    name: 'MainHomeBoardView',
-    component: MainHomeBoardView
-  }
 ]
 
 const router = new VueRouter({

@@ -1,18 +1,28 @@
 <template>
-  <v-app>
+  <div id="app">
     <v-main>
       <router-view/>
     </v-main>
-  </v-app>
+  </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-};
+  name: "App",
+  components: {
+  },
+  computed: {
+    }
+}
 </script>
+
+<style scoped>
+
+#app {
+  height: 100%;
+  position: relative;
+  padding-bottom: 170px;
+}
+</style>
+
