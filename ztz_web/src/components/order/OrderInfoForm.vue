@@ -112,7 +112,7 @@
         <v-card style="width: 760px">
           <v-list-item-content>
             <v-row justify="left">
-              <v-img :src="require('@/assets/logo.png')"
+              <v-img :src="require('@/assets/products/item1.jpg')"
                      max-width="60"
                      style="margin: 15px; margin-left: 25px;"/>
               <p style="margin-left: 50px; margin-top: 33px">상품 이름</p>

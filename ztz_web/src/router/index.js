@@ -7,6 +7,7 @@ import TestView from "@/views/TestView";
 import ProductDetailView from "@/views/products/ProductDetailView";
 import CartView from "@/views/order/CartView";
 import ProductsView from "@/views/products/ProductsView";
+import OrderInfoView from "@/views/order/OrderInfoView";
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,13 @@ const routes = [
     name: 'CartView',
     component: CartView
   },
+  {
+    path: '/order-Info',
+    name: 'OrderInfoView',
+    component: OrderInfoView
+  },
+
+    ///order-info
 ]
 
 const router = new VueRouter({

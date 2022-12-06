@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <div class="mb-5">
-      <input type="checkbox" name="allProducts" value="all" v-model="allSelected" ><label for="all">  전체 선택</label>
+      <input type="checkbox" style="accent-color: green;" name="allProducts" value="all" v-model="allSelected" ><label for="all">  전체 선택</label>
     </div>
     <v-divider></v-divider>
 <!--장바구니 상품 리스트-->
     <div class="item-info" v-for="(item, index) in allProductList" :key="index">
       <div class="l">
           <v-row>
-             <input type="checkbox" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.price, item.quantity)" >
+             <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.price, item.quantity)" >
               <v-img
                   src="@/assets/products/img/pd_1.png"
                   max-width="320"
@@ -51,13 +51,14 @@
 
           <!-- v-img :src="require('../../assets/products/${이미지명}')"/ -->
         </div>
-    </div>
       <v-divider></v-divider>
+    </div>
+
 <!--    장바구니 리스트 끝-->
 <!--    총합계 부분-->
-    <div class="row #205C37--text" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
-      <p class="col-sm-4" style="text-align: right;">총 합계</p>
-      <div class="col-sm-8" align="center">
+    <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
+      <p class="col-sm-4" style="text-align: right; color: #205c37">총 합계</p>
+      <div class="col-sm-8" align="center" style=" color: #205c37">
         <p>{{ this.totalPrice | numberFormat }} 원</p>
       </div>
     </div>
@@ -68,7 +69,7 @@
           width="265px"
           x-large
       />
-      <ButtonAmber
+      <ButtonGreen
           @click="btnAllPurchase"
           btn-name="전체상품 구매"
           width="265px"
