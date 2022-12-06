@@ -43,9 +43,9 @@
           </div>
         </div>
         <v-divider></v-divider>
-        <div class="row amber--text text--darken-3" style="margin-top: 60px; font-size: 25px; font-weight: bold">
-          <p class="col-sm-4" style="text-align: left;">총 합계</p>
-          <div class="col-sm-8" align="right">
+        <div class="row" style="margin-top: 60px; font-size: 25px; font-weight: bold">
+          <p class="col-sm-4" style="text-align: left; color: #205c37">총 합계</p>
+          <div class="col-sm-8" align="right" style="color: #205c37">
             <p>{{ totalPrice | numberFormat }} 원</p>
           </div>
         </div>
@@ -56,7 +56,7 @@
               width="265px"
               x-large
           />
-          <ButtonAmber
+          <ButtonGreen
               @click="btnPurchase"
               btn-name="바로구매"
               width="265px"
