@@ -2,8 +2,11 @@
   <v-container>
     <router-link to="/sign-up">회원가입</router-link> |
     <router-link to="/sign-in">로그인</router-link> |
-    <button-white btn-name="로그아웃" @click="logout"/>
-    <router-link to="/product">상품 리스트 UI</router-link>
+    <button-white btn-name="로그아웃" @click="logout"/> |
+    <router-link to="/product">상품 리스트 UI</router-link> |
+    <router-link to="/product/detail">상품 상세페이지</router-link> |
+    <router-link to="/cart">장바구니</router-link> |
+    <router-link to="/order-info">주문하기</router-link> |
   </v-container>
 
 </template>
