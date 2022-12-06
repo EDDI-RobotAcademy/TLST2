@@ -5,22 +5,12 @@ import SignUpView from "@/views/account/SignUpView";
 import SignInView from "@/views/account/SignInView";
 import TestView from "@/views/TestView";
 import ProductDetailView from "@/views/products/ProductDetailView";
-import HomeView from "@/views/HomeView";
-import KaramView from "@/views/KaramView";
+import CartView from "@/views/order/CartView";
+import ProductsView from "@/views/products/ProductsView";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/karam-view',
-    name: 'KaramView',
-    component: KaramView
-  },
   {
     path: '/test',
     name: 'test',
@@ -38,9 +28,22 @@ const routes = [
   },
   {
     // /:productNo
+    path: '/product',
+    name: 'ProductsView',
+    component: ProductsView
+  },
+
+  {
+    // /:productNo
     path: '/product/detail',
     name: 'ProductDetailView',
     component: ProductDetailView
+  },
+
+  {
+    path: '/cart',
+    name: 'CartView',
+    component: CartView
   },
 ]
 
