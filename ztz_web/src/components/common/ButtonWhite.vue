@@ -1,7 +1,7 @@
 <template>
   <v-btn
     class="ma-2"
-    color="amber darken-3"
+    color="#205C37"
     outlined
     elevation="1"
     v-on="$listeners"
@@ -19,7 +19,7 @@
  -->
   <v-btn
       class="ma-2"
-      color="amber darken-3"
+      color="#205C37"
       outlined
       elevation="2"
       v-on="$listeners"

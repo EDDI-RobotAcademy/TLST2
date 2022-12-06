@@ -4,7 +4,7 @@
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
           <v-img
-              :src="require('@/assets/logo.png')" width="120" class="mx-auto mb-6"/>
+              :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
         </router-link>
         <v-card width="460">
           <v-card-text class="text-center px-12 py-16">
