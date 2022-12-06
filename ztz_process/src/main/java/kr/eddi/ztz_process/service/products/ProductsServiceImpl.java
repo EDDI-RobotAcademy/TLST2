@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.service.products;
 
+import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,5 +19,8 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> list() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
     }
-
+    @Override
+    public List<Product> list(Local local) {
+        return repository.filterLoco(local);
+    }
 }
