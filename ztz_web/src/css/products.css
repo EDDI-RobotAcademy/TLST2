@@ -5,6 +5,14 @@
     margin: 0 auto;
     padding : 40px 0;
 }
+.listWrap ul, p, div {
+    margin: 0 ;
+    font-family: AppleSDGothicNeoM00;
+    font-size: 12px;
+}
+.listWrap ul{
+    list-style: none ;
+}
 
 .list-filter-area {
     display: flex;
