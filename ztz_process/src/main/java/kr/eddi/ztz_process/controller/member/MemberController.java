@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.controller.member;
 
-import kr.eddi.ztz_process.controller.member.form.CertificationMemberForm;
 import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
 import kr.eddi.ztz_process.service.member.MemberService;
@@ -39,9 +38,10 @@ public class MemberController {
         return service.signIn(form.toLoginRequest());
     }
 
-    @DeleteMapping("/withdrawal")
-    public void withdrawal(@RequestBody CertificationMemberForm form) {
-        service.withdrawal(form.getToken());
+    @DeleteMapping(path = "/withdrawal", headers = "Token")
+    public void withdrawal(@RequestHeader("Token") String token) {
+        String SubString = token.substring(1,37);
+        service.withdrawal(SubString);
     }
 
 }
