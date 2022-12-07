@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-15">
     <order-info-form/>
   </v-container>
 </template>
