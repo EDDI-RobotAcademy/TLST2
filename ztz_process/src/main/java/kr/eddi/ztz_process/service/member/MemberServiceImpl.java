@@ -84,4 +84,10 @@ public class MemberServiceImpl implements MemberService {
         throw new RuntimeException("아이디 또는 패스워드가 잘못되었습니다");
     }
 
+    @Override
+    public void withdrawal(String token) {
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        memberRepository.delete(member);
+    }
 }
