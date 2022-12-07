@@ -35,10 +35,10 @@ const routes = [
   },
 
   {
-    // /:productNo
-    path: '/product/detail',
+    path: '/product/:productNo',
     name: 'ProductDetailView',
-    component: ProductDetailView
+    component: ProductDetailView,
+    props: true
   },
 
   {

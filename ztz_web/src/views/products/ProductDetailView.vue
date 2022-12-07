@@ -1,20 +1,40 @@
 <template>
   <div class="detailWrap">
-    <product-detail-form/>
+      <product-detail-form
+          :product="product"
+      />
   </div>
-
 </template>
 
 <script>
 import ProductDetailForm from "@/components/products/ProductDetailForm";
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: "ProductDetailView",
   components: {ProductDetailForm},
+  data () {
+    return {
+    }
+  },
+  methods: {
+    ...mapActions([
+        'requestProductFromSpring'
+    ])
+  },
+  props: {
+    productNo: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
-    //mapState - product
+    ...mapState([
+        'product'
+    ])
   },
   created() {
-    // 스프링에 상품 정보 요청하기 - requestProductFromSpring(productNo)
+    this.requestProductFromSpring(this.productNo)
   }
 }
 </script>
