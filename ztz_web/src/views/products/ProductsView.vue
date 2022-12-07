@@ -1,6 +1,5 @@
 <template>
  <div class="listWrap">
-
    <div class="list-filter-area">
      <p>모든 상품</p>
      <div class="local-filter">

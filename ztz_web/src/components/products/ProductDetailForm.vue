@@ -133,10 +133,12 @@ export default {
     },
     btnCart() {
       // 장바구니 버튼 클릭 -> 장바구니에 상품 추가
+      this.$router.push({name:'CartView'})
 
     },
     btnPurchase() {
       // 바로 구매 버튼 클릭 -> 구매 페이지로 이동
+      this.$router.push({name:'OrderInfoView'})
     }
 
   },

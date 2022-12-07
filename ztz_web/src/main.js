@@ -14,6 +14,7 @@ import MainFooter from "@/components/common/footer/MainFooter";
 
 Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
 Vue.component('MainFooter', MainFooter)
+import "@/css/mypage.css";
 Vue.component('ButtonGreen', ButtonGreen)
 Vue.component('ButtonWhite', ButtonWhite)
 

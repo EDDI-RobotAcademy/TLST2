@@ -1,20 +1,24 @@
 <template>
-  <div id="app">
-    <v-main>
-      <router-view/>
-    </v-main>
-  </div>
+  <v-app>
+      <div id="app">
+        <v-main>
+          <main-header/>
+          <router-view/>
+          <main-footer/>
+        </v-main>
+      </div>
+  </v-app>
 </template>
 
 <script>
 
 export default {
-  name: "App",
-  components: {
-  },
-  computed: {
-  }
-}
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+};
 </script>
 
 <style scoped>
