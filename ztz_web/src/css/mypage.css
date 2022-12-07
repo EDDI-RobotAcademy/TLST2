@@ -9,7 +9,14 @@
     margin: 0 auto;
     padding : 40px 0;
 }
-
+.mypageWrap ul, p, div {
+    margin: 0 ;
+    font-family: AppleSDGothicNeoM00;
+    font-size: 12px;
+}
+.mypageWrap ul{
+    list-style: none ;
+}
 .mypageWrap{
     display:flex;
     justify-content: space-evenly;
