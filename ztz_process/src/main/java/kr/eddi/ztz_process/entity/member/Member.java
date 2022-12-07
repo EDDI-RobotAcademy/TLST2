@@ -30,7 +30,7 @@ public class Member {
     @Column(nullable = false)
     private int birthdate;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Authentication> authentications = new HashSet<>();
 
     public Member(String email, String username, int birthdate) {
