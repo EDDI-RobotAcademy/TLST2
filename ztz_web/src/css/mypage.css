@@ -1,13 +1,4 @@
 /* common css */
-ul, p, div {
-    padding: 0 ;
-    margin: 0 ;
-    font-family: AppleSDGothicNeoM00;
-    font-size: 12px;
-}
-ul{
-    list-style: none ;
-}
 .no-border-bottom {
     border-bottom: none !important;
 }
