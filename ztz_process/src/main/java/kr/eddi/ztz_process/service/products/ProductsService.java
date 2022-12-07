@@ -9,4 +9,5 @@ public interface ProductsService {
 
     public List<Product> list();
     public List<Product> list(Local local);
+    public Product getProductInfo(Long productNo);
 }
