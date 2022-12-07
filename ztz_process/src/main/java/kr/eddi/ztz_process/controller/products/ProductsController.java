@@ -30,4 +30,10 @@ public class ProductsController {
 
         return productsService.list(filterLocal);
     }
+    @PostMapping("/list/product/{productNo}")
+    public Product getProductInfo(@PathVariable("productNo") Long productNo) {
+        log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
+
+        return productsService.getProductInfo(productNo);
+    }
 }
