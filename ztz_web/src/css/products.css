@@ -27,7 +27,7 @@ ul{
 }
 .list-filter-area .local-filter {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .list-filter-area .local-filter ul{
     display: flex;

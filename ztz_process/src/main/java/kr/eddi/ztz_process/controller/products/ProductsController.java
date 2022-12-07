@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/products")
+@RequestMapping("ztz/products")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductsController {
 
