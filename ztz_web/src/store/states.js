@@ -3,5 +3,6 @@ export default {
     products: [],
     product: {},
     resMyRequest: {},
+    resMember: {},
 
 }

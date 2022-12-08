@@ -2,8 +2,8 @@
   <section class="profile-section">
 
     <div class="management-box  first-box">
-      <p class="name head-text">홍길동님</p>
-      <p class="email">irigeori@josun.com</p>
+      <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
+      <p class="email">{{ this.$store.state.resMember.email }}</p>
     </div>
 
     <nav>
@@ -21,12 +21,29 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapState} from "vuex";
 export default {
   name: "MyPageProfileSection",
+  computed : {
+    ...mapState([
+      'isAuthenticated',
+      'resMember',
+    ])
+  },
+  mounted(){
+    if(this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem('userInfo')
+      this.reqMemberInfoToSpring(token)
+    } else {
+      console.log("내 상태가 로그인상태가 아니라면 자동으로 로그인창으로 넘어갈수 있나?")
+      alert("로그인 상태가 아닙니다.")
+    }
+
+  },
   methods : {
     ...mapActions([
-        'reqDeleteMemberToSpring'
+        'reqDeleteMemberToSpring',
+        'reqMemberInfoToSpring'
     ]),
     async withdrawal() {
       if(window.localStorage.getItem('userInfo') != null) {
