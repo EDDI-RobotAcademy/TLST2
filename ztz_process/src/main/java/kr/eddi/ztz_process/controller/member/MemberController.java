@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.member;
 
+import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
 import kr.eddi.ztz_process.entity.member.Member;
@@ -46,8 +47,13 @@ public class MemberController {
     }
 
     @PostMapping("/user-verification")
-    public Member userVerification(@RequestParam String token) {
-        return service.returnMemberInfo(token);
+    public Member userVerification(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
+        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        Member member = service.returnMemberInfo(SubString);
+        log.info(member.getEmail());
+        return member;
     }
+
+
 
 }
