@@ -10,14 +10,14 @@ import axios from 'axios'
 
 export default {
     reqProductsFromSpring ({ commit }) {
-        return axios.get('http://localhost:7777/products/list')
+        return axios.get('http://localhost:7777/ztz/products/list')
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
                 console.log(res.data)
             })
     },
     reqFilteredProductsFromSpring ({ commit }, localName) {
-        return axios.get(`http://localhost:7777/products/list/${localName}`)
+        return axios.get(`http://localhost:7777/ztz/products/list/${localName}`)
             .then((res) => {
                 commit(REQUEST_FILTERED_PRODUCT_FROM_SPRING, res.data)
             })
@@ -25,7 +25,7 @@ export default {
     requestProductFromSpring({ commit }, productNo) {
         console.log('productDetailView - product 가져오기' + productNo)
 
-        return axios.post(`http://localhost:7777/products/list/product/${productNo}`)
+        return axios.post(`http://localhost:7777/ztz/products/list/product/${productNo}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_FROM_SPRING, res.data)
             })
@@ -37,5 +37,6 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data)
             })
     },
+
 
 }
