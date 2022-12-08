@@ -3,6 +3,7 @@ import {
     REQUEST_FILTERED_PRODUCT_FROM_SPRING,
     REQUEST_PRODUCT_FROM_SPRING,
     RESPONSE_MY_REQUEST,
+    RESPONSE_MEMBER_OBJECT,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -13,7 +14,6 @@ export default {
         return axios.get('http://localhost:7777/ztz/products/list')
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
-                console.log(res.data)
             })
     },
     reqFilteredProductsFromSpring ({ commit }, localName) {
@@ -37,6 +37,13 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data)
             })
     },
-
+    reqMemberInfoToSpring({ commit }, token) {
+        return axios.post(`http://localhost:7777/ztz/member/user-verification`,
+            { token: token })
+            .then((res) => {
+                commit(RESPONSE_MEMBER_OBJECT, res.data)
+                console.log("actions :" + res.data)
+            })
+    },
 
 }
