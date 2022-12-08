@@ -13,32 +13,32 @@
 
       <div v-if="MemberInfoShow" style="margin-top: 50px; margin-left: 25px">
         <template>
-          <v-row justify="left" >
+          <v-row>
             <p style="padding-top: 9px; width: 150px; font-size: 13px">이름</p>
             <p style="width: 600px">
-              <v-text-field outlined dense="true" style="font-size: 13px"></v-text-field>
+              <v-text-field outlined dense style="font-size: 13px"></v-text-field>
             </p>
           </v-row>
 
           <v-row justify="left" >
             <p style="padding-top: 9px; width: 150px; font-size: 13px">이메일</p>
             <p style="width: 250px">
-              <v-text-field outlined dense="true" style="font-size: 13px"></v-text-field>
+              <v-text-field outlined dense style="font-size: 13px"></v-text-field>
             </p>
             <p style="margin: 5px">@</p>
             <p style="width: 330px;">
-              <v-select :items="PortalSites" outlined dense="true" style="font-size: 13px;"></v-select>
+              <v-select :items="PortalSites" outlined dense style="font-size: 13px;"></v-select>
             </p>
           </v-row>
 
           <v-row justify="left" >
             <p style="padding-top: 9px; width: 150px; font-size: 13px">전화번호</p>
             <p style="width: 250px">
-              <v-select :items="LocalNumber" outlined dense="true" style="font-size: 13px;"></v-select>
+              <v-select :items="LocalNumber" outlined dense style="font-size: 13px;"></v-select>
             </p>
             <p style="margin: 9px">-</p>
             <p style="width: 330px;">
-            <v-text-field label=" '-'없이 휴대폰 번호 입력" outlined dense="true" style="font-size: 13px;"></v-text-field>
+            <v-text-field label=" '-'없이 휴대폰 번호 입력" outlined dense style="font-size: 13px;"></v-text-field>
             </p>
           </v-row>
         </template>
@@ -54,48 +54,32 @@
         <v-row justify="left" >
           <p style="padding-top: 9px; width: 150px; font-size: 13px">받는분</p>
           <p style="width: 600px">
-            <v-text-field outlined dense="true" style="font-size: 13px"></v-text-field>
+            <v-text-field outlined dense style="font-size: 13px"></v-text-field>
           </p>
         </v-row>
 
         <v-row justify="left" >
           <p style="padding-top: 9px; width: 150px; font-size: 13px">전화번호</p>
           <p style="width: 250px">
-            <v-select :items="LocalNumber" outlined dense="true" style="font-size: 13px;"></v-select>
+            <v-select :items="LocalNumber" outlined dense style="font-size: 13px;"></v-select>
           </p>
           <p style="margin: 9px">-</p>
           <p style="width: 330px;">
-            <v-text-field label=" '-'없이 휴대폰 번호 입력" outlined dense="true" style="font-size: 13px;"></v-text-field>
+            <v-text-field label=" '-'없이 휴대폰 번호 입력" outlined dense style="font-size: 13px;"></v-text-field>
           </p>
         </v-row>
 
-          <v-row justify="left">
-            <p style="padding-top: 9px; width: 150px; font-size: 13px">주소</p>
-            <div class="d-flex">
-              <v-text-field v-model="zipcode" outlined dense disabled style="font-size: 13px;" required/>
-            </div>
-            <v-btn style="font-size: 13px; height: 40px; margin-left: 8px" @click="callDaumAddressApi" outlined dense>우편번호 찾기</v-btn>
-          </v-row>
+<!--        <address-form @submit="onSubmit"/>-->
+        <AddressForm/>
 
-        <div class="d-flex" style="margin-left: 138px; width: 600px">
-          <v-text-field v-model="city" outlined dense disabled style="font-size: 13px;" required/>
+
         </div>
-
-        <div class="d-flex" style="margin-left: 138px; width: 600px">
-          <v-text-field v-model="street" outlined dense disabled style="font-size: 13px;" required/>
-        </div>
-
-        <div class="d-flex" style="margin-left: 138px; width: 600px">
-          <v-text-field v-model="addressDetail" outlined dense style="font-size: 13px;" required/>
-        </div>
-
-      </div>
     </v-col>
     <v-card outlined width="775px" style="margin-bottom: 30px">
       <p style="padding: 20px">
         배송요청사항
       </p>
-      <v-select :items="RequestItems" v-model="Request" outlined dense="true" style="font-size: 13px; margin: 30px">
+      <v-select :items="RequestItems" v-model="Request" outlined dense style="font-size: 13px; margin: 30px">
 
       </v-select>
     </v-card>
@@ -109,7 +93,7 @@
 
     <v-list>
       <v-list-item v-for="i in 5" :key="i" two-line>
-        <v-card style="width: 760px">
+        <v-card class="mt-5" style="width: 760px">
           <v-list-item-content>
             <v-row justify="left">
               <v-img :src="require('@/assets/products/item1.jpg')"
@@ -124,7 +108,7 @@
       </v-list-item>
     </v-list>
     <p style="padding-left: 270px"><ButtonGreen
-        @click="payBtn"
+        @click="payment"
         btn-name="결제하기"
         width="265px"
         x-large
@@ -134,9 +118,13 @@
 </template>
 
 <script>
+const IMP = window.IMP;
+IMP.init("imp20030584");
 
+import AddressForm from "@/components/common/AddressForm";
 export default {
   name: "OrderInfoForm",
+  components: {AddressForm},
   data() {
     return{
       Request:'',
@@ -152,9 +140,26 @@ export default {
       addressDetail: '',
       zipcode: '',
 
+
+      PaymentPrice: 100,
+      uid_num: 0o00321,
+      merchant_uid :'ORD20221207-',
+      randomNumber : 0,
+      usedNum :[],
+
+
     }
   },
   methods : {
+    onSubmit (payload) {
+      const { city, street, addressDetail, zipcode } = payload;
+      this.city = city;
+      this.street = street;
+      this.addressDetail = addressDetail;
+      this.zipcode = zipcode;
+
+      console.log(this.city + this.street + this.addressDetail +this.zipcode)
+    },
     orderMemberInfoVisible(){
       this.MemberInfoShow = !this.MemberInfoShow;
 
@@ -164,33 +169,40 @@ export default {
         this.ShowDirection = false;
       }
     },
-    payBtn(){
+    payment() {
+      console.log("paymentBtn - 실행")
 
-    },
-    callDaumAddressApi () {
-      new window.daum.Postcode({
-        oncomplete: (data) => {
-          let fullRoadAddr = data.roadAddress;
-          let extraRoadAddr = '';
-          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-            extraRoadAddr += data.bname;
-          }
-          if (data.buildingName !== '' && data.apartment === 'Y') {
-            extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-          }
-          if (extraRoadAddr !== '') {
-            extraRoadAddr = ' (' + extraRoadAddr + ')';
-          }
-          if (fullRoadAddr !== '') {
-            fullRoadAddr += extraRoadAddr;
-          }
-          this.city = data.sido;
-          this.zipcode = data.zonecode;
-          this.street = data.sigungu + ' ' + fullRoadAddr;
-          this.streetPass = true
+      this.randomNumber = Math.random()*100000;
+
+      for (let i = 0; i < this.usedNum.length; i++) {
+        if(this.usedNum[i] == this.randomNumber){
+
+          continue;
         }
-      }).open()
-    },
+      }
+
+      IMP.request_pay({ // param
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: this.merchant_uid + this.randomNumber,
+        name: "ZTZ 전통주 결제",
+        amount: this.PaymentPrice,
+        buyer_email: "foertonw5@gmail.com",
+        buyer_name: "최재민",
+        buyer_tel: "010-9556-7997",
+        buyer_addr: "서울특별시",
+        buyer_postcode: "01182"
+      }, rsp => { // callback
+        if (rsp.success) {
+          console.log("결제성공")
+          this.usedNum.push(this.randomNumber)
+          const { PaymentPrice, MemberNo, merchant_uid, phoneNumber} = this
+          this.$emit("submit", {PaymentPrice , MemberNo , merchant_uid ,phoneNumber})
+        } else {
+          console.log("결제실패")
+        }
+      });
+    }
   }
 }
 </script>
