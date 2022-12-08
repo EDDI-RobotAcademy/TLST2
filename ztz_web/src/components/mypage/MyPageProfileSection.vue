@@ -31,9 +31,9 @@ export default {
     async withdrawal() {
       if(window.localStorage.getItem('userInfo') != null) {
         let token = window.localStorage.getItem('userInfo')
-        console.log("내 토큰 : " + token)
         // eslint-disable-next-line no-undef
         await this.reqDeleteMemberToSpring(token)
+        console.log(this.$store.state.resMyRequest.toString())
       } else {
         alert("로그인 상태가 아닙니다.")
       }
