@@ -6,7 +6,7 @@
           <v-img
               :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
         </router-link>
-        <v-card width="460">
+        <v-card width="460" elevation="0" outlined >
           <v-card-text class="text-center px-12 py-16">
             <v-form @submit.prevent="onSubmit">
               <div class="text-h4 font-weight-black mb-10">로그인</div>
@@ -21,10 +21,10 @@
                               :rules="password_rule" clearable prepend-icon="mdi-lock-outline"/>
               </div>
 
-              <button-amber type="submit" block x-large
+              <button-green type="submit" block x-large
                      class="mt-6"  :disabled="false"
                       btn-name="로그인">
-              </button-amber>
+              </button-green>
 
             </v-form>
           </v-card-text>

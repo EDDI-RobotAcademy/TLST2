@@ -9,6 +9,12 @@ import ButtonWhite from "@/components/common/ButtonWhite";
 Vue.config.productionTip = false
 
 import "@/css/products.css";
+import MainHeader from "@/components/common/header/MainHeader";
+import MainFooter from "@/components/common/footer/MainFooter";
+
+Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
+Vue.component('MainFooter', MainFooter)
+import "@/css/mypage.css";
 Vue.component('ButtonGreen', ButtonGreen)
 Vue.component('ButtonWhite', ButtonWhite)
 

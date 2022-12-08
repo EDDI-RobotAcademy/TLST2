@@ -1,6 +1,6 @@
 <template>
-  <div class="detailWrap">
-  <cart-form/>
+  <div class="detailWrap mt-15" >
+   <cart-form/>
   </div>
 </template>
 

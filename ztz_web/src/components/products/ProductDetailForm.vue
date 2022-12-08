@@ -4,7 +4,7 @@
       <div class="l">
         <div align="center">
           <v-img
-              src="@/assets/products/item1.jpg"
+              :src="require(`../../assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
               max-width="640"
               max-height="480"
               contain
@@ -13,12 +13,12 @@
         </div>
       </div>
       <div class="r">
-        <p class="item-name">{{ name }}</p>
-        <p class="item-description">{{ description }}</p>
+        <p class="item-name">{{ product.name }}</p>
+        <p class="item-description">{{ product.description }}</p>
         <v-divider></v-divider>
         <div class="row" style="margin: 20px 0; font-size: 18px">
           <p class="col-sm-4">판매가</p>
-          <p class="col-sm-8" style="text-align: right">{{ price | numberFormat }} 원</p>
+          <p class="col-sm-8" style="text-align: right">{{ product.price | numberFormat }} 원</p>
         </div>
         <div class="row" style="margin: 20px 0 20px; font-size: 18px">
           <p class="col-sm-5" style="text-align: left;">구매수량</p>
@@ -43,9 +43,9 @@
           </div>
         </div>
         <v-divider></v-divider>
-        <div class="row" style="margin-top: 60px; font-size: 25px; font-weight: bold">
-          <p class="col-sm-4" style="text-align: left; color: #205c37">총 합계</p>
-          <div class="col-sm-8" align="right" style="color: #205c37">
+        <div class="row" style="margin-top: 60px; font-size: 25px; font-weight: bold; color: #205C37;">
+          <p class="col-sm-4" style="text-align: left;">총 합계</p>
+          <div class="col-sm-8" align="right">
             <p>{{ totalPrice | numberFormat }} 원</p>
           </div>
         </div>
@@ -70,7 +70,7 @@
       <v-tabs
           fixed-tabs
           v-model="tabs"
-          color="amber darken-3"
+          color="#205C37"
       >
         <v-tab v-for="list in lists" :key="list">
           {{ list }}
@@ -115,7 +115,10 @@ export default {
     }
   },
   props: {
-    //props로 product 정보 받아와야함.
+    product: {
+      type: Object,
+      required: true,
+    }
   },
   methods: {
     qtyDecrease() {
@@ -130,17 +133,20 @@ export default {
     },
     btnCart() {
       // 장바구니 버튼 클릭 -> 장바구니에 상품 추가
+      this.$router.push({name:'CartView'})
 
     },
     btnPurchase() {
       // 바로 구매 버튼 클릭 -> 구매 페이지로 이동
+      this.$router.push({name:'OrderInfoView'})
     }
 
   },
   beforeUpdate() {
-    this.totalPrice = this.price * this.quantity
+    this.totalPrice = this.product.price * this.quantity
   },
   filters: {
+    // 상품 금액 천단위 콤마 찍기
     numberFormat(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }

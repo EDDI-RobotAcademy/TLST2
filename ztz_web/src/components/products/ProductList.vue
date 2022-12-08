@@ -5,7 +5,8 @@
       <p>상품이 존재하지 않습니다.</p>
     </li>
     <li v-else v-for="product in paginated('products')" :key="product.productNo">
-      <router-link :to="{ name: 'home'}">
+      <router-link :to="{ name: 'ProductDetailView', params: { productNo: product.productNo.toString() }}"
+      >
         <product-card :product="product" ></product-card>
       </router-link>
     </li>
