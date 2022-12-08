@@ -1,0 +1,14 @@
+
+/* common css */
+.wrap {
+    width: 1200px;
+    margin: 0 auto;
+    padding : 40px 0;
+    font-family: AppleSDGothicNeoM00;
+}
+.wrap ul {
+    list-style: none !important;
+}
+.no-border-bottom {
+    border-bottom: none !important;
+}

@@ -1,26 +1,13 @@
 
 /* products list local-filter-area css*/
-.listWrap {
-    width: 1200px;
-    margin: 0 auto;
-    padding : 40px 0;
-}
-.listWrap ul, p, div {
-    margin: 0 ;
-    font-family: AppleSDGothicNeoM00;
-    font-size: 12px;
-}
-.listWrap ul{
-    list-style: none ;
-}
-
 .list-filter-area {
     display: flex;
     justify-content: space-between;
     padding: 20px 0 10px 0;
+    font-size: 13px;
 }
 .list-filter-area > p {
-    margin: 0  !important;
+    margin: 0 !important;
     padding : 0;
 }
 .list-filter-area .local-filter {
