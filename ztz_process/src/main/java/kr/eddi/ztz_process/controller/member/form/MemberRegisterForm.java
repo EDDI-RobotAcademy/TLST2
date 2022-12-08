@@ -17,7 +17,12 @@ public class MemberRegisterForm {
     private String username;
     private int birthdate;
 
+    private String city;
+    private String street;
+    private String addressDetail;
+    private String zipcode;
+    private String phoneNumber;
     public MemberRegisterRequest toMemberRegisterRequest () {
-        return new MemberRegisterRequest( email, password, username, birthdate);
+        return new MemberRegisterRequest( email, password, username, birthdate,city,street,addressDetail,zipcode,phoneNumber);
     }
 }
