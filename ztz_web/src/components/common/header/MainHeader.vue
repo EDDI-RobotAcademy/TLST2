@@ -1,73 +1,147 @@
 <template>
   <div>
-  <v-container >
-    <div>
-      <v-row justify="center">
-        <v-col cols="auto">
-          <router-link to="/">
-            <v-img
-                :src="require('@/assets/ztz_logo1.png')" width="120" />
-          </router-link>
-
-        </v-col>
-        <v-col >
-          <div style="font-size:20px;">
-            <v-row class="mt-16">
+    <v-container >
+      <div>
+        <v-row justify="center">
+          <v-col cols="auto">
+            <router-link to="/">
+              <v-img
+                  :src="require('@/assets/ztz_logo1.png')" width="120" />
+            </router-link>
+          </v-col>
+          <v-col >
+            <!-- 메인 메뉴 -->
+            <v-row class="mt-16" style="font-size:20px;">
               <v-col class="col-12 col-sm-4">
-                <router-link style="text-decoration: none; font-weight: bold; " to="/product">
-                  <p class="light-green--text text--darken-3" align="center">전통주</p>
+                <router-link style="text-decoration: none; font-weight: bold; " to="/product" @click.native="alcohol">
+                  <p align="center" style="color: #205C37">전통주</p>
                 </router-link>
               </v-col>
               <v-col class="col-12 col-sm-4">
-                <router-link style="text-decoration: none; font-weight: bold" to="/">
-                  <p class="light-green--text text--darken-3" align="center">이달의 술</p>
+                <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="monthAlcohol">
+                  <p align="center" style="color: #205C37">이달의 술</p>
                 </router-link>
               </v-col>
               <v-col class="col-12 col-sm-4">
-                <router-link style="text-decoration: none; font-weight: bold" to="/">
-                  <p class="light-green--text text--darken-3" align="center">양조체험</p>
+                <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="brewery">
+                  <p align="center" style="color: #205C37">양조체험</p>
                 </router-link>
               </v-col>
             </v-row>
-         </div>
-        </v-col>
 
-        <v-col cols="auto" v-if="this.$store.state.isAuthenticated">
-          <v-btn small text @click="logout">로그아웃</v-btn>
-          <v-btn small text @click="goMyPage">마이페이지</v-btn>
-        </v-col>
+          </v-col>
 
-        <v-col cols="auto" v-else>
-          <v-btn small text @click="goSignIn">로그인</v-btn>
-          <v-btn small text @click="goSignUp">회원가입</v-btn>
-        </v-col>
+          <!-- 로그인 시 상단 메뉴 상태 변경 -->
+          <v-col cols="auto" v-if="this.$store.state.isAuthenticated">
+            <v-row>
+              <v-col style="padding-right: 0px">
+                <h4 class="name" style="margin-top: 11px; padding: 0px;">
+                  환영합니다, {{ this.$store.state.resMember.username}}님!
+                </h4>
+              </v-col>
+              <p style="margin-top: 18px; padding: 0px">
+                <v-btn small text @click="logout">로그아웃</v-btn>
+                <v-btn small text @click="goMyPage">마이페이지</v-btn>
+              </p>
+            </v-row>
+          </v-col>
 
-      </v-row>
+          <!-- 비로그인 시 상단 메뉴 상태 변경 -->
+          <v-col cols="auto" v-else>
+            <v-row>
+              <v-col style="padding-right: 0px">
+                <h4 class="name" style="margin-top: 11px; padding: 0px;">
+                  안녕하세요, 회원님! &nbsp;
+                </h4>
+              </v-col>
+              <p style="margin-top: 18px; padding: 0px">
+                <v-btn small text @click="goSignIn">로그인</v-btn>
+                <v-btn small text @click="goSignUp">회원가입</v-btn>
+              </p>
+            </v-row>
+          </v-col>
 
+        </v-row>
+
+        <!--서브메뉴 클릭: 전통주 -->
+        <v-row v-if="this.selectMenu === 'alcohol'">
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold; " to="/product" @click.native="alcohol">
+              <p align="center" style="color: #205C37">증류주</p>
+            </router-link>
+          </v-col>
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="monthAlcohol">
+              <p align="center" style="color: #205C37">발효주</p>
+            </router-link>
+          </v-col>
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="brewery">
+              <p align="center" style="color: #205C37">기타 주류</p>
+            </router-link>
+          </v-col>
+        </v-row>
+
+        <!--서브메뉴 클릭: 양조체험 -->
+        <v-row v-else-if="this.selectMenu === 'brewery'">
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold; " to="/product" @click.native="alcohol">
+              <p align="center" style="color: #205C37">양조장들</p>
+            </router-link>
+          </v-col>
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="monthAlcohol">
+              <p align="center" style="color: #205C37">예약</p>
+            </router-link>
+          </v-col>
+          <v-col class="col-12 col-sm-4">
+            <router-link style="text-decoration: none; font-weight: bold" to="/" @click.native="brewery">
+              <p align="center" style="color: #205C37">예약현황</p>
+            </router-link>
+          </v-col>
+        </v-row>
+
+        <!--서브메뉴 클릭: 이달의 술 -->
+        <v-row v-else-if="this.selectMenu === 'monthAlcohol'">
+          <!-- 서브메뉴 없음 -->
+        </v-row>
+
+      </div>
+    </v-container>
+    <div>
+      <v-divider style="border-color: #205C37; border-width:1px;"></v-divider>
     </div>
-  </v-container>
-
-  <div>
-    <v-divider style="border-color: #205C37; border-width:1px;"></v-divider>
-  </div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'MainHeader',
   computed: {
-      ...mapState([
-      'isAuthenticated'
+    ...mapState([
+      'isAuthenticated', 'resMember'
     ]),
   },
   data() {
     return {
+      selectMenu: "none",
+      // memberName: ""
     }
   },
+  mounted() {
+    if(this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem('userInfo')
+      this.reqMemberInfoToSpring(token)
+
+    }
+
+  },
   methods:{
+    ...mapActions([
+      'reqMemberInfoToSpring'
+    ]),
     async logout() {
       console.log("로그아웃합니다")
       this.$store.commit('IS_AUTHENTICATED', false)
@@ -85,6 +159,23 @@ export default {
     goSignUp(){
       this.$router.push({name:'SignUpView'})
     },
+    brewery(){
+      this.selectMenu="brewery"
+      console.log("셀렉 메뉴: " +this.selectMenu )
+    },
+    alcohol(){
+      this.selectMenu="alcohol"
+      console.log("셀렉 메뉴: " +this.selectMenu )
+    },
+    monthAlcohol(){
+      this.selectMenu="monthAlcohol"
+      console.log("셀렉 메뉴: " +this.selectMenu )
+    }
   }
 }
 </script>
+<style scoped>
+.name {
+  color: #205C37
+}
+</style>
