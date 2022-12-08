@@ -15,7 +15,9 @@ public class MemberTestCase {
 
     @Test
     void memberSignUpTest() {
-        MemberRegisterRequest registerRequest = new MemberRegisterRequest("he1@he.com", "hehe", "김헤헤", 19931106);
+        MemberRegisterRequest registerRequest = new MemberRegisterRequest(
+                "he1@he.com", "hehe", "김헤헤", 19931106,
+                "서울특별시","중랑구","면목동","어딘가","010-0000-0000");
         service.signUp(registerRequest);
     }
 
