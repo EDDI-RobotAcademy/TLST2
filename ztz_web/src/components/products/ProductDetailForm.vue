@@ -85,21 +85,23 @@
           </v-card>
         </v-tab-item>
         <v-tab-item>
-          <v-card flat height="600px">
-            <v-card-title>상품 리뷰</v-card-title>
-            <v-card-text>상품 리뷰 입니다.</v-card-text>
+          <v-card flat>
+            <v-card-text align="center">
+              <product-review-form/>
+            </v-card-text>
           </v-card>
         </v-tab-item>
       </v-tabs-items>
-      <v-divider></v-divider>
     </div>
   </v-container>
 </template>
 
 <script>
 
+import ProductReviewForm from "@/components/products/ProductReviewForm";
 export default {
   name: "ProductDetailForm",
+  components: {ProductReviewForm},
   data() {
     return {
       name: '붉은 원숭이',

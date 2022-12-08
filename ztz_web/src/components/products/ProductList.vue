@@ -20,9 +20,6 @@
 
 <script>
 import ProductCard from "@/components/products/ProductCard.vue";
-import VuePaginate from 'vue-paginate'
-import Vue from "vue";
-Vue.use(VuePaginate)
 
 export default {
   name: "ProductList",
