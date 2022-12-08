@@ -38,4 +38,10 @@ public class MemberController {
         return service.signIn(form.toLoginRequest());
     }
 
+    @DeleteMapping(path = "/withdrawal", headers = "Token")
+    public void withdrawal(@RequestHeader("Token") String token) {
+        String SubString = token.substring(1,37);
+        service.withdrawal(SubString);
+    }
+
 }

@@ -1,6 +1,5 @@
 import {
     REQUEST_PRODUCTS_LIST_FROM_SPRING,
-    REQUEST_FILTERED_PRODUCT_FROM_SPRING, REQUEST_PRODUCT_FROM_SPRING
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -15,19 +14,9 @@ export default {
             })
     },
     reqFilteredProductsFromSpring ({ commit }, localName) {
-        console.log('해당 지역 상품만 가져오기')
-
         return axios.get(`http://localhost:7777/products/list/${localName}`)
             .then((res) => {
                 commit(REQUEST_FILTERED_PRODUCT_FROM_SPRING, res.data)
             })
     },
-    requestProductFromSpring({ commit }, productNo) {
-        console.log('productDetailView - product 가져오기' + productNo)
-
-        return axios.post(`http://localhost:7777/products/list/product/${productNo}`)
-            .then((res) => {
-                commit(REQUEST_PRODUCT_FROM_SPRING, res.data)
-            })
-    }
 }

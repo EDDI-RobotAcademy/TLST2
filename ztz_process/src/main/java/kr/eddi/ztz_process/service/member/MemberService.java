@@ -8,6 +8,7 @@ public interface MemberService {
     Boolean signUp(MemberRegisterRequest request);
     Boolean emailValidation(String email);
     String signIn(MemberLoginRequest request);
+    void withdrawal(String token);
 
 
 }

@@ -1,13 +1,5 @@
 /* common css */
-ul, p, div {
-    padding: 0 ;
-    margin: 0 ;
-    font-family: AppleSDGothicNeoM00;
-    /*font-size: 12px;*/
-}
-ul{
-    list-style: none ;
-}
+
 .no-border-bottom {
     border-bottom: none !important;
 }
@@ -18,7 +10,14 @@ ul{
     margin: 0 auto;
     padding : 40px 0;
 }
-
+.mypageWrap ul, p, div {
+    margin: 0 ;
+    font-family: AppleSDGothicNeoM00;
+    font-size: 12px;
+}
+.mypageWrap ul{
+    list-style: none ;
+}
 .mypageWrap{
     display:flex;
     justify-content: space-evenly;

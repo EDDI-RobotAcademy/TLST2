@@ -1,19 +1,17 @@
-/* list common css */
-ul, p, div {
-    padding: 0 ;
-    margin: 0 ;
-    font-family: AppleSDGothicNeoM00;
-    /*font-size: 12px;*/
-}
-ul{
-    list-style: none ;
-}
 
 /* products list local-filter-area css*/
 .listWrap {
     width: 1200px;
     margin: 0 auto;
     padding : 40px 0;
+}
+.listWrap ul, p, div {
+    margin: 0 ;
+    font-family: AppleSDGothicNeoM00;
+    font-size: 12px;
+}
+.listWrap ul{
+    list-style: none ;
 }
 
 .list-filter-area {
@@ -27,7 +25,7 @@ ul{
 }
 .list-filter-area .local-filter {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .list-filter-area .local-filter ul{
     display: flex;
