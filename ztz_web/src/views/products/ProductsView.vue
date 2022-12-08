@@ -1,5 +1,5 @@
 <template>
- <div class="listWrap">
+ <div class="wrap productWrap">
    <div class="list-filter-area">
      <p>모든 상품</p>
      <div class="local-filter">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import "@/css/initialization.css";
 import ProductCard from "@/components/products/ProductCard.vue";
 import ProductList from "@/components/products/ProductList.vue";
 

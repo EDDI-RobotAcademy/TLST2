@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import "@/css/initialization.css";
 import MyPageContentSection from "@/components/mypage/MyPageContentSection.vue";
 import MyPageProfileSection from "@/components/mypage/MyPageProfileSection.vue";
 
