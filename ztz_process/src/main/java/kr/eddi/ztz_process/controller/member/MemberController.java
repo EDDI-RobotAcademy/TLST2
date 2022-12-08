@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.controller.member;
 
 import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
+import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,11 @@ public class MemberController {
     public void withdrawal(@RequestHeader("Token") String token) {
         String SubString = token.substring(1,37);
         service.withdrawal(SubString);
+    }
+
+    @PostMapping("/user-verification")
+    public Member userVerification(@RequestParam String token) {
+        return service.returnMemberInfo(token);
     }
 
 }

@@ -90,4 +90,12 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByMemberId(id);
         memberRepository.delete(member);
     }
+
+    @Override
+    public Member returnMemberInfo(String token) {
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        return member;
+    }
+
 }
