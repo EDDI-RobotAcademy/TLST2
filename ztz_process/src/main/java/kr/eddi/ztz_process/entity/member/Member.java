@@ -33,10 +33,15 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Authentication> authentications = new HashSet<>();
 
-    public Member(String email, String username, int birthdate) {
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private MemberProfile profile;
+
+    public Member(String email, String username, int birthdate , MemberProfile memberProfile) {
         this.email = email;
         this.username = username;
         this.birthdate = birthdate;
+        this.profile = memberProfile;
+        memberProfile.setMember(this);
     }
 
     public boolean isRightPassword(String plainToCheck) {
