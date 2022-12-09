@@ -13,7 +13,7 @@
     padding-top: 30px;
 }
 .sub-nav li {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 .sub-nav li a {
     font-size: 13px;
@@ -31,18 +31,18 @@
     padding: 30px;
     border-bottom: 1px solid #eee;
 }
+.management-box .small-button {
+    font-size: 13px;
+}
 
 .first-box{
     height: 160px !important;
+}
+.first-box .email{
+    font-size: 14px;
 }
 
 .head-area {
     display: flex;
     justify-content: space-between;
-}
-.head-text {
-    font-size: 16px;
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 6px !important;
 }

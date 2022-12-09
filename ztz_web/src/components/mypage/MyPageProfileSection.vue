@@ -1,7 +1,7 @@
 <template>
   <section class="profile-section">
 
-    <div class="management-box  first-box">
+    <div class="management-box first-box">
       <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
       <p class="email">{{ this.$store.state.resMember.email }}</p>
     </div>
