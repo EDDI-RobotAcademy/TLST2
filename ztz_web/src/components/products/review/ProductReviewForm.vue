@@ -40,21 +40,26 @@
           prev: '« Back'
         }"></paginate-links>
     </div>
+    <!-- 리뷰 등록 버튼 나중에 마이페이지 쪽으로 이동 예정(?) -->
     <div>
       <ButtonGreen
           btn-name="리뷰등록"
+          @click="registerReview"
       />
+      <ReviewRegisterForm
+        ref="ReviewRegisterForm"/>
     </div>
   </div>
 </template>
 
 <script>
 
-import ProductReviewContents from "@/components/products/ProductReviewContents";
+import ProductReviewContents from "@/components/products/review/ProductReviewContents";
+import ReviewRegisterForm from "@/components/products/review/ReviewRegisterForm";
 
 export default {
   name: "ProductReviewForm",
-  components: {ProductReviewContents},
+  components: {ReviewRegisterForm, ProductReviewContents},
   data() {
     return {
       paginate: ['reviews'],
@@ -81,9 +86,14 @@ export default {
           content: '리뷰내용',
           src: require('@/assets/products/defaultImg/pd_03.png')
         },
-      ]
+      ],
     }
   },
+  methods: {
+    registerReview() {
+      this.$refs.ReviewRegisterForm.dialog = true
+    }
+  }
 }
 </script>
 
