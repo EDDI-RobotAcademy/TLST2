@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 import "@/css/products.css";
 import "@/css/mypage.css";
-
+import "@/css/foundry.css";
 import MainHeader from "@/components/common/header/MainHeader";
 import MainFooter from "@/components/common/footer/MainFooter";
 
