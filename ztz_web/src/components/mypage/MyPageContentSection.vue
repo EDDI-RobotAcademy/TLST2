@@ -4,7 +4,7 @@
     <div class="management-box first-box">
       <div class="head-area">
         <p class=" head-text">배송관리</p>
-        <button>배송지 변경</button>
+        <button class="small-button">배송지 변경</button>
       </div>
 
     </div>

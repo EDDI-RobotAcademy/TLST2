@@ -9,6 +9,7 @@ import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
+import FoundryView from "@/views/reservation/FoundryView.vue";
 
 Vue.use(VueRouter)
 
@@ -33,14 +34,12 @@ const routes = [
     name: 'ProductsView',
     component: ProductsView
   },
-
   {
     path: '/product/:productNo',
     name: 'ProductDetailView',
     component: ProductDetailView,
     props: true
   },
-
   {
     path: '/cart',
     name: 'CartView',
@@ -51,11 +50,15 @@ const routes = [
     name: 'OrderInfoView',
     component: OrderInfoView
   },
-
   {
     path: '/my-page',
     name: 'MyPageView',
     component: MypageView
+  },
+  {
+    path: '/foundry',
+    name: 'FoundryView',
+    component: FoundryView
   },
 ]
 
