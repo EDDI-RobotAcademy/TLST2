@@ -12,3 +12,17 @@
 .no-border-bottom {
     border-bottom: none !important;
 }
+
+
+
+/* text style css */
+.head-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 6px !important;
+}
+.menu-head-text {
+    font-size: 120px;
+    text-align: center;
+}
