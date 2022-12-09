@@ -98,7 +98,7 @@
 
 <script>
 
-import ProductReviewForm from "@/components/products/ProductReviewForm";
+import ProductReviewForm from "@/components/products/review/ProductReviewForm";
 export default {
   name: "ProductDetailForm",
   components: {ProductReviewForm},
