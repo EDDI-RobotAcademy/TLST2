@@ -72,4 +72,10 @@ public class OrderTestCase {
         System.out.println("장바구니 아이템 저장 테스트");
     }
 
+    @Test
+    void findCartItemListTest(){
+
+        System.out.println("장바구니 아이템 조회 테스트: "+ cartItemRepository.findCartListByMemberId(1L));
+    }
+
 }
