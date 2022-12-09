@@ -80,4 +80,9 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.save(cartItem);
 
     }
+    public List<CartItem> cartList(String userToken){
+        //유저토큰으로 멤버 아이디 찾기
+        Long id = redisService.getValueByKey(userToken);
+        return cartItemRepository.findCartListByMemberId(id);
+    }
 }

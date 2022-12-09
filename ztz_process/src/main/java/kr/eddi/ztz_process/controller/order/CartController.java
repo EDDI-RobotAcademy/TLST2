@@ -1,11 +1,15 @@
 package kr.eddi.ztz_process.controller.order;
 
 
+import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.order.request.AddCartRequest;
+import kr.eddi.ztz_process.entity.order.CartItem;
 import kr.eddi.ztz_process.service.order.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -25,5 +29,11 @@ public class CartController {
         service.addCartItem(addCartRequest.toAddCartRequest());
     }
 
+    @PostMapping("/cartList")
+    public List<CartItem> cartList(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
+        String userToken = memberLoggedInTokenForm.getToken().substring(1,37);
 
+        log.info("회원 카트리스트 조회 후 리턴");
+        return service.cartList(userToken);
+    }
 }
