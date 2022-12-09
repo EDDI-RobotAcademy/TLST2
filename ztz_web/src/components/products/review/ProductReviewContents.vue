@@ -48,7 +48,10 @@ p {
   font-size: 14px;
 }
 .review-content {
+  position: relative;
   list-style: none;
+  padding: 10px;
+
 }
 
 </style>
