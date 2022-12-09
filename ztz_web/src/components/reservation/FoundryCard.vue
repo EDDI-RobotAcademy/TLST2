@@ -22,7 +22,7 @@
       <div class="program-info">
         <div class="program-head">
           <p class="head-text">양조장 프로그램 안내</p>
-          <button>예약하기</button>
+          <button v-show="isLoggedIn">예약하기</button>
         </div>
 
         <div class="program-table">
@@ -51,12 +51,22 @@
 </template>
 
 <script>
-
+import {mapState} from "vuex";
 
 export default {
   name: "FoundryCard",
+  computed : {
+    ...mapState([
+      'isAuthenticated',
+    ])
+  },
   mounted() {
-
+    if(this.$store.state.isAuthenticated === true){
+      console.log("로그인 상태")
+      this.isLoggedIn = true
+    } else {
+      console.log("로그인 필요")
+    }
   },
   methods: {
     toggle() {
@@ -66,8 +76,8 @@ export default {
   data() {
     return {
       show: true,
+      isLoggedIn : false,
     };
   },
 }
 </script>
-
