@@ -6,13 +6,14 @@
           <v-img
             :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
         </router-link>
+
         <v-card width="460" elevation="0" outlined >
           <v-card-text class="text-center px-12 py-16">
             <v-form @submit.prevent="onSubmit" ref="form">
               <div class="text-h4 font-weight-black mb-10">회원 가입</div>
 
               <div class="d-flex">
-                <v-text-field v-model="email" label="이메일" @change="emailValidation"
+                <v-text-field class="mt-3" v-model="email" label="이메일 (특수문자 제외 2자리 이상)" outlined dense @change="emailValidation"
                               :rules="email_rule" :disabled="false" required/>
                 <button-white text large style="font-size: 13px"
                        class="mt-3 ml-5"
@@ -23,22 +24,28 @@
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="password" label="비밀번호" type="password"
+                <v-text-field v-model="password" label="비밀번호" type="password" outlined dense
                               :rules="password_rule" :disabled="false" required/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password"
+                <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password" outlined dense
                               :rules="password_confirm_rule" :disabled="false" required/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="username" label="사용자명" :disabled="false" required/>
+                <v-text-field v-model="username" label="사용자명" :disabled="false" required outlined dense/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="birthdate" label="생년월일" :disabled="false" :rules="birthdate_rule" required/>
+                <v-text-field v-model="birthdate" label="생년월일 (8자리)" :disabled="false" :rules="birthdate_rule" required outlined dense/>
               </div>
+
+              <div class="d-flex">
+                <v-text-field v-model="phoneNumber" label="전화번호 ('-'포함 11자리)" :disabled="false" :rules="phoneNumber_rule" required outlined dense/>
+              </div>
+
+              <AddressForm @submit="onAddressSubmit"/>
 
               <button-green type="submit" block x-large
                      class="mt-6" :disabled="(emailPass) == false"
@@ -60,12 +67,20 @@ export default {
   name: "SignUpForm",
   data () {
     return {
+
+      city: '',
+      street: '',
+      addressDetail: '',
+      zipcode: '',
+
       email: "",
       password: "",
       password_confirm: "",
+      phoneNumber : "",
 
       username: "",
       birthdate: "",
+
 
       emailPass: false,
 
@@ -74,7 +89,7 @@ export default {
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
           const pattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
-          return pattern.test(replaceV) || '이메일 형식을 입력하세요.'
+          return pattern.test(replaceV) || '특수문자 제외 2자리 이상 이메일 형식을 입력하세요.'
         }
       ],
       password_rule: [
@@ -87,20 +102,37 @@ export default {
         v => v === this.password || '패스워드가 일치하지 않습니다.'
       ],
       birthdate_rule: [
-        v => !!v || '생년월일을 입력해주세요.',
+        v => !!v || '생년월일 8자리를 입력해주세요.',
         v => {
           const replaceV = v.replace(/(\s*)/g, '')
           const pattern = /^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/
           return pattern.test(replaceV) || '생년월일 형식을 입력하세요.'
         }
       ],
+      phoneNumber_rule:[
+        v => !!v || '전화번호를 입력 해주세요.',
+        v => {
+          const replaceV = v.replace(/(\s*)/g, '')
+          const pattern = /010-\d{4}-\d{4}/
+          return pattern.test(replaceV) || '전화번호 11자리를 입력해주세요. ("-"포함)'
+        }
+      ]
     }
   },
   methods: {
+    onAddressSubmit (payload) {
+      const { city, street, addressDetail, zipcode } = payload;
+      this.city = city;
+      this.street = street;
+      this.addressDetail = addressDetail;
+      this.zipcode = zipcode;
+
+      console.log(this.city + this.street + this.addressDetail +this.zipcode)
+    },
     onSubmit () {
       if (this.$refs.form.validate()) {
-        const { email, password, username, birthdate } = this
-        this.$emit("submit", {  email, password, username, birthdate })
+        const { email, password, username, birthdate, city, street , addressDetail , zipcode ,phoneNumber } = this
+        this.$emit("submit", { email, password, username, birthdate, city, street , addressDetail , zipcode ,phoneNumber })
       } else {
         alert('올바른 정보를 입력하세요!')
       }
