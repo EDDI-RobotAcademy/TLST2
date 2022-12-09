@@ -14,12 +14,14 @@ import "@/css/mypage.css";
 
 import MainHeader from "@/components/common/header/MainHeader";
 import MainFooter from "@/components/common/footer/MainFooter";
+import AddressForm from "@/components/common/AddressForm";
 
 Vue.use(VuePaginate)
 Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
 Vue.component('MainFooter', MainFooter)
 Vue.component('ButtonGreen', ButtonGreen)
 Vue.component('ButtonWhite', ButtonWhite)
+Vue.component('AddressForm', AddressForm)
 
 new Vue({
   router,
