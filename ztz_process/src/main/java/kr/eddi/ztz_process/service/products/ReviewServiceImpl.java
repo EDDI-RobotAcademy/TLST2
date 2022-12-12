@@ -44,6 +44,7 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
 
     }
+
     @Override
     public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName) {
         Optional<Member> maybeMember = memberRepository.findById(reviewRequest.getMemberId());
@@ -63,4 +64,8 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
     }
 
+    @Override
+    public List<Review> read(Long productNo) {
+        return reviewRepository.findByProductNo(productNo);
+    }
 }

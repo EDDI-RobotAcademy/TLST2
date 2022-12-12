@@ -8,5 +8,8 @@ import java.util.List;
 public interface ReviewService {
 
     public void register(ReviewRequest reviewRequest);
+
     public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName);
+
+    public List<Review> read(Long productNo);
 }
