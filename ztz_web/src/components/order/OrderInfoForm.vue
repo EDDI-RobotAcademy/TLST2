@@ -222,6 +222,11 @@ export default {
       }
     },
     payBtn(){
+    //if문 해서 this.orderList.orderSave.cartOrderCheck -> true면 cart정보가 더 있게 구성 -> 결제 후 장바구니 지우기 기능에 사용
+    //   for (let i = 0; i <this.orderList.orderSave.selectList.length ; i++) {
+    //     this.orderCartItemNo[i] = this.orderList.orderSave.selectList[i].cartItemNo
+    //   }
+    //this.orderCartItemNo 배열 값 스프링에 전달해서 삭제
 
     },
     callDaumAddressApi () {

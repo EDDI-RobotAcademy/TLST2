@@ -109,6 +109,9 @@ export default {
 
       //주문페이지 전달용
       selectTotalPrice:0,
+
+      //카트아이템 삭제용
+      selectCartItemNo:[]
     }
   },
   computed: {
@@ -143,6 +146,15 @@ export default {
       item.count++
     },
     btnDeleteCartItem(){
+      let deleteCartMessage = confirm("선택 상품을 삭제하시겠습니까?")
+
+      if(deleteCartMessage){
+        for (let i = 0; i < this.selectList.length; i++) {
+          this.selectCartItemNo[i] = this.selectList[i].cartItemNo
+        }
+        this.$emit('deleteCartItem', this.selectCartItemNo)
+      }
+
     },
 
     async btnDirectPurchase(item, index){
