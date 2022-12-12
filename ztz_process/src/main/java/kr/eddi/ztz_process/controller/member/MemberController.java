@@ -4,6 +4,7 @@ import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.member.MemberProfile;
 import kr.eddi.ztz_process.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,15 @@ public class MemberController {
         return member;
     }
 
-
+    @PostMapping("/user-profile")
+    public MemberProfile userProfile(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
+        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        MemberProfile memberProfile = service.returnMemberProfile(SubString);
+        log.info(memberProfile.getId().toString());
+        log.info(memberProfile.getMember().toString());
+        log.info(memberProfile.getPhoneNumber().toString());
+        log.info(memberProfile.getAddress().toString());
+        return memberProfile;
+    }
 
 }
