@@ -1,6 +1,8 @@
 package kr.eddi.ztz_process.entity.order;
 
 import jakarta.persistence.*;
+import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.products.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,28 +21,34 @@ public class OrderInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderNo;
+    private Long orderID;
 
     @Column(nullable = false)
-    private Integer orderID;
-
+    private String orderNo;
     @Column(nullable = false)
     private Integer orderCnt;
 
-    @Column(nullable = false)
-    private String orderedProductName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Product_Id")
+    private Product product;
 
-    @Column(nullable = false)
-    private String productThumbnailRoute;
+    @ManyToOne
+    @JoinColumn(name = "Member_id")
+    private Member member;
 
-    @Column(nullable = false)
-    private Integer productPrice;
+    @ManyToOne
+    @JoinColumn(name = "Payment_id")
+    private Payment payment;
 
+    public OrderInfo(String orderNo,Integer orderCnt,Member member,Payment payment, Product product) {
+        this.orderNo = orderNo;
+        this.orderCnt = orderCnt;
+        this.member = member;
+        this.payment = payment;
+        this.product = product;
+    }
 //    @ManyToOne
-//    private Basket basket;
-//
-//    @ManyToOne
-//    private MemberAddress memberAddress;
+//    private cart cart;
 
     @CreationTimestamp
     private Date regDate;

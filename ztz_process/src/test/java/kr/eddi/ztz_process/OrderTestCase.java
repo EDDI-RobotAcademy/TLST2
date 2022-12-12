@@ -1,12 +1,15 @@
 package kr.eddi.ztz_process;
 
-import kr.eddi.ztz_process.controller.order.request.*;
+import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.CartItemRepository;
 import kr.eddi.ztz_process.repository.order.CartRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.service.order.CartService;
 import kr.eddi.ztz_process.service.order.OrderService;
+import kr.eddi.ztz_process.service.order.request.CancelRequest;
+import kr.eddi.ztz_process.service.order.request.ModifyRequest;
+import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,10 +42,13 @@ public class OrderTestCase {
 
     @Test
     void OrderRegisterTest(){
-        List<OrderRequest> orderRequestList = new ArrayList<>();
-        orderRequestList.add(new OrderRequest(1,1,1));
+        List<OrderInfoRegisterForm> orderInfoRegisterForms = new ArrayList<>();
+        orderInfoRegisterForms.add(new OrderInfoRegisterForm(1L,1L,1));
+        orderInfoRegisterForms.add(new OrderInfoRegisterForm(2L,1L,1));
+        PaymentRegisterRequest paymentRegisterRequestList = new PaymentRegisterRequest(10000,"pay_id",orderInfoRegisterForms);
 
-        orderService.registerOrderInfo(orderRequestList);
+        orderService.registerOrderInfo(paymentRegisterRequestList);
+        //orderService.registerOrderInfo(paymentRegisterRequestList);
     }
 
     @Test
@@ -63,7 +69,7 @@ public class OrderTestCase {
     @Test
     void CreateCartItemTest(){
 
-        AddCartRequest addCartRequest = new AddCartRequest(2L, 3L, 3);
+        kr.eddi.ztz_process.controller.order.request.AddCartRequest addCartRequest = new kr.eddi.ztz_process.controller.order.request.AddCartRequest(2L, 3L, 3);
         cartService.addCartItem(addCartRequest);
 
         System.out.println("장바구니 아이템 저장 테스트");
