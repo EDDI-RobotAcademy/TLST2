@@ -4,7 +4,7 @@
       <div>
         <v-row justify="center">
           <v-col cols="auto">
-            <router-link to="/">
+            <router-link to="/" @click.native="home">
               <v-img
                   :src="require('@/assets/ztz_logo1.png')" width="120" />
             </router-link>
@@ -39,7 +39,12 @@
                   환영합니다, {{ this.$store.state.resMember.username}}님!
                 </h4>
               </v-col>
-              <p style="margin-top: 18px; padding: 0px">
+              <p style="margin-top: 18px; margin-left: 5px; padding: 0px">
+                <v-btn x-small elevation="0" text @click="goCartPage">
+                  <v-icon>
+                    mdi-cart-outline
+                  </v-icon>
+                </v-btn>
                 <v-btn small text @click="logout">로그아웃</v-btn>
                 <v-btn small text @click="goMyPage">마이페이지</v-btn>
               </p>
@@ -54,7 +59,7 @@
                   안녕하세요, 회원님! &nbsp;
                 </h4>
               </v-col>
-              <p style="margin-top: 18px; padding: 0px">
+              <p style="margin-top: 18px; margin-left: 5px; padding: 0px">
                 <v-btn small text @click="goSignIn">로그인</v-btn>
                 <v-btn small text @click="goSignUp">회원가입</v-btn>
               </p>
@@ -106,6 +111,11 @@
           <!-- 서브메뉴 없음 -->
         </v-row>
 
+        <!--서브메뉴 클릭: Home-->
+        <v-row v-else>
+          <!-- 서브메뉴 없음 -->
+        </v-row>
+
       </div>
     </v-container>
     <div>
@@ -127,20 +137,18 @@ export default {
   data() {
     return {
       selectMenu: "none",
-      // memberName: ""
     }
   },
   mounted() {
     if(this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem('userInfo')
       this.reqMemberInfoToSpring(token)
-
     }
 
   },
   methods:{
     ...mapActions([
-      'reqMemberInfoToSpring'
+      'reqMemberInfoToSpring', 'reqCartListFromSpring'
     ]),
     async logout() {
       console.log("로그아웃합니다")
@@ -159,6 +167,9 @@ export default {
     goSignUp(){
       this.$router.push({name:'SignUpView'})
     },
+    goCartPage(){
+      this.$router.push({name:'CartView'})
+    },
     brewery(){
       this.selectMenu="brewery"
       console.log("셀렉 메뉴: " +this.selectMenu )
@@ -170,6 +181,9 @@ export default {
     monthAlcohol(){
       this.selectMenu="monthAlcohol"
       console.log("셀렉 메뉴: " +this.selectMenu )
+    },
+    home(){
+      this.selectMenu="none"
     }
   }
 }
