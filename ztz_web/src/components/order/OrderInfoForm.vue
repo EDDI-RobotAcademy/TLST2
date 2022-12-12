@@ -121,6 +121,11 @@ export default {
       randomNumber : 0,
       usedNum :[],
 
+      sendInfo :{
+        productID : [],
+        memberID : [],
+        orderCnt : []
+      }
     }
   },
   mounted() {
@@ -137,6 +142,19 @@ export default {
       'reqMemberInfoToSpring',
       'reqMemberProfileInfoToSpring'
     ]),
+    setSendInfo(){
+      if(this.orderList.orderSave.directOrderCheck){
+        this.$set(this.sendInfo.productID, 0, this.$store.state.orderList.orderSave.product.productNo);
+        this.$set(this.sendInfo.memberID, 0, this.$store.state.resMember.id);
+        this.$set(this.sendInfo.orderCnt, 0, this.$store.state.orderList.orderSave.quantity);
+      }else {
+        for (let i = 0; i < this.totalCount; i++) {
+          this.$set(this.sendInfo.productID, i, this.$store.state.orderList.orderSave.product.productNo);
+          this.$set(this.sendInfo.memberID, i, this.$store.state.resMember.id);
+          this.$set(this.sendInfo.orderCnt, i, this.$store.state.orderList.orderSave.selectList[i].count);
+        }
+      }
+    },
     setDestinationToAddress(){
       if(this.setAddress == false ){
         this.city = this.$store.state.resMemberProfile.address.city
