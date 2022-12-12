@@ -3,6 +3,7 @@ package kr.eddi.ztz_process.service.member;
 import kr.eddi.ztz_process.entity.member.Authentication;
 import kr.eddi.ztz_process.entity.member.BasicAuthentication;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.member.MemberProfile;
 import kr.eddi.ztz_process.repository.member.AuthenticationRepository;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,7 +78,6 @@ public class MemberServiceImpl implements MemberService {
             log.info("유저토큰: "+userToken.toString());
             log.info("레디스 유저토큰으로 멤버아이디 구하기: "+ redisService.getValueByKey(userToken.toString()));
             log.info("유저토큰:"+userToken.toString() +" 멤버아이디:"+ member.getId());
-
             return userToken.toString();
         }
 
@@ -96,6 +97,15 @@ public class MemberServiceImpl implements MemberService {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
         return member;
+    }
+
+    @Override
+    public MemberProfile returnMemberProfile(String token){
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+
+        MemberProfile memberProfile = memberRepository.findProfileByMemberId(member.getId());
+        return memberProfile;
     }
 
 }

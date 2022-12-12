@@ -7,6 +7,7 @@ import {
     RESPONSE_MY_REQUEST,
     REQUEST_CART_LIST_FROM_SPRING,
     REQUEST_ORDER_LIST_FROM_SPRING,
+    RESPONSE_MEMBER_PROFILE_OBJET
 } from './mutation-types'
 
 export default {
@@ -36,4 +37,7 @@ export default {
         state.orderList = passingData
     },
 
+    [RESPONSE_MEMBER_PROFILE_OBJET](state, passingData) {
+        state.resMemberProfile = passingData
+    },
 }
