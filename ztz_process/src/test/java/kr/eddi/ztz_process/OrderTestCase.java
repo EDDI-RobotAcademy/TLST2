@@ -1,9 +1,6 @@
 package kr.eddi.ztz_process;
 
-import kr.eddi.ztz_process.controller.order.request.AddCartRequest;
-import kr.eddi.ztz_process.controller.order.request.CancelRequest;
-import kr.eddi.ztz_process.controller.order.request.ModifyRequest;
-import kr.eddi.ztz_process.controller.order.request.OrderRequest;
+import kr.eddi.ztz_process.controller.order.request.*;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.CartItemRepository;
 import kr.eddi.ztz_process.repository.order.CartRepository;
@@ -76,6 +73,14 @@ public class OrderTestCase {
     void findCartItemListTest(){
 
         System.out.println("장바구니 아이템 조회 테스트: "+ cartItemRepository.findCartListByMemberId(1L));
+    }
+
+    @Test
+    void deleteCartItemTest(){
+
+        cartItemRepository.deleteById(3L);
+
+        System.out.println("장바구니 아이템 삭제 테스트");
     }
 
 }

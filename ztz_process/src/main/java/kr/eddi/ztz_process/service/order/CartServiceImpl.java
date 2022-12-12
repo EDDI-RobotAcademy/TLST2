@@ -1,6 +1,7 @@
 package kr.eddi.ztz_process.service.order;
 
 import kr.eddi.ztz_process.controller.order.request.AddCartRequest;
+import kr.eddi.ztz_process.controller.order.request.SelectCartItemRequest;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Cart;
 import kr.eddi.ztz_process.entity.order.CartItem;
@@ -85,4 +86,14 @@ public class CartServiceImpl implements CartService {
         Long id = redisService.getValueByKey(userToken);
         return cartItemRepository.findCartListByMemberId(id);
     }
+
+    public void deleteCartItem(SelectCartItemRequest selectCartItemRequest){
+        List<Long> deleteCartItemNo = selectCartItemRequest.getSelectCartItemNo();
+
+        for (int i = 0; i <deleteCartItemNo.size() ; i++) {
+            cartItemRepository.deleteById(deleteCartItemNo.get(i));
+        }
+    }
+
+
 }
