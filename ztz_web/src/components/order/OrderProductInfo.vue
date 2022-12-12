@@ -49,7 +49,7 @@
           </td>
           <td class="product-info"  >{{item.count}}개</td>
           <td class="product-info"  >무료</td>
-          <td class="product-info"  >{{item.product.price}}원</td>
+          <td class="product-info"  >{{item.product.price * item.count}}원</td>
         </tr>
         </tbody>
       </v-simple-table>
