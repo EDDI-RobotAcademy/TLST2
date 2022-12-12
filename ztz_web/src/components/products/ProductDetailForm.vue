@@ -111,6 +111,7 @@ export default {
         '상품 상세',
         '상품 리뷰',
       ],
+      orderListCheck: false,
     }
   },
   props: {
@@ -135,7 +136,18 @@ export default {
       const count = this.quantity
       this.$emit('addCart', {productId, count})
     },
-    btnDirectPurchase() {
+    async btnDirectPurchase() {
+      if(this.$store.state.isAuthenticated){
+        this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING', {orderSave: {directOrderCheck:true ,cartInfoCheck:false, tmpCartItemOrderNo:0,  product:this.product , quantity: this.quantity, totalPrice: this.totalPrice}})
+        alert ("주문 페이지로 이동합니다.")
+        this.orderListCheck = true
+        if(this.orderListCheck){
+          await this.$router.push({ name:'OrderInfoView'})
+          this.orderListCheck=false
+        }
+      } else{
+        alert("로그인이 필요한 기능입니다.")
+      }
 
     }
 

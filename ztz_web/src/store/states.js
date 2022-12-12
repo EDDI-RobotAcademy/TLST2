@@ -5,5 +5,6 @@ export default {
     resMyRequest: {},
     resMember: {},
     cartList:[],
+    orderList:[],
 
 }
