@@ -7,4 +7,5 @@ export default {
     cartList:[],
     orderList:[],
 
+    resMemberProfile: {}
 }
