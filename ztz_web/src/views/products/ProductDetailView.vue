@@ -2,6 +2,7 @@
   <div class="detailWrap">
     <product-detail-form class="mt-15"
                          :product="product"
+                         @addCart="addCart"
     />
   </div>
 </template>
@@ -13,15 +14,6 @@ import {mapActions, mapState} from "vuex";
 export default {
   name: "ProductDetailView",
   components: {ProductDetailForm},
-  data () {
-    return {
-    }
-  },
-  methods: {
-    ...mapActions([
-        'requestProductFromSpring'
-    ])
-  },
   props: {
     productNo: {
       type: String,
@@ -30,12 +22,35 @@ export default {
   },
   computed: {
     ...mapState([
-        'product'
+      'product', 'isAuthenticated', 'resMember'
     ])
   },
   created() {
     this.requestProductFromSpring(this.productNo)
-  }
+  },
+
+  methods: {
+    ...mapActions([
+        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring'
+    ]),
+    async addCart(payload){
+      if(this.isAuthenticated){
+        const {productId, count} = payload
+        let token = window.localStorage.getItem('userInfo')
+        await this.reqMemberInfoToSpring(token)
+        const memberId = this.resMember.id
+
+        await this.reqAddCartToSpring({memberId, productId, count})
+        let cartMessage = confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")
+        if(cartMessage){
+          await this.$router.push({name: 'CartView'})
+        }
+      } else {
+        alert("로그인이 필요합니다.")
+      }
+    },
+  },
+
 }
 </script>
 
