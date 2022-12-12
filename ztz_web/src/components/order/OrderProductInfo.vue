@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-divider class="mt-3 mb-3"/>
+    <v-divider class="mt-3 mb-3" @submit.prevent="ProductInfoSubmit" />
     <p align="left">상품 정보</p>
 
     <v-card class="product-info-card" outlined>
@@ -44,7 +44,7 @@
               <img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
                    style="width: 60px"
               >
-              <p class="product-info mt-7 ml-2">{{ item.product.name}}</p>
+              <p class="product-info mt-7 ml-2">{{ item.product.name }}</p>
             </v-row>
           </td>
           <td class="product-info"  >{{item.count}}개</td>
@@ -54,15 +54,6 @@
         </tbody>
       </v-simple-table>
     </v-card>
-
-    <!--    총 합계 추가 -->
-    <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
-      <p class="col-sm-4" style="text-align: right; color: #205c37">총 합계</p>
-      <div class="col-sm-8" align="center" style=" color: #205c37">
-        <p>{{ this.totalPrice | numberFormat }} 원</p>
-      </div>
-    </div>
-
 
     <ul class="product-explanation">
       <li>ztz 스토어는 기본적으로 대한민국 내 제주도 및 도서 산간 지역 포함 전 지역, 전 상품 무료배송입니다.</li>
@@ -85,6 +76,11 @@ export default {
 
     }
   },
+  computed : {
+    ...mapState([
+      'orderList'
+    ])
+  },
   created() {
     this.totalPrice =this.$store.state.orderList.orderSave.totalPrice
     if(this.orderList.orderSave.directOrderCheck){ //바로 구매일 경우
@@ -92,15 +88,15 @@ export default {
     }else {  //바로 구매아니고 선택 구매, 전체구매일 경우
       this.totalCount = Object.keys(this.$store.state.orderList.orderSave.selectList).length
     }
+
+    this.onProductInfoSubmit()
   },
-  computed : {
-    ...mapState([
-      'orderList'
-    ])
-  },
-  filters: {
-    numberFormat(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  methods:{
+    onProductInfoSubmit () {
+      console.log("왜안함?" + this.totalCount + this.totalPrice)
+
+      const { totalCount, totalPrice } = this
+      this.$emit("submit", { totalCount, totalPrice })
     }
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="white" style="font-family: Arial">
+  <div class="white" style="font-family: Arial" @submit.prevent="payment" ref="form">
     <v-container>
       <h3>주문/결제 하기</h3>
       <v-divider class="mt-3 mb-3"/>
@@ -54,19 +54,20 @@
         </p>
       </v-card>
 
-      <v-card v-else class="pt-5 pl-5">
+      <v-card v-else class="pt-5 pl-5" outlined>
         <address-form @submit="onAddressSubmit"/>
       </v-card>
 
-      <order-product-info/>
+      <order-product-info @submit="onProductInfoSubmit"/>
 
-      <order-agreement class="mb-5" TotalPaymentAmount="20000"/>
+      <order-agreement class="mb-5" :TotalPaymentAmount= "paymentPrice" />
 
     </v-container>
 
     <p align="center">
       <ButtonGreen @click="payment" btn-name="결제하기" width="265px" x-large/>
     </p>
+
   </div>
 </template>
 
@@ -106,7 +107,7 @@ export default {
       zipcode: '',
 
       //추가
-      totalPrice: 0,
+      paymentPrice: 0,
       totalCount: 0,
 
       //결제 후 장바구니 아이템 삭제용
@@ -115,9 +116,8 @@ export default {
       setDestination: true,
       setAddress: false,
 
-      PaymentPrice: 100,
       uid_num: 0o00321,
-      merchant_uid :'ORD20221207-',
+      merchant_uid :'ORD2022-',
       randomNumber : 0,
       usedNum :[],
 
@@ -148,6 +148,7 @@ export default {
         console.log(this.city + this.street + this.addressDetail +this.zipcode)
       }
       this.setAddress = !this.setAddress;
+      this.setDestination = !this.setDestination;
     },
     onAddressSubmit (payload) {
       const { city, street, addressDetail, zipcode } = payload;
@@ -158,8 +159,48 @@ export default {
 
       console.log(this.city + this.street + this.addressDetail +this.zipcode)
     },
+    onProductInfoSubmit (payload) {
+      const { totalCount, totalPrice } = payload;
+      this.totalCount = totalCount;
+      this.paymentPrice = totalPrice;
+    },
     payment() {
+      console.log("paymentBtn - 실행")
 
+      this.randomNumber = Math.random()*100000;
+
+      for (let i = 0; i < this.usedNum.length; i++) {
+        if(this.usedNum[i] == this.randomNumber){
+          console.log(this.usedNum[i])
+          continue;
+        }
+      }
+      IMP.request_pay({ // param
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: this.merchant_uid + this.randomNumber,
+        name: "ZTZ 전통주 결제",
+        amount: 100 /*this.totalPrice*/,
+        buyer_email: this.$store.state.resMember.email,
+        buyer_name: this.$store.state.resMember.username,
+        buyer_tel: this.$store.state.resMemberProfile.phoneNumber,
+        buyer_addr: this.city + this.street + this.addressDetail ,
+        buyer_postcode: this.zipcode
+      }, rsp => { // callback
+        if (rsp.success) {
+          this.merchant_uid += this.randomNumber
+          console.log("결제성공")
+          this.usedNum.push(this.randomNumber)
+
+          this.setSendInfo()
+
+          const { paymentPrice, merchant_uid , sendInfo} = this
+          this.$emit("submit", { paymentPrice , merchant_uid , sendInfo})
+
+        } else {
+          console.log("결제실패")
+        }
+      });
     }
   },
   beforeUpdate() {
@@ -169,6 +210,11 @@ export default {
     }else {
       this.directlyInput =false;
       this.sendRequest = this.selectedRequest;
+    }
+  },
+  filters: {
+    numberFormat(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
 }
