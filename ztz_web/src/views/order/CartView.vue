@@ -7,11 +7,24 @@
 <script>
 
 import CartForm from "@/components/order/CartForm";
+import {mapActions} from "vuex";
 
 export default {
   name: "CartView",
   components: {
     CartForm
+  },
+  methods:{
+    ...mapActions([
+      'reqCartListFromSpring',
+    ]),
+  },
+  mounted() {
+    if(this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem('userInfo')
+      this.reqCartListFromSpring(token)
+    }
+
   },
 }
 </script>

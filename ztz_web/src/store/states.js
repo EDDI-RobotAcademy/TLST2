@@ -4,5 +4,6 @@ export default {
     product: {},
     resMyRequest: {},
     resMember: {},
+    cartList:[],
 
 }

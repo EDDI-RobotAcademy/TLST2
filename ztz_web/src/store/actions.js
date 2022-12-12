@@ -4,6 +4,7 @@ import {
     REQUEST_PRODUCT_FROM_SPRING,
     RESPONSE_MY_REQUEST,
     RESPONSE_MEMBER_OBJECT,
+    REQUEST_CART_LIST_FROM_SPRING,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -55,6 +56,14 @@ export default {
         return axios.post(`http://localhost:7777/ztz/order/addCartItem/${memberId}`,
             { memberId, productId, count} )
             .then(() => {
+            })
+    },
+    reqCartListFromSpring ({ commit }, token) {
+        return axios.post('http://localhost:7777/ztz/order/cartList',
+            { token: token })
+            .then((res) => {
+                commit(REQUEST_CART_LIST_FROM_SPRING, res.data)
+                console.log("장바구니 리스트 출력")
             })
     },
 }
