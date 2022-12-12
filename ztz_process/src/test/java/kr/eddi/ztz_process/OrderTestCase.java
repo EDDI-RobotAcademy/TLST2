@@ -42,13 +42,16 @@ public class OrderTestCase {
 
     @Test
     void OrderRegisterTest(){
-        List<OrderInfoRegisterForm> orderInfoRegisterForms = new ArrayList<>();
-        orderInfoRegisterForms.add(new OrderInfoRegisterForm(1L,1L,1));
-        orderInfoRegisterForms.add(new OrderInfoRegisterForm(2L,1L,1));
+        List<Long> test1 = new ArrayList<>();
+        test1.add(1L);
+        List<Integer> test2 = new ArrayList<>();
+        test2.add(1);
+        OrderInfoRegisterForm orderInfoRegisterForms = new OrderInfoRegisterForm(test1,test1,test2);
+
         PaymentRegisterRequest paymentRegisterRequestList = new PaymentRegisterRequest(10000,"pay_id",orderInfoRegisterForms);
 
         orderService.registerOrderInfo(paymentRegisterRequestList);
-        //orderService.registerOrderInfo(paymentRegisterRequestList);
+        orderService.registerOrderInfo(paymentRegisterRequestList);
     }
 
     @Test

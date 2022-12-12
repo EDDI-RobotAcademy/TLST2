@@ -6,21 +6,23 @@ import lombok.Setter;
 import lombok.ToString;
 import org.aspectj.weaver.ast.Or;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class OrderInfoRegisterForm {
 
-    private Long productID;
+    private List<Long> productID;
 
-    private Long MemberID;
+    private List<Long> memberID;
 
-    private Integer OrderCnt;
+    private List<Integer> orderCnt;
 
-    public OrderInfoRegisterForm(Long productID,Long memberID,Integer OrderCnt){
+    public OrderInfoRegisterForm(List<Long> productID,List<Long> memberID,List<Integer> OrderCnt){
         this.productID = productID;
-        this.MemberID = memberID;
-        this.OrderCnt = OrderCnt;
+        this.memberID = memberID;
+        this.orderCnt = OrderCnt;
     }
 }
