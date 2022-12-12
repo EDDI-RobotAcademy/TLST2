@@ -4,5 +4,7 @@ export default {
     product: {},
     resMyRequest: {},
     resMember: {},
+    cartList:[],
+    orderList:[],
 
 }

@@ -3,6 +3,7 @@ package kr.eddi.ztz_process.controller.order;
 
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.order.request.AddCartRequest;
+import kr.eddi.ztz_process.controller.order.request.SelectCartItemRequest;
 import kr.eddi.ztz_process.entity.order.CartItem;
 import kr.eddi.ztz_process.service.order.CartService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,4 +37,12 @@ public class CartController {
         log.info("회원 카트리스트 조회 후 리턴");
         return service.cartList(userToken);
     }
+
+    @PostMapping("/deleteCartItem")
+    public void deleteCartItem(@RequestBody SelectCartItemRequest selectCartItemRequest) {
+
+        log.info("회원 카트 아이템 삭제");
+        service.deleteCartItem(selectCartItemRequest);
+    }
+
 }

@@ -1,36 +1,45 @@
 <template>
   <v-container>
     <div class="mb-5">
-      <input type="checkbox" style="accent-color: green;" name="allProducts" value="all" v-model="allSelected" ><label for="all">  전체 선택</label>
+      <v-row>
+      <input type="checkbox" style="accent-color: green;" name="allProducts" value="all" v-model="allSelected" class="mb-3" ><label for="all">&nbsp;&nbsp;&nbsp;전체 선택</label>
+      <v-spacer></v-spacer>
+        <v-btn text @click="btnDeleteCartItem"><v-icon>mdi-delete-outline</v-icon>선택 삭제</v-btn>
+      </v-row>
     </div>
     <v-divider></v-divider>
 <!--장바구니 상품 리스트-->
-    <div class="item-info" v-for="(item, index) in allProductList" :key="index">
+    <div class="item-info" v-if="!cartList || (Array.isArray(cartList) && cartList.length === 0)">
+        <p align="center" class="mt-15 mb-15"> 장바구니 상품이 없습니다.</p>
+      <v-divider></v-divider>
+    </div>
+    <div v-else>
+    <div class="item-info" v-for="(item, index) in cartList" :key="index">
       <div class="l">
           <v-row>
-             <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.price, item.quantity)" >
+             <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.product.price, item.count)" >
               <v-img
-                  src="@/assets/products/img/pd_1.png"
+                  :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
                   max-width="320"
                   max-height="240"
                   contain
               />
             <div class="c1">
-              <p class="item-name">{{ item.name }}</p>
-              <p class="item-description">{{ item.company }}</p>
+              <p class="item-name" @click="productViewBtn(item)">{{ item.product.name }}</p>
+              <p class="item-description" @click="productViewBtn(item)">{{ item.product.brand }}</p>
             </div>
             <div class="c2" >
                           <v-btn
-                              class="mr-5"
+                              class="mr-3"
                               elevation="0"
                               color="white"
                               @click="qtyDecrease(item)"
                           >
                             <v-icon>mdi-minus</v-icon>
                           </v-btn>
-                          {{  item.quantity }}
+                          {{  item.count }}
                           <v-btn
-                              class="ml-5"
+                              class="ml-3"
                               elevation="0"
                               color="white"
                               @click="qtyIncrease(item)"
@@ -39,21 +48,20 @@
                           </v-btn>
                         </div>
             <div class="r1">
-              <p>{{  item.price | numberFormat }} 원</p>
+              <p>{{  item.product.price | numberFormat }} 원</p>
             </div>
             <div class="r2">
-              <ButtonWhite
-                  @click="btnDirectPurchase"
+              <ButtonWhite class="ml-0"
+                  @click="btnDirectPurchase(item, index)"
                   btn-name="바로구매"
               />
             </div>
           </v-row>
 
-          <!-- v-img :src="require('../../assets/products/${이미지명}')"/ -->
         </div>
       <v-divider></v-divider>
     </div>
-
+    </div>
 <!--    장바구니 리스트 끝-->
 <!--    총합계 부분-->
     <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
@@ -81,67 +89,140 @@
 </template>
 
 <script>
+
+import {mapState} from "vuex";
+
 export default {
   name: "CartForm",
   data() {
     return {
       totalPrice: 0,
-      allProductList: [
-          {id:1 , name: '화요 25', company: '(주) 화요', price: 20000, quantity: 1},
-          {id:2, name: '마요 17', company: '(주) 한솥', price: 30000, quantity: 1}
-      ],
       selectList:[],
+
+      //async용
+      orderListCheck: false,
+
+      //바로 구매
+      directTotalPrice:0,
+      directTmpOrderNo:[],
+      directCartList: [],
+
+      //주문페이지 전달용
+      selectTotalPrice:0,
+
+      //카트아이템 삭제용
+      selectCartItemNo:[]
     }
   },
-  computed:{
-    // 장바구니 전체선택 체크박스용
-    allSelected: {
+  computed: {
+    ...mapState([
+      'cartList'
+    ]),
+  allSelected: {
       //getter
       get: function() {
-        return this.allProductList.length === this.selectList.length;
+        return this.cartList.length === this.selectList.length;
       },
       //setter
       set: function(e) {
-        this.selectList = e ? this.allProductList : [];
+        this.selectList = e ? this.cartList : [];
       }
     },
   },
-  props: {
-    //props로 product 정보 받아와야함.
-  },
   methods: {
-    selectItem(price, quantity){
-      console.log("가격과 수량: " +price +quantity)
+    selectItem(price, count){
+      console.log("가격과 수량: " +price +count)
       console.log("셀렉트 아이템 리스트: " +this.selectList)
-      this.totalPrice = this.totalPrice +(price * quantity)
+      this.totalPrice = this.totalPrice +(price * count)
     },
     qtyDecrease(item) {
-      if (item.quantity > 0) {
-        item.quantity--
-        console.log("수량 마이너스: 셀렉트 아이템 id:"+ this.selectList[item.id])
+      if (item.count> 0) {
+        item.count--
       } else {
-        item.quantity = 0
+        item.count = 0
       }
     },
     qtyIncrease(item) {
-      item.quantity++
+      item.count++
     },
-    btnDirectPurchase(){
-      //바로 구매
+    btnDeleteCartItem(){
+      let deleteCartMessage = confirm("선택 상품을 삭제하시겠습니까?")
+
+      if(deleteCartMessage){
+        for (let i = 0; i < this.selectList.length; i++) {
+          this.selectCartItemNo[i] = this.selectList[i].cartItemNo
+        }
+        this.$emit('deleteCartItem', this.selectCartItemNo)
+      }
+
     },
-    btnSelectPurchase() {
-      // 선택상품들 구매
+
+    async btnDirectPurchase(item, index){
+
+      this.directTotalPrice = item.count * item.product.price
+
+      this.directTmpOrderNo= index
+      this.directCartList = this.cartList[index]
+      this.quantity = this.cartList[index].count
+      this.cartNo = this.cartList[index].cart.cartNo
+      this.cartItemNo =  this.cartList[index].cartItemNo
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:true ,cartInfoCheck:true, tmpCartItemOrderNo: this.cartItemNo, cartNo: this.cartNo,
+                              product:this.directCartList.product , quantity: this.quantity, totalPrice: this.directTotalPrice}})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+      }
     },
-    btnAllPurchase() {
+    async btnSelectPurchase() {
+      //선택 상품 구매
+      for (let i = 0; i < this.selectList.length; i++) {
+        this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
+      }
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:false, cartOrderCheck:true, selectList: this.selectList, totalPrice: this.selectTotalPrice }})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+      }
+    },
+    async btnAllPurchase() {
       // 전체 상품 구매
+      this.selectList = this.cartList
+      for (let i = 0; i < this.selectList.length; i++) {
+        this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
+      }
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:false, cartOrderCheck:true, selectList: this.selectList, totalPrice: this.selectTotalPrice }})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+        }
+    },
+    productViewBtn(item){
+      alert("상품 상세페이지로 이동합니다.")
+      this.$router.push({name: 'ProductDetailView', params: {productNo: item.product.productNo}})
     }
   },
   beforeUpdate() {
     this.totalPrice = 0
     for (let i = 0; i < this.selectList.length; i++) {
-      this.totalPrice = this.totalPrice + this.selectList[i].price * this.selectList[i].quantity
+      this.totalPrice = this.totalPrice + this.selectList[i].product.price * this.selectList[i].count
     }
   },
+  //가격 ,000 원단위 포맷으로 가공
   filters: {
     numberFormat(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");

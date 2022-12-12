@@ -4,7 +4,9 @@ import {
     REQUEST_PRODUCT_FROM_SPRING,
     REQUEST_FILTERED_PRODUCT_FROM_SPRING,
     RESPONSE_MEMBER_OBJECT,
-    RESPONSE_MY_REQUEST
+    RESPONSE_MY_REQUEST,
+    REQUEST_CART_LIST_FROM_SPRING,
+    REQUEST_ORDER_LIST_FROM_SPRING,
 } from './mutation-types'
 
 export default {
@@ -25,6 +27,13 @@ export default {
     },
     [RESPONSE_MY_REQUEST](state, passingData) {
         state.resMyRequest = passingData
+    },
+    [REQUEST_CART_LIST_FROM_SPRING](state, passingData) {
+        state.cartList = passingData
+    },
+
+    [REQUEST_ORDER_LIST_FROM_SPRING](state, passingData) {
+        state.orderList = passingData
     },
 
 }

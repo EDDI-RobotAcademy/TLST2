@@ -10,7 +10,7 @@ import LoginForm from "@/components/account/LoginForm";
 import cookies from 'vue-cookies';
 import axios from "axios";
 import Vue from 'vue';
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 
 Vue.use(cookies);
@@ -38,6 +38,9 @@ export default {
       }
   },
   methods: {
+    ...mapActions([
+      'reqMemberInfoToSpring'
+    ]),
      onSubmit (payload) {
       if (!this.isLogin) {
         const { email, password } = payload
@@ -51,7 +54,10 @@ export default {
               this.$cookies.set("user", res.data, 3600);
               localStorage.setItem("userInfo", JSON.stringify(res.data))
               this.isLogin = true
+              // 헤더 상단에 회원이름 띄워주기 위함-> 로그인 시 유저토큰 기반으로 유저정보 states에 commit
+              this.reqMemberInfoToSpring(JSON.stringify(res.data))
               this.$router.push("/")
+
             } else {
               alert("아이디 혹은 비밀번호가 존재하지 않거나 틀렸습니다!")
             }

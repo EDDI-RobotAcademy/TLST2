@@ -4,7 +4,7 @@
       <div class="l">
         <div align="center">
           <v-img
-              :src="require(`../../assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
+              :src="require(`@/assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
               max-width="640"
               max-height="480"
               contain
@@ -57,7 +57,7 @@
               x-large
           />
           <ButtonGreen
-              @click="btnPurchase"
+              @click="btnDirectPurchase"
               btn-name="바로구매"
               width="265px"
               x-large
@@ -104,16 +104,14 @@ export default {
   components: {ProductReviewForm},
   data() {
     return {
-      name: '붉은 원숭이',
-      description: '홍국쌀로 만들어 붉은 최고급 생탁주',
-      price: 20000,
-      quantity: 0,
+      quantity: 1,
       totalPrice: 0,
       tabs: null,
       lists: [
         '상품 상세',
         '상품 리뷰',
-      ]
+      ],
+      orderListCheck: false,
     }
   },
   props: {
@@ -134,13 +132,23 @@ export default {
       this.quantity++
     },
     btnCart() {
-      // 장바구니 버튼 클릭 -> 장바구니에 상품 추가
-      this.$router.push({name:'CartView'})
-
+      const productId = this.product.productNo
+      const count = this.quantity
+      this.$emit('addCart', {productId, count})
     },
-    btnPurchase() {
-      // 바로 구매 버튼 클릭 -> 구매 페이지로 이동
-      this.$router.push({name:'OrderInfoView'})
+    async btnDirectPurchase() {
+      if(this.$store.state.isAuthenticated){
+        this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING', {orderSave: {directOrderCheck:true ,cartInfoCheck:false, tmpCartItemOrderNo:0,  product:this.product , quantity: this.quantity, totalPrice: this.totalPrice}})
+        alert ("주문 페이지로 이동합니다.")
+        this.orderListCheck = true
+        if(this.orderListCheck){
+          await this.$router.push({ name:'OrderInfoView'})
+          this.orderListCheck=false
+        }
+      } else{
+        alert("로그인이 필요한 기능입니다.")
+      }
+
     }
 
   },
