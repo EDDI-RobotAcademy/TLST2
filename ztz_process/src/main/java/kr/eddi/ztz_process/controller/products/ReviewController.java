@@ -59,4 +59,11 @@ public class ReviewController {
         }
         reviewService.registerWithImg(reviewRequest, thumbFileName);
     }
+
+    @PostMapping("/read/{productNo}")
+    public List<Review> reviewList(@PathVariable("productNo") Long productNo) {
+        log.info(productNo + "의 리뷰 읽기");
+
+        return reviewService.read(productNo);
+    }
 }
