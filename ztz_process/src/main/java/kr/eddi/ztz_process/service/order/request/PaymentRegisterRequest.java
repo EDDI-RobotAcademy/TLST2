@@ -11,7 +11,7 @@ import java.util.List;
 @ToString
 @RequiredArgsConstructor
 public class PaymentRegisterRequest {
-    private final Integer TotalPaymentPrice;
+    private final Integer paymentPrice;
     private final String merchant_uid;
-    private final List<OrderInfoRegisterForm> orderInfos;
+    private final OrderInfoRegisterForm sendInfo;
 }

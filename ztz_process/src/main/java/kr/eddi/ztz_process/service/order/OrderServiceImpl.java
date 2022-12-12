@@ -13,6 +13,7 @@ import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,22 +44,22 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Boolean registerOrderInfo(PaymentRegisterRequest paymentRegisterRequest) {
         try {
-            // 결제 정보 저장
+             //결제 정보 저장
             Payment payment = registerPayment(paymentRegisterRequest);
 
-            List<OrderInfoRegisterForm> OrderListInfo = paymentRegisterRequest.getOrderInfos();
+            OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
 
             // 주문 번호 생성
-            String setOrderNum = MakeOrderedNo(OrderListInfo.get(0).getMemberID());
+            String setOrderNum = MakeOrderedNo(OrderListInfo.getMemberID().get(0));
 
-            for (int i = 0; i < OrderListInfo.size(); i++) {
-                Optional<Product> maybeProduct = productsRepository.findById(OrderListInfo.get(i).getProductID());
-                Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.get(i).getMemberID());
+            for (int i = 0; i < OrderListInfo.getProductID().size(); i++) {
+                Optional<Product> maybeProduct = productsRepository.findById(OrderListInfo.getProductID().get(i));
+                Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.getMemberID().get(i));
 
                 OrderInfo orderInfo = OrderInfo
                         .builder()
                         .orderNo(setOrderNum)
-                        .orderCnt(OrderListInfo.get(i).getOrderCnt())
+                        .orderCnt(OrderListInfo.getOrderCnt().get(i))
                         .product(maybeProduct.get())
                         .member(maybeMember.get())
                         .payment(payment)
@@ -139,7 +140,7 @@ public class OrderServiceImpl implements OrderService{
         Payment payment = Payment.
                 builder()
                 .merchant_uid(paymentRegisterRequest.getMerchant_uid())
-                .totalPaymentPrice(paymentRegisterRequest.getTotalPaymentPrice())
+                .totalPaymentPrice(paymentRegisterRequest.getPaymentPrice())
                 .build();
 
         paymentRepository.save(payment);
