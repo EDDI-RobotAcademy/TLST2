@@ -100,40 +100,53 @@
       </v-select>
     </v-card>
 
+<!--    주문상품-->
     <p style="width: 800px; margin-bottom: 15px;border-top: 2px solid black"></p>
     <v-row>
       <p style="margin: 20px"> 주문 상품 </p>
-      <p style="margin: 20px; margin-left: 620px; font-size: 13px">총 1건</p>
+
+      <p style="margin: 20px; margin-left: 620px; font-size: 13px" >총 {{totalCount}}건</p>
     </v-row>
 
-
-    <v-list>
-      <v-list-item v-for="i in 5" :key="i" two-line>
+<!--    바로 구매 (단건)인 경우 : directOrderCheck는 true  -->
+    <!--    데이터 분석 orderList = (orderSave( cartInfoCheck:false, directOrderCheck:true , tmpCartItemOrderNo:0,  quantity, totalPrice, product(productNo, brand, name, price, productInfo(thumnailFileName) ) )-->
+    <v-list v-if="this.orderList.orderSave.directOrderCheck">
+      <v-list-item>
         <v-card style="width: 760px">
-          <v-list-item-content>
-            <v-row justify="left">
-              <v-img :src="require('@/assets/products/item1.jpg')"
+          <v-list-item-content >
+            <v-row justify="left" v-for="item in orderList" :key="item.tmpCartItemOrderNo">
+              <v-img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
                      max-width="60"
                      style="margin: 15px; margin-left: 25px;"/>
-              <p style="margin-left: 50px; margin-top: 33px">상품 이름</p>
-              <p style="margin-left: 400px;  margin-top: 33px; font-weight: bold">20,000 원</p>
-              <p style="margin-top: 33px;">/1개</p>
+              <p style="margin-left: 50px; margin-top: 33px">{{ item.product.name}}</p>
+              <p style="margin-left: 400px;  margin-top: 33px; font-weight: bold">{{item.product.price}}원</p>
+              <p style="margin-top: 33px;">/ {{item.quantity}}개</p>
             </v-row>
           </v-list-item-content>
         </v-card>
       </v-list-item>
     </v-list>
+
+<!--    총 합계 추가 -->
+    <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
+      <p class="col-sm-4" style="text-align: right; color: #205c37">총 합계</p>
+      <div class="col-sm-8" align="center" style=" color: #205c37">
+        <p>{{ this.totalPrice | numberFormat }} 원</p>
+      </div>
+    </div>
+
     <p style="padding-left: 270px"><ButtonGreen
         @click="payBtn"
         btn-name="결제하기"
         width="265px"
         x-large
     /></p>
-
-  </div>
+    </div>
 </template>
 
 <script>
+
+import {mapState} from "vuex";
 
 export default {
   name: "OrderInfoForm",
@@ -152,7 +165,23 @@ export default {
       addressDetail: '',
       zipcode: '',
 
+      //추가
+      totalPrice: 0,
+      totalCount: 0,
+
     }
+  },
+  computed:{
+    ...mapState([
+        'orderList'
+    ])
+  },
+ created() {
+
+    this.totalPrice =this.$store.state.orderList.orderSave.totalPrice
+   if(this.orderList.orderSave.directOrderCheck){ //바로 구매일 경우
+     this.totalCount = 1
+   }
   },
   methods : {
     orderMemberInfoVisible(){
@@ -191,7 +220,12 @@ export default {
         }
       }).open()
     },
-  }
+  },
+  filters: {
+    numberFormat(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
 }
 </script>
 

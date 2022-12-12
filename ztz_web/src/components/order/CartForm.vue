@@ -98,6 +98,14 @@ export default {
     return {
       totalPrice: 0,
       selectList:[],
+
+      //async용
+      orderListCheck: false,
+
+      //바로 구매
+      directTotalPrice:0,
+      directTmpOrderNo:[],
+      directCartList: [],
     }
   },
   computed: {
@@ -134,12 +142,29 @@ export default {
     btnDeleteCartItem(){
     },
 
-    async btnDirectPurchase(){
+    async btnDirectPurchase(item, index){
 
+      this.directTotalPrice = item.count * item.product.price
+
+      this.directTmpOrderNo= index
+      this.directCartList = this.cartList[index]
+      this.quantity = this.cartList[index].count
+      this.cartNo = this.cartList[index].cart.cartNo
+      this.cartItemNo =  this.cartList[index].cartItemNo
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:true ,cartInfoCheck:true, tmpCartItemOrderNo: this.cartItemNo, cartNo: this.cartNo,
+                              product:this.directCartList.product , quantity: this.quantity, totalPrice: this.directTotalPrice}})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+      }
     },
     async btnSelectPurchase() {
       //선택 상품 구매
-
     },
     async btnAllPurchase() {
       // 전체 상품 구매
