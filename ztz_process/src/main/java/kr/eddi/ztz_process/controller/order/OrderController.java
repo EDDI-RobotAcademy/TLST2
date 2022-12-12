@@ -1,8 +1,8 @@
 package kr.eddi.ztz_process.controller.order;
 
-import kr.eddi.ztz_process.controller.order.request.CancelRequest;
-import kr.eddi.ztz_process.controller.order.request.ModifyRequest;
-import kr.eddi.ztz_process.controller.order.request.OrderRequest;
+import kr.eddi.ztz_process.service.order.request.CancelRequest;
+import kr.eddi.ztz_process.service.order.request.ModifyRequest;
+import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
 import kr.eddi.ztz_process.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +15,19 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/order")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("order")
+@CrossOrigin(origins = "http://localhost:8080", allowedHeaders = "*")
 public class OrderController {
 
 
     @Autowired
     private OrderService service;
 
-    @PostMapping("/OrderList")
-    public List<ResponseOrderInfo> orderInfoList(List<OrderRequest> orderRequest) {
-        log.info("orderInfoList" + orderRequest);
-        return service.orderInfoList(orderRequest);
-    }
-
     @PostMapping("/OrderRegister")
-    public Boolean orderRegister(List<OrderRequest> orderRequest){
-        log.info("orderRegister" + orderRequest);
+    public Boolean orderRegister(PaymentRegisterRequest paymentRegisterRequest){
+        log.info("orderRegister" + paymentRegisterRequest);
 
-        return service.registerOrderInfo(orderRequest);
+        return service.registerOrderInfo(paymentRegisterRequest);
     }
 
     @PostMapping("/AllOrderCancel")

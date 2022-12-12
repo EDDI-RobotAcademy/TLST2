@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderInfoRepository extends JpaRepository<OrderInfo, Long> {
-    @Query("select o from OrderInfo o where o.orderID = :orderID")
-    List<Optional<OrderInfo>> findByOrderID(Integer orderID);
+    @Query("select o from OrderInfo o where o.orderNo = :orderNo")
+    Optional<OrderInfo> findByOrderNo(String orderNo);
 
-    @Query("select o from OrderInfo o where o.orderID = :orderID and o.orderedProductName =:orderedProductName")
-    Optional<OrderInfo> findProductByIdAndName(Integer orderID,String orderedProductName);
+//    @Query("select o from OrderInfo o where o.orderID = :orderID and o.orderedProductName =:orderedProductName")
+////    Optional<OrderInfo> findProductByIdAndName(Integer orderID,String orderedProductName);
 }
