@@ -1,6 +1,6 @@
 <template>
   <div class="detailWrap mt-15" >
-   <cart-form/>
+   <cart-form @deleteCartItem="deleteCartItem"/>
   </div>
 </template>
 
@@ -16,8 +16,13 @@ export default {
   },
   methods:{
     ...mapActions([
-      'reqCartListFromSpring',
+      'reqCartListFromSpring', 'reqDeleteCartItemFromSpring'
     ]),
+    deleteCartItem(payload){
+      const selectCartItemNo= payload
+      this.reqDeleteCartItemFromSpring(selectCartItemNo)
+      this.$router.go(this.$router.currentRoute)
+    }
   },
   mounted() {
     if(this.$store.state.isAuthenticated === true) {

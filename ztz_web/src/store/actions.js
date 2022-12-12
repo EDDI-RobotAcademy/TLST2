@@ -66,4 +66,16 @@ export default {
                 console.log("장바구니 리스트 출력")
             })
     },
+    // eslint-disable-next-line no-empty-pattern
+    reqDeleteCartItemFromSpring({}, payload) {
+        const selectCartItemNo = payload
+
+        console.log('장바구니 아이템 삭제 전')
+
+        return axios.post(`http://localhost:7777/ztz/order/deleteCartItem`,
+            { selectCartItemNo} )
+            .then(() => {
+            })
+    },
+
 }
