@@ -127,6 +127,28 @@
       </v-list-item>
     </v-list>
 
+<!--    선택구매, 전체선택 (어러 건)인 경우 : directOrderCheck는 false -->
+    <!--데이터 분석 orderList (orderSave (cartOrderCheck:true, directOrderCheck:false, totalPrice,
+                                        selectList({cartItemNo, count, product(brand, name, price, productInfo(thumnailFileName)) }, {1번째}, {2번째},...)
+                                           ) )-->
+    <v-list v-else>
+      <v-list-item>
+        <v-card style="width: 760px">
+          <v-list-item-content >
+            <v-row justify="left" v-for="item in orderList.orderSave.selectList" :key="item.index">
+              <v-img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
+                     max-width="60"
+                     style="margin: 15px; margin-left: 25px;"/>
+              <p style="margin-left: 50px; margin-top: 33px">{{ item.product.name}}</p>
+              <p style="margin-left: 400px;  margin-top: 33px; font-weight: bold">{{item.product.price}}원</p>
+              <p style="margin-top: 33px;">/ {{item.count}}개</p>
+            </v-row>
+          </v-list-item-content>
+        </v-card>
+      </v-list-item>
+
+    </v-list>
+
 <!--    총 합계 추가 -->
     <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
       <p class="col-sm-4" style="text-align: right; color: #205c37">총 합계</p>
@@ -142,6 +164,7 @@
         x-large
     /></p>
     </div>
+
 </template>
 
 <script>
@@ -169,6 +192,8 @@ export default {
       totalPrice: 0,
       totalCount: 0,
 
+      //결제 후 장바구니 아이템 삭제용
+      orderCartItemNo:[]
     }
   },
   computed:{
@@ -181,7 +206,10 @@ export default {
     this.totalPrice =this.$store.state.orderList.orderSave.totalPrice
    if(this.orderList.orderSave.directOrderCheck){ //바로 구매일 경우
      this.totalCount = 1
+   }else {  //바로 구매아니고 선택 구매, 전체구매일 경우
+     this.totalCount = Object.keys(this.$store.state.orderList.orderSave.selectList).length
    }
+
   },
   methods : {
     orderMemberInfoVisible(){

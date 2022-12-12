@@ -106,6 +106,9 @@ export default {
       directTotalPrice:0,
       directTmpOrderNo:[],
       directCartList: [],
+
+      //주문페이지 전달용
+      selectTotalPrice:0,
     }
   },
   computed: {
@@ -165,9 +168,36 @@ export default {
     },
     async btnSelectPurchase() {
       //선택 상품 구매
+      for (let i = 0; i < this.selectList.length; i++) {
+        this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
+      }
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:false, cartOrderCheck:true, selectList: this.selectList, totalPrice: this.selectTotalPrice }})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+      }
     },
     async btnAllPurchase() {
       // 전체 상품 구매
+      this.selectList = this.cartList
+      for (let i = 0; i < this.selectList.length; i++) {
+        this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
+      }
+
+      this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
+          {orderSave: {directOrderCheck:false, cartOrderCheck:true, selectList: this.selectList, totalPrice: this.selectTotalPrice }})
+
+      alert ("주문 페이지로 이동합니다.")
+      this.orderListCheck = true
+      if(this.orderListCheck) {
+        await this.$router.push({name: 'OrderInfoView'})
+        this.orderListCheck = false
+        }
     },
     productViewBtn(item){
       alert("상품 상세페이지로 이동합니다.")
