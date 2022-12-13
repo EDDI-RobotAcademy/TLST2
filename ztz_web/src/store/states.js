@@ -6,5 +6,5 @@ export default {
     resMember: {},
     cartList:[],
     orderList:[],
-
+    foundrys:[],
 }

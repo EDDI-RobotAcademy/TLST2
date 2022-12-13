@@ -5,6 +5,7 @@ import {
     RESPONSE_MY_REQUEST,
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
+    REQUEST_FOUNDRY_LIST,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -45,6 +46,13 @@ export default {
             .then((res) => {
                 commit(RESPONSE_MEMBER_OBJECT, res.data)
                 console.log("actions :" + res.data)
+            })
+    },
+    reqFoundryListFromSpring ({ commit }) {
+        return axios.get('http://localhost:7777/ztz/reservation/list')
+            .then((res) => {
+                commit(REQUEST_FOUNDRY_LIST, res.data)
+                console.log(res.data)
             })
     },
 
