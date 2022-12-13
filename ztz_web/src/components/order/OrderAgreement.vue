@@ -67,7 +67,7 @@
 
       <v-row class="member-row" >
         <p class="member-tool" align="left">총금액</p>
-        <p class="member-info">{{ this.TotalPaymentAmount }}원</p>
+        <p class="member-info">{{ this.TotalPaymentAmount | numberFormat }}원</p>
       </v-row>
 
     </v-card>
@@ -78,7 +78,7 @@
 export default {
   name: "OrderAgreement",
   props:{
-    TotalPaymentAmount : String
+    TotalPaymentAmount : Number
   },
   data(){
     return{
@@ -97,7 +97,12 @@ export default {
     showPaymentCardMethod(){
       this.showPaymentCard = !this.showPaymentCard
     }
-  }
+  },
+  filters: {
+    numberFormat(val) {
+      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  },
 }
 </script>
 
