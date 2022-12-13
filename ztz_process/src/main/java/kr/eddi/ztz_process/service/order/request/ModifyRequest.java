@@ -1,4 +1,4 @@
-package kr.eddi.ztz_process.controller.order.request;
+package kr.eddi.ztz_process.service.order.request;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
