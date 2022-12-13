@@ -149,6 +149,7 @@ export default {
         const productNo = this.product.productNo
         await this.reqRegisterReviewToSpring({memberId, productNo, rate, content})
       }
+      await this.$router.go(this.$router.currentRoute)
       this.dialog = false
     },
     cancel() {
