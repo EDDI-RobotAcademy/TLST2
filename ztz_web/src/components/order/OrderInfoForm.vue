@@ -87,10 +87,11 @@ export default {
     ...mapState([
       'isAuthenticated',
       'resMember',
-      'resMemberProfile'
+      'resMemberProfile',
+      'orderList'
     ]),
     ...mapState([
-      'orderList'
+
     ])
   },
   data() {
@@ -140,7 +141,8 @@ export default {
   methods : {
     ...mapActions([
       'reqMemberInfoToSpring',
-      'reqMemberProfileInfoToSpring'
+      'reqMemberProfileInfoToSpring',
+      'reqDeleteCartItemFromSpring'
     ]),
     setSendInfo(){
       if(this.orderList.orderSave.directOrderCheck){
@@ -152,8 +154,13 @@ export default {
           this.$set(this.sendInfo.productID, i, this.$store.state.orderList.orderSave.selectList[i].product.productNo);
           this.$set(this.sendInfo.memberID, i, this.$store.state.resMember.id);
           this.$set(this.sendInfo.orderCnt, i, this.$store.state.orderList.orderSave.selectList[i].count);
+
+          this.orderCartItemNo[i] = this.$store.state.orderList.orderSave.selectList[i].cartItemNo
         }
       }
+    },
+    delSelectedOrderCart(){
+      this.reqDeleteCartItemFromSpring(this.orderCartItemNo)
     },
     setDestinationToAddress(){
       if(this.setAddress == false ){
@@ -212,9 +219,10 @@ export default {
 
           this.setSendInfo()
 
-          const { paymentPrice, merchant_uid , sendInfo} = this
-          this.$emit("submit", { paymentPrice , merchant_uid , sendInfo})
+          const { paymentPrice, merchant_uid , sendInfo } = this
+          this.$emit("submit", { paymentPrice , merchant_uid , sendInfo })
 
+          this.delSelectedOrderCart()
         } else {
           console.log("결제실패")
         }
