@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName) {
+    public void registerWithImg(ReviewRequest reviewRequest, String thumbnailFileName) {
         Optional<Member> maybeMember = memberRepository.findById(reviewRequest.getMemberId());
         Member member = maybeMember.get();
 
@@ -59,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService{
                 .product(product)
                 .rate(reviewRequest.getRate())
                 .content(reviewRequest.getContent())
-                .thumbFileName(thumbFileName)
+                .thumbFileName(thumbnailFileName)
                 .build();
         reviewRepository.save(review);
     }

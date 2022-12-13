@@ -37,7 +37,7 @@ public class ReviewController {
             @RequestPart(value = "info") ReviewRequest reviewRequest) {
         log.info("파일리스트" + image);
         log.info("파일 정보" + reviewRequest);
-        String thumbFileName = image.getOriginalFilename();
+        String thumbnailFileName = image.getOriginalFilename();
 
         try {
             log.info("requestUploadFilesWitText() - Make file: " +
@@ -57,7 +57,7 @@ public class ReviewController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        reviewService.registerWithImg(reviewRequest, thumbFileName);
+        reviewService.registerWithImg(reviewRequest, thumbnailFileName);
     }
 
     @PostMapping("/read/{productNo}")
