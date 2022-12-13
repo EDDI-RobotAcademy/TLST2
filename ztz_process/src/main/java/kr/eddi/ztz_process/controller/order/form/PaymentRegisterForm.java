@@ -15,13 +15,13 @@ import java.util.Map;
 @NoArgsConstructor
 public class PaymentRegisterForm {
 
-    private Integer TotalPaymentPrice;
+    private Integer paymentPrice;
     private String merchant_uid;
 
-    private List<OrderInfoRegisterForm> orderInfos;
+    private OrderInfoRegisterForm sendInfo;
 
 
     public PaymentRegisterRequest toOrderRegisterRequest () {
-        return new PaymentRegisterRequest( TotalPaymentPrice, merchant_uid, orderInfos);
+        return new PaymentRegisterRequest( paymentPrice, merchant_uid, sendInfo);
     }
 }
