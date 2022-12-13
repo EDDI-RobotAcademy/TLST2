@@ -86,5 +86,22 @@ export default {
             .then(() => {
             })
     },
+    reqRegisterReviewToSpring(_, payload) {
+        console.log('이미지 미포함 리뷰 등록하기')
+
+        return axios.post('http://localhost:7777/ztz/products/review/register', payload)
+            .then(() => {
+            })
+    },
+    reqRegisterReviewWithImageToSpring(_, payload) {
+        console.log("이미지 포함 리뷰 등록하기")
+        return axios.post('http://localhost:7777/ztz/products/review/registerWithImg', payload)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((res) => {
+                console.log(res.message)
+            })
+    },
 
 }

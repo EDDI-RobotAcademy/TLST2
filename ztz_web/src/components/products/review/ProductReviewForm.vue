@@ -47,7 +47,8 @@
           @click="registerReview"
       />
       <ReviewRegisterForm
-        ref="ReviewRegisterForm"/>
+          :product="product"
+          ref="ReviewRegisterForm"/>
     </div>
   </div>
 </template>

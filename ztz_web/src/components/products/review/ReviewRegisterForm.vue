@@ -3,6 +3,7 @@
     <v-dialog
         v-model="dialog"
         max-width="650"
+        persistent
     >
       <v-card align="center">
         <v-card-title class="text-h5">
@@ -10,7 +11,13 @@
         </v-card-title>
         <div>
           <!-- 리뷰 작성할 상품 추가 예정 -->
-          <p>리뷰 작성할 상품 보여주기</p>
+          <p>{{ product.name }}</p>
+          <v-img
+              :src="require(`@/assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
+              max-width="200"
+              max-height="150"
+              contain
+          ></v-img>
         </div>
         <div>
           <p class="mt-5 mb-3">상품은 만족하셨나요?</p>
@@ -19,7 +26,9 @@
               :value="rate"
               background-color="#205C37"
               color="#205C37"
+              half-increments
               x-large
+              hover
           ></v-rating>
           <p>{{ rate }}</p>
         </div>
@@ -29,19 +38,21 @@
               background-color="grey lighten-4"
               style="width: 600px"
               label="상품평을 작성해 주세요."
+              :rules="content_rule"
               solo
+              required
           ></v-textarea>
         </div>
         <div class="mb-10">
           <v-file-input
-              v-model="file"
-              @change="previewFile(file)"
+              ref="fileUpload"
+              @change="selectFile"
               @click:clear="removeFile"
               style="width: 550px"
               color="#205C37"
               prepend-icon="mdi-camera"
               label="사진 추가하기"
-          />
+          ></v-file-input>
           <v-img
               :src="preview"
               max-height="150"
@@ -53,12 +64,12 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <ButtonWhite
-              @click="btnCloseDialog"
+              @click="cancel"
               btn-name="취소"
               large
           />
           <ButtonGreen
-              @click="btnRegisterReview"
+              @click="submit"
               btn-name="등록"
               large
           />
@@ -70,6 +81,8 @@
 </template>
 
 <script>
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: "ReviewRegisterForm",
   data() {
@@ -77,34 +90,87 @@ export default {
       dialog: false,
       rate: 0,
       content: '',
+      image: '',
       preview: '',
+      fileName: '',
+      content_rule: [
+        v => !!v || '필수 입력 사항입니다.',
+        v => !(v && v.length < 10) || '10자 이상 입력해 주세요.',
+      ]
+    }
+  },
+  props: {
+    product: {
+      type: Object,
+      required: true,
     }
   },
   methods: {
-    previewFile(file) {
-      const fileData = (data) => {
-        this.preview = data
+    ...mapActions([
+      'reqRegisterReviewToSpring',
+      'reqRegisterReviewWithImageToSpring'
+    ]),
+    selectFile(file) {
+      this.image = file
+      // 사진 업로드 시 미리보기 기능
+      if (!(this.image == null)) {
+        const fileData = (data) => {
+          this.preview = data
+        }
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.addEventListener("load", function () {
+          fileData(reader.result)
+        }, false);
       }
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.addEventListener("load", function () {
-        fileData(reader.result)
-      }, false);
     },
-    removeFile() {
+    removeFile(e) {
+      e.target.file = null
       this.preview = ''
     },
-    btnCloseDialog() {
-      // 취소 버튼 추가 구현 예정
+    async submit() {
+      if (!(this.image === null)) {
+        //이미지 있는 경우
+        let formData = new FormData()
+        formData.append('image', this.image);
+
+        let fileInfo = {
+          memberId: this.resMember.id,
+          productNo: this.product.productNo,
+          rate: this.rate,
+          content: this.content
+        }
+        formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
+        await this.reqRegisterReviewWithImageToSpring(formData)
+      } else {
+        //이미지 없는 경우
+        const {rate, content} = this
+        const memberId = this.resMember.id
+        const productNo = this.product.productNo
+        await this.reqRegisterReviewToSpring({memberId, productNo, rate, content})
+      }
       this.dialog = false
     },
-    btnRegisterReview() {
-      // 리뷰 등록 버튼 추가 구현 예정
+    cancel() {
       this.dialog = false
-    }
-
-
+    },
   },
+  computed: {
+    ...mapState([
+      'resMember'
+    ])
+  },
+  watch: {
+    // dialog 상태가 변경되면 실행됨
+    dialog: function (val) {
+      if (val) {
+        this.image = ''
+        this.rate = 0
+        this.content = ''
+        this.preview = ''
+      }
+    }
+  }
 }
 </script>
 
