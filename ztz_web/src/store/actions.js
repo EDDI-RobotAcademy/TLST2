@@ -6,6 +6,7 @@ import {
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
+    REQUEST_READ_REVIEW_FROM_SPRING,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -102,6 +103,15 @@ export default {
             .catch((res) => {
                 console.log(res.message)
             })
+    },
+    reqReadReviewFromSpring({ commit }, productNo) {
+        console.log(productNo + '번 상품의 리뷰 가져오기')
+
+        return axios.post(`http://localhost:7777/ztz/products/review/read/${productNo}`)
+            .then((res) => {
+                commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
+            })
+
     },
 
 }
