@@ -8,4 +8,5 @@ export default {
     orderList:[],
 
     resMemberProfile: {}
+    foundrys:[],
 }
