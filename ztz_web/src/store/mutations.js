@@ -9,6 +9,7 @@ import {
     REQUEST_ORDER_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
     REQUEST_FOUNDRY_LIST,
+    REQUEST_READ_REVIEW_FROM_SPRING,
 } from './mutation-types'
 
 export default {
@@ -33,15 +34,16 @@ export default {
     [REQUEST_CART_LIST_FROM_SPRING](state, passingData) {
         state.cartList = passingData
     },
-
     [REQUEST_ORDER_LIST_FROM_SPRING](state, passingData) {
         state.orderList = passingData
     },
     [REQUEST_FOUNDRY_LIST](state, passingData) {
         state.foundrys = passingData
     },
-
     [RESPONSE_MEMBER_PROFILE_OBJET](state, passingData) {
         state.resMemberProfile = passingData
+    },
+    [REQUEST_READ_REVIEW_FROM_SPRING](state, passingData) {
+        state.reviews = passingData
     },
 }
