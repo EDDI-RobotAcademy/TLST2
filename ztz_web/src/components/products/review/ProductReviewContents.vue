@@ -15,10 +15,19 @@
         </div>
       </v-col>
       <v-col cols="8" align="left">
-        <div class="ml-3">
-        <p>{{ review.userName | nameFormat }}</p>
-        <p>{{ review.content }}</p>
-        <v-img :src="review.src" height="300" width="400" contain></v-img>
+        <div class="ml-3" v-if="(review.thumbFileName == null)">
+          <p>{{ review.member.username | nameFormat }}</p>
+          <p>{{ review.content }}</p>
+        </div>
+        <div class="ml-3" v-else>
+          <p>{{ review.member.username | nameFormat }}</p>
+          <p>{{ review.content }}</p>
+          <v-img
+              :src="require(`@/assets/products/uploadImg/${review.thumbFileName}`)"
+              height="300"
+              width="400"
+              contain
+          ></v-img>
         </div>
       </v-col>
     </v-row>
@@ -27,6 +36,7 @@
 </template>
 
 <script>
+
 export default {
   name: "ProductReviewContents",
   props: {
@@ -39,7 +49,7 @@ export default {
     nameFormat(val) {
       return String(val).replace(/(?<=.{1})./gi, "*");
     }
-  }
+  },
 }
 </script>
 
@@ -47,6 +57,7 @@ export default {
 p {
   font-size: 14px;
 }
+
 .review-content {
   position: relative;
   list-style: none;

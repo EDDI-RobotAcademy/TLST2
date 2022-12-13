@@ -6,6 +6,7 @@ import {
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
+    REQUEST_READ_REVIEW_FROM_SPRING,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -86,19 +87,5 @@ export default {
             .then(() => {
             })
     },
-    // eslint-disable-next-line no-empty-pattern
-    reqRegisterOrderToSpring({}, payload) {
-        const { paymentPrice, merchant_uid , sendInfo} = payload
 
-        return axios.post("http://localhost:7777/ztz/order/OrderRegister", {
-            paymentPrice , merchant_uid , sendInfo
-        })
-            .then((res) => {
-                console.log(res)
-
-            })
-            .catch((res) => {
-                alert(res.response.data.message)
-            })
-    },
 }
