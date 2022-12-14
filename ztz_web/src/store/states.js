@@ -1,5 +1,6 @@
 export default {
     isAuthenticated: false,
+    hideHeader: false,
     products: [],
     product: {},
     resMyRequest: {},

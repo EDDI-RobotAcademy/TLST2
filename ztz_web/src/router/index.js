@@ -10,6 +10,7 @@ import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
 import FoundryView from "@/views/reservation/FoundryView.vue";
+import ModifyAddressView from "@/views/mypage/ModifyAddressView";
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,14 @@ const routes = [
     path: '/foundry',
     name: 'FoundryView',
     component: FoundryView
+  },
+  {
+    path: '/modify-address',
+    name: 'ModifyAddressView',
+    component: ModifyAddressView,
+    meta:{
+      hideHeader:true,
+    }
   },
 ]
 

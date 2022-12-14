@@ -2,7 +2,7 @@
   <v-app>
       <div id="app">
         <v-main>
-          <main-header/>
+          <main-header v-if="!$route.meta.hideHeader"/>
           <router-view/>
           <main-footer/>
         </v-main>
