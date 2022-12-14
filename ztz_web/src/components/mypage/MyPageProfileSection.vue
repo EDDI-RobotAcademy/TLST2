@@ -46,13 +46,18 @@ export default {
         'reqMemberInfoToSpring'
     ]),
     async withdrawal() {
-      if(window.localStorage.getItem('userInfo') != null) {
+      let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?")
+
+      if(withdrawalMessage){
         let token = window.localStorage.getItem('userInfo')
         // eslint-disable-next-line no-undef
         await this.reqDeleteMemberToSpring(token)
         console.log(this.$store.state.resMyRequest.toString())
-      } else {
-        alert("로그인 상태가 아닙니다.")
+        this.$store.commit('IS_AUTHENTICATED', false)
+        localStorage.removeItem("userInfo")
+        this.$cookies.remove('user')
+        alert('회원탈퇴가 완료되었습니다. 그동안 이용해주셔서 감사드립니다.')
+        await this.$router.push({name:'HomeView'})
       }
     }
   }
