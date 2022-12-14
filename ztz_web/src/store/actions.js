@@ -6,7 +6,6 @@ import {
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
-    REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_FOUNDRY_LIST,
 } from './mutation-types'
 
@@ -51,7 +50,7 @@ export default {
             })
     },
     reqFoundryListFromSpring ({ commit }) {
-        return axios.get('http://localhost:7777/ztz/reservation/list')
+        return axios.get('http://localhost:7777/ztz/tour/list')
             .then((res) => {
                 commit(REQUEST_FOUNDRY_LIST, res.data)
                 console.log(res.data)
@@ -113,7 +112,8 @@ export default {
                 console.log(res.message)
             })
     },
-    reqReadReviewFromSpring({ commit }, productNo) {
+    // eslint-disable-next-line no-empty-pattern
+    reqReadReviewFromSpring({ }, productNo) {
         console.log(productNo + '번 상품의 리뷰 가져오기')
-
+    }
 }
