@@ -6,7 +6,7 @@
 </template>
 <script>
 import "@/css/initialization.css";
-import FoundryList from "@/components/reservation/FoundryList.vue";
+import FoundryList from "@/components/tour/FoundryList.vue";
 
 import { mapState, mapActions } from "vuex";
 
@@ -17,7 +17,6 @@ export default {
     ...mapState([
       'foundrys'
     ]),
-
   },
   mounted() {
     this.reqFoundryListFromSpring()

@@ -6,7 +6,7 @@ import {
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
-    REQUEST_READ_REVIEW_FROM_SPRING,
+    REQUEST_FOUNDRY_LIST,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -47,6 +47,13 @@ export default {
             .then((res) => {
                 commit(RESPONSE_MEMBER_OBJECT, res.data)
                 console.log("actions :" + res.data)
+            })
+    },
+    reqFoundryListFromSpring ({ commit }) {
+        return axios.get('http://localhost:7777/ztz/tour/list')
+            .then((res) => {
+                commit(REQUEST_FOUNDRY_LIST, res.data)
+                console.log(res.data)
             })
     },
     reqMemberProfileInfoToSpring({ commit }, token) {
@@ -105,27 +112,8 @@ export default {
                 console.log(res.message)
             })
     },
-    reqReadReviewFromSpring({ commit }, productNo) {
-        console.log(productNo + '번 상품의 리뷰 가져오기')
-
-        return axios.post(`http://localhost:7777/ztz/products/review/read/${productNo}`)
-            .then((res) => {
-                commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
-            })
-
-    },
     // eslint-disable-next-line no-empty-pattern
-    reqRegisterOrderToSpring({}, payload) {
-        const { paymentPrice, merchant_uid , sendInfo} = payload
-
-        return axios.post("http://localhost:7777/ztz/order/OrderRegister", {
-            paymentPrice , merchant_uid , sendInfo
-        })
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((res) => {
-                alert(res.response.data.message)
-            })
-    },
+    reqReadReviewFromSpring({ }, productNo) {
+        console.log(productNo + '번 상품의 리뷰 가져오기')
+    }
 }

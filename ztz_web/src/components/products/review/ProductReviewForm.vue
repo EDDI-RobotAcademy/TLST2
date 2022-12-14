@@ -10,7 +10,8 @@
           <p>총 {{ reviews.length }}개의 상품 후기가 있습니다.</p>
         </v-col>
         <v-col cols="6">
-          <p style="font-size: 20px">리뷰 평점 {{ totalRate }}</p>
+          <p style="font-size: 20px" v-if="!reviews || (Array.isArray(reviews) && reviews.length === 0)">리뷰 평점 {{ 0 }}</p>
+          <p style="font-size: 20px" v-else>리뷰 평점 {{ totalRate }}</p>
           <v-rating
               :value="totalRate"
               background-color="#205C37"

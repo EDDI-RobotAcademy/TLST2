@@ -1,46 +1,46 @@
 
 .foundry-list-box {
-    margin: 20px 0 0;
+    margin: 40px 0 0;
     padding: 0 !important;
     width: 100%;
     border-top: 2px solid #222;
 }
+
 .foundry-list-box p {
     margin-bottom: 0;
 }
-.foundry-list-box .foundry-name {
-    padding: 10px 0 8px;
-    border-bottom: 1px solid #222;
-    font-size: 40px;
-    cursor: pointer;
+.foundry-list-box .tab {
     display: flex;
     justify-content: space-between;
-}
-.foundry-detail {
-    padding-bottom: 50px;
-    border-bottom: 1px solid #222;
-}
-.foundry-detail .default-info {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-}
-.foundry-detail .default-info p span{
-    font-weight: bold;
-}
-.foundry-detail .map-area{
-    width: 100%;
-    height: 330px;
-    margin-top: 20px;
-    background-color: #656565;
-}
-.foundry-detail p {
-    font-size: 17px;
-    margin: 5px 0 0;
+    border-bottom:1px solid #222;
 }
 
+.foundry-list-box .tab .default-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+.foundry-list-box .tab .default-info .name {
+    width: 240px;
+    font-size: 40px;
+    color: #222;
+    padding: 12px 0 8px;
+}
+.tmp-style {
+    display: flex;
+    justify-content: space-between;
+}
+.foundry-name{
+    width: 1200px;
+    font-size: 40px;
+    color: #222;
+    padding: 12px 0 8px;
+    border-top: 2px solid #222;
+    border-bottom : 1px solid #222;
+}
 .program-info {
-    margin-top: 20px;
+    margin: 50px 0 30px;
 }
 .program-info .program-head {
     display: flex;
