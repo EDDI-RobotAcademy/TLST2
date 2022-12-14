@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.member;
 
+import kr.eddi.ztz_process.controller.member.form.MemberAddressForm;
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.member.form.MemberLoginForm;
 import kr.eddi.ztz_process.controller.member.form.MemberRegisterForm;
@@ -64,6 +65,14 @@ public class MemberController {
         log.info(memberProfile.getPhoneNumber().toString());
         log.info(memberProfile.getAddress().toString());
         return memberProfile;
+    }
+
+    @PostMapping("/modify-address")
+    public Boolean modifyAddress(@RequestBody MemberAddressForm memberAddressForm){
+        log.info("modifyAddress" + memberAddressForm);
+
+
+        return service.ModifyMemberAddress(memberAddressForm.toMemberAddressRequest());
     }
 
 }
