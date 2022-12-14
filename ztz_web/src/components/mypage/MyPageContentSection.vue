@@ -2,11 +2,7 @@
   <section class="management-section">
 
     <div class="management-box first-box">
-      <div class="head-area">
-        <p class=" head-text">배송관리</p>
-        <button class="small-button">배송지 변경</button>
-      </div>
-
+      <my-page-delivery-section/>
     </div>
 
     <div class="management-box">
@@ -21,7 +17,9 @@
 </template>
 
 <script>
+import MyPageDeliverySection from "@/components/mypage/MyPageDeliverySection";
 export default {
-  name: "MyPageContentSection"
+  name: "MyPageContentSection",
+  components: {MyPageDeliverySection}
 }
 </script>
