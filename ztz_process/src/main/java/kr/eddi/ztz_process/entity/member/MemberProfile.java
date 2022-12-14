@@ -2,7 +2,7 @@ package kr.eddi.ztz_process.entity.member;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -11,16 +11,19 @@ import lombok.NoArgsConstructor;
 public class MemberProfile {
 
     @Id
+    @Getter
     @Column(name = "member_profile_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id = null;
 
+    @Getter
     @Column(nullable = false)
     private String PhoneNumber;
-
+    @Getter
     @Embedded
     private Address address;
 
+    @Getter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

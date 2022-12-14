@@ -7,6 +7,8 @@ import {
     RESPONSE_MY_REQUEST,
     REQUEST_CART_LIST_FROM_SPRING,
     REQUEST_ORDER_LIST_FROM_SPRING,
+    RESPONSE_MEMBER_PROFILE_OBJET,
+    REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_FOUNDRY_LIST,
 } from './mutation-types'
 
@@ -40,4 +42,10 @@ export default {
         state.foundrys = passingData
     },
 
+    [RESPONSE_MEMBER_PROFILE_OBJET](state, passingData) {
+        state.resMemberProfile = passingData
+    },
+    [REQUEST_READ_REVIEW_FROM_SPRING](state, passingData) {
+        state.reviews = passingData
+    },
 }

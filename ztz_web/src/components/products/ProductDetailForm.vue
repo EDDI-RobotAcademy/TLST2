@@ -9,7 +9,6 @@
               max-height="480"
               contain
           />
-          <!-- v-img :src="require('../../assets/products/${이미지명}')"/ -->
         </div>
       </div>
       <div class="r">
@@ -87,7 +86,7 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text align="center">
-              <product-review-form/>
+              <product-review-form :product="product"/>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -148,7 +147,6 @@ export default {
       } else{
         alert("로그인이 필요한 기능입니다.")
       }
-
     }
 
   },

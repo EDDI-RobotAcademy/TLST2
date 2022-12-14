@@ -6,5 +6,9 @@ export default {
     resMember: {},
     cartList:[],
     orderList:[],
+    reviews: [],
+    review: {},
+
+    resMemberProfile: {}
     foundrys:[],
 }

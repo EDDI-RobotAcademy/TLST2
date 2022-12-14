@@ -5,6 +5,8 @@ import {
     RESPONSE_MY_REQUEST,
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
+    RESPONSE_MEMBER_PROFILE_OBJET,
+    REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_FOUNDRY_LIST,
 } from './mutation-types'
 
@@ -55,6 +57,14 @@ export default {
                 console.log(res.data)
             })
     },
+    reqMemberProfileInfoToSpring({ commit }, token) {
+        return axios.post(`http://localhost:7777/ztz/member/user-profile`,
+            { token: token })
+            .then((res) => {
+                commit(RESPONSE_MEMBER_PROFILE_OBJET, res.data)
+                console.log("profile :" + res.data)
+            })
+    },
 
     // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({ }, payload) {
@@ -85,5 +95,25 @@ export default {
             .then(() => {
             })
     },
+    reqRegisterReviewToSpring(_, payload) {
+        console.log('이미지 미포함 리뷰 등록하기')
+
+        return axios.post('http://localhost:7777/ztz/products/review/register', payload)
+            .then(() => {
+            })
+    },
+    reqRegisterReviewWithImageToSpring(_, payload) {
+        console.log("이미지 포함 리뷰 등록하기")
+
+        return axios.post('http://localhost:7777/ztz/products/review/registerWithImg', payload)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((res) => {
+                console.log(res.message)
+            })
+    },
+    reqReadReviewFromSpring({ commit }, productNo) {
+        console.log(productNo + '번 상품의 리뷰 가져오기')
 
 }
