@@ -9,8 +9,9 @@ import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
-import FoundryView from "@/views/reservation/FoundryView.vue";
 import ModifyAddressView from "@/views/mypage/ModifyAddressView";
+import FoundryView from "@/views/tour/FoundryView.vue";
+import ReservationView from "@/views/tour/ReservationView.vue";
 
 Vue.use(VueRouter)
 
@@ -57,7 +58,7 @@ const routes = [
     component: MypageView
   },
   {
-    path: '/foundry',
+    path: '/tour',
     name: 'FoundryView',
     component: FoundryView
   },
@@ -65,9 +66,14 @@ const routes = [
     path: '/modify-address',
     name: 'ModifyAddressView',
     component: ModifyAddressView,
-    meta:{
-      hideHeader:true,
+    meta: {
+      hideHeader: true,
     }
+  },
+  {
+    path: '/reservation',
+    name: 'ReservationView',
+    component: ReservationView
   },
 ]
 

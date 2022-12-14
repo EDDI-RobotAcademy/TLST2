@@ -10,6 +10,7 @@ import {
     RESPONSE_MEMBER_PROFILE_OBJET,
     REQUEST_FOUNDRY_LIST,
     REQUEST_READ_REVIEW_FROM_SPRING,
+    REQUEST_FOUNDRY_INFO,
 } from './mutation-types'
 
 export default {
@@ -39,6 +40,9 @@ export default {
     },
     [REQUEST_FOUNDRY_LIST](state, passingData) {
         state.foundrys = passingData
+    },
+    [REQUEST_FOUNDRY_INFO](state, passingData) {
+        state.selectedFoundry = passingData
     },
     [RESPONSE_MEMBER_PROFILE_OBJET](state, passingData) {
         state.resMemberProfile = passingData
