@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("ztz/reservation")
+@RequestMapping("ztz/tour")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ReservationController {
 
