@@ -9,6 +9,7 @@ import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
+
 import FoundryView from "@/views/tour/FoundryView.vue";
 import ReservationView from "@/views/tour/ReservationView.vue";
 
