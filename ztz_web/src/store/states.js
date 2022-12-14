@@ -8,7 +8,7 @@ export default {
     orderList:[],
     reviews: [],
     review: {},
-
-    resMemberProfile: {}
+    resMemberProfile: {},
     foundrys:[],
+    selectedFoundry: {},
 }
