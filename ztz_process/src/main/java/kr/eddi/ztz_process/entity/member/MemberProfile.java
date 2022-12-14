@@ -33,6 +33,10 @@ public class MemberProfile {
         this.PhoneNumber = phoneNumber;
     }
 
+    public void modifyAddress(Address address){
+        this.address = address;
+    }
+
     public static MemberProfile of (String city, String street, String addressDetail, String zipcode,String phoneNumber) {
         final Address address = Address.of(city, street, addressDetail, zipcode);
         return new MemberProfile(address , phoneNumber);

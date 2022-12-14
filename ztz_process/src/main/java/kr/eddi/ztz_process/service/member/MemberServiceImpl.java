@@ -1,11 +1,10 @@
 package kr.eddi.ztz_process.service.member;
 
-import kr.eddi.ztz_process.entity.member.Authentication;
-import kr.eddi.ztz_process.entity.member.BasicAuthentication;
-import kr.eddi.ztz_process.entity.member.Member;
-import kr.eddi.ztz_process.entity.member.MemberProfile;
+import kr.eddi.ztz_process.entity.member.*;
 import kr.eddi.ztz_process.repository.member.AuthenticationRepository;
+import kr.eddi.ztz_process.repository.member.MemberProfileRepository;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
+import kr.eddi.ztz_process.service.member.request.MemberAddressRequest;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
 import kr.eddi.ztz_process.service.security.RedisService;
@@ -30,6 +29,8 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private MemberProfileRepository memberProfileRepository;
 
     @Override
     public Boolean emailValidation(String email) {
@@ -107,5 +108,30 @@ public class MemberServiceImpl implements MemberService {
         MemberProfile memberProfile = memberRepository.findProfileByMemberId(member.getId());
         return memberProfile;
     }
+
+    @Override
+    public Boolean ModifyMemberAddress(MemberAddressRequest memberAddressRequest) {
+        try{
+            Long id = redisService.getValueByKey(memberAddressRequest.getToken().substring(1,37));
+            Member member = memberRepository.findByMemberId(id);
+            MemberProfile memberProfile = memberRepository.findProfileByMemberId(member.getId());
+
+            Address address = Address.of(
+                    memberAddressRequest.getCity(),
+                    memberAddressRequest.getStreet(),
+                    memberAddressRequest.getAddressDetail(),
+                    memberAddressRequest.getZipcode());
+            memberProfile.modifyAddress(address);
+
+            memberProfileRepository.save(memberProfile);
+            return true;
+
+        }catch (Exception e){
+            System.out.println(e);
+
+            return false;
+        }
+    }
+
 
 }
