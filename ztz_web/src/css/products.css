@@ -1,0 +1,133 @@
+
+/* products list local-filter-area css*/
+.list-filter-area {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 10px 0;
+    font-size: 13px;
+}
+.list-filter-area > p {
+    margin: 0 !important;
+    padding : 0;
+}
+.list-filter-area .local-filter {
+    display: flex;
+    justify-content: flex-end;
+}
+.list-filter-area .local-filter ul{
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0 !important;
+}
+.list-filter-area .local-filter ul li {
+    margin-left : 10px;
+}
+
+/* product list css */
+.product-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 1200px;
+    padding: 0 !important;
+    border: 1px solid #eee;
+
+}
+.product-list li {
+    width: 239px;
+    border-right: 1px solid #eee;
+}
+.product-list li:nth-child(5n) {
+    width: 238px;
+    border-right: none !important;
+}
+
+.product-list li a {
+    text-decoration: none;
+    color: #222;
+}
+.empty_product {
+    width: 100%;
+    padding: 44px 0 30px;
+    text-align: center;
+}
+
+/* product list pagination css */
+.paginate-links {
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+    margin: 40px auto;
+    padding: 0 !important;
+    border: 1px solid #fefef5;
+
+}
+.paginate-links li {
+    user-select: none;
+    cursor: pointer;
+}
+.paginate-links li.next:before{
+    content: ' | ';
+    margin-right: 13px;
+    color: #ddd;
+}
+.paginate-links li.disabled a{
+    color: #ccc;
+    cursor: no-drop;
+}
+.paginate-links li a {
+    color: #205c37;
+    font-size: 12px;
+}
+
+/* product card css */
+.productCard {
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.productInfo {
+    width: 150px;
+    margin: 0 auto;
+}
+.productInfo > p {
+    margin: 0 0 -2px !important;
+    font-size: 13px;
+    font-weight: bold;
+
+}
+.productInfo .brand {
+    color: #205c37;
+    font-size: 12px;
+    margin-bottom: 4px !important;
+}
+.productInfo .price {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.productInfo .price > p{
+    color: #222;
+    font-size: 14px;
+    margin-bottom: 4px !important;
+}
+
+.thumb {
+    width: 150px;
+    height: 200px;
+    background-color: #f2f2f2;
+    margin: 30px 0 15px;
+    color: #bbb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.thumb > img {
+    width: 150px;
+}
+.thumb > span {
+    margin: 0 auto;
+}
+
+

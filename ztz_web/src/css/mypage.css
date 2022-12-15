@@ -1,0 +1,48 @@
+
+/* products list local-filter-area css*/
+
+.mypageWrap{
+    display:flex;
+    justify-content: space-evenly;
+}
+.profile-section {
+    width: 400px;
+}
+
+.sub-nav {
+    padding-top: 30px;
+}
+.sub-nav li {
+    margin: 5px 0;
+}
+.sub-nav li a {
+    font-size: 13px;
+    color: #222222;
+    text-decoration: none;
+}
+
+.management-section {
+    width: 800px;
+    border-left: 1px solid #eee;
+}
+
+.management-box {
+    height: 250px;
+    padding: 30px;
+    border-bottom: 1px solid #eee;
+}
+.management-box .small-button {
+    font-size: 13px;
+}
+
+.first-box{
+    height: 160px !important;
+}
+.first-box .email{
+    font-size: 14px;
+}
+
+.head-area {
+    display: flex;
+    justify-content: space-between;
+}
