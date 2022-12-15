@@ -1,27 +1,10 @@
-/* common css */
-.no-border-bottom {
-    border-bottom: none !important;
-}
 
 /* products list local-filter-area css*/
-.wrap {
-    width: 1200px;
-    margin: 0 auto;
-    padding : 40px 0;
-}
-.mypageWrap ul, p, div {
-    margin: 0 ;
-    font-family: AppleSDGothicNeoM00;
-    font-size: 12px;
-}
-.mypageWrap ul{
-    list-style: none ;
-}
+
 .mypageWrap{
     display:flex;
     justify-content: space-evenly;
 }
-
 .profile-section {
     width: 400px;
 }
