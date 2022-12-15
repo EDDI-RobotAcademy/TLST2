@@ -3,19 +3,20 @@ import VueRouter from 'vue-router'
 
 import SignUpView from "@/views/account/SignUpView";
 import SignInView from "@/views/account/SignInView";
-import TestView from "@/views/TestView";
 import ProductDetailView from "@/views/products/ProductDetailView";
 import CartView from "@/views/order/CartView";
 import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
+import MypageView from "@/views/mypage/MypageView";
+import HomeView from "@/views/HomeView";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/test',
-    name: 'test',
-    component: TestView
+    path: '/',
+    name: 'home',
+    component: HomeView
   },
   {
     path: '/sign-up',
@@ -28,7 +29,6 @@ const routes = [
     component: SignInView
   },
   {
-    // /:productNo
     path: '/product',
     name: 'ProductsView',
     component: ProductsView
@@ -52,7 +52,11 @@ const routes = [
     component: OrderInfoView
   },
 
-    ///order-info
+  {
+    path: '/my-page',
+    name: 'MyPageView',
+    component: MypageView
+  },
 ]
 
 const router = new VueRouter({

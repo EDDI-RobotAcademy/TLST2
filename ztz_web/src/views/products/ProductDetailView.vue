@@ -1,8 +1,8 @@
 <template>
   <div class="detailWrap">
-      <product-detail-form
-          :product="product"
-      />
+    <product-detail-form class="mt-15"
+                         :product="product"
+    />
   </div>
 </template>
 
