@@ -1,0 +1,66 @@
+
+.foundry-list-box {
+    margin: 40px 0 0;
+    padding: 0 !important;
+    width: 100%;
+    border-top: 2px solid #222;
+}
+
+.foundry-list-box p {
+    margin-bottom: 0;
+}
+.foundry-list-box .tab {
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #222;
+}
+
+.foundry-list-box .tab .default-info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+}
+.foundry-list-box .tab .default-info .name {
+    width: 240px;
+    font-size: 40px;
+    color: #222;
+    padding: 12px 0 8px;
+}
+.tmp-style {
+    display: flex;
+    justify-content: space-between;
+}
+.foundry-name{
+    width: 1200px;
+    font-size: 40px;
+    color: #222;
+    padding: 12px 0 8px;
+    border-top: 2px solid #222;
+    border-bottom : 1px solid #222;
+}
+.program-info {
+    margin: 50px 0 30px;
+}
+.program-info .program-head {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #555;
+}
+.program-info .program-table {
+    display: flex;
+    justify-content: space-between;
+}
+.program-table ul {
+    width: 25%;
+    padding: 20px 0 0;
+}
+.program-table ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+}
+.program-table .strong-text li {
+    font-weight: bold;
+    color: #222;
+}
