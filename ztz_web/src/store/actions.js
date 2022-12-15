@@ -96,6 +96,7 @@ export default {
     },
     reqRegisterReviewWithImageToSpring(_, payload) {
         console.log("이미지 포함 리뷰 등록하기")
+
         return axios.post('http://localhost:7777/ztz/products/review/registerWithImg', payload)
             .then((res) => {
                 console.log(res.data)
@@ -116,12 +117,13 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     reqRegisterOrderToSpring({}, payload) {
         const { paymentPrice, merchant_uid , sendInfo} = payload
+
         return axios.post("http://localhost:7777/ztz/order/OrderRegister", {
             paymentPrice , merchant_uid , sendInfo
         })
             .then((res) => {
                 console.log(res)
-                })
+            })
             .catch((res) => {
                 alert(res.response.data.message)
             })
