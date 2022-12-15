@@ -1,0 +1,33 @@
+.reservation-style-box > div:nth-child(4) > div {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+.reservation-style-box > div:nth-child(4) > div > p {
+  margin: 0 10px;
+  padding: 0;
+}
+.reservation-style-box > div:nth-child(4) > div > p.member {
+  width: 20px;
+}
+
+<div>
+            <v-btn
+              class="mr-5"
+              elevation="0"
+              color="white"
+              @click="qtyDecrease"
+            >
+              <v-icon>mdi-minus</v-icon>
+            </v-btn>
+            <p class="member">{{ member }}</p>
+            <v-btn
+              class="ml-5"
+              elevation="0"
+              color="white"
+              @click="qtyIncrease"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </div>
