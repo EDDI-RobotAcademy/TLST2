@@ -40,17 +40,17 @@ public class QuestionController {
         questionService.questionRegister(boardsRequest);
     }
 
-//     // 질문게시판 게시물 수정
-//    @PutMapping("/{questionNo}")
-//    public QuestionBoard questionBoardModify (@PathVariable("questionNo") Long questionNo, @RequestBody QuestionBoard questionBoard) {
-//        log.info("questionBoardModify()");
-//
-//        questionBoard.setQuestionNo(questionNo);
-//        questionService.questionModify(questionBoard);
-//
-//        return questionBoard;
-//    }
-//
+     // 질문게시판 게시물 수정
+    @PutMapping("/{questionNo}")
+    public QuestionBoard questionBoardModify (@PathVariable("questionNo") Long questionNo, @RequestBody QuestionBoard questionBoard) {
+        log.info("questionBoardModify()");
+
+        questionBoard.setQuestionNo(questionNo);
+        questionService.questionModify(questionBoard);
+
+        return questionBoard;
+    }
+
 //    // 질문게시판 게시물 삭제
 //    @DeleteMapping("/{questionNo}")
 //    public void questionBoardRemove (@PathVariable("questionNo") Long questionNo) {

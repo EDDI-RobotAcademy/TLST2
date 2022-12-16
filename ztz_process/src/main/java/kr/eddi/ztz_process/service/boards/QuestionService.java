@@ -12,8 +12,8 @@ public interface QuestionService {
     public QuestionBoard questionRead(Long questionNo);
      // 질문게시판 게시물 등록
     public void questionRegister(BoardsRequest boardsRequest);
-//     //질문게시판 게시물 수정
-//    public void questionModify(QuestionBoard questionBoard);
+     //질문게시판 게시물 수정
+    public void questionModify(QuestionBoard questionBoard);
 //    // 질문게시판 게시물 삭제
 //    public void questionRemove(Long questionNo);
 }

@@ -46,12 +46,12 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.save(questionBoard);
     }
 
-//     // 질문게시판 게시물 수정
-//    @Override
-//    public void questionModify(QuestionBoard questionBoard) {
-//        questionRepository.save(questionBoard);
-//    }
-//
+     // 질문게시판 게시물 수정
+    @Override
+    public void questionModify(QuestionBoard questionBoard) {
+        questionRepository.save(questionBoard);
+    }
+
 //    // 질문게시판 게시물 삭제
 //    @Override
 //    public void questionRemove(Long questionNo) {
