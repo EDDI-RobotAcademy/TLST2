@@ -36,16 +36,16 @@ public class QuestionServiceImpl implements QuestionService {
         return maybeBoard.get();
     }
 
-//     // 질문게시판 게시물 등록
-//    public void questionRegister(BoardsRequest boardsRequest) {
-//        QuestionBoard questionBoard = new QuestionBoard();
-//        questionBoard.setTitle(boardsRequest.getTitle());
-//        questionBoard.setContent(boardsRequest.getContent());
-//        questionBoard.setWriter(boardsRequest.getWriter());
-//
-//        questionRepository.save(questionBoard);
-//    }
-//
+     // 질문게시판 게시물 등록
+    public void questionRegister(BoardsRequest boardsRequest) {
+        QuestionBoard questionBoard = new QuestionBoard();
+        questionBoard.setTitle(boardsRequest.getTitle());
+        questionBoard.setContent(boardsRequest.getContent());
+        questionBoard.setWriter(boardsRequest.getWriter());
+
+        questionRepository.save(questionBoard);
+    }
+
 //     // 질문게시판 게시물 수정
 //    @Override
 //    public void questionModify(QuestionBoard questionBoard) {

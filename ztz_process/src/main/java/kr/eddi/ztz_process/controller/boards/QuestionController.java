@@ -31,15 +31,15 @@ public class QuestionController {
 
         return questionService.questionRead(questionNo);
     }
-//
-//     // 질문게시판 게시물 등록
-//    @PostMapping("/register")
-//    public void questionBoardRegister (@RequestBody BoardsRequest boardsRequest) {
-//        log.info("questionBoardRegister()");
-//
-//        questionService.questionRegister(boardsRequest);
-//    }
-//
+
+     // 질문게시판 게시물 등록
+    @PostMapping("/register")
+    public void questionBoardRegister (@RequestBody BoardsRequest boardsRequest) {
+        log.info("questionBoardRegister()");
+
+        questionService.questionRegister(boardsRequest);
+    }
+
 //     // 질문게시판 게시물 수정
 //    @PutMapping("/{questionNo}")
 //    public QuestionBoard questionBoardModify (@PathVariable("questionNo") Long questionNo, @RequestBody QuestionBoard questionBoard) {
