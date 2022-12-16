@@ -51,11 +51,11 @@ public class QuestionController {
         return questionBoard;
     }
 
-//    // 질문게시판 게시물 삭제
-//    @DeleteMapping("/{questionNo}")
-//    public void questionBoardRemove (@PathVariable("questionNo") Long questionNo) {
-//        log.info("questionBoardRemove()");
-//
-//        questionService.questionRemove(questionNo);
-//    }
+    // 질문게시판 게시물 삭제
+    @DeleteMapping("/{questionNo}")
+    public void questionBoardRemove (@PathVariable("questionNo") Long questionNo) {
+        log.info("questionBoardRemove()");
+
+        questionService.questionRemove(questionNo);
+    }
 }

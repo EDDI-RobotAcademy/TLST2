@@ -52,9 +52,9 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.save(questionBoard);
     }
 
-//    // 질문게시판 게시물 삭제
-//    @Override
-//    public void questionRemove(Long questionNo) {
-//        questionRepository.deleteById(Long.valueOf(questionNo));
-//    }
+    // 질문게시판 게시물 삭제
+    @Override
+    public void questionRemove(Long questionNo) {
+        questionRepository.deleteById(Long.valueOf(questionNo));
+    }
 }
