@@ -2,6 +2,7 @@
   <div class="reservationForm">
     <v-form @submit.prevent="onReservationSubmit">
       <div class="reservation-style-box">
+
         <div>
           <label for="name">성함</label>
           <input
@@ -12,6 +13,7 @@
             disabled
           />
         </div>
+
         <div>
           <label for="phone">연락처</label>
           <input
@@ -23,6 +25,7 @@
             @blur="checkIsEmpty($event)"
           />
         </div>
+
         <div>
           <label for="date">예약일</label>
           <input
@@ -37,15 +40,27 @@
 
         <div>
           <label>예약인원</label>
-          <input
-            v-model="date"
-            id="date"
-            type="text"
-            placeholder="예약인원 입력해주세요"
-            class="reservation-text-field"
-            @blur="checkIsEmpty($event)"
-          />
+          <div>
+            <v-btn
+              class="mr-5"
+              elevation="0"
+              color="white"
+              @click="qtyDecrease"
+              >
+              <v-icon>mdi-minus</v-icon>
+              </v-btn>
+              <p class="member">{{ member }}</p>
+              <v-btn
+              class="ml-5"
+              elevation="0"
+              color="white"
+              @click="qtyIncrease"
+              >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </div>
         </div>
+
       </div>
 
       <button-green
