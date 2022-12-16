@@ -24,13 +24,13 @@ public class QuestionController {
         return questionService.questionList();
     }
 
-//     // 질문게시판 게시물 조회(읽기)
-//    @GetMapping("/{questionNo}")
-//    public QuestionBoard questionBoardRead (@PathVariable("questionNo") Long questionNo) {
-//        log.info("questionBoardRead()");
-//
-//        return questionService.questionRead(questionNo);
-//    }
+     // 질문게시판 게시물 조회(읽기)
+    @GetMapping("/{questionNo}")
+    public QuestionBoard questionBoardRead (@PathVariable("questionNo") Long questionNo) {
+        log.info("questionBoardRead()");
+
+        return questionService.questionRead(questionNo);
+    }
 //
 //     // 질문게시판 게시물 등록
 //    @PostMapping("/register")

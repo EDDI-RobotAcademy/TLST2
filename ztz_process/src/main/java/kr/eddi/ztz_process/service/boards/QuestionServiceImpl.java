@@ -23,19 +23,19 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAll(Sort.by(Sort.Direction.DESC, "questionNo"));
     }
 
-//    // 질문게시판 조회(읽기)
-//    @Override
-//    public QuestionBoard questionRead(Long questionNo) {
-//        Optional<QuestionBoard> maybeBoard = questionRepository.findById(Long.valueOf(questionNo));
-//
-//        if (maybeBoard.equals(Optional.empty())) {
-//            log.info("조회할 수 없습니다!");
-//            return null;
-//        }
-//
-//        return maybeBoard.get();
-//    }
-//
+    // 질문게시판 조회(읽기)
+    @Override
+    public QuestionBoard questionRead(Long questionNo) {
+        Optional<QuestionBoard> maybeBoard = questionRepository.findById(Long.valueOf(questionNo));
+
+        if (maybeBoard.equals(Optional.empty())) {
+            log.info("조회할 수 없습니다!");
+            return null;
+        }
+
+        return maybeBoard.get();
+    }
+
 //     // 질문게시판 게시물 등록
 //    public void questionRegister(BoardsRequest boardsRequest) {
 //        QuestionBoard questionBoard = new QuestionBoard();
