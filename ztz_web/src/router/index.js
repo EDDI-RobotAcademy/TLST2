@@ -84,16 +84,16 @@ const routes = [
     name: 'QuestionRegisterView',
     component: QuestionRegisterView
   },
-  // {
-  //   path: '/question-modify/:questionNo',
-  //   name: 'QuestionModifyView',
-  //   components: {
-  //     default: QuestionModifyView
-  //   },
-  //   props: {
-  //     default: true
-  //   }
-  // },
+  {
+    path: '/question-modify/:questionNo',
+    name: 'QuestionModifyView',
+    components: {
+      default: QuestionModifyView
+    },
+    props: {
+      default: true
+    }
+  },
 ]
 
 const router = new VueRouter({

@@ -148,20 +148,20 @@ export default {
             })
     },
 
-    // // 질문게시판 수정
-    // // eslint-disable-next-line no-empty-pattern
-    // requestQuestionModifyToSpring ({ }, payload) {
-    //     console.log('requestQuestionModifyToSpring()')
-    //
-    //     const { title, content, questionNo, writer, regDate } = payload
-    //
-    //     return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
-    //         { title, content, writer, regDate })
-    //         .then(() => {
-    //             alert('수정 완료했습니다!')
-    //         })
-    // },
-    //
+    // 질문게시판 수정
+    // eslint-disable-next-line no-empty-pattern
+    requestQuestionModifyToSpring ({ }, payload) {
+        console.log('requestQuestionModifyToSpring()')
+
+        const { title, content, questionNo, writer, regDate } = payload
+
+        return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
+            { title, content, writer, regDate })
+            .then(() => {
+                alert('수정 완료했습니다!')
+            })
+    },
+
     // // 질문게시판 삭제
     // // eslint-disable-next-line no-empty-pattern
     // requestDeleteQuestionToSpring ({ }, questionNo) {
