@@ -135,19 +135,19 @@ export default {
                 commit(REQUEST_QUESTION_FROM_SPRING, res.data)
             })
     },
-    //
-    // // 질문게시판 등록
-    // // eslint-disable-next-line no-empty-pattern
-    // requestCreateQuestionContentsToSpring ({ }, payload) {
-    //     console.log('requestCreateQuestionContentsToSpring()')
-    //     const { title, content, writer } = payload
-    //     return axios.post('http://localhost:7777/ztz/boards/question/register',
-    //         { title, content, writer })
-    //         .then(() => {
-    //             alert('등록 완료했습니다!')
-    //         })
-    // },
-    //
+
+    // 질문게시판 등록
+    // eslint-disable-next-line no-empty-pattern
+    requestCreateQuestionContentsToSpring ({ }, payload) {
+        console.log('requestCreateQuestionContentsToSpring()')
+        const { title, content, writer } = payload
+        return axios.post('http://localhost:7777/ztz/boards/question/register',
+            { title, content, writer })
+            .then(() => {
+                alert('등록 완료했습니다!')
+            })
+    },
+
     // // 질문게시판 수정
     // // eslint-disable-next-line no-empty-pattern
     // requestQuestionModifyToSpring ({ }, payload) {

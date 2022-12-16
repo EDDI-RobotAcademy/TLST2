@@ -79,11 +79,11 @@ const routes = [
       default: true
     }
   },
-  // {
-  //   path: '/question-register',
-  //   name: 'QuestionRegisterView',
-  //   component: QuestionRegisterView
-  // },
+  {
+    path: '/question-register',
+    name: 'QuestionRegisterView',
+    component: QuestionRegisterView
+  },
   // {
   //   path: '/question-modify/:questionNo',
   //   name: 'QuestionModifyView',
