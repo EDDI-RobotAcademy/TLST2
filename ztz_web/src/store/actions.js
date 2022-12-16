@@ -126,15 +126,15 @@ export default {
                 commit(REQUEST_QUESTION_LIST_FROM_SPRING, res.data)
             })
     },
-    //
-    // // 질문게시판 조회(읽기)
-    // requestQuestionFromSpring ({ commit }, questionNo) {
-    //     console.log('requestQuestionFromSpring()')
-    //     return axios.get(`http://localhost:7777/ztz/boards/question/${questionNo}`)
-    //         .then((res) => {
-    //             commit(REQUEST_QUESTION_FROM_SPRING, res.data)
-    //         })
-    // },
+
+    // 질문게시판 조회(읽기)
+    requestQuestionFromSpring ({ commit }, questionNo) {
+        console.log('requestQuestionFromSpring()')
+        return axios.get(`http://localhost:7777/ztz/boards/question/${questionNo}`)
+            .then((res) => {
+                commit(REQUEST_QUESTION_FROM_SPRING, res.data)
+            })
+    },
     //
     // // 질문게시판 등록
     // // eslint-disable-next-line no-empty-pattern

@@ -69,16 +69,16 @@ const routes = [
     name: 'QuestionListView',
     component: QuestionListView
   },
-  // {
-  //   path: '/question-read/:questionNo',
-  //   name: 'QuestionReadView',
-  //   components: {
-  //     default: QuestionReadView
-  //   },
-  //   props: {
-  //     default: true
-  //   }
-  // },
+  {
+    path: '/question-read/:questionNo',
+    name: 'QuestionReadView',
+    components: {
+      default: QuestionReadView
+    },
+    props: {
+      default: true
+    }
+  },
   // {
   //   path: '/question-register',
   //   name: 'QuestionRegisterView',

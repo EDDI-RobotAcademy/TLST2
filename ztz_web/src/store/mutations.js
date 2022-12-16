@@ -50,9 +50,9 @@ export default {
     [REQUEST_QUESTION_LIST_FROM_SPRING](state, passingData) {
         state.questionBoards = passingData
     },
-    // [REQUEST_QUESTION_FROM_SPRING](state, passingData) {
-    //     state.questionBoard = passingData
-    // },
+    [REQUEST_QUESTION_FROM_SPRING](state, passingData) {
+        state.questionBoard = passingData
+    },
 
     [REQUEST_FOUNDRY_LIST](state, passingData) {
         state.foundrys = passingData
