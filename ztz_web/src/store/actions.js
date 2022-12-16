@@ -6,7 +6,9 @@ import {
     RESPONSE_MEMBER_OBJECT,
     REQUEST_CART_LIST_FROM_SPRING,
     RESPONSE_MEMBER_PROFILE_OBJET,
-    REQUEST_FOUNDRY_LIST, REQUEST_QUESTION_LIST_FROM_SPRING, REQUEST_QUESTION_FROM_SPRING,
+    REQUEST_FOUNDRY_LIST,
+    REQUEST_QUESTION_LIST_FROM_SPRING,
+    REQUEST_QUESTION_FROM_SPRING,
 } from './mutation-types'
 
 // npm install axios --save-dev
@@ -162,14 +164,14 @@ export default {
             })
     },
 
-    // // 질문게시판 삭제
-    // // eslint-disable-next-line no-empty-pattern
-    // requestDeleteQuestionToSpring ({ }, questionNo) {
-    //     console.log('requestDeleteQuestionToSpring()')
-    //
-    //     return axios.delete(`http://localhost:7777/ztz/boards/question/${questionNo}`)
-    //         .then(() => {
-    //             alert('삭제 완료했습니다!')
-    //         })
-    // },
+    // 질문게시판 삭제
+    // eslint-disable-next-line no-empty-pattern
+    requestDeleteQuestionToSpring ({ }, questionNo) {
+        console.log('requestDeleteQuestionToSpring()')
+
+        return axios.delete(`http://localhost:7777/ztz/boards/question/${questionNo}`)
+            .then(() => {
+                alert('삭제 완료했습니다!')
+            })
+    },
 }
