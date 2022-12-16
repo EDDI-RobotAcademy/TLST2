@@ -68,6 +68,22 @@
   .reservation-style-box > div:nth-child(4) > div > p.member {
   width: 20px;
   }
+/* reservation-form date ui css */
+  .date-picker-ui{
+    width: 280px;
+  }
+  .date-picker-ui input {
+    border-radius: 0;
+    padding: 10px;
+    margin-top: -1px;
+    height: 43px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .mx-icon-calendar{
+    right: 14px;
+  }
+  
 /* reservation-view css */
 .foundry-name {
   width: 1200px;

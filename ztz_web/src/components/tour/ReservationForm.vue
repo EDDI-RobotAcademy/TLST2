@@ -28,14 +28,15 @@
 
         <div>
           <label for="date">예약일</label>
-          <input
-            v-model="date"
-            id="date"
-            type="text"
-            placeholder="예약일을 입력해주세요"
-            class="reservation-text-field"
+          
+          <date-picker 
+            v-model="date" 
+            valueType="format" 
             @blur="checkIsEmpty($event)"
+            class="date-picker-ui"
           />
+          
+          
         </div>
 
         <div>
@@ -79,10 +80,13 @@
 </template>
 <script>
 import "@/css/initialization.css";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 import { mapActions, mapState } from "vuex";
 
 export default {
   name: "ReservationForm",
+  components:{DatePicker},
   beforeUpdate() {
     this.onReservationSubmit();
     this.checkValidation();
