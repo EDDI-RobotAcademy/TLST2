@@ -9,10 +9,11 @@ import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
-
-import FoundryView from "@/views/tour/FoundryView.vue";
-import ReservationView from "@/views/tour/ReservationView.vue";
-import ModifyAddressView from "@/views/mypage/ModifyAddressView";
+import QuestionListView from "@/views/boards/QuestionListView";
+import QuestionReadView from "@/views/boards/QuestionReadView";
+import QuestionRegisterView from "@/views/boards/QuestionRegisterView";
+import QuestionModifyView from "@/views/boards/QuestionModifyView";
+import FoundryView from "@/views/tour/FoundryView";
 
 Vue.use(VueRouter)
 
@@ -59,21 +60,38 @@ const routes = [
     component: MypageView
   },
   {
-    path: '/tour',
+    path: '/foundry',
     name: 'FoundryView',
     component: FoundryView
   },
   {
-    path: '/reservation',
-    name: 'ReservationView',
-    component: ReservationView
+    path: '/question-list',
+    name: 'QuestionListView',
+    component: QuestionListView
   },
   {
-    path: '/modify-address',
-    name: 'ModifyAddressView',
-    component: ModifyAddressView,
-    meta:{
-      hideHeader:true,
+    path: '/question-read/:questionNo',
+    name: 'QuestionReadView',
+    components: {
+      default: QuestionReadView
+    },
+    props: {
+      default: true
+    }
+  },
+  {
+    path: '/question-register',
+    name: 'QuestionRegisterView',
+    component: QuestionRegisterView
+  },
+  {
+    path: '/question-modify/:questionNo',
+    name: 'QuestionModifyView',
+    components: {
+      default: QuestionModifyView
+    },
+    props: {
+      default: true
     }
   },
 ]
