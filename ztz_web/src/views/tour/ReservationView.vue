@@ -33,13 +33,15 @@
       class="map-area"
       style="width: 1200px; height: 300px; background-color: cyan"
     ></div>
-    <reservation-form />
+    <reservation-form @submit="onReservationSubmit" />
   </div>
 </template>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<API KEY>"></script> -->
 <script>
 import "@/css/initialization.css";
 import ReservationForm from "@/components/tour/ReservationForm.vue";
+import { mapActions, mapState } from "vuex";
+
 export default {
   name: "ReservationView",
   components: { ReservationForm },
@@ -48,7 +50,11 @@ export default {
       item: {},
       map: null,
       location: { lat: "", lng: "" },
+      res: "",
     };
+  },
+  computed: {
+    ...mapState(["resMyRequest"]),
   },
   mounted() {
     // this.initMap()
@@ -60,6 +66,7 @@ export default {
     this.location.lng = this.item.mapPoint.lng;
   },
   methods: {
+    ...mapActions(["reqReservationToSpring"]),
     // initMap() {
     //   this.map = new google.maps.Map(document.getElementById("map"), { //getElementById로 map id 속성의 요소를 가져온다.
     //     center: this.location, //center로 할 위도, 경도를 지정한다.
@@ -82,6 +89,15 @@ export default {
     //     },
     //   });
     // },
+    async onReservationSubmit(payload) {
+      await this.reqReservationToSpring(payload);
+      console.log(payload.toString());
+      this.res = this.$store.state.resMyRequest;
+
+      if (this.res === 1) {
+        alert("성공적으로 예약되었습니다.");
+      }
+    },
   },
 };
 </script>
