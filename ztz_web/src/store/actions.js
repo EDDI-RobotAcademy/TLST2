@@ -186,4 +186,12 @@ export default {
                 alert('삭제 완료했습니다!')
             })
     },
+    reqDeleteReviewToSpring(_, reviewNo) {
+        console.log(reviewNo + "번 리뷰 삭제")
+
+        return axios.delete(`http://localhost:7777/ztz/products/review/delete/${reviewNo}`)
+            .then(() => {
+                alert('삭제 완료했습니다.')
+            })
+    }
 }

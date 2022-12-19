@@ -59,6 +59,7 @@
               btn-name="수정"/>
           <button-white
               small
+              @click="btnDeleteReview"
               btn-name="삭제"/>
         </v-col>
       </v-row>
@@ -67,11 +68,23 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "MyPageReviewCard",
   props: {
     review: Object,
   },
+  methods: {
+    ...mapActions([
+       'reqDeleteReviewToSpring'
+    ]),
+    async btnDeleteReview() {
+      const reviewNo = this.review.reviewNo
+      await this.reqDeleteReviewToSpring(reviewNo)
+      await this.$router.go(this.$router.currentRoute)
+    }
+  }
 }
 </script>
 
