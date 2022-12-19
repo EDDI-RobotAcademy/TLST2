@@ -14,6 +14,7 @@ import QuestionReadView from "@/views/boards/QuestionReadView";
 import QuestionRegisterView from "@/views/boards/QuestionRegisterView";
 import QuestionModifyView from "@/views/boards/QuestionModifyView";
 import FoundryView from "@/views/tour/FoundryView";
+import MyPageReview from "@/views/mypage/MyPageReview";
 
 Vue.use(VueRouter)
 
@@ -94,6 +95,16 @@ const routes = [
       default: true
     }
   },
+  {
+    path: '/my-page/review/:memberId',
+    name: 'MyPageReview',
+    components: {
+      default: MyPageReview
+    },
+    props: {
+      default: true
+    }
+  }
 ]
 
 const router = new VueRouter({
