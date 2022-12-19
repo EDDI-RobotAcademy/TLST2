@@ -73,4 +73,9 @@ public class ReviewServiceImpl implements ReviewService{
     public List<Review> memberReviewRead(Long memberId) {
         return reviewRepository.findByMemberId(memberId);
     }
+
+    @Override
+    public void deleteReview(Long reviewNo) {
+        reviewRepository.deleteById(reviewNo);
+    }
 }

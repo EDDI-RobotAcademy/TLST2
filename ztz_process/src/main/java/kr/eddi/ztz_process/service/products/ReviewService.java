@@ -15,5 +15,7 @@ public interface ReviewService {
 
     public List<Review> memberReviewRead(Long memberId);
 
+    public void deleteReview(Long reviewNo);
+
 
 }

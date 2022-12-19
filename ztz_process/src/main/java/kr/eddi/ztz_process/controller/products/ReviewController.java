@@ -73,4 +73,12 @@ public class ReviewController {
 
         return reviewService.memberReviewRead(memberId);
     }
+
+    @DeleteMapping("/delete/{reviewNo}")
+    public void deleteReview (@PathVariable("reviewNo") Long reviewNo) {
+        log.info(reviewNo + "번의 리뷰 삭제");
+
+        reviewService.deleteReview(reviewNo);
+    }
+    
 }
