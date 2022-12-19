@@ -40,6 +40,19 @@ export default {
   props: {
     memberId: String,
   },
+  methods: {
+    ...mapActions([
+      'reqMyPageReviewFromSpring',
+    ])
+  },
+  mounted() {
+    this.reqMyPageReviewFromSpring(this.memberId)
+  },
+  computed: {
+    ...mapState([
+      'reviews'
+    ])
+  }
 }
 </script>
 
