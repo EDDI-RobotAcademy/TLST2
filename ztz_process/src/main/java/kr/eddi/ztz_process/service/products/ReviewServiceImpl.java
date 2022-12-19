@@ -59,13 +59,18 @@ public class ReviewServiceImpl implements ReviewService{
                 .product(product)
                 .rate(reviewRequest.getRate())
                 .content(reviewRequest.getContent())
-                .thumbFileName(thumbnailFileName)
+                .thumbnailFileName(thumbnailFileName)
                 .build();
         reviewRepository.save(review);
     }
 
     @Override
-    public List<Review> read(Long productNo) {
+    public List<Review> productReviewRead(Long productNo) {
         return reviewRepository.findByProductNo(productNo);
+    }
+
+    @Override
+    public List<Review> memberReviewRead(Long memberId) {
+        return reviewRepository.findByMemberId(memberId);
     }
 }

@@ -11,5 +11,9 @@ public interface ReviewService {
 
     public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName);
 
-    public List<Review> read(Long productNo);
+    public List<Review> productReviewRead(Long productNo);
+
+    public List<Review> memberReviewRead(Long memberId);
+
+
 }

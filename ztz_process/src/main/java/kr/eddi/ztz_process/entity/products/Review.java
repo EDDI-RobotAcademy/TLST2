@@ -28,7 +28,7 @@ public class Review {
     private String content;
 
     @Column
-    private String thumbFileName;
+    private String thumbnailFileName;
 
     @CreationTimestamp
     private LocalDate regDate;

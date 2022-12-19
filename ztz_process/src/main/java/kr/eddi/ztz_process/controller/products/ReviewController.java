@@ -62,8 +62,15 @@ public class ReviewController {
 
     @PostMapping("/read/{productNo}")
     public List<Review> reviewList(@PathVariable("productNo") Long productNo) {
-        log.info(productNo + "의 리뷰 읽기");
+        log.info(productNo + "상품의 리뷰 읽기");
 
-        return reviewService.read(productNo);
+        return reviewService.productReviewRead(productNo);
+    }
+
+    @PostMapping("/read/myPage/{memberId}")
+    public List<Review> memberReviewList(@PathVariable("memberId") Long memberId) {
+        log.info(memberId + "번 멤버의 리뷰 읽기");
+
+        return reviewService.memberReviewRead(memberId);
     }
 }
