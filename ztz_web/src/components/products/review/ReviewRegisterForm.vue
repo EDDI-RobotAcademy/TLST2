@@ -113,7 +113,7 @@ export default {
     selectFile(file) {
       this.image = file
       // 사진 업로드 시 미리보기 기능
-      if (!this.image.length == 0) {
+      if (!(this.image.length == 0)) {
         const fileData = (data) => {
           this.preview = data
         }
@@ -129,7 +129,7 @@ export default {
       this.preview = ''
     },
     async submit() {
-      if (!this.image.length == 0) {
+      if (!(this.image.length == 0)) {
         console.log("이미지 포함 리뷰")
         //이미지 있는 경우
         let formData = new FormData()
