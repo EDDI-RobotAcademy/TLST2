@@ -43,7 +43,7 @@ public class ReviewController {
             log.info("requestUploadFilesWitText() - Make file: " +
                     image.getOriginalFilename());
             FileOutputStream writer = new FileOutputStream(
-                    "C:/TLST2/ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
+                    "../ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
             );
 
             log.info("디렉토리에 파일 배치 성공");
