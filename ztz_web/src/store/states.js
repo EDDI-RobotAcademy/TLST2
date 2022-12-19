@@ -12,4 +12,6 @@ export default {
     resMemberProfile: {},
     foundrys:[],
     selectedFoundry: {},
+    questionBoard: {},
+    questionBoards: [],
 }
