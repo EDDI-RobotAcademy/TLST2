@@ -256,4 +256,14 @@ export default {
                 console.log(res)
             })
     },
+    // eslint-disable-next-line no-empty-pattern
+    reqRegisterOrderToSpring({}, payload){
+        const { paymentPrice, merchant_uid , sendInfo , imp_uid, city, street, addressDetail, zipcode ,sendRequest} = payload
+        return axios.post(`http://localhost:7777/ztz/order/OrderRegister`,
+            {paymentPrice, merchant_uid , sendInfo , imp_uid, city, street, addressDetail, zipcode ,sendRequest})
+
+            .then((res) => {
+                console.log(res)
+            })
+    },
 }
