@@ -90,9 +90,6 @@ export default {
       'resMemberProfile',
       'orderList'
     ]),
-    ...mapState([
-
-    ])
   },
   data() {
     return{
@@ -192,7 +189,7 @@ export default {
     payment() {
       console.log("paymentBtn - 실행")
 
-      this.randomNumber = Math.random()*100000;
+      this.randomNumber = Math.floor(Math.random()*100000);
 
       for (let i = 0; i < this.usedNum.length; i++) {
         if(this.usedNum[i] == this.randomNumber){
@@ -213,14 +210,15 @@ export default {
         buyer_postcode: this.zipcode
       }, rsp => { // callback
         if (rsp.success) {
+          let imp_uid = rsp.imp_uid
           this.merchant_uid += this.randomNumber
           console.log("결제성공")
           this.usedNum.push(this.randomNumber)
 
           this.setSendInfo()
 
-          const { paymentPrice, merchant_uid , sendInfo } = this
-          this.$emit("submit", { paymentPrice , merchant_uid , sendInfo })
+          const { paymentPrice, merchant_uid , sendInfo,city, street, addressDetail, zipcode ,sendRequest} = this
+          this.$emit("submit", { paymentPrice , merchant_uid , sendInfo, imp_uid,city, street, addressDetail, zipcode,sendRequest })
 
           this.delSelectedOrderCart()
         } else {

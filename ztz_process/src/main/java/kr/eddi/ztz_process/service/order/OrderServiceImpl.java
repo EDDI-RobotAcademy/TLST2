@@ -1,25 +1,28 @@
 package kr.eddi.ztz_process.service.order;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
+import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.PaymentRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
-import kr.eddi.ztz_process.service.order.request.CancelRequest;
-import kr.eddi.ztz_process.service.order.request.ModifyRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
+import kr.eddi.ztz_process.service.security.RedisService;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +38,8 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     PaymentRepository paymentRepository;
 
+    @Autowired
+    RedisService redisService;
     @Autowired
     ProductsRepository productsRepository;
 
@@ -60,6 +65,7 @@ public class OrderServiceImpl implements OrderService{
                         .builder()
                         .orderNo(setOrderNum)
                         .orderCnt(OrderListInfo.getOrderCnt().get(i))
+                        .orderState("결제완료")
                         .product(maybeProduct.get())
                         .member(maybeMember.get())
                         .payment(payment)
@@ -72,75 +78,84 @@ public class OrderServiceImpl implements OrderService{
             return false;
         }
     }
-
     @Override
-    public Boolean CancelAllOrder(CancelRequest cancelRequest) {
+    public List<OrderInfo> readAllOrders(Long PaymentId){
 
-        return false;
-//        List<Optional<OrderInfo>> mayBeOrder = orderRepository.findByOrderID(cancelRequest.getOrderID());
-//
-//        try{
-//            if(mayBeOrder.get(0).isPresent()){
-//                for(int i = 0; i <= mayBeOrder.size(); i++){
-//                    OrderInfo orderInfo = mayBeOrder.get(i).get();
-//                    orderRepository.deleteById(orderInfo.getOrderID());
-//                }
-//                return true;
-//            }else {
-//                System.out.println("해당하는 주문 번호가 없습니다");
-//                return false;
-//            }
-//        }catch (Exception e){
-//            System.out.println("오류 발생 " + e);
-//            return false;
-//        }
+        List<OrderInfo> orderInfo = orderRepository.findByPaymentId(PaymentId);
+
+        System.out.println("주문 아이디"+ orderInfo.get(0).getOrderID());
+        System.out.println("주문 개수"+orderInfo.get(0).getOrderCnt());
+        System.out.println("상품 이름"+orderInfo.get(0).getProduct().getName());
+        System.out.println("결제 정보"+orderInfo.get(0).getPayment().getImp_uid());
+        return orderInfo;
     }
 
     @Override
-    public Boolean ModifyOrder(List<ModifyRequest> modifyRequest) {
+    public List<Payment> readAllPayment(String token){
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        System.out.println("맴버 번호"+ member.getId());
 
-        return false;
-//        List<OrderInfo> orderInfoList = new ArrayList<>();
-//
-//        try{
-//            for (int i=0; i < modifyRequest.size(); i++){
-//                Integer RequestOrderID = modifyRequest.get(i).getOrderID();
-//                String RequestProductName = modifyRequest.get(i).getProductName();
-//
-//                Optional<OrderInfo> maybeOrder = orderRepository.findProductByIdAndName(RequestOrderID,RequestProductName);
-//
-//                if(maybeOrder.isEmpty()){
-//                    System.out.println("해당 주문번호와 이름으로 저장된 데이터가 없습니다.");
-//                    return false;
-//                }
-//
-//                orderInfoList.add(maybeOrder.get());
-//            }
-//
-//            for (int i = 0; i < modifyRequest.size(); i++) {
-//                if(modifyRequest.get(i).getModifyCnt() == 0 ){
-//                    orderRepository.deleteById(orderInfoList.get(i).getOrderID());
-//                    System.out.println("해당 상품 취소를 완료 했습니다.");
-//                }else {
-//                    OrderInfo orderInfo = orderInfoList.get(i);
-//                    orderInfo.ModifyOrderCnt(modifyRequest.get(i).getModifyCnt());
-//                    orderRepository.save(orderInfo);
-//                    System.out.println("주문 갯수 수정을 완료 했습니다.");
-//                }
-//            }
-//            return true;
-//        }catch (Exception e){
-//            System.out.println(e);
-//            return false;
-//        }
+
+        List<Payment> payments = paymentRepository.findAllByMemberId(member.getId());
+
+        return payments;
     }
+    @Override
+    public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
+        String test_api_key = "7457766534132075";
+        String test_api_secret = "CG6nmGvTcWQiEqQGAf53yVQiuAesHTly0uJL5mHTdbzRhlbOinjSulKdE9vObOvAfjDpcS2cRzNxjHn8";
+        IamportClient client = new IamportClient(test_api_key,test_api_secret);
 
+        Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());
+        Payment payment = maybePayment.get();
+        List<OrderInfo> orderInfos = orderRepository.findByPaymentId(payment.getPaymentId());
+        String uid = payment.getImp_uid();
+        System.out.println(uid);
+        CancelData cancelData = new CancelData(uid,true);
+
+        try {
+            client.cancelPaymentByImpUid(cancelData);
+
+            payment.setPaymentState("전액 취소 완료");
+            for (int i = 0; i < orderInfos.size(); i++) {
+                orderInfos.get(i).setOrderState("환불 완료");
+                orderInfos.get(i).setRefundReason(refundRequest.getRefundReason());
+                orderRepository.save(orderInfos.get(i));
+            }
+            paymentRepository.save(payment);
+        }catch (IamportResponseException e){
+            System.out.println("결제 취소 실패");
+            System.out.println("오류 :" + e);
+        }
+        return true;
+    }
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest){
+        OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
+        Integer TotalOrderedCnt = 0;
+        Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.getMemberID().get(0));
+        for (int i = 0; i < paymentRegisterRequest.getSendInfo().getOrderCnt().size(); i++) {
+            TotalOrderedCnt += paymentRegisterRequest.getSendInfo().getOrderCnt().get(i);
+        }
+
+        Address address = Address.of(
+                paymentRegisterRequest.getCity(),
+                paymentRegisterRequest.getStreet(),
+                paymentRegisterRequest.getAddressDetail(),
+                paymentRegisterRequest.getZipcode()
+        );
+
         Payment payment = Payment.
                 builder()
                 .merchant_uid(paymentRegisterRequest.getMerchant_uid())
                 .totalPaymentPrice(paymentRegisterRequest.getPaymentPrice())
+                .imp_uid(paymentRegisterRequest.getImp_uid())
+                .OrderedCnt(TotalOrderedCnt)
+                .PaymentState("결제 완료")
+                .address(address)
+                .DeliveryRequest(paymentRegisterRequest.getSendRequest())
+                .member(maybeMember.get())
                 .build();
 
         paymentRepository.save(payment);
@@ -155,7 +170,7 @@ public class OrderServiceImpl implements OrderService{
 
         while (true){
             setOrderNum = String.valueOf(setRandomOrderNo.makeIntCustomRandom(MINORDERNUM , MAXORDERNUM));
-           Optional<OrderInfo> maybeOrderNo = orderRepository.findByOrderNo(setOrderNum);
+            Optional<OrderInfo> maybeOrderNo = orderRepository.findByOrderNo(setOrderNum);
             if (maybeOrderNo.isPresent()){
                 System.out.println("주문 아이디 재생성" + maybeOrderNo.get());
             }else {

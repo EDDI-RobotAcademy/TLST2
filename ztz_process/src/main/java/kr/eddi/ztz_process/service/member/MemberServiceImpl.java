@@ -105,7 +105,7 @@ public class MemberServiceImpl implements MemberService {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
 
-        MemberProfile memberProfile = memberRepository.findProfileByMemberId(member.getId());
+        MemberProfile memberProfile = memberProfileRepository.findProfileByMemberId(member.getId());
         return memberProfile;
     }
 
@@ -114,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
         try{
             Long id = redisService.getValueByKey(memberAddressRequest.getToken().substring(1,37));
             Member member = memberRepository.findByMemberId(id);
-            MemberProfile memberProfile = memberRepository.findProfileByMemberId(member.getId());
+            MemberProfile memberProfile = memberProfileRepository.findProfileByMemberId(member.getId());
 
             Address address = Address.of(
                     memberAddressRequest.getCity(),

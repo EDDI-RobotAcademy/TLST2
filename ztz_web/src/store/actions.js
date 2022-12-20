@@ -10,7 +10,9 @@ import {
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
-} from './mutation-types'
+    REQUEST_ALL_ORDER_LIST_FROM_SPRING,
+    REQUEST_ALL_PAYMENT_FROM_SPRING
+} from "./mutation-types";
 
 
 // npm install axios --save-dev
@@ -61,7 +63,7 @@ export default {
             })
     },
 
-    reqReservationToSpring({ commit }, payload) {
+    reqReservationToSpring({commit}, payload) {
         return axios.post("http://localhost:7777/ztz/tour/reservation", payload)
             .then((res) => {
                 commit(RESPONSE_MY_REQUEST, res.data);
@@ -132,7 +134,7 @@ export default {
             })
     },
     reqMyPageReviewFromSpring({commit}, memberId) {
-        console.log('멤버' + memberId + '번의 리뷰 불러오기' )
+        console.log('멤버' + memberId + '번의 리뷰 불러오기')
 
         return axios.post(`http://localhost:7777/ztz/products/review/read/myPage/${memberId}`)
             .then((res) => {
@@ -228,5 +230,30 @@ export default {
                 console.log(res.message)
             })
     },
-}
+    reqOrderedListFromSpring({commit}, paymentId) {
+        return axios.post(`http://localhost:7777/ztz/order/ReadAllOrder/${paymentId}`)
+            .then((res) => {
+                commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data)
+                console.log("reqOrderedListFromSpring : " + res.data)
+            })
+    },
 
+    reqPaymentListFromSpring({commit}, token) {
+        return axios.post(`http://localhost:7777/ztz/order/ReadAllPayment`,
+            {token: token})
+            .then((res) => {
+                commit(REQUEST_ALL_PAYMENT_FROM_SPRING, res.data)
+            })
+    },
+    // eslint-disable-next-line no-empty-pattern
+    reqRefundAllOrderToSpring({}, payload) {
+        const {refundPaymentId, refundReason} = payload
+        return axios.post(`http://localhost:7777/ztz/order/refundAllOrder/${refundPaymentId}`, {
+            refundPaymentId,
+            refundReason
+        })
+            .then((res) => {
+                console.log(res)
+            })
+    },
+}

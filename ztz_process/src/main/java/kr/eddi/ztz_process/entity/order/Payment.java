@@ -1,16 +1,16 @@
 package kr.eddi.ztz_process.entity.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import kr.eddi.ztz_process.entity.member.MemberProfile;
-import kr.eddi.ztz_process.entity.order.OrderInfo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import kr.eddi.ztz_process.entity.member.Address;
+import kr.eddi.ztz_process.entity.member.Member;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Data
 @Entity
@@ -29,13 +29,32 @@ public class Payment {
     @Column(nullable = false)
     private String merchant_uid;
 
-    @OneToMany(mappedBy = "orderID", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<OrderInfo> orderInfos = new ArrayList<>();
+    @Column(nullable = false)
+    private String imp_uid;
+
+    @Column(nullable = false)
+    private Integer OrderedCnt;
+
+    @Column(nullable = false)
+    private String PaymentState;
+
+    @Column(nullable = false)
+    private String DeliveryRequest;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @Getter
+    @Embedded
+    private Address address;
 
     @CreationTimestamp
-    private Date regDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime regData = LocalDateTime.now();
 
     @UpdateTimestamp
-    private Date updDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime updData = LocalDateTime.now();
 
 }
