@@ -1,23 +1,27 @@
 package kr.eddi.ztz_process.service.order;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
+import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.PaymentRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
-import kr.eddi.ztz_process.service.order.request.CancelRequest;
-import kr.eddi.ztz_process.service.order.request.ModifyRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
+import kr.eddi.ztz_process.service.security.RedisService;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,42 +101,15 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Boolean ModifyOrder(List<ModifyRequest> modifyRequest) {
+    public List<Payment> readAllPayment(String token){
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        System.out.println("맴버 번호"+ member.getId());
 
-        return false;
-//        List<OrderInfo> orderInfoList = new ArrayList<>();
-//
-//        try{
-//            for (int i=0; i < modifyRequest.size(); i++){
-//                Integer RequestOrderID = modifyRequest.get(i).getOrderID();
-//                String RequestProductName = modifyRequest.get(i).getProductName();
-//
-//                Optional<OrderInfo> maybeOrder = orderRepository.findProductByIdAndName(RequestOrderID,RequestProductName);
-//
-//                if(maybeOrder.isEmpty()){
-//                    System.out.println("해당 주문번호와 이름으로 저장된 데이터가 없습니다.");
-//                    return false;
-//                }
-//
-//                orderInfoList.add(maybeOrder.get());
-//            }
-//
-//            for (int i = 0; i < modifyRequest.size(); i++) {
-//                if(modifyRequest.get(i).getModifyCnt() == 0 ){
-//                    orderRepository.deleteById(orderInfoList.get(i).getOrderID());
-//                    System.out.println("해당 상품 취소를 완료 했습니다.");
-//                }else {
-//                    OrderInfo orderInfo = orderInfoList.get(i);
-//                    orderInfo.ModifyOrderCnt(modifyRequest.get(i).getModifyCnt());
-//                    orderRepository.save(orderInfo);
-//                    System.out.println("주문 갯수 수정을 완료 했습니다.");
-//                }
-//            }
-//            return true;
-//        }catch (Exception e){
-//            System.out.println(e);
-//            return false;
-//        }
+
+        List<Payment> payments = paymentRepository.findAllByMemberId(member.getId());
+
+        return payments;
     }
 
 

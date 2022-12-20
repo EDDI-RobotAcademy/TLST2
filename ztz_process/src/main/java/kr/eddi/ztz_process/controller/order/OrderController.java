@@ -1,14 +1,17 @@
 package kr.eddi.ztz_process.controller.order;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.order.form.PaymentRegisterForm;
-import kr.eddi.ztz_process.service.order.request.CancelRequest;
-import kr.eddi.ztz_process.service.order.request.ModifyRequest;
-import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
+import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
+import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -35,11 +38,12 @@ public class OrderController {
         return service.CancelAllOrder(cancelRequest);
     }
 
-    @PostMapping("/OrderModify")
-    public Boolean OrderModify(List<ModifyRequest> modifyRequest){
-        log.info("OrderModify" + modifyRequest);
+    @PostMapping("/ReadAllPayment")
+    public List<Payment> ReadAllPayemt(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm){
+        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
 
-        return service.ModifyOrder(modifyRequest);
+        List<Payment> payments = service.readAllPayment(SubString);
+        return payments;
     }
 
 }

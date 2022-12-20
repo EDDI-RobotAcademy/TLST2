@@ -1,9 +1,12 @@
 package kr.eddi.ztz_process.service.order;
 
-import kr.eddi.ztz_process.service.order.request.CancelRequest;
-import kr.eddi.ztz_process.service.order.request.ModifyRequest;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
+import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface OrderService {
@@ -14,4 +17,6 @@ public interface OrderService {
 
     public Boolean ModifyOrder(List<ModifyRequest> modifyRequest);
 
+
+    public List<Payment> readAllPayment(String token);
 }
