@@ -15,7 +15,8 @@ public interface OrderService {
 
     public Boolean CancelAllOrder(CancelRequest cancelRequest);
 
-    public Boolean ModifyOrder(List<ModifyRequest> modifyRequest);
+
+    public List<OrderInfo> readAllOrders(Long PaymentId);
 
 
     public List<Payment> readAllPayment(String token);

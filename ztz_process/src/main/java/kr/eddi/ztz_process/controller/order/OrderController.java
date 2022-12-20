@@ -31,11 +31,13 @@ public class OrderController {
         return service.registerOrderInfo(paymentRegisterForm.toOrderRegisterRequest());
     }
 
-    @PostMapping("/AllOrderCancel")
-    public Boolean AllOrderCancel(CancelRequest cancelRequest){
-        log.info("AllOrderCancel" + cancelRequest);
+    @PostMapping("/ReadAllOrder/{paymentId}")
+    public List<OrderInfo> ReadAllOrder(@PathVariable("paymentId") Long paymentId){
+        log.info("ReadAllOrder" + paymentId);
 
-        return service.CancelAllOrder(cancelRequest);
+        List<OrderInfo> orderInfoList = service.readAllOrders(paymentId);
+        System.out.println(orderInfoList.get(0).getOrderID());
+        return orderInfoList;
     }
 
     @PostMapping("/ReadAllPayment")

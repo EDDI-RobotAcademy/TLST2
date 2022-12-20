@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,28 +75,16 @@ public class OrderServiceImpl implements OrderService{
             return false;
         }
     }
-
     @Override
-    public Boolean CancelAllOrder(CancelRequest cancelRequest) {
+    public List<OrderInfo> readAllOrders(Long PaymentId){
 
-        return false;
-//        List<Optional<OrderInfo>> mayBeOrder = orderRepository.findByOrderID(cancelRequest.getOrderID());
-//
-//        try{
-//            if(mayBeOrder.get(0).isPresent()){
-//                for(int i = 0; i <= mayBeOrder.size(); i++){
-//                    OrderInfo orderInfo = mayBeOrder.get(i).get();
-//                    orderRepository.deleteById(orderInfo.getOrderID());
-//                }
-//                return true;
-//            }else {
-//                System.out.println("해당하는 주문 번호가 없습니다");
-//                return false;
-//            }
-//        }catch (Exception e){
-//            System.out.println("오류 발생 " + e);
-//            return false;
-//        }
+        List<OrderInfo> orderInfo = orderRepository.findByPaymentId(PaymentId);
+
+        System.out.println("주문 아이디"+ orderInfo.get(0).getOrderID());
+        System.out.println("주문 개수"+orderInfo.get(0).getOrderCnt());
+        System.out.println("상품 이름"+orderInfo.get(0).getProduct().getName());
+        System.out.println("결제 정보"+orderInfo.get(0).getPayment().getImp_uid());
+        return orderInfo;
     }
 
     @Override
