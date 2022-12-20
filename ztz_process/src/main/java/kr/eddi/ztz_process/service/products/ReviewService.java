@@ -11,5 +11,15 @@ public interface ReviewService {
 
     public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName);
 
-    public List<Review> read(Long productNo);
+    public List<Review> productReviewRead(Long productNo);
+
+    public List<Review> memberReviewRead(Long memberId);
+
+    public void deleteReview(Long reviewNo);
+
+    public void modify(Long reviewNo, ReviewRequest reviewRequest);
+
+    public void modifyWithImg(Long reviewNo, ReviewRequest reviewRequest, String thumbnailFileName);
+
+
 }

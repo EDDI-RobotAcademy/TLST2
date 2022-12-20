@@ -11,7 +11,11 @@
         <li><a href="#">회원정보변경</a></li>
         <li><a href="#">배송지관리</a></li>
         <li><a href="#">주문관리</a></li>
-        <li><a href="#">리뷰관리</a></li>
+        <li>
+          <router-link :to="{ name: 'MyPageReview', params: {memberId: resMember.id.toString()} }">
+          상품 리뷰
+        </router-link>
+        </li>
         <li><a href="#">예약관리</a></li>
         <li><a @click="withdrawal">회원탈퇴</a></li>
       </ul>

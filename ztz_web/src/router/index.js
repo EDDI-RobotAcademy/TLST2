@@ -6,15 +6,17 @@ import SignInView from "@/views/account/SignInView";
 import ProductDetailView from "@/views/products/ProductDetailView";
 import CartView from "@/views/order/CartView";
 import ProductsView from "@/views/products/ProductsView";
-import OrderInfoView from "@/views/order/OrderInfoView"
-import MypageView from "@/views/mypage/MypageView"
-import HomeView from "@/views/HomeView"
-import QuestionListView from "@/views/boards/QuestionListView"
-import QuestionReadView from "@/views/boards/QuestionReadView"
-import QuestionRegisterView from "@/views/boards/QuestionRegisterView"
-import QuestionModifyView from "@/views/boards/QuestionModifyView"
-import FoundryView from "@/views/tour/FoundryView"
+import OrderInfoView from "@/views/order/OrderInfoView";
+import MypageView from "@/views/mypage/MypageView";
+import HomeView from "@/views/HomeView";
+import QuestionListView from "@/views/boards/QuestionListView";
+import QuestionReadView from "@/views/boards/QuestionReadView";
+import QuestionRegisterView from "@/views/boards/QuestionRegisterView";
+import QuestionModifyView from "@/views/boards/QuestionModifyView";
+import FoundryView from "@/views/tour/FoundryView";
 import ReservationView from "@/views/tour/ReservationView"
+import MyPageReview from "@/views/mypage/MyPageReview";
+
 
 Vue.use(VueRouter)
 
@@ -101,6 +103,16 @@ const routes = [
       default: true
     }
   },
+  {
+    path: '/my-page/review/:memberId',
+    name: 'MyPageReview',
+    components: {
+      default: MyPageReview
+    },
+    props: {
+      default: true
+    }
+  }
 ]
 
 const router = new VueRouter({
