@@ -14,4 +14,6 @@ export default {
     selectedFoundry: {},
     questionBoard: {},
     questionBoards: [],
+    questionComment: {},
+    questionComments: [],
 }
