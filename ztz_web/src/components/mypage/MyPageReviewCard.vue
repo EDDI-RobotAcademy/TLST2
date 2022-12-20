@@ -56,6 +56,7 @@
         <v-col class="mr-3 mb-2" align="right">
           <button-white
               small
+              @click="btnModifyReview"
               btn-name="수정"/>
           <button-white
               small
@@ -64,14 +65,19 @@
         </v-col>
       </v-row>
     </v-card>
+    <review-modify-form
+        ref="ReviewModifyForm"
+        :review="review"/>
   </div>
 </template>
 
 <script>
 import {mapActions} from "vuex";
+import ReviewModifyForm from "@/components/products/review/ReviewModifyForm";
 
 export default {
   name: "MyPageReviewCard",
+  components: {ReviewModifyForm},
   props: {
     review: Object,
   },
@@ -83,6 +89,9 @@ export default {
       const reviewNo = this.review.reviewNo
       await this.reqDeleteReviewToSpring(reviewNo)
       await this.$router.go(this.$router.currentRoute)
+    },
+    btnModifyReview() {
+      this.$refs.ReviewModifyForm.dialog = true
     }
   }
 }

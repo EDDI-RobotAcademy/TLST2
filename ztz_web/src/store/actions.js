@@ -193,5 +193,31 @@ export default {
             .then(() => {
                 alert('삭제 완료했습니다.')
             })
-    }
+    },
+    reqModifyReviewToSpring(_, payload) {
+        console.log('이미지 없는 리뷰 수정')
+
+        const {reviewNo, rate, content} = payload
+
+        return axios.put(`http://localhost:7777/ztz/products/review/modify/${reviewNo}`,
+            {rate, content})
+            .then(() => {
+                alert('리뷰를 수정했습니다.')
+            })
+    },
+    reqModifyReviewWithImgToSpring(_, payload) {
+        console.log('이미지 포함 리뷰 수정')
+
+        const {formData, reviewNo} = payload
+        console.log(formData)
+
+        return axios.put(`http://localhost:7777/ztz/products/review/modifyWithImg/${reviewNo}`, formData)
+            .then((res) => {
+                console.log(res.data)
+                alert('리뷰를 수정했습니다.')
+            })
+            .catch((res) => {
+                console.log(res.message)
+            })
+    },
 }
