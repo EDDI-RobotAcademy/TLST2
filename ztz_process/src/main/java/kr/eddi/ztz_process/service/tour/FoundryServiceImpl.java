@@ -39,7 +39,7 @@ public class FoundryServiceImpl implements FoundryService{
     public String savedReservation(ReservationRequest reservationRequest) {
         Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
         Member member = memberRepository.findByMemberId(id);
-        Foundry foundry = foundryRepository.findByFoundryId((long)reservationRequest.foundryId());
+        Foundry foundry = foundryRepository.findByFoundryName(reservationRequest.foundryName());
         LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
 
         log.info("받은데이터 : " + reservationRequest.toString());

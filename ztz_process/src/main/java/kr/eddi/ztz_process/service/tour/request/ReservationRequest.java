@@ -6,6 +6,6 @@ public record ReservationRequest(
         String reservationDate,
         String phoneNumber,
         String token,
-        int foundryId) {
+        String foundryName) {
 
 }
