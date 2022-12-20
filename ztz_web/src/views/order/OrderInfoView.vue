@@ -18,8 +18,8 @@ export default {
       'reqRegisterOrderToSpring',
     ]),
     async payment(payload){
-      const { paymentPrice, merchant_uid , sendInfo} = payload
-      console.log(paymentPrice + merchant_uid + sendInfo )
+      const { paymentPrice, merchant_uid , sendInfo , imp_uid, city, street, addressDetail, zipcode ,sendRequest} = payload
+      console.log(paymentPrice + merchant_uid + sendInfo , imp_uid ,city, street, addressDetail, zipcode ,sendRequest )
 
       await this.reqRegisterOrderToSpring(payload)
 
