@@ -12,8 +12,9 @@ import {
     REQUEST_QUESTION_FROM_SPRING,
 } from './mutation-types'
 
+
 // npm install axios --save-dev
-import axios from 'axios'
+import axios from "axios";
 
 export default {
     reqProductsFromSpring({commit}) {
@@ -58,6 +59,13 @@ export default {
                 commit(REQUEST_FOUNDRY_LIST, res.data)
                 console.log(res.data)
             })
+    },
+
+    reqReservationToSpring({ commit }, payload) {
+        return axios.post("http://localhost:7777/ztz/tour/reservation", payload)
+            .then((res) => {
+                commit(RESPONSE_MY_REQUEST, res.data);
+            });
     },
     reqMemberProfileInfoToSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/member/user-profile`,
@@ -221,3 +229,4 @@ export default {
             })
     },
 }
+

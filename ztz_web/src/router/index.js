@@ -14,7 +14,9 @@ import QuestionReadView from "@/views/boards/QuestionReadView";
 import QuestionRegisterView from "@/views/boards/QuestionRegisterView";
 import QuestionModifyView from "@/views/boards/QuestionModifyView";
 import FoundryView from "@/views/tour/FoundryView";
+import ReservationView from "@/views/tour/ReservationView"
 import MyPageReview from "@/views/mypage/MyPageReview";
+
 
 Vue.use(VueRouter)
 
@@ -61,9 +63,15 @@ const routes = [
     component: MypageView
   },
   {
-    path: '/foundry',
+    path: '/tour',
     name: 'FoundryView',
     component: FoundryView
+  }, 
+  {
+    path: '/reservation',
+    name: 'ReservationView',
+    component: ReservationView,
+    props: true
   },
   {
     path: '/question-list',

@@ -1,4 +1,4 @@
-package kr.eddi.ztz_process.entity.reservation;
+package kr.eddi.ztz_process.entity.tour;
 
 import jakarta.persistence.*;
 import lombok.Data;
