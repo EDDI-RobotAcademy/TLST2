@@ -91,12 +91,16 @@ export default {
     // },
     async onReservationSubmit(payload) {
       await this.reqReservationToSpring(payload);
-      console.log(payload.toString());
       this.res = this.$store.state.resMyRequest;
 
       if (this.res === 1) {
         alert("성공적으로 예약되었습니다.");
+        this.goCompletePage(payload);
       }
+    },
+    goCompletePage(payload) {
+      this.$store.commit("SAVE_RESERVATION_INFO", payload);
+      this.$router.push({ name: "CompleteView" });
     },
   },
 };

@@ -12,6 +12,7 @@ export default {
   resMemberProfile: {},
   foundrys: [],
   selectedFoundry: {},
+  reservationInfo: {},
   questionBoard: {},
   questionBoards: [],
 };

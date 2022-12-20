@@ -12,10 +12,10 @@ public class ReservationForm {
     private String reservationDate;
     private String phoneNumber;
     private String token;
-    private int foundryId;
+    private String foundryName;
 
 
     public ReservationRequest toReservationRequest(){
-        return new ReservationRequest(username,numberOfMember,reservationDate,phoneNumber,token,foundryId);
+        return new ReservationRequest(username,numberOfMember,reservationDate,phoneNumber,token,foundryName);
     }
 }

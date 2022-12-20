@@ -16,92 +16,99 @@ import QuestionModifyView from "@/views/boards/QuestionModifyView";
 import FoundryView from "@/views/tour/FoundryView";
 import ReservationView from "@/views/tour/ReservationView"
 import MyPageReview from "@/views/mypage/MyPageReview";
+import CompleteView from "@/views/tour/CompleteView";
+
 
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "home",
+    component: HomeView,
   },
   {
-    path: '/sign-up',
-    name: 'SignUpView',
-    component: SignUpView
+    path: "/sign-up",
+    name: "SignUpView",
+    component: SignUpView,
   },
   {
-    path: '/sign-in',
-    name: 'SignInView',
-    component: SignInView
+    path: "/sign-in",
+    name: "SignInView",
+    component: SignInView,
   },
   {
-    path: '/product',
-    name: 'ProductsView',
-    component: ProductsView
+    path: "/product",
+    name: "ProductsView",
+    component: ProductsView,
   },
   {
-    path: '/product/:productNo',
-    name: 'ProductDetailView',
+    path: "/product/:productNo",
+    name: "ProductDetailView",
     component: ProductDetailView,
-    props: true
+    props: true,
   },
   {
-    path: '/cart',
-    name: 'CartView',
-    component: CartView
+    path: "/cart",
+    name: "CartView",
+    component: CartView,
   },
   {
-    path: '/order-Info',
-    name: 'OrderInfoView',
-    component: OrderInfoView
+    path: "/order-Info",
+    name: "OrderInfoView",
+    component: OrderInfoView,
   },
   {
-    path: '/my-page',
-    name: 'MyPageView',
-    component: MypageView
+    path: "/my-page",
+    name: "MyPageView",
+    component: MypageView,
   },
   {
-    path: '/tour',
-    name: 'FoundryView',
-    component: FoundryView
-  }, 
+    path: "/tour",
+    name: "FoundryView",
+    component: FoundryView,
+  },
   {
-    path: '/reservation',
-    name: 'ReservationView',
+    path: "/reservation",
+    name: "ReservationView",
     component: ReservationView,
-    props: true
+    props: true,
   },
   {
-    path: '/question-list',
-    name: 'QuestionListView',
-    component: QuestionListView
+    path: "/completeReservation",
+    name: "CompleteView",
+    component: CompleteView,
   },
   {
-    path: '/question-read/:questionNo',
-    name: 'QuestionReadView',
+    path: "/question-list",
+    name: "QuestionListView",
+    component: QuestionListView,
+  },
+  {
+    path: "/question-read/:questionNo",
+    name: "QuestionReadView",
     components: {
-      default: QuestionReadView
+      default: QuestionReadView,
     },
     props: {
-      default: true
-    }
+      default: true,
+    },
   },
   {
-    path: '/question-register',
-    name: 'QuestionRegisterView',
-    component: QuestionRegisterView
+    path: "/question-register",
+    name: "QuestionRegisterView",
+    component: QuestionRegisterView,
   },
   {
-    path: '/question-modify/:questionNo',
-    name: 'QuestionModifyView',
+    path: "/question-modify/:questionNo",
+    name: "QuestionModifyView",
     components: {
-      default: QuestionModifyView
+      default: QuestionModifyView,
     },
     props: {
-      default: true
-    }
+      default: true,
+    },
   },
   {
     path: '/my-page/review/:memberId',
@@ -116,9 +123,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface FoundryRepository extends JpaRepository<Foundry, Long> {
-    @Query("select f from Foundry f where f.id = :id")
-    Foundry findByFoundryId(Long id);
+    @Query("select f from Foundry f where f.name = :name")
+    Foundry findByFoundryName(String name);
 }

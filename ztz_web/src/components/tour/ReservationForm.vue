@@ -112,7 +112,7 @@ export default {
       phoneNumber: "",
       isActive: false,
       token: "",
-      foundryId: this.item.foundryId,
+      foundryName: this.item.name,
     };
   },
   methods: {
@@ -129,7 +129,7 @@ export default {
     },
     onReservationSubmit() {
       const {
-        foundryId,
+        foundryName,
         username,
         numberOfMember,
         reservationDate,
@@ -137,7 +137,7 @@ export default {
         token,
       } = this;
       this.$emit("submit", {
-        foundryId,
+        foundryName,
         username,
         numberOfMember,
         reservationDate,
