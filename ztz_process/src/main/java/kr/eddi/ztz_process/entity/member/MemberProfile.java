@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberProfile {
 
+
     @Id
     @Getter
     @Column(name = "member_profile_id")

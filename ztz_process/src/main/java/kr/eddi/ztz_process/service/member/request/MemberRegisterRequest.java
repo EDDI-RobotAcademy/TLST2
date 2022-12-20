@@ -1,14 +1,15 @@
 package kr.eddi.ztz_process.service.member.request;
 
+import kr.eddi.ztz_process.entity.member.Authority;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.member.MemberProfile;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class MemberRegisterRequest {
 
     private final String email;
@@ -17,18 +18,62 @@ public class MemberRegisterRequest {
     private final String username;
     private final int birthdate;
 
-    private final String city;
-    private final String street;
-    private final String addressDetail;
-    private final String zipcode;
+    private final Long authorityNo;
+    private final String authorityName;
+
+    private boolean managerCheck;
+    private String managerCode;
+    private String city;
+    private String street;
+    private String addressDetail;
+    private String zipcode;
     private final String phoneNumber;
+
+    public MemberRegisterRequest(String email, String password, String username, int birthdate, Long authorityNo, String authorityName, boolean managerCheck, String city, String street, String addressDetail, String zipcode, String phoneNumber){
+        this.email= email;
+        this.password = password;
+        this.username= username;
+        this.birthdate = birthdate;
+        this.authorityNo = authorityNo;
+        this.authorityName = authorityName;
+        this.managerCheck = managerCheck;
+        this.city= city;
+        this.street = street;
+        this.addressDetail = addressDetail;
+        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public MemberRegisterRequest(String email, String password, String username, int birthdate,Long authorityNo, String authorityName,boolean managerCheck, String phoneNumber){
+        this.email = email;
+        this.password = password;
+        this.username= username;
+        this.birthdate = birthdate;
+        this.authorityNo = authorityNo;
+        this.authorityName = authorityName;
+        this.managerCheck = managerCheck;
+        this.phoneNumber =phoneNumber;
+    }
 
     public Member toMember () {
         return new Member(
                 email,
                 username,
                 birthdate,
+                Authority.ofMember(authorityNo, authorityName),
+                managerCheck,
                 MemberProfile.of(city, street, addressDetail, zipcode,phoneNumber)
         );
     }
+
+    public Member toManager() {
+        return new Member(
+                email,
+                username,
+                birthdate,
+                Authority.ofMember(authorityNo, authorityName),
+                managerCheck
+        );
+    }
+
 }

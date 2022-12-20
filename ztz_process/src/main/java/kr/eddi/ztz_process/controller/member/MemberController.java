@@ -28,11 +28,24 @@ public class MemberController {
         return service.emailValidation(email);
     }
 
+    @PostMapping("/check-manager/{managerCode}")
+    public Boolean managerCodeValidation(@PathVariable("managerCode") String managerCode) {
+        log.info("managerCodeValidation(): " + managerCode);
+
+        return service.managerCodeValidation(managerCode);
+    }
+
     @PostMapping("/sign-up")
     public Boolean signUp(@RequestBody MemberRegisterForm form) {
         log.info("signUp: " + form);
+        log.info("매니저코드: "+ form.getManagerCode());
+        if(form.getManagerCode()== null ||form.getManagerCode().isEmpty()){
+            return service.signUp(form.toMemberRegisterRequest());
+        }else{
+            return service.signUp(form.toManagerRegisterRequest());
+        }
 
-        return service.signUp(form.toMemberRegisterRequest());
+
     }
 
     @PostMapping("/sign-in")

@@ -1,9 +1,7 @@
 package kr.eddi.ztz_process.service.member;
 
 import kr.eddi.ztz_process.entity.member.*;
-import kr.eddi.ztz_process.repository.member.AuthenticationRepository;
-import kr.eddi.ztz_process.repository.member.MemberProfileRepository;
-import kr.eddi.ztz_process.repository.member.MemberRepository;
+import kr.eddi.ztz_process.repository.member.*;
 import kr.eddi.ztz_process.service.member.request.MemberAddressRequest;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
@@ -27,10 +25,18 @@ public class MemberServiceImpl implements MemberService {
     private AuthenticationRepository authenticationRepository;
 
     @Autowired
+    private ManagerCodeRepository managerCodeRepository;
+
+
+    @Autowired
     private RedisService redisService;
 
     @Autowired
     private MemberProfileRepository memberProfileRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
 
     @Override
     public Boolean emailValidation(String email) {
@@ -42,14 +48,37 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Boolean managerCodeValidation(String managerCode) {
+        Optional<ManagerCode> maybeManager = managerCodeRepository.findByCode(managerCode);
+        if (maybeManager.isPresent()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public Boolean signUp(MemberRegisterRequest request) {
-        final Member member = request.toMember();
-        memberRepository.save(member);
+        log.info("매니저코드: "+request.getManagerCode());
+        if(request.getManagerCode() == null || request.getManagerCode().isEmpty()){
+            log.info("일반회원 가입");
+            final Member member = request.toMember();
+            memberRepository.save(member);
 
-        final BasicAuthentication auth = new BasicAuthentication(member,
-                Authentication.BASIC_AUTH, request.getPassword());
+            final BasicAuthentication auth = new BasicAuthentication(member,
+                    Authentication.BASIC_AUTH, request.getPassword());
 
-        authenticationRepository.save(auth);
+            authenticationRepository.save(auth);
+
+        } else{
+            log.info("관리자회원 가입");
+            final Member member = request.toManager();
+            memberRepository.save(member);
+
+            final BasicAuthentication auth = new BasicAuthentication(member,
+                    Authentication.BASIC_AUTH, request.getPassword());
+
+            authenticationRepository.save(auth);
+        }
 
         return true;
     }
@@ -90,6 +119,8 @@ public class MemberServiceImpl implements MemberService {
     public void withdrawal(String token) {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
+
+        authorityRepository.delete(member.getAuthority());
         memberRepository.delete(member);
     }
 
