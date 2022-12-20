@@ -80,5 +80,47 @@ public class ReviewController {
 
         reviewService.deleteReview(reviewNo);
     }
+
+    @PutMapping("/modify/{reviewNo}")
+    public void modifyReview (@PathVariable("reviewNo") Long reviewNo,
+                              @RequestBody ReviewRequest reviewRequest) {
+        log.info(reviewNo + "번의 리뷰 수정");
+
+        reviewService.modify(reviewNo, reviewRequest);
+    }
+
+    @ResponseBody
+    @PutMapping(value = "/modifyWithImg/{reviewNo}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public void modifyWithImg(
+            @PathVariable("reviewNo") Long reviewNo,
+            @RequestPart(value = "image") MultipartFile image,
+            @RequestPart(value = "info") ReviewRequest reviewRequest) {
+
+        log.info(reviewNo + "번의 리뷰 수정");
+        log.info("파일 리스트" + image);
+        log.info("파일 정보" + reviewRequest);
+
+        String thumbnailFileName = image.getOriginalFilename();
+
+        try {
+            log.info("requestUploadFilesWitText() - Make file: " +
+                    image.getOriginalFilename());
+            FileOutputStream writer = new FileOutputStream(
+                    "../ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
+            );
+
+            log.info("디렉토리에 파일 배치 성공");
+
+            writer.write(image.getBytes());
+
+            writer.close();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException((e));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        reviewService.modifyWithImg(reviewNo, reviewRequest, thumbnailFileName);
+    }
     
 }

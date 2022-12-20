@@ -17,5 +17,9 @@ public interface ReviewService {
 
     public void deleteReview(Long reviewNo);
 
+    public void modify(Long reviewNo, ReviewRequest reviewRequest);
+
+    public void modifyWithImg(Long reviewNo, ReviewRequest reviewRequest, String thumbnailFileName);
+
 
 }
