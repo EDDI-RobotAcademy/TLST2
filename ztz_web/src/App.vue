@@ -1,19 +1,18 @@
 <template>
   <v-app>
-      <div id="app">
-        <v-main>
-          <main-header v-if="!$route.meta.hideHeader"/>
-          <router-view/>
-          <main-footer/>
-        </v-main>
-      </div>
+    <div id="app">
+      <v-main>
+        <main-header v-if="!$route.meta.hideHeader" />
+        <router-view />
+        <new-footer />
+      </v-main>
+    </div>
   </v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+  name: "App",
 
   data: () => ({
     //
@@ -22,7 +21,6 @@ export default {
 </script>
 
 <style scoped>
-
 #app {
   height: 100%;
   position: relative;

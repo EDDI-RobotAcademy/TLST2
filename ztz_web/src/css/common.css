@@ -1,0 +1,54 @@
+footer {
+  width: 100%;
+  border-top: 1px solid #ddd;
+}
+
+footer .footer-nav {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+footer .footer-nav li {
+  margin-left: 14px;
+  font-size: 14px;
+  color: #205c37;
+  list-style: none;
+  padding: 14px 0;
+}
+
+footer > div {
+  width: 100%;
+  background-color: #205c37;
+}
+
+footer .content-box {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+footer > div .team {
+  font-size: 13px;
+  color: #91bca1;
+  margin-bottom: 6px;
+}
+
+footer > div .copyright {
+  font-size: 12px;
+  color: #568869;
+}
+
+.team-github {
+  margin-top: -5px;
+}
+.team-github button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+}
