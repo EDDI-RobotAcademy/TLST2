@@ -39,6 +39,8 @@ public class OrderServiceImpl implements OrderService{
     PaymentRepository paymentRepository;
 
     @Autowired
+    RedisService redisService;
+    @Autowired
     ProductsRepository productsRepository;
 
     @Autowired
@@ -63,6 +65,7 @@ public class OrderServiceImpl implements OrderService{
                         .builder()
                         .orderNo(setOrderNum)
                         .orderCnt(OrderListInfo.getOrderCnt().get(i))
+                        .orderState("결제완료")
                         .product(maybeProduct.get())
                         .member(maybeMember.get())
                         .payment(payment)
@@ -101,10 +104,30 @@ public class OrderServiceImpl implements OrderService{
 
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest){
+        OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
+        Integer TotalOrderedCnt = 0;
+        Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.getMemberID().get(0));
+        for (int i = 0; i < paymentRegisterRequest.getSendInfo().getOrderCnt().size(); i++) {
+            TotalOrderedCnt += paymentRegisterRequest.getSendInfo().getOrderCnt().get(i);
+        }
+
+        Address address = Address.of(
+                paymentRegisterRequest.getCity(),
+                paymentRegisterRequest.getStreet(),
+                paymentRegisterRequest.getAddressDetail(),
+                paymentRegisterRequest.getZipcode()
+        );
+
         Payment payment = Payment.
                 builder()
                 .merchant_uid(paymentRegisterRequest.getMerchant_uid())
                 .totalPaymentPrice(paymentRegisterRequest.getPaymentPrice())
+                .imp_uid(paymentRegisterRequest.getImp_uid())
+                .OrderedCnt(TotalOrderedCnt)
+                .PaymentState("결제 완료")
+                .address(address)
+                .DeliveryRequest(paymentRegisterRequest.getSendRequest())
+                .member(maybeMember.get())
                 .build();
 
         paymentRepository.save(payment);
@@ -119,7 +142,7 @@ public class OrderServiceImpl implements OrderService{
 
         while (true){
             setOrderNum = String.valueOf(setRandomOrderNo.makeIntCustomRandom(MINORDERNUM , MAXORDERNUM));
-           Optional<OrderInfo> maybeOrderNo = orderRepository.findByOrderNo(setOrderNum);
+            Optional<OrderInfo> maybeOrderNo = orderRepository.findByOrderNo(setOrderNum);
             if (maybeOrderNo.isPresent()){
                 System.out.println("주문 아이디 재생성" + maybeOrderNo.get());
             }else {
