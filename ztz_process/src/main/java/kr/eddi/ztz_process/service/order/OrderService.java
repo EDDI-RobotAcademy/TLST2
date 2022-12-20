@@ -13,7 +13,7 @@ public interface OrderService {
 
     public Boolean registerOrderInfo(PaymentRegisterRequest paymentRegisterRequest);
 
-    public Boolean CancelAllOrder(CancelRequest cancelRequest);
+    public Boolean refundAllOrder(RefundRequest refundRequest) throws IamportResponseException, IOException;
 
 
     public List<OrderInfo> readAllOrders(Long PaymentId);

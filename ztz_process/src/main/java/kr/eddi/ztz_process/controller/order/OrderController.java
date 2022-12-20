@@ -48,4 +48,15 @@ public class OrderController {
         return payments;
     }
 
+    @PostMapping("/refundAllOrder/{refundPaymentId}")
+    public Boolean refundAllOrder(@PathVariable("refundPaymentId") Long refundPaymentId, @RequestBody RefundRequest refundRequest) throws IamportResponseException, IOException {
+        log.info("refundAllOrder" + refundPaymentId);
+        log.info("refundAllOrder" + refundRequest.getRefundReason());
+        log.info("refundAllOrder" + refundRequest.getRefundPaymentId());
+
+        return service.refundAllOrder(refundRequest);
+
+    }
+
+
 }

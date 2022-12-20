@@ -101,7 +101,35 @@ public class OrderServiceImpl implements OrderService{
 
         return payments;
     }
+    @Override
+    public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
+        String test_api_key = "7457766534132075";
+        String test_api_secret = "CG6nmGvTcWQiEqQGAf53yVQiuAesHTly0uJL5mHTdbzRhlbOinjSulKdE9vObOvAfjDpcS2cRzNxjHn8";
+        IamportClient client = new IamportClient(test_api_key,test_api_secret);
 
+        Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());
+        Payment payment = maybePayment.get();
+        List<OrderInfo> orderInfos = orderRepository.findByPaymentId(payment.getPaymentId());
+        String uid = payment.getImp_uid();
+        System.out.println(uid);
+        CancelData cancelData = new CancelData(uid,true);
+
+        try {
+            client.cancelPaymentByImpUid(cancelData);
+
+            payment.setPaymentState("전액 취소 완료");
+            for (int i = 0; i < orderInfos.size(); i++) {
+                orderInfos.get(i).setOrderState("환불 완료");
+                orderInfos.get(i).setRefundReason(refundRequest.getRefundReason());
+                orderRepository.save(orderInfos.get(i));
+            }
+            paymentRepository.save(payment);
+        }catch (IamportResponseException e){
+            System.out.println("결제 취소 실패");
+            System.out.println("오류 :" + e);
+        }
+        return true;
+    }
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest){
         OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
