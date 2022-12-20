@@ -7,13 +7,13 @@
     >
       <v-card align="center">
         <v-card-title class="text-h5">
-          리뷰쓰기
+          리뷰 수정
         </v-card-title>
         <div>
           <!-- 리뷰 작성할 상품 추가 예정 -->
-          <p>{{ product.name }}</p>
+          <p>{{ review.product.name }}</p>
           <v-img
-              :src="require(`@/assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
+              :src="require(`@/assets/products/defaultImg/${review.product.productInfo.thumbnailFileName}`)"
               max-width="200"
               max-height="150"
               contain
@@ -23,12 +23,11 @@
           <p class="mt-5 mb-3">상품은 만족하셨나요?</p>
           <v-rating
               v-model="rate"
-              :value="rate"
+              :value="review.rate"
               background-color="#205C37"
               color="#205C37"
               half-increments
               x-large
-              hover
           ></v-rating>
           <p>{{ rate }}</p>
         </div>
@@ -45,7 +44,6 @@
         </div>
         <div class="mb-10">
           <v-file-input
-              ref="fileUpload"
               @change="selectFile"
               @click:clear="removeFile"
               style="width: 550px"
@@ -53,6 +51,7 @@
               prepend-icon="mdi-camera"
               label="사진 추가하기"
           ></v-file-input>
+          <p>등록된 이미지</p>
           <v-img
               :src="preview"
               max-height="150"
@@ -70,7 +69,7 @@
           />
           <ButtonGreen
               @click="submit"
-              btn-name="등록"
+              btn-name="수정"
               large
           />
           <v-spacer></v-spacer>
@@ -81,10 +80,10 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
-  name: "ReviewRegisterForm",
+  name: "ReviewModifyForm",
   data() {
     return {
       dialog: false,
@@ -92,7 +91,6 @@ export default {
       content: '',
       image: '',
       preview: '',
-      fileName: '',
       content_rule: [
         v => !!v || '필수 입력 사항입니다.',
         v => !(v && v.length < 10) || '10자 이상 입력해 주세요.',
@@ -100,20 +98,22 @@ export default {
     }
   },
   props: {
-    product: {
-      type: Object,
-      required: true,
-    }
+    review: Object
+  },
+  created() {
+    this.rate = this.review.rate
+    this.content = this.review.content
+    this.preview = require(`@/assets/products/uploadImg/${this.review.thumbnailFileName}`)
   },
   methods: {
     ...mapActions([
-      'reqRegisterReviewToSpring',
-      'reqRegisterReviewWithImageToSpring'
+      'reqModifyReviewToSpring',
+      'reqModifyReviewWithImgToSpring'
     ]),
     selectFile(file) {
       this.image = file
       // 사진 업로드 시 미리보기 기능
-      if (!(this.image.length == 0)) {
+      if (!(this.image.length === 0)) {
         const fileData = (data) => {
           this.preview = data
         }
@@ -129,27 +129,25 @@ export default {
       this.preview = ''
     },
     async submit() {
-      if (!(this.image.length == 0)) {
-        console.log("이미지 포함 리뷰")
-        //이미지 있는 경우
+      if (!(this.image.length === 0)) {
+        console.log("이미지 포함 리뷰 수정")
+
         let formData = new FormData()
         formData.append('image', this.image);
 
         let fileInfo = {
-          memberId: this.resMember.id,
-          productNo: this.product.productNo,
           rate: this.rate,
           content: this.content
         }
+        const reviewNo = this.review.reviewNo
         formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
-        await this.reqRegisterReviewWithImageToSpring(formData)
+        await this.reqModifyReviewWithImgToSpring({formData, reviewNo})
       } else {
-        //이미지 없는 경우
-        console.log("이미지 없는 리뷰")
+        //이미지 수정 없는 경우
+        console.log("이미지 없이 리뷰 수정")
         const {rate, content} = this
-        const memberId = this.resMember.id
-        const productNo = this.product.productNo
-        await this.reqRegisterReviewToSpring({memberId, productNo, rate, content})
+        const reviewNo = this.review.reviewNo
+        await this.reqModifyReviewToSpring({reviewNo, rate, content})
       }
       await this.$router.go(this.$router.currentRoute)
       this.dialog = false
@@ -158,22 +156,22 @@ export default {
       this.dialog = false
     },
   },
-  computed: {
-    ...mapState([
-      'resMember'
-    ])
-  },
-  watch: {
-    // dialog 상태가 변경되면 실행됨
-    dialog: function (val) {
-      if (val) {
-        this.image = ''
-        this.rate = 0
-        this.content = ''
-        this.preview = ''
-      }
-    }
-  }
+  // computed: {
+  //   ...mapState([
+  //     'resMember'
+  //   ])
+  // },
+  // watch: {
+  //   // dialog 상태가 변경되면 실행됨
+  //   dialog: function (val) {
+  //     if (val) {
+  //       this.image = ''
+  //       this.rate = 0
+  //       this.content = ''
+  //       this.preview = ''
+  //     }
+  //   }
+  // }
 }
 </script>
 

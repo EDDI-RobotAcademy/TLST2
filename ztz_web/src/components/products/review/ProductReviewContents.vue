@@ -15,7 +15,7 @@
         </div>
       </v-col>
       <v-col cols="8" align="left">
-        <div class="ml-3" v-if="(review.thumbFileName == null)">
+        <div class="ml-3" v-if="(review.thumbnailFileName == null)">
           <p>{{ review.member.username | nameFormat }}</p>
           <p>{{ review.content }}</p>
         </div>
@@ -23,7 +23,7 @@
           <p>{{ review.member.username | nameFormat }}</p>
           <p>{{ review.content }}</p>
           <v-img
-              :src="require(`@/assets/products/uploadImg/${review.thumbFileName}`)"
+              :src="require(`@/assets/products/uploadImg/${review.thumbnailFileName}`)"
               height="300"
               width="400"
               contain

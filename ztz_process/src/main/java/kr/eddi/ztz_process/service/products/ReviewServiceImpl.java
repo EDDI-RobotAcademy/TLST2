@@ -3,7 +3,6 @@ package kr.eddi.ztz_process.service.products;
 import kr.eddi.ztz_process.controller.products.request.ReviewRequest;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.products.Product;
-import kr.eddi.ztz_process.entity.products.ProductInfo;
 import kr.eddi.ztz_process.entity.products.Review;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
@@ -59,13 +58,46 @@ public class ReviewServiceImpl implements ReviewService{
                 .product(product)
                 .rate(reviewRequest.getRate())
                 .content(reviewRequest.getContent())
-                .thumbFileName(thumbnailFileName)
+                .thumbnailFileName(thumbnailFileName)
                 .build();
         reviewRepository.save(review);
     }
 
     @Override
-    public List<Review> read(Long productNo) {
+    public List<Review> productReviewRead(Long productNo) {
         return reviewRepository.findByProductNo(productNo);
+    }
+
+    @Override
+    public List<Review> memberReviewRead(Long memberId) {
+        return reviewRepository.findByMemberId(memberId);
+    }
+
+    @Override
+    public void deleteReview(Long reviewNo) {
+        reviewRepository.deleteById(reviewNo);
+    }
+
+    @Override
+    public void modify(Long reviewNo, ReviewRequest reviewRequest) {
+        Optional<Review> maybeReview = reviewRepository.findById(reviewNo);
+        Review review = maybeReview.get();
+
+        review.setRate(reviewRequest.getRate());
+        review.setContent(reviewRequest.getContent());
+
+        reviewRepository.save(review);
+    }
+
+    @Override
+    public void modifyWithImg(Long reviewNo, ReviewRequest reviewRequest, String thumbnailFileName) {
+        Optional<Review> maybeReview = reviewRepository.findById(reviewNo);
+        Review review = maybeReview.get();
+
+        review.setRate(reviewRequest.getRate());
+        review.setContent(reviewRequest.getContent());
+        review.setThumbnailFileName(thumbnailFileName);
+
+        reviewRepository.save(review);
     }
 }
