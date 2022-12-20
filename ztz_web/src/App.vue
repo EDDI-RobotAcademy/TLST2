@@ -26,6 +26,5 @@ export default {
 #app {
   height: 100%;
   position: relative;
-  padding-bottom: 170px;
 }
 </style>
