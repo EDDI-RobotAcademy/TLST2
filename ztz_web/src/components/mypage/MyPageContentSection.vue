@@ -6,7 +6,7 @@
     </div>
 
     <div class="management-box">
-      <p class=" head-text">주문관리</p>
+      <OrderManagement/>
     </div>
 
     <div class="management-box no-border-bottom">
@@ -18,8 +18,9 @@
 
 <script>
 import MyPageDeliverySection from "@/components/mypage/MyPageDeliverySection";
+import OrderManagement from "@/components/mypage/OrderManagement";
 export default {
   name: "MyPageContentSection",
-  components: {MyPageDeliverySection}
+  components: {OrderManagement, MyPageDeliverySection}
 }
 </script>
