@@ -5,6 +5,7 @@ public record ReservationRequest(
         int numberOfMember,
         String reservationDate,
         String phoneNumber,
-        String token) {
+        String token,
+        int foundryId) {
 
 }

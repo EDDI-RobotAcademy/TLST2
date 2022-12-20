@@ -39,6 +39,7 @@ public class FoundryServiceImpl implements FoundryService{
     public String savedReservation(ReservationRequest reservationRequest) {
         Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
         Member member = memberRepository.findByMemberId(id);
+        Foundry foundry = foundryRepository.findByFoundryId((long)reservationRequest.foundryId());
         LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
 
         log.info("받은데이터 : " + reservationRequest.toString());
@@ -47,15 +48,9 @@ public class FoundryServiceImpl implements FoundryService{
                 reservationRequest.username(),
                 reservationRequest.phoneNumber(),
                 selectedDate,
-                reservationRequest.numberOfMember()
+                reservationRequest.numberOfMember(),
+                foundry
         );
-
-//        reservation.setMember(member);
-//        reservation.setUsername(reservationRequest.getUsername());
-//        reservation.setPhoneNumber(reservationRequest.getPhoneNumber());
-//        reservation.setReservationDate(selectedDate);
-//        reservation.setNumberOfMember( reservationRequest.getNumberOfMember());
-
 
         log.info("reservation : " + reservation.toString());
         reservationRepository.save(reservation);

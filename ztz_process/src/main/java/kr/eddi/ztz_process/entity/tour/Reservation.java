@@ -26,14 +26,17 @@ public class Reservation {
     private LocalDate reservationDate;
     @Column(nullable = false)
     private int numberOfMember;
+    @ManyToOne
+    @JoinColumn(name = "Foundry_id")
+    private Foundry foundry;
 
-
-    public Reservation(Member member, String username, String phoneNumber, LocalDate reservationDate, int numberOfMember) {
+    public Reservation(Member member, String username, String phoneNumber, LocalDate reservationDate, int numberOfMember, Foundry foundry) {
         this.member = member;
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.reservationDate = reservationDate;
         this.numberOfMember = numberOfMember;
+        this.foundry = foundry;
     }
 
 }
