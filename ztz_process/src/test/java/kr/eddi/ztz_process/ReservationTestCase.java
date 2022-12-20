@@ -1,9 +1,9 @@
 package kr.eddi.ztz_process;
 
 
-import kr.eddi.ztz_process.entity.reservation.Foundry;
-import kr.eddi.ztz_process.entity.reservation.MapPoint;
-import kr.eddi.ztz_process.repository.reservation.FoundryRepository;
+import kr.eddi.ztz_process.entity.tour.Foundry;
+import kr.eddi.ztz_process.entity.tour.MapPoint;
+import kr.eddi.ztz_process.repository.tour.FoundryRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
