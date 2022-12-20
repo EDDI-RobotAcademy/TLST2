@@ -82,6 +82,12 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "ReservationForm",
   components: { DatePicker },
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
   beforeUpdate() {
     this.checkValidation();
   },
@@ -106,6 +112,7 @@ export default {
       phoneNumber: "",
       isActive: false,
       token: "",
+      foundryId: this.item.foundryId,
     };
   },
   methods: {
@@ -121,9 +128,16 @@ export default {
       }
     },
     onReservationSubmit() {
-      const { username, numberOfMember, reservationDate, phoneNumber, token } =
-        this;
+      const {
+        foundryId,
+        username,
+        numberOfMember,
+        reservationDate,
+        phoneNumber,
+        token,
+      } = this;
       this.$emit("submit", {
+        foundryId,
         username,
         numberOfMember,
         reservationDate,

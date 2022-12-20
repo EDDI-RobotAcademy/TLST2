@@ -33,7 +33,7 @@
       class="map-area"
       style="width: 1200px; height: 300px; background-color: cyan"
     ></div>
-    <reservation-form @submit="onReservationSubmit" />
+    <reservation-form :item="item" @submit="onReservationSubmit" />
   </div>
 </template>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<API KEY>"></script> -->
