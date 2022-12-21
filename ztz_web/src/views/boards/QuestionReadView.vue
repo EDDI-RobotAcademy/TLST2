@@ -62,9 +62,9 @@
           </div>
         </tr>
       </table>
-      <!--      <div>-->
-      <!--        <question-comment-register-form @submit="onSubmitRegister"/>-->
-      <!--      </div>-->
+      <div>
+        <question-comment-register-form @submit="onSubmitRegister"/>
+      </div>
     </div>
   </v-container>
 </template>
@@ -73,7 +73,7 @@
 import {mapActions, mapState} from "vuex";
 import QuestionRead from "@/components/boards/QuestionRead";
 import QuestionCommentList from "@/components/boards/comment/QuestionCommentList";
-// import QuestionCommentRegisterForm from "@/components/boards/comment/QuestionCommentRegisterForm";
+import QuestionCommentRegisterForm from "@/components/boards/comment/QuestionCommentRegisterForm";
 
 export default {
   name: "QuestionReadView",
@@ -86,7 +86,7 @@ export default {
   components: {
     QuestionRead,
     QuestionCommentList,
-    // QuestionCommentRegisterForm,
+    QuestionCommentRegisterForm,
   },
   props: {
     questionNo: {
@@ -106,21 +106,21 @@ export default {
       'requestQuestionFromSpring',
       'requestDeleteQuestionToSpring',
       'requestQuestionCommentListFromSpring',
-      // 'requestQuestionCommentRegisterToSpring'
+      'requestQuestionCommentRegisterToSpring'
     ]),
     async onDelete() {
       await this.requestDeleteQuestionToSpring(this.questionNo);
       await this.$router.push({name: 'QuestionListView'})
     },
-    // async onSubmitRegister( payload ) {
-    //   const { comment, commentWriter } = payload
-    //   const questionNo = this.questionNo
-    //   console.log("댓글 등록" + questionNo)
-    //   await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo} )
-    //   await this.$router.push({
-    //     name: 'QuestionReadView', params: { questionNo: this.questionNo }
-    //   })
-    // },
+    async onSubmitRegister( payload ) {
+      const { comment, commentWriter } = payload
+      const questionNo = this.questionNo
+      console.log("댓글 등록" + questionNo)
+      await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo} )
+      await this.$router.push({
+        name: 'QuestionReadView', params: { questionNo: this.questionNo }
+      })
+    },
     cancelBtn() {
       this.deleteDialog = false
     },
