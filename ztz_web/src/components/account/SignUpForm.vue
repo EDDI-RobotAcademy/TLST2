@@ -4,7 +4,7 @@
       <v-col cols="auto" style="padding-bottom: 90px">
         <router-link to="/">
           <v-img
-            :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
+              :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
         </router-link>
 
         <v-card width="460" elevation="0" outlined >
@@ -12,46 +12,98 @@
             <v-form @submit.prevent="onSubmit" ref="form">
               <div class="text-h4 font-weight-black mb-10">회원 가입</div>
 
-              <div class="d-flex">
-                <v-text-field class="mt-3" v-model="email" label="이메일 (특수문자 제외 2자리 이상)" outlined dense @change="emailValidation"
-                              :rules="email_rule" :disabled="false" required/>
-                <button-white text large style="font-size: 13px"
-                       class="mt-3 ml-5"
-                       @click="checkDuplicateEmail"
-                       :disabled="!emailPass"
-                        btn-name="이메일 중복검사">
-                </button-white>
+              <div align="right">
+                <input type="checkbox" style="accent-color: green;" name="authority" value="true" v-model="manager"><label>  관리자로 가입</label>
+              </div>
+              <div v-if="!this.manager">
+                <div class="d-flex">
+                  <v-text-field class="mt-3" v-model="email" label="이메일 (특수문자 제외 2자리 이상)" outlined dense @change="emailValidation"
+                                :rules="email_rule" :disabled="false" required/>
+                  <button-white text large style="font-size: 13px"
+                                class="mt-3 ml-5"
+                                @click="checkDuplicateEmail"
+                                :disabled="!emailPass"
+                                btn-name="이메일 중복검사">
+                  </button-white>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="password" label="비밀번호" type="password" outlined dense
+                                :rules="password_rule" :disabled="false" required/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password" outlined dense
+                                :rules="password_confirm_rule" :disabled="false" required/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="username" label="사용자명" :disabled="false" required outlined dense/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="birthdate" label="생년월일 (8자리)" :disabled="false" :rules="birthdate_rule" required outlined dense/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="phoneNumber" label="전화번호 ('-'포함 11자리)" :disabled="false" :rules="phoneNumber_rule" required outlined dense/>
+                </div>
+
+                <AddressForm @submit="onAddressSubmit"/>
+
+                <button-green type="submit" block x-large
+                              class="mt-6" :disabled="(emailPass) == false"
+                              btn-name="가입하기">
+                </button-green>
               </div>
 
-              <div class="d-flex">
-                <v-text-field v-model="password" label="비밀번호" type="password" outlined dense
-                              :rules="password_rule" :disabled="false" required/>
+              <div v-else>
+                <div class="d-flex">
+                  <v-text-field class="mt-3" v-model="managerCode" label="관리자코드 입력해주세요" outlined dense :disabled="false" required/>
+                  <button-white text large style="font-size: 13px"
+                                class="mt-3 ml-5"
+                                @click="checkManagerCode"
+                                :disabled="false"
+                                btn-name="관리자 코드확인">
+                  </button-white>
+
+                </div>
+                <div class="d-flex">
+                  <v-text-field class="mt-3" v-model="email" label="이메일 (특수문자 제외 2자리 이상)" outlined dense @change="emailValidation"
+                                :rules="email_rule" :disabled="false" required/>
+                  <button-white text large style="font-size: 13px"
+                                class="mt-3 ml-5"
+                                @click="checkDuplicateEmail"
+                                :disabled="!emailPass"
+                                btn-name="이메일 중복검사">
+                  </button-white>
+                </div>
+                <div class="d-flex">
+                  <v-text-field v-model="password" label="비밀번호" type="password" outlined dense
+                                :rules="password_rule" :disabled="false" required/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password" outlined dense
+                                :rules="password_confirm_rule" :disabled="false" required/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="username" label="사용자명" :disabled="false" required outlined dense/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="birthdate" label="생년월일 (8자리)" :disabled="false" :rules="birthdate_rule" required outlined dense/>
+                </div>
+
+                <div class="d-flex">
+                  <v-text-field v-model="phoneNumber" label="전화번호 ('-'포함 11자리)" :disabled="false" :rules="phoneNumber_rule" required outlined dense/>
+                </div>
+                <button-green type="submit" block x-large
+                              class="mt-6" :disabled="(emailPass & managerPass) == false"
+                              btn-name="가입하기">
+                </button-green>
               </div>
-
-              <div class="d-flex">
-                <v-text-field v-model="password_confirm" label="비밀번호 확인" type="password" outlined dense
-                              :rules="password_confirm_rule" :disabled="false" required/>
-              </div>
-
-              <div class="d-flex">
-                <v-text-field v-model="username" label="사용자명" :disabled="false" required outlined dense/>
-              </div>
-
-              <div class="d-flex">
-                <v-text-field v-model="birthdate" label="생년월일 (8자리)" :disabled="false" :rules="birthdate_rule" required outlined dense/>
-              </div>
-
-              <div class="d-flex">
-                <v-text-field v-model="phoneNumber" label="전화번호 ('-'포함 11자리)" :disabled="false" :rules="phoneNumber_rule" required outlined dense/>
-              </div>
-
-              <AddressForm @submit="onAddressSubmit"/>
-
-              <button-green type="submit" block x-large
-                     class="mt-6" :disabled="(emailPass) == false"
-                      btn-name="가입하기">
-              </button-green>
-
             </v-form>
           </v-card-text>
         </v-card>
@@ -81,7 +133,10 @@ export default {
       username: "",
       birthdate: "",
 
+      manager:false,
+      managerCode: "",
 
+      managerPass: false,
       emailPass: false,
 
       email_rule: [
@@ -93,8 +148,8 @@ export default {
         }
       ],
       password_rule: [
-          v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
-          v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
+        v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
+        v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
       ],
       password_confirm_rule: [
         v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
@@ -131,8 +186,20 @@ export default {
     },
     onSubmit () {
       if (this.$refs.form.validate()) {
-        const { email, password, username, birthdate, city, street , addressDetail , zipcode ,phoneNumber } = this
-        this.$emit("submit", { email, password, username, birthdate, city, street , addressDetail , zipcode ,phoneNumber })
+        if(this.manager){
+          const authorityNo = 1
+          const authorityName= "관리자"
+          const managerCode = this.managerCode
+          const managerCheck = this.manager
+          const { email, password, username, birthdate ,phoneNumber } = this
+          this.$emit("submit", { email, password, username, birthdate, authorityNo, authorityName, managerCheck, managerCode ,phoneNumber })
+        }else{
+          const authorityNo = 2
+          const authorityName= "일반회원"
+          const managerCheck = this.manager
+          const { email, password, username, birthdate, city, street , addressDetail , zipcode ,phoneNumber } = this
+          this.$emit("submit", { email, password, username, birthdate, authorityNo, authorityName, managerCheck, city, street , addressDetail , zipcode ,phoneNumber })
+        }
       } else {
         alert('올바른 정보를 입력하세요!')
       }
@@ -165,6 +232,19 @@ export default {
             })
       }
     },
+    checkManagerCode(){
+      const {managerCode} = this
+      axios.post(`http://localhost:7777/ztz/member/check-manager/${managerCode}`)
+          .then((res) => {
+            if (res.data) {
+              alert("관리자 코드 확인하였습니다.")
+              this.managerPass = true
+            } else {
+              alert("일치하는 관리자 코드가 없습니다.")
+              this.managerPass = false
+            }
+          })
+    }
   }
 }
 </script>
