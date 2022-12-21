@@ -1,11 +1,14 @@
 package kr.eddi.ztz_process.controller.products;
 
+import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.service.products.ProductsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class ProductsController {
     }
     @GetMapping(path = "/list/{localName}")
     public List<Product> productsList(@PathVariable("localName") String localName) {
+        log.info("받은 지역데이터:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -36,4 +40,23 @@ public class ProductsController {
 
         return productsService.getProductInfo(productNo);
     }
+
+
+
+    @ResponseBody
+    @PostMapping(value = "/register",
+            consumes = {  MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE }) // 이미지+텍스트 업로드하는 경우 value , consumes 정보(이미지타입, json타입) 추가
+    public String registerProduct(
+            @RequestPart(value = "thumbnail") List<MultipartFile> thumbnail,
+            @RequestPart(value = "fileList") List<MultipartFile> fileList,
+            @RequestPart(value = "info") ProductRequest productRequest) {
+
+        log.info("상품등록 컨트롤러-파일리스트: " + fileList.toString());
+        log.info("상품등록 컨트롤러-리퀘스트내용: " + productRequest);
+
+        productsService.registerProduct(thumbnail, fileList, productRequest);
+
+        return "상품이 등록되었습니다.";
+    }
+
 }

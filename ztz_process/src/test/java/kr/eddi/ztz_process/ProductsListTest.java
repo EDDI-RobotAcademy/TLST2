@@ -5,6 +5,10 @@ import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 public class ProductsListTest {
 
@@ -13,31 +17,29 @@ public class ProductsListTest {
 
     @Test
     public void saveProduct () {
-        String brand = "테스트 양조장";
-        String name = "이화주";
-        Long price = 28000L;
-        Classification cls = new Classification(AlcoholType.TYPE3, Local.LOCO6);
-        ProductInfo pi = new ProductInfo("pd_01.png");
+        String brand = "진리";
+        String name = "화요";
+        int price = 70000;
+        int deliveryFee = 0;
+        Classification cls1 = new Classification(AlcoholType.SOJU_SPIRITS, Local.SEOUL_GYEONGGI);
 
-        //String brand, String name, Long price, Classification classification,ProductInfo productInfo
+        List<String> images = new ArrayList<>();
+        images.add("pd_01.png");
+
+        List<String> taste = new ArrayList<>();
+        taste.add("달달");
+        ProductInfo pi1 = new ProductInfo("pd_01.png", images, taste, "달달하고 시원한 맛!", "배송비 무료이벤트 적용 상품입니다");
+
         Product product = new Product(
                 brand,
                 name,
                 price,
-                cls,
-                pi
-        );
-
-        Product product2 = new Product(
-                "광주요",
-                "화요 25",
-                15000L,
-                cls,
-                pi
+                deliveryFee,
+                cls1,
+                pi1
         );
 
         repository.save(product);
-        repository.save(product2);
 
     }
 }

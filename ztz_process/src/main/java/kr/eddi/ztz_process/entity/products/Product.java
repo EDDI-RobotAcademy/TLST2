@@ -1,10 +1,10 @@
 package kr.eddi.ztz_process.entity.products;
 
-import lombok.Data;
+import lombok.*;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Product {
@@ -18,17 +18,21 @@ public class Product {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private Long price;
+    private Integer price;
+
+    @Column(nullable = false)
+    private Integer deliveryFee;
 
     @Embedded
     private Classification classification;
     @Embedded
     private ProductInfo productInfo;
 
-    public Product(String brand, String name, Long price, Classification classification,ProductInfo productInfo) {
+    public Product(String brand, String name, int price, int deliveryFee, Classification classification,ProductInfo productInfo) {
         this.brand = brand;
         this.name = name;
         this.price = price;
+        this.deliveryFee = deliveryFee;
         this.classification = classification;
         this.productInfo = productInfo;
     }
