@@ -1,11 +1,12 @@
 <template>
   <div align="center">
     <v-img
-        :src="require('@/assets/ztz_logo1.png')" width="120" />
-    <v-card class="pa-5 mb-5" outlined>
+        class="mt-10"
+        :src="require('@/assets/logo/ztz_logo1.png')" width="120" />
+    <v-card class="pa-5 mb-5 mt-10" elevation="0">
       <address-form @submit="onAddressSubmit"/>
     </v-card>
-    <button-green @click="modifyAddress" btn-name="배송지 저장" />
+    <button-green @click="modifyAddress" btn-name="배송지 저장" class="mb-10"/>
   </div>
 </template>
 
@@ -29,12 +30,10 @@ export default {
   },
   data(){
     return{
-
       city: '',
       street: '',
       addressDetail: '',
       zipcode: '',
-
       token :''
     }
   },
