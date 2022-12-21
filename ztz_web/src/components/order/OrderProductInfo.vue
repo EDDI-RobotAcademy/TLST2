@@ -25,7 +25,7 @@
         <tr v-for="item in orderList" :key="item.tmpCartItemOrderNo">
           <td>
             <v-row class="mt-5 mb-3">
-              <img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
+              <img :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)"
                    style="width: 60px"
               >
               <p class="product-info mt-7 ml-2">{{ item.product.name}}</p>
@@ -41,7 +41,7 @@
         <tr v-for="item in orderList.orderSave.selectList" :key="item.index">
           <td>
             <v-row class="mt-5 mb-3">
-              <img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
+              <img :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)"
                    style="width: 60px"
               >
               <p class="product-info mt-7 ml-2">{{ item.product.name }}</p>

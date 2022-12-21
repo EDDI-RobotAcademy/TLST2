@@ -30,19 +30,39 @@ public class Member {
     @Column(nullable = false)
     private int birthdate;
 
+    @Getter
+    @Column
+    private boolean managerCheck;
+
+    @Getter
+    @JoinColumn(name ="authority_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Authority authority;
+
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Authentication> authentications = new HashSet<>();
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST , orphanRemoval = true)
     private MemberProfile profile;
 
-    public Member(String email, String username, int birthdate , MemberProfile memberProfile) {
+    public Member(String email, String username, int birthdate, Authority authority,boolean managerCheck, MemberProfile memberProfile) {
         this.email = email;
         this.username = username;
         this.birthdate = birthdate;
+        this.authority = authority;
+        this.managerCheck = managerCheck;
         this.profile = memberProfile;
         memberProfile.setMember(this);
     }
+
+    public Member(String email, String username, int birthdate, Authority authority, boolean managerCheck) {
+        this.email = email;
+        this.username = username;
+        this.birthdate = birthdate;
+        this.authority = authority;
+        this.managerCheck = managerCheck;
+    }
+
 
     public boolean isRightPassword(String plainToCheck) {
         final Optional<Authentication> maybeBasicAuth = findBasicAuthentication();

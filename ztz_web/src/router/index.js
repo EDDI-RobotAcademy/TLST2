@@ -9,76 +9,104 @@ import ProductsView from "@/views/products/ProductsView";
 import OrderInfoView from "@/views/order/OrderInfoView";
 import MypageView from "@/views/mypage/MypageView";
 import HomeView from "@/views/HomeView";
-import QuestionListView from "@/views/boards/QuestionListView";
 import QuestionReadView from "@/views/boards/QuestionReadView";
 import QuestionRegisterView from "@/views/boards/QuestionRegisterView";
 import QuestionModifyView from "@/views/boards/QuestionModifyView";
-import FoundryView from "@/views/tour/FoundryView";
-import ReservationView from "@/views/tour/ReservationView"
 import MyPageReview from "@/views/mypage/MyPageReview";
+
+import FoundryView from "@/views/tour/FoundryView.vue";
+import ReservationView from "@/views/tour/ReservationView.vue";
+import ModifyAddressView from "@/views/mypage/ModifyAddressView";
+import ManagerView from "@/views/managerpage/ManagerView";
+import ProductRegisterView from "@/views/products/ProductRegisterView";
+import ProductModifyView from "@/views/products/ProductModifyView";
 import CompleteView from "@/views/tour/CompleteView";
-
-
+import QuestionListView from "@/views/boards/QuestionListView";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: '/',
+    name: 'home',
+    component: HomeView
   },
   {
-    path: "/sign-up",
-    name: "SignUpView",
-    component: SignUpView,
+    path: '/sign-up',
+    name: 'SignUpView',
+    component: SignUpView
   },
   {
-    path: "/sign-in",
-    name: "SignInView",
-    component: SignInView,
+    path: '/sign-in',
+    name: 'SignInView',
+    component: SignInView
   },
   {
-    path: "/product",
-    name: "ProductsView",
-    component: ProductsView,
+    path: '/product',
+    name: 'ProductsView',
+    component: ProductsView
   },
   {
-    path: "/product/:productNo",
-    name: "ProductDetailView",
+    path: '/product-register',
+    name: 'ProductRegisterView',
+    component: ProductRegisterView
+  },
+  {
+    path: '/product/:productNo',
+    name: 'ProductDetailView',
     component: ProductDetailView,
-    props: true,
+    props: true
+  },
+
+  {
+    path: '/product-modify/:productNo',
+    name: 'ProductModifyView',
+    component: ProductModifyView,
+    props: true
   },
   {
-    path: "/cart",
-    name: "CartView",
-    component: CartView,
+    path: '/cart',
+    name: 'CartView',
+    component: CartView
   },
   {
-    path: "/order-Info",
-    name: "OrderInfoView",
-    component: OrderInfoView,
+    path: '/order-Info',
+    name: 'OrderInfoView',
+    component: OrderInfoView
   },
   {
-    path: "/my-page",
-    name: "MyPageView",
-    component: MypageView,
+    path: '/my-page',
+    name: 'MyPageView',
+    component: MypageView
   },
   {
-    path: "/tour",
-    name: "FoundryView",
-    component: FoundryView,
+    path: '/manager',
+    name: 'ManagerView',
+    component: ManagerView
+  },
+
+  {
+    path: '/tour',
+    name: 'FoundryView',
+    component: FoundryView
   },
   {
-    path: "/reservation",
-    name: "ReservationView",
-    component: ReservationView,
-    props: true,
+    path: '/reservation',
+    name: 'ReservationView',
+    component: ReservationView
   },
   {
     path: "/completeReservation",
     name: "CompleteView",
     component: CompleteView,
+  },
+  {
+    path: '/modify-address',
+    name: 'ModifyAddressView',
+    component: ModifyAddressView,
+    meta:{
+      hideHeader:true,
+    }
   },
   {
     path: "/question-list",
@@ -123,9 +151,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
 })
 
 export default router

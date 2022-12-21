@@ -4,7 +4,7 @@
       <div class="l">
         <div align="center">
           <v-img
-              :src="require(`@/assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
+              :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
               max-width="640"
               max-height="480"
               contain
@@ -13,13 +13,27 @@
       </div>
       <div class="r">
         <p class="item-name">{{ product.name }}</p>
-        <p class="item-description">{{ product.description }}</p>
+        <p class="item-description">{{ product.productInfo.subTitle }}</p>
+        <v-row class="mb-3 ml-1">
+          <div v-for="(tastes,index) in product.productInfo.taste" :key="index" style="color:#E53935">
+          {{'#'+ tastes }}&nbsp;&nbsp;
+          </div>
+        </v-row>
         <v-divider></v-divider>
-        <div class="row" style="margin: 20px 0; font-size: 18px">
+        <div class="row" style="margin: 10px 0; font-size: 18px">
+          <p class="col-sm-4">제조사</p>
+          <p class="col-sm-8" style="text-align: right">{{ product.brand }}</p>
+        </div>
+        <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">판매가</p>
           <p class="col-sm-8" style="text-align: right">{{ product.price | numberFormat }} 원</p>
         </div>
-        <div class="row" style="margin: 20px 0 20px; font-size: 18px">
+        <div class="row" style="margin: 10px 0; font-size: 18px">
+          <p class="col-sm-4">배송비</p>
+          <p class="col-sm-8" style="text-align: right">{{ product.deliveryFee | numberFormat }} 원</p>
+        </div>
+
+        <div class="row" style="margin: 10px 0 20px; font-size: 18px">
           <p class="col-sm-5" style="text-align: left;">구매수량</p>
           <div class="col-sm-7" align="right">
             <v-btn
@@ -41,6 +55,7 @@
             </v-btn>
           </div>
         </div>
+
         <v-divider></v-divider>
         <div class="row" style="margin-top: 60px; font-size: 25px; font-weight: bold; color: #205C37;">
           <p class="col-sm-4" style="text-align: left;">총 합계</p>
@@ -48,20 +63,39 @@
             <p>{{ totalPrice | numberFormat }} 원</p>
           </div>
         </div>
-        <div align="center" style="margin-top: 20px">
-          <ButtonWhite
-              @click="btnCart"
-              btn-name="장바구니"
-              width="265px"
-              x-large
-          />
-          <ButtonGreen
-              @click="btnDirectPurchase"
-              btn-name="바로구매"
-              width="265px"
-              x-large
-          />
+        <div v-if="!this.$store.state.resMember.managerCheck">
+          <div align="center" style="margin-top: 20px">
+            <ButtonWhite
+                @click="btnCart"
+                btn-name="장바구니"
+                width="265px"
+                x-large
+            />
+            <ButtonGreen
+                @click="btnDirectPurchase"
+                btn-name="바로구매"
+                width="265px"
+                x-large
+            />
+          </div>
         </div>
+        <div v-else>
+          <div align="right" style="margin-top: 20px">
+            <ButtonWhite
+                @click="btnModifyProduct"
+                btn-name="상품정보 수정"
+                width="150px"
+                x-large
+            />
+            <ButtonGreen
+                @click="btnDeleteProduct"
+                btn-name="상품정보 삭제"
+                width="150px"
+                x-large
+            />
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- 상품 상세 설명 및 리뷰 -->
@@ -78,9 +112,18 @@
       <v-divider></v-divider>
       <v-tabs-items v-model="tabs">
         <v-tab-item>
-          <v-card flat height="600px">
+          <v-card flat height="auto">
             <v-card-title>상품 상세</v-card-title>
-            <v-card-text>상품 상세 입니다.</v-card-text>
+            <v-card-text>
+              {{product.productInfo.description}}
+              <div align="center" v-for="(image, index) in product.productInfo.productImagesName" :key="index">
+                <v-img
+                    :src="require(`@/assets/products/uploadImg/${image}`)"
+                    max-width="750"
+                    contain
+                />
+              </div>
+            </v-card-text>
           </v-card>
         </v-tab-item>
         <v-tab-item>
@@ -147,8 +190,15 @@ export default {
       } else{
         alert("로그인이 필요한 기능입니다.")
       }
+    },
+    btnModifyProduct(){
+      alert("상품수정페이지로 이동합니다.")
+      this.$router.push({name: 'ProductModifyView',
+        params: { productNo: this.product.productNo.toString() }})
+    },
+    btnDeleteProduct(){
+      this.$emit('deleteProduct', this.product.productNo)
     }
-
   },
   beforeUpdate() {
     this.totalPrice = this.product.price * this.quantity

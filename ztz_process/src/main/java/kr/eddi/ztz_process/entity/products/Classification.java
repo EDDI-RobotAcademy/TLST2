@@ -1,8 +1,6 @@
 package kr.eddi.ztz_process.entity.products;
 
 import jakarta.persistence.*;
-import kr.eddi.ztz_process.utility.LocalCodeConverter;
-import kr.eddi.ztz_process.utility.alcoholTypeConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Classification {
 
-    @Convert(converter = alcoholTypeConverter.class )
-    @Column(name="alcohol_type", nullable = false)
+    @Column(name="alcohol_type")
     private AlcoholType alcoholType;
 
-    @Convert(converter = LocalCodeConverter.class )
-    @Column(nullable = false)
+    @Column
     private Local local;
 
 

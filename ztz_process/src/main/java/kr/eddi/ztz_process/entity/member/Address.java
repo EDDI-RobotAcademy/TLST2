@@ -12,16 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Address {
 
-    @Column(nullable = false)
+    @Column
     private String city;
 
-    @Column(nullable = false)
+    @Column
     private String street;
 
-    @Column(nullable = false)
+    @Column
     private String addressDetail;
 
-    @Column(nullable = false)
+    @Column
     private String zipcode;
 
     public static Address of(String city, String street, String addressDetail, String zipcode) {

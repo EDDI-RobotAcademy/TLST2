@@ -19,7 +19,7 @@
           <v-row>
              <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.product.price, item.count)" >
               <v-img
-                  :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)"
+                  :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)"
                   max-width="320"
                   max-height="240"
                   contain

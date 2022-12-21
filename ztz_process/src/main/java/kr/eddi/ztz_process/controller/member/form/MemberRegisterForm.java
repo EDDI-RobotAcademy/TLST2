@@ -17,12 +17,21 @@ public class MemberRegisterForm {
     private String username;
     private int birthdate;
 
+    private Long authorityNo;
+    private String authorityName;
+
+    private boolean managerCheck;
+    private String managerCode;
     private String city;
     private String street;
     private String addressDetail;
     private String zipcode;
     private String phoneNumber;
     public MemberRegisterRequest toMemberRegisterRequest () {
-        return new MemberRegisterRequest( email, password, username, birthdate,city,street,addressDetail,zipcode,phoneNumber);
+        return new MemberRegisterRequest( email, password, username, birthdate, authorityNo, authorityName,managerCheck, city,street,addressDetail,zipcode, phoneNumber);
+    }
+
+    public MemberRegisterRequest toManagerRegisterRequest() {
+        return new MemberRegisterRequest( email, password, username, birthdate, authorityNo, authorityName,managerCheck, phoneNumber);
     }
 }

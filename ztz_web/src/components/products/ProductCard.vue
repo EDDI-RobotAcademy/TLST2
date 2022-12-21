@@ -3,7 +3,7 @@
 
   <div class="productInfo">
     <div class="thumb">
-      <img :src="require(`../../assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)" >
+      <img :src="require(`../../assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)" >
     </div>
     <p class="brand" >{{ product.brand }}</p>
     <p class="productName" >{{ product.name }}</p>
