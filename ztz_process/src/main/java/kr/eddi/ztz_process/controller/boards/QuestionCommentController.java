@@ -24,10 +24,10 @@ public class QuestionCommentController {
         return questionCommentService.questionCommentList();
     }
 
-//    @PostMapping("/register")
-//    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) {
-//        log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
-//
-//        questionCommentService.questionCommentRegister(commentRequest);
-//    }
+    @PostMapping("/register")
+    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) {
+        log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
+
+        questionCommentService.questionCommentRegister(commentRequest);
+    }
 }

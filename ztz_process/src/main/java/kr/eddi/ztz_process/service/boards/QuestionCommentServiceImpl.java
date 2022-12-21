@@ -1,6 +1,6 @@
 package kr.eddi.ztz_process.service.boards;
 
-//import kr.eddi.ztz_process.controller.boards.CommentRequest;
+import kr.eddi.ztz_process.controller.boards.CommentRequest;
 import kr.eddi.ztz_process.entity.boards.QuestionBoard;
 import kr.eddi.ztz_process.entity.boards.QuestionComment;
 import kr.eddi.ztz_process.repository.boards.QuestionCommentRepository;
@@ -29,15 +29,15 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
     }
 
     // 댓글 등록
-//    @Override
-//    public void questionCommentRegister(CommentRequest commentRequest) {
-//        QuestionComment questionComment = new QuestionComment();
-//        questionComment.setCommentWriter(commentRequest.getCommentWriter());
-//        questionComment.setComment(commentRequest.getComment());
-//        Optional<QuestionBoard> maybeBoard = questionRepository.findById(commentRequest.getQuestion_no());
-//        QuestionBoard board = maybeBoard.get();
-//        questionComment.setQuestionBoard(board);
-//
-//        questionCommentRepository.save(questionComment);
-//    }
+    @Override
+    public void questionCommentRegister(CommentRequest commentRequest) {
+        QuestionComment questionComment = new QuestionComment();
+        questionComment.setCommentWriter(commentRequest.getCommentWriter());
+        questionComment.setComment(commentRequest.getComment());
+        Optional<QuestionBoard> maybeBoard = questionRepository.findById(commentRequest.getQuestion_no());
+        QuestionBoard board = maybeBoard.get();
+        questionComment.setQuestionBoard(board);
+
+        questionCommentRepository.save(questionComment);
+    }
 }
