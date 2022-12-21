@@ -257,6 +257,16 @@ export default {
             })
     },
     // eslint-disable-next-line no-empty-pattern
+    requestDeleteProductToSpring ({ }, productNo) {
+        console.log('상품 삭제()')
+
+        return axios.delete(`http://localhost:7777/ztz/products/${productNo}`)
+            .then(() => {
+                alert('상품이 삭제되었습니다.')
+            })
+    },
+
+    // eslint-disable-next-line no-empty-pattern
     reqRegisterOrderToSpring({}, payload){
         const { paymentPrice, merchant_uid , sendInfo , imp_uid, city, street, addressDetail, zipcode ,sendRequest} = payload
         return axios.post(`http://localhost:7777/ztz/order/OrderRegister`,

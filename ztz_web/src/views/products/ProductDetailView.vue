@@ -3,6 +3,7 @@
     <product-detail-form class="mt-15"
                          :product="product"
                          @addCart="addCart"
+                         @deleteProduct = "deleteProduct"
     />
   </div>
 </template>
@@ -31,7 +32,7 @@ export default {
 
   methods: {
     ...mapActions([
-        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring'
+        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring', 'requestDeleteProductToSpring'
     ]),
     async addCart(payload){
       if(this.isAuthenticated){
@@ -49,6 +50,11 @@ export default {
         alert("로그인이 필요합니다.")
       }
     },
+    async deleteProduct(payload){
+      const productNo = payload
+      await this.requestDeleteProductToSpring(productNo);
+      await this.$router.push({ name: 'ProductsView' })
+    }
   },
 
 }
