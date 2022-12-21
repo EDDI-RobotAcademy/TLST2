@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.service.products;
 
+import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
@@ -14,5 +15,7 @@ public interface ProductsService {
     public Product getProductInfo(Long productNo);
 
     public void registerProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductRequest productRequest);
+
+    public void modifyProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductModifyRequest productModifyRequest);
 
 }

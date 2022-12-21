@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class ProductsListTest {
@@ -42,4 +43,18 @@ public class ProductsListTest {
         repository.save(product);
 
     }
+
+    @Test
+    public void modifyProduct () {
+        Long productNo = 4L;
+        Optional<Product> maybeProduct = repository.findById(productNo);
+        Product product = maybeProduct.get();
+
+        product.setName("영덕의 밤");
+        product.setBrand("영덕법인");
+        product.setPrice(37000);
+        product.setDeliveryFee(0);
+        repository.save(product);
+    }
+
 }

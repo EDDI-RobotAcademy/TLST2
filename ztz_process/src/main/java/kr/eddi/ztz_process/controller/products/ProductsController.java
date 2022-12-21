@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.products;
 
+import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
@@ -57,6 +58,21 @@ public class ProductsController {
         productsService.registerProduct(thumbnail, fileList, productRequest);
 
         return "상품이 등록되었습니다.";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/modify",
+            consumes = {  MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public String modifyProduct(
+            @RequestPart(value = "thumbnail",required = false) List<MultipartFile> thumbnail,
+            @RequestPart(value = "fileList",required = false) List<MultipartFile> fileList,
+            @RequestPart(value = "info") ProductModifyRequest productModifyRequest) {
+
+        log.info("상품수정 컨트롤러-리퀘스트내용: " + productModifyRequest);
+
+        productsService.modifyProduct(thumbnail, fileList, productModifyRequest);
+
+        return "상품이 수정되었습니다.";
     }
 
 }
