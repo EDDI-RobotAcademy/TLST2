@@ -62,5 +62,11 @@ public class ProductsListTest {
         Long productNo = 4L;
         repository.deleteById(productNo);
     }
-    
+
+    @Test
+    public void findAlcocholProduct(){
+        String tmp = "소주증류주";
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+        System.out.println("소주증류주 찾기"+ repository.filterType(filterAlcohol));
+    }
 }

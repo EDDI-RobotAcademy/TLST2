@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.controller.products;
 
 import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
+import kr.eddi.ztz_process.entity.products.AlcoholType;
 import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.service.products.ProductsService;
@@ -35,6 +36,16 @@ public class ProductsController {
 
         return productsService.list(filterLocal);
     }
+
+    @GetMapping("/alcoholList/{alcoholType}")
+    public List<Product> alcoholProductList(@PathVariable("alcoholType") String alcoholType) {
+        log.info("받은 알코올타입:" +alcoholType);
+        String tmp = alcoholType;
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+
+        return productsService.alcoholList(filterAlcohol);
+    }
+
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
         log.info("상품 상세 - 상품 정보 가져오기: " + productNo);

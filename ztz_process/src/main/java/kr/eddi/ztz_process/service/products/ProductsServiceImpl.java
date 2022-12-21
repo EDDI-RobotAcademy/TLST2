@@ -32,6 +32,12 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> list(Local local) {
         return repository.filterLoco(local);
     }
+
+    @Override
+    public List<Product> alcoholList(AlcoholType filterAlcohol){
+        return repository.filterType(filterAlcohol);
+    }
+
     @Override
     public Product getProductInfo(Long productNo) {
         Optional<Product> maybeProduct = repository.findById(productNo);
