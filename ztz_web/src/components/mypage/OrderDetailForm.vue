@@ -49,7 +49,7 @@
       <tr v-for="item in orderedList" :key="item">
         <td>
           <v-row>
-            <img :src="require(`@/assets/products/defaultImg/${item.product.productInfo.thumbnailFileName}`)" class="ma-3" style="width: 70px">
+            <img :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)" class="ma-3" style="width: 70px">
             <v-col>
               <p class="product-brand">brand: {{item.product.brand}}</p>
               <p class="mt-0 pt-0">{{ item.product.name }}</p>
