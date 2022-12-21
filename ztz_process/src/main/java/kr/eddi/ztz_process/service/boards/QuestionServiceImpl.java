@@ -37,8 +37,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
      // 질문게시판 게시물 등록
+    @Override
     public void questionRegister(BoardsRequest boardsRequest) {
         QuestionBoard questionBoard = new QuestionBoard();
+
         questionBoard.setTitle(boardsRequest.getTitle());
         questionBoard.setContent(boardsRequest.getContent());
         questionBoard.setWriter(boardsRequest.getWriter());
