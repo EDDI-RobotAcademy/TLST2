@@ -18,4 +18,5 @@ public interface ProductsService {
 
     public void modifyProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductModifyRequest productModifyRequest);
 
+    public void remove(Long productNo);
 }

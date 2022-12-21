@@ -57,4 +57,10 @@ public class ProductsListTest {
         repository.save(product);
     }
 
+    @Test
+    public void deleteProduct(){
+        Long productNo = 4L;
+        repository.deleteById(productNo);
+    }
+    
 }

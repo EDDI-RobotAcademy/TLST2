@@ -262,4 +262,7 @@ public class ProductsServiceImpl implements ProductsService{
         }
     }
 
+    public void remove(Long productNo){
+        repository.deleteById(productNo);
+    }
 }

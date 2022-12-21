@@ -75,4 +75,10 @@ public class ProductsController {
         return "상품이 수정되었습니다.";
     }
 
+    @DeleteMapping("/{productNo}")
+    public void removeProduct (@PathVariable("productNo") Long productNo) {
+        log.info("상품 삭제 번호():" + productNo);
+
+        productsService.remove(productNo);
+    }
 }
