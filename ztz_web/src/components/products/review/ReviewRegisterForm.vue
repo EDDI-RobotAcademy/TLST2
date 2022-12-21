@@ -13,7 +13,7 @@
           <!-- 리뷰 작성할 상품 추가 예정 -->
           <p>{{ product.name }}</p>
           <v-img
-              :src="require(`@/assets/products/defaultImg/${product.productInfo.thumbnailFileName}`)"
+              :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
               max-width="200"
               max-height="150"
               contain
