@@ -9,6 +9,7 @@ import VuePaginate from "vue-paginate"
 
 Vue.config.productionTip = false
 
+import "@/css/font.css";
 import "@/css/products.css"
 import "@/css/mypage.css"
 import "@/css/foundry.css"
@@ -17,13 +18,16 @@ import MainFooter from "@/components/common/footer/MainFooter"
 import NewFooter from "@/components/common/footer/footer.vue"
 import AddressForm from "@/components/common/AddressForm"
 
-Vue.use(VuePaginate);
-Vue.component("MainHeader", MainHeader) // 글로벌 컴포넌트
-Vue.component("MainFooter", MainFooter)
+Vue.filter('numberFormat', function (val) {
+  return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+})
+Vue.use(VuePaginate)
+Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
+Vue.component('MainFooter', MainFooter)
 Vue.component("NewFooter", NewFooter)
-Vue.component("ButtonGreen", ButtonGreen)
-Vue.component("ButtonWhite", ButtonWhite)
-Vue.component("AddressForm", AddressForm)
+Vue.component('ButtonGreen', ButtonGreen)
+Vue.component('ButtonWhite', ButtonWhite)
+Vue.component('AddressForm', AddressForm)
 
 new Vue({
   router,

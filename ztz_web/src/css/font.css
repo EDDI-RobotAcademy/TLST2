@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'naver';
+    src: url(../assets/font/NanumSquareNeo-aLt.ttf) format('truetype');
+}
+/* 사용중인 폰트 */
+@font-face {
+    font-family: 'naver2';
+    src: url(../assets/font/NanumSquareNeo-bRg.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'naver3';
+    src: url(../assets/font/NanumSquareNeo-cBd.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'naver4';
+    src: url(../assets/font/NanumSquareNeo-dEb.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'naver5';
+    src: url(../assets/font/NanumSquareNeo-eHv.ttf) format('truetype');
+}

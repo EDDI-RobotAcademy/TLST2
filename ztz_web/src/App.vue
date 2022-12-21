@@ -24,5 +24,7 @@ export default {
 #app {
   height: 100%;
   position: relative;
+  font-family: "naver2";
 }
+
 </style>
