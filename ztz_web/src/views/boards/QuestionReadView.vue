@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <div align="center">
+      <p>
+        {{this.questionNo}}
+      </p>
       <div>
         <question-read v-if="questionBoard" :questionBoard="questionBoard"/>
         <p v-else>Loading .......</p>
@@ -48,6 +51,20 @@
           </v-btn>
         </router-link>
       </div>
+      <br/>
+      <table class="boards">
+        <tr>
+          <div>
+            <h1>댓글</h1>
+          </div>
+          <div class="comment">
+            <question-comment-list :questionComments="questionComments"/>
+          </div>
+        </tr>
+      </table>
+      <!--      <div>-->
+      <!--        <question-comment-register-form @submit="onSubmitRegister"/>-->
+      <!--      </div>-->
     </div>
   </v-container>
 </template>
@@ -55,6 +72,8 @@
 <script>
 import {mapActions, mapState} from "vuex";
 import QuestionRead from "@/components/boards/QuestionRead";
+import QuestionCommentList from "@/components/boards/comment/QuestionCommentList";
+// import QuestionCommentRegisterForm from "@/components/boards/comment/QuestionCommentRegisterForm";
 
 export default {
   name: "QuestionReadView",
@@ -66,6 +85,8 @@ export default {
   },
   components: {
     QuestionRead,
+    QuestionCommentList,
+    // QuestionCommentRegisterForm,
   },
   props: {
     questionNo: {
@@ -78,24 +99,39 @@ export default {
     required: true
   },
   computed: {
-    ...mapState(['questionBoard'])
+    ...mapState(['questionBoard', 'questionComments'])
   },
   methods: {
     ...mapActions([
       'requestQuestionFromSpring',
       'requestDeleteQuestionToSpring',
+      'requestQuestionCommentListFromSpring',
+      // 'requestQuestionCommentRegisterToSpring'
     ]),
     async onDelete() {
       await this.requestDeleteQuestionToSpring(this.questionNo);
       await this.$router.push({name: 'QuestionListView'})
     },
+    // async onSubmitRegister( payload ) {
+    //   const { comment, commentWriter } = payload
+    //   const questionNo = this.questionNo
+    //   console.log("댓글 등록" + questionNo)
+    //   await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo} )
+    //   await this.$router.push({
+    //     name: 'QuestionReadView', params: { questionNo: this.questionNo }
+    //   })
+    // },
     cancelBtn() {
       this.deleteDialog = false
     },
   },
   created() {
     this.requestQuestionFromSpring(this.questionNo)
+    this.requestQuestionCommentListFromSpring(this.questionNo)
   },
+  // mounted() {
+  //   this.requestQuestionCommentListFromSpring(this.questionNo)
+  // }
 }
 </script>
 
@@ -103,6 +139,44 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+table.boards {
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  margin: 20px 10px;
+}
+table.boards thead {
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  background: darkseagreen;
+}
+table.boards thead th {
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  color: #fff;
+}
+table.boards tbody th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #ececec;
+}
+table.boards td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+}
+.comment {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 </style>
