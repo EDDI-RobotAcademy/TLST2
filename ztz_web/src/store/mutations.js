@@ -17,6 +17,7 @@ import {
     SAVE_RESERVATION_INFO,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
     REQUEST_ALL_PAYMENT_FROM_SPRING,
+      REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
 } from "./mutation-types"
 
 export default {
@@ -73,6 +74,9 @@ export default {
     },
     [REQUEST_ALL_PAYMENT_FROM_SPRING](state,passingData){
         state.paymentList = passingData
+    },
+    [REQUEST_MY_RESERVATION_LIST_FROM_SPRING](state,passingData){
+        state.myReservationList = passingData
     }
 }
 

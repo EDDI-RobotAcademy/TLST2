@@ -11,7 +11,9 @@ import {
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
-    REQUEST_ALL_PAYMENT_FROM_SPRING, REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
+    REQUEST_ALL_PAYMENT_FROM_SPRING,
+    REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
+    REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
 } from "./mutation-types";
 
 
@@ -69,6 +71,15 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data);
             });
     },
+      reqMyReservationListToSpring({ commit }, token) {
+        return axios
+          .get("http://localhost:7777/ztz/tour/my-reservation", {
+            headers: { Token: token },
+          })
+          .then((res) => {
+            commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data);
+          });
+      },
     reqMemberProfileInfoToSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/member/user-profile`,
             {token: token})
