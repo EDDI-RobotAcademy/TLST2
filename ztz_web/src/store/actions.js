@@ -10,6 +10,7 @@ import {
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
+    REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
     REQUEST_ALL_PAYMENT_FROM_SPRING, REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
 } from "./mutation-types";
@@ -19,11 +20,16 @@ import {
 import axios from "axios";
 
 export default {
-    reqProductsFromSpring({commit}) {
-        return axios.get('http://localhost:7777/ztz/products/list')
+    reqProductsFromSpring({commit}, keyword) {
+        console.log('상품 검색 키워드: ' + keyword)
+        let url = `http://localhost:7777/ztz/products/list`
+        if(keyword != undefined){
+            url += '?keyword='+encodeURIComponent(keyword)
+        }
+        return axios.get(url)
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
-                console.log(res.data)
+                console.log('상품 리스트 조회')
             })
     },
     reqFilteredProductsFromSpring({commit}, localName) {
@@ -40,6 +46,13 @@ export default {
                 commit(REQUEST_PRODUCT_FROM_SPRING, res.data)
             })
     },
+    reqFilteredAlcoholProductsFromSpring ({ commit }, alcoholType) {
+        return axios.get(`http://localhost:7777/ztz/products/alcoholList/${alcoholType}`)
+            .then((res) => {
+                commit(REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING, res.data)
+            })
+    },
+
     reqDeleteMemberToSpring({commit}, token) {
         return axios.delete('http://localhost:7777/ztz/member/withdrawal', {
             headers: {token: token}
