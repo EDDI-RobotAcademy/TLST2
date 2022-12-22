@@ -34,6 +34,14 @@ public class FoundryServiceImpl implements FoundryService{
     public List<Foundry> list() {
         return foundryRepository.findAll(Sort.by(Sort.Direction.DESC, "foundryId"));
     }
+    @Override
+    public List<Reservation> myReservationList(String token) {
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        log.info(reservationRepository.findByMember(member).toString());
+        return reservationRepository.findByMember(member);
+    }
+
 
     @Override
     public String savedReservation(ReservationRequest reservationRequest) {
