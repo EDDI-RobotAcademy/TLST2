@@ -15,6 +15,8 @@ export default {
   reservationInfo: {},
   questionBoard: {},
   questionBoards: [],
+  questionComment: {},
+  questionComments: [],
   orderedList:{},
   paymentList:{}
 };

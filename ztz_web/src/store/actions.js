@@ -11,7 +11,7 @@ import {
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
-    REQUEST_ALL_PAYMENT_FROM_SPRING
+    REQUEST_ALL_PAYMENT_FROM_SPRING, REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
 } from "./mutation-types";
 
 
@@ -196,6 +196,30 @@ export default {
                 alert('삭제 완료했습니다!')
             })
     },
+
+    // 댓글 리스트 UI
+    requestQuestionCommentListFromSpring ({ commit }, questionNo) {
+        console.log('requestQuestionCommentListFromSpring()')
+
+        return axios.get(`http://localhost:7777/ztz/boards/question/comment/${questionNo}`)
+            .then((res) => {
+                commit(REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING, res.data)
+            })
+    },
+
+    // 댓글 리스트 등록
+    // eslint-disable-next-line no-empty-pattern
+    requestQuestionCommentRegisterToSpring ({ }, payload) {
+        console.log('requestQuestionCommentRegisterToSpring()')
+        const { comment, commentWriter, questionNo } = payload
+        console.log("댓글 등록" + questionNo)
+        return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
+            { comment : comment, commentWriter: commentWriter, question_no : questionNo })
+            .then(() => {
+                alert('댓글 등록 성공')
+            })
+    },
+
     reqDeleteReviewToSpring(_, reviewNo) {
         console.log(reviewNo + "번 리뷰 삭제")
 
