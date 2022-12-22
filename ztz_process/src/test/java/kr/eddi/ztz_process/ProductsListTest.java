@@ -2,6 +2,7 @@ package kr.eddi.ztz_process;
 
 import kr.eddi.ztz_process.entity.products.*;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
+import kr.eddi.ztz_process.service.products.ProductsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,9 @@ public class ProductsListTest {
 
     @Autowired
     ProductsRepository repository;
+
+    @Autowired
+    ProductsService service;
 
     @Test
     public void saveProduct () {
@@ -68,5 +72,11 @@ public class ProductsListTest {
         String tmp = "소주증류주";
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
         System.out.println("소주증류주 찾기"+ repository.filterType(filterAlcohol));
+    }
+
+    @Test
+    public void findKeywordProduct(){
+        String keyword = "도원";
+        System.out.println("검색키워드 상품 찾기"+ service.search(keyword));
     }
 }

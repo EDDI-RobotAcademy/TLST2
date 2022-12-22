@@ -25,11 +25,17 @@ public class ProductsController {
     ProductsService productsService;
 
     @GetMapping(path = "/list")
-    public List<Product> productsList() {
-        return productsService.list();
+    public List<Product> productsList(String keyword) {
+
+        if (keyword == null|| keyword.length() == 0){
+            return productsService.list();
+        }else {
+            return productsService.search(keyword);
+        }
     }
+
     @GetMapping(path = "/list/{localName}")
-    public List<Product> productsList(@PathVariable("localName") String localName) {
+    public List<Product> localProductsList(@PathVariable("localName") String localName) {
         log.info("받은 지역데이터:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
