@@ -12,6 +12,8 @@ import java.util.List;
 public interface ProductsService {
 
     public List<Product> list();
+
+    public List<Product> search(String keyword);
     public List<Product> list(Local local);
     public List<Product> alcoholList(AlcoholType filterAlcohol);
     public List<Product> listByView();

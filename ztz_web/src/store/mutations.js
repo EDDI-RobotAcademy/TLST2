@@ -17,6 +17,7 @@ import {
     SAVE_RESERVATION_INFO,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
     REQUEST_ALL_PAYMENT_FROM_SPRING,
+    REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING
 } from "./mutation-types"
 
 export default {
@@ -28,6 +29,9 @@ export default {
     },
     [REQUEST_PRODUCT_FROM_SPRING](state, passingData) {
         state.product = passingData
+    },
+    [REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING](state, passingData) {
+        state.products = passingData
     },
     [REQUEST_FILTERED_PRODUCT_FROM_SPRING](state, passingData) {
         state.products = passingData
