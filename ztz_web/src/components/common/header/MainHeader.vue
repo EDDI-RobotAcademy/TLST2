@@ -37,7 +37,7 @@
                       :class="{ isOpen }"
                   >
                     <li v-for="(child, idx) in item.children" :key="idx" >
-                      <router-link :to="item.link" class="dropdown-router">
+                      <router-link :to="item.link" class="dropdown-router" @click.native="filterAlcoholType(idx)">
                         <p>{{ child.name }}</p>
                       </router-link>
                     </li>
@@ -141,6 +141,7 @@ export default {
     ...mapActions([
       "reqMemberInfoToSpring",
       "reqCartListFromSpring",
+      "reqFilteredAlcoholProductsFromSpring",
       "reqProductsFromSpring"
     ]),
     async logout() {
@@ -177,6 +178,11 @@ export default {
     },
     mouseleave() {
       this.isOpen = false;
+    },
+    async filterAlcoholType(index){
+      console.log("상품 필터 알콜메뉴명:" + this.nav[0].children[index].name )
+      let alcoholType = this.nav[0].children[index].name
+      await this.reqFilteredAlcoholProductsFromSpring(alcoholType)
     },
     btnSearch(){
       this.showSearch = true

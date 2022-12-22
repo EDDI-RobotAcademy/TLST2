@@ -10,6 +10,7 @@ import {
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
+    REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
     REQUEST_ALL_PAYMENT_FROM_SPRING, REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
 } from "./mutation-types";
@@ -45,6 +46,13 @@ export default {
                 commit(REQUEST_PRODUCT_FROM_SPRING, res.data)
             })
     },
+    reqFilteredAlcoholProductsFromSpring ({ commit }, alcoholType) {
+        return axios.get(`http://localhost:7777/ztz/products/alcoholList/${alcoholType}`)
+            .then((res) => {
+                commit(REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING, res.data)
+            })
+    },
+
     reqDeleteMemberToSpring({commit}, token) {
         return axios.delete('http://localhost:7777/ztz/member/withdrawal', {
             headers: {token: token}
