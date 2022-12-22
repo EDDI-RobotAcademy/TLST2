@@ -1,31 +1,33 @@
 <template>
   <div class="white" style="font-family: Arial">
-    <v-row justify="center">
+    <v-row justify="center" class="mt-6">
       <v-col cols="auto" style="padding-bottom: 90px">
-        <router-link to="/">
-          <v-img
-              :src="require('@/assets/ztz_logo1.png')" width="180" class="mx-auto"/>
-        </router-link>
-        <v-card width="460" elevation="0" outlined >
+        <v-card width="460" elevation="0">
           <v-card-text class="text-center px-12 py-16">
             <v-form @submit.prevent="onSubmit">
               <div class="text-h4 font-weight-black mb-10">로그인</div>
 
               <div class="d-flex">
-                <v-text-field v-model="email" label="이메일" @change="emailValidation" color="teal"
-                              :rules="email_rule" clearable prepend-icon="mdi-account-outline"/>
+                <v-text-field v-model="email" label="이메일" @change="emailValidation" color="black"
+                              :rules="email_rule" clearable prepend-inner-icon="mdi-account-outline" outlined/>
               </div>
 
               <div class="d-flex">
-                <v-text-field v-model="password" label="비밀번호" type="password" color="teal"
-                              :rules="password_rule" clearable prepend-icon="mdi-lock-outline"/>
+                <v-text-field v-model="password" label="비밀번호" type="password" color="black"
+                              :rules="password_rule" clearable prepend-inner-icon="mdi-lock-outline" outlined/>
               </div>
 
-              <button-green type="submit" block x-large
-                     class="mt-6"  :disabled="false"
-                      btn-name="로그인">
-              </button-green>
-
+              <div>
+                <button-green type="submit" block x-large
+                              class="mt-4"  :disabled="false"
+                              btn-name="로그인">
+                </button-green>
+              </div>
+              <div>
+                <button-white block x-large @click="goSignUp"
+                              class="mt-4 ml-0" btn-name="회원가입">
+                </button-white>
+              </div>
             </v-form>
           </v-card-text>
         </v-card>
@@ -60,7 +62,10 @@ export default {
     onSubmit () {
       const { email, password } = this
       this.$emit("submit", { email, password })
-    }
+    },
+    goSignUp() {
+      this.$router.push({ name: "SignUpView" });
+    },
   }
 }
 </script>

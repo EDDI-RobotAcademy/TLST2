@@ -92,7 +92,9 @@
             <v-row class="ml-1">
 
               <v-col cols="2"><h4>가격</h4></v-col>
+              <!-- 폰트 변경으로 배치가 깨져서 가격, 배송비의 text-field width를 200px으로 변경함 -->
               <v-text-field
+                  style="width: 200px"
                   type="number"
                   outlined color="grey darken-1"
                   dense
@@ -103,6 +105,7 @@
               <v-col cols="2" align="center"><h4>배송비</h4></v-col>
 
               <v-text-field
+                  style="width: 200px"
                   type="number"
                   outlined color="grey darken-1"
                   dense

@@ -1,161 +1,82 @@
 <template>
-  <div>
-    <v-container>
-      <div>
-        <v-row justify="center">
-          <v-col cols="auto">
-            <router-link to="/" @click.native="home">
-              <v-img :src="require('@/assets/ztz_logo1.png')" width="120" />
-            </router-link>
-          </v-col>
-          <v-col>
-            <!-- 메인 메뉴 -->
-            <v-row class="mt-16" style="font-size: 20px">
-              <v-col class="col-12 col-sm-4">
-                <router-link
-                  style="text-decoration: none; font-weight: bold"
-                  to="/product"
-                  @click.native="alcohol"
-                >
-                  <p align="center" style="color: #205c37">전통주</p>
-                </router-link>
-              </v-col>
-              <v-col class="col-12 col-sm-4">
-                <router-link
-                  style="text-decoration: none; font-weight: bold"
-                  to="/"
-                  @click.native="monthAlcohol"
-                >
-                  <p align="center" style="color: #205c37">이달의 술</p>
-                </router-link>
-              </v-col>
-              <v-col class="col-12 col-sm-4">
-                <router-link
-                  style="text-decoration: none; font-weight: bold"
-                  to="/tour"
-                  @click.native="brewery"
-                >
-                  <p align="center" style="color: #205c37">양조체험</p>
-                </router-link>
-              </v-col>
-            </v-row>
-          </v-col>
-
-          <!-- 로그인 시 상단 메뉴 상태 변경 -->
-          <v-col cols="auto" v-if="this.$store.state.isAuthenticated">
-            <v-row>
-              <v-col style="padding-right: 0px">
-                <h4 class="name" style="margin-top: 11px; padding: 0px">
-                  환영합니다, {{ this.$store.state.resMember.username }}님!
-                </h4>
-              </v-col>
-              <p style="margin-top: 18px; margin-left: 5px; padding: 0px">
-                <v-btn x-small elevation="0" text @click="goCartPage">
-                  <v-icon> mdi-cart-outline </v-icon>
-                </v-btn>
-                <v-btn small text @click="logout">로그아웃</v-btn>
-                <v-btn small text @click="goMyPage">마이페이지</v-btn>
-              </p>
-            </v-row>
-          </v-col>
-
-          <!-- 비로그인 시 상단 메뉴 상태 변경 -->
-          <v-col cols="auto" v-else>
-            <v-row>
-              <v-col style="padding-right: 0px">
-                <h4 class="name" style="margin-top: 11px; padding: 0px">
-                  안녕하세요, 회원님! &nbsp;
-                </h4>
-              </v-col>
-              <p style="margin-top: 18px; margin-left: 5px; padding: 0px">
-                <v-btn small text @click="goSignIn">로그인</v-btn>
-                <v-btn small text @click="goSignUp">회원가입</v-btn>
-              </p>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <!--서브메뉴 클릭: 전통주 -->
-        <v-row v-if="this.selectMenu === 'alcohol'">
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/product"
-              @click.native="alcohol"
-            >
-              <p align="center" style="color: #205c37">증류주</p>
-            </router-link>
-          </v-col>
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/"
-              @click.native="monthAlcohol"
-            >
-              <p align="center" style="color: #205c37">발효주</p>
-            </router-link>
-          </v-col>
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/"
-              @click.native="brewery"
-            >
-              <p align="center" style="color: #205c37">기타 주류</p>
-            </router-link>
-          </v-col>
-        </v-row>
-
-        <!--서브메뉴 클릭: 양조체험 -->
-        <v-row v-else-if="this.selectMenu === 'brewery'">
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/product"
-              @click.native="alcohol"
-            >
-              <p align="center" style="color: #205c37">양조장들</p>
-            </router-link>
-          </v-col>
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/"
-              @click.native="monthAlcohol"
-            >
-              <p align="center" style="color: #205c37">예약</p>
-            </router-link>
-          </v-col>
-          <v-col class="col-12 col-sm-4">
-            <router-link
-              style="text-decoration: none; font-weight: bold"
-              to="/"
-              @click.native="brewery"
-            >
-              <p align="center" style="color: #205c37">예약현황</p>
-            </router-link>
-          </v-col>
-        </v-row>
-
-        <!--서브메뉴 클릭: 이달의 술 -->
-        <v-row v-else-if="this.selectMenu === 'monthAlcohol'">
-          <!-- 서브메뉴 없음 -->
-        </v-row>
-
-        <!--서브메뉴 클릭: Home-->
-        <v-row v-else>
-          <!-- 서브메뉴 없음 -->
-        </v-row>
-      </div>
-    </v-container>
-    <div>
-      <v-divider style="border-color: #205c37; border-width: 1px"></v-divider>
+  <div class="header-wrap">
+    <div class="header-top">
+      <p v-if="this.$store.state.isAuthenticated">
+        안녕하세요, {{ this.$store.state.resMember.username }}님! &nbsp;
+        ZTZ 멤버십 특별 혜택!</p>
+      <p v-else>회원가입 시 전구매 무료 배송, 첫 구매 시 사은품 증정</p>
     </div>
+    <div class="header-container">
+
+      <div class="inner-box">
+        <div class="left-box">
+          <div class="logo">
+            <router-link to="/">
+              <v-img :src="require('@/assets/logo/ztz_logo1.png')" width="110px"/>
+            </router-link>
+          </div>
+
+          <div class="nav" v-for="(item, idx) in nav" :key="idx">
+            <v-row>
+              <v-col class="nav-item mb-2" v-if="!item.children">
+                <router-link
+                    style="text-decoration: none;"
+                    :to="item.link">
+                  <p>{{ item.name }}</p>
+                </router-link>
+              </v-col>
+              <v-col class="nav-item" v-else>
+                <span @mouseover="mouseover" @mouseleave="mouseleave">
+                  <router-link
+                      style="text-decoration: none;"
+                      :to="item.link">
+                    <p>{{ item.name }}</p>
+                  </router-link>
+                  <ul class="dropdown"
+                      :class="{ isOpen }"
+                  >
+                    <li v-for="(child, idx) in item.children" :key="idx">
+                      <router-link :to="item.link" class="dropdown-router">
+                        <p>{{ child.name }}</p>
+                      </router-link>
+                    </li>
+                  </ul>
+                </span>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+
+        <div class="right-box">
+          <div class="nav-util">
+            <v-btn large elevation="0" text @click="search">
+              <v-icon> mdi-magnify</v-icon>
+            </v-btn>
+            <v-btn large elevation="0" text @click="goCartPage">
+              <v-icon> mdi-cart-outline</v-icon>
+            </v-btn>
+          </div>
+          <div class="nav-account">
+            <!-- 로그인 시 상단 메뉴 상태 변경 -->
+            <v-row v-if="this.$store.state.isAuthenticated">
+              <v-btn large text @click="logout">로그아웃</v-btn>
+              <v-btn large text @click="goMyPage">마이페이지</v-btn>
+            </v-row>
+            <!-- 비로그인 시 상단 메뉴 상태 변경 -->
+            <v-row v-else>
+              <v-btn large text @click="goSignIn">로그인</v-btn>
+              <v-btn large text @click="goSignUp">회원가입</v-btn>
+            </v-row>
+          </div>
+        </div>
+      </div>
+    </div>
+    <v-divider></v-divider>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "MainHeader",
@@ -165,7 +86,30 @@ export default {
   data() {
     return {
       selectMenu: "none",
-    };
+      isOpen: false,
+      nav: [
+        {
+          name: '전통주',
+          link: '/product',
+          children: [
+            {name: '소주·증류주', link: '/'},
+            {name: '리큐르', link: '/'},
+            {name: '막걸리', link: '/'},
+            {name: '약주·청주', link: '/'},
+            {name: '과실주', link: '/'},
+            {name: '기타 주류', link: '/'},
+          ]
+        },
+        {
+          name: '이달의 술',
+          link: '/month'
+        },
+        {
+          name: '양조 체험',
+          link: '/tour',
+        },
+      ],
+    }
   },
   mounted() {
     if (this.$store.state.isAuthenticated === true) {
@@ -174,47 +118,149 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["reqMemberInfoToSpring", "reqCartListFromSpring"]),
+    ...mapActions([
+      "reqMemberInfoToSpring",
+      "reqCartListFromSpring",
+      "reqFilteredAlcoholProductsFromSpring",
+      "reqProductsFromSpring"
+    ]),
     async logout() {
       console.log("로그아웃합니다");
       this.$store.commit("IS_AUTHENTICATED", false);
       localStorage.removeItem("userInfo");
       this.$cookies.remove("user");
       alert("로그아웃 되었습니다.");
-      await this.$router.push({ name: "SignInView" });
+      await this.$router.push({name: "SignInView"});
     },
     goMyPage() {
-      this.$router.push({ name: "MyPageView" });
+      this.$router.push({name: "MyPageView"});
     },
     goSignIn() {
-      this.$router.push({ name: "SignInView" });
+      this.$router.push({name: "SignInView"});
     },
     goSignUp() {
-      this.$router.push({ name: "SignUpView" });
+      this.$router.push({name: "SignUpView"});
     },
     goCartPage() {
-      this.$router.push({ name: "CartView" });
+      this.$router.push({name: "CartView"});
     },
-    brewery() {
-      this.selectMenu = "brewery";
-      console.log("셀렉 메뉴: " + this.selectMenu);
+    mouseover() {
+      this.isOpen = true;
     },
-    alcohol() {
-      this.selectMenu = "alcohol";
-      console.log("셀렉 메뉴: " + this.selectMenu);
+    mouseleave() {
+      this.isOpen = false;
     },
-    monthAlcohol() {
-      this.selectMenu = "monthAlcohol";
-      console.log("셀렉 메뉴: " + this.selectMenu);
-    },
-    home() {
-      this.selectMenu = "none";
-    },
-  },
-};
-</script>
-<style scoped>
-.name {
-  color: #205c37;
+  }
 }
+
+</script>
+
+<style scoped>
+
+.header-top {
+  display: flex;
+  background-color: #205C37;
+  height: 28px;
+}
+
+.header-top p {
+  margin: auto;
+  color: white;
+}
+
+.logo {
+  width: 110px;
+}
+
+.header-container {
+  margin: 24px 100px 24px 100px;
+}
+
+.inner-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.left-box .nav {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+
+.left-box .nav .nav-item {
+  position: relative;
+  width: 200px;
+}
+
+.nav p {
+  color: #205C37;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.right-box {
+  display: flex;
+  align-items: center;
+}
+
+.right-box .nav-util {
+  display: flex;
+  align-items: center;
+  margin-right: 45px;
+}
+
+.right-box .nav-account {
+  display: flex;
+}
+
+.nav-item span {
+  position: relative;
+  display: block;
+  height: 50px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  padding: 0;
+  list-style-type: none;
+  background-color: white;
+  z-index: 10000;
+  border: 1px solid #eeeeee;
+  font-size: 10px;
+}
+
+.dropdown li {
+  width: 170px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.dropdown-router {
+  display: block;
+  padding-top: 20px;
+  text-decoration: none;
+}
+
+.dropdown-router p {
+  font-size: 14px;
+}
+
+.isOpen {
+  display: block;
+}
+
+
 </style>

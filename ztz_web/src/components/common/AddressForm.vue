@@ -2,23 +2,28 @@
   <div>
     <v-form v-bind="$attrs" @submit.prevent="onAddressSubmit" ref="form">
 
-      <v-row class="ml-0 mt-3">
         <div class="d-flex">
-          <v-text-field v-model="zipcode" outlined dense disabled label="우편번호" required/>
+          <v-text-field v-model="zipcode" outlined disabled label="우편번호" required color="black"/>
+        <button-white
+            text
+            large
+            class="mt-0 ml-5 mr-0"
+            btn-name="주소 찾기"
+            style="font-size: 13px; height: 55px;"
+            @click="callDaumAddressApi" outlined>
+        </button-white>
         </div>
-        <v-btn style="font-size: 13px; height: 40px; margin-left: 8px" @click="callDaumAddressApi" outlined dense>주소 찾기</v-btn>
-      </v-row>
 
       <div class="d-flex">
-        <v-text-field v-model="city" label="도시" outlined dense disabled required/>
+        <v-text-field v-model="city" label="도시" outlined disabled required color="black"/>
       </div>
 
       <div class="d-flex">
-        <v-text-field v-model="street" label="도로명" outlined dense disabled required/>
+        <v-text-field v-model="street" label="도로명" outlined disabled required color="black"/>
       </div>
 
       <div class="d-flex">
-        <v-text-field v-model="addressDetail" label="상세주소" outlined dense required/>
+        <v-text-field v-model="addressDetail" label="상세주소" outlined required color="black"/>
       </div>
 
     </v-form>
@@ -31,8 +36,8 @@ export default {
     this.onAddressSubmit();
   },
   name: "AddressForm",
-  data () {
-    return{
+  data() {
+    return {
       city: '',
       street: '',
       addressDetail: '',
@@ -40,15 +45,13 @@ export default {
       streetPass: false,
     }
   },
-  props:{
-
-  },
-  methods:{
-    onAddressSubmit () {
-        const { city, street, addressDetail, zipcode } = this
-        this.$emit("submit", { city, street, addressDetail, zipcode })
+  props: {},
+  methods: {
+    onAddressSubmit() {
+      const {city, street, addressDetail, zipcode} = this
+      this.$emit("submit", {city, street, addressDetail, zipcode})
     },
-    callDaumAddressApi () {
+    callDaumAddressApi() {
       new window.daum.Postcode({
         oncomplete: (data) => {
           let fullRoadAddr = data.roadAddress;
