@@ -21,8 +21,6 @@ public class ReservationController {
     @Autowired
     FoundryService foundryservice;
 
-    @Autowired
-    MemberService memberService;
 
     @GetMapping(path = "/list")
     public List<Foundry> foundryList() {
@@ -31,13 +29,16 @@ public class ReservationController {
 
     @PostMapping(path = "/reservation")
     public String reservation(@RequestBody ReservationForm reservationForm) {
-
         return foundryservice.savedReservation(reservationForm.toReservationRequest());
     }
 
     @GetMapping(path = "/my-reservation", headers = "Token")
     public List<Reservation> myReservationList(@RequestHeader("Token") String token) {
-        String SubString = token.substring(1,37);
-        return foundryservice.myReservationList(SubString);
+        return foundryservice.myReservationList(token);
+    }
+
+    @DeleteMapping(path = "/{reservationId}", headers = "Token")
+    public String cancelMyReservation (@PathVariable("reservationId") Long reservationId, @RequestHeader("Token") String token) {
+        return foundryservice.cancelMyReservation(reservationId, token);
     }
 }
