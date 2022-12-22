@@ -11,7 +11,7 @@
       <div class="inner-box">
         <div class="left-box">
           <div class="logo">
-            <router-link to="/">
+            <router-link to="/" @click.native="btnNoSearch">
               <v-img :src="require('@/assets/logo/ztz_logo1.png')" width="110px"/>
             </router-link>
           </div>
@@ -21,21 +21,22 @@
               <v-col class="nav-item mb-2" v-if="!item.children">
                 <router-link
                     style="text-decoration: none;"
-                    :to="item.link">
+                    :to="item.link" @click.native="btnNoSearch">
                   <p>{{ item.name }}</p>
                 </router-link>
               </v-col>
+<!--              전통주-->
               <v-col class="nav-item" v-else>
                 <span @mouseover="mouseover" @mouseleave="mouseleave">
                   <router-link
                       style="text-decoration: none;"
-                      :to="item.link">
+                      :to="item.link" @click.native="btnNoSearch">
                     <p>{{ item.name }}</p>
                   </router-link>
                   <ul class="dropdown"
                       :class="{ isOpen }"
                   >
-                    <li v-for="(child, idx) in item.children" :key="idx">
+                    <li v-for="(child, idx) in item.children" :key="idx" >
                       <router-link :to="item.link" class="dropdown-router">
                         <p>{{ child.name }}</p>
                       </router-link>
@@ -49,18 +50,35 @@
 
         <div class="right-box">
           <div class="nav-util">
-            <v-btn large elevation="0" text @click="search">
+            <div v-if="showSearch">
+              <v-text-field v-model= "keyword"
+                            ref="keyword"
+                            label="검색어를 입력해주세요"
+                            type="text"
+                            append-icon="mdi-magnify"
+                            @click:append="search"/>
+            </div>
+            <div v-else>
+            <v-btn large elevation="0" text @click="btnSearch">
               <v-icon> mdi-magnify</v-icon>
             </v-btn>
+            </div>
             <v-btn large elevation="0" text @click="goCartPage">
               <v-icon> mdi-cart-outline</v-icon>
             </v-btn>
+
           </div>
           <div class="nav-account">
             <!-- 로그인 시 상단 메뉴 상태 변경 -->
             <v-row v-if="this.$store.state.isAuthenticated">
-              <v-btn large text @click="logout">로그아웃</v-btn>
-              <v-btn large text @click="goMyPage">마이페이지</v-btn>
+              <div v-if="this.$store.state.resMember.managerCheck">
+                <v-btn large text @click="logout">로그아웃</v-btn>
+                <v-btn large text @click="goManagerPage">관리자페이지</v-btn>
+              </div>
+              <div v-else>
+                <v-btn large text @click="logout">로그아웃</v-btn>
+                <v-btn large text @click="goMyPage">마이페이지</v-btn>
+              </div>
             </v-row>
             <!-- 비로그인 시 상단 메뉴 상태 변경 -->
             <v-row v-else>
@@ -92,12 +110,12 @@ export default {
           name: '전통주',
           link: '/product',
           children: [
-            {name: '소주·증류주', link: '/'},
-            {name: '리큐르', link: '/'},
-            {name: '막걸리', link: '/'},
-            {name: '약주·청주', link: '/'},
-            {name: '과실주', link: '/'},
-            {name: '기타 주류', link: '/'},
+            {name: '소주증류주', link: '/product'},
+            {name: '리큐르', link: '/product'},
+            {name: '막걸리', link: '/product'},
+            {name: '약주청주', link: '/product'},
+            {name: '과실주', link: '/product'},
+            {name: '기타주류', link: '/product'},
           ]
         },
         {
@@ -109,6 +127,8 @@ export default {
           link: '/tour',
         },
       ],
+      showSearch: false,
+      keyword: '',
     }
   },
   mounted() {
@@ -121,7 +141,6 @@ export default {
     ...mapActions([
       "reqMemberInfoToSpring",
       "reqCartListFromSpring",
-      "reqFilteredAlcoholProductsFromSpring",
       "reqProductsFromSpring"
     ]),
     async logout() {
@@ -131,18 +150,27 @@ export default {
       this.$cookies.remove("user");
       alert("로그아웃 되었습니다.");
       await this.$router.push({name: "SignInView"});
+      this.showSearch = false
     },
     goMyPage() {
       this.$router.push({name: "MyPageView"});
+      this.showSearch = false
     },
     goSignIn() {
       this.$router.push({name: "SignInView"});
+      this.showSearch = false
     },
     goSignUp() {
       this.$router.push({name: "SignUpView"});
+      this.showSearch = false
     },
     goCartPage() {
       this.$router.push({name: "CartView"});
+      this.showSearch = false
+    },
+    goManagerPage(){
+      alert("관리자페이지")
+      this.showSearch = false
     },
     mouseover() {
       this.isOpen = true;
@@ -150,6 +178,17 @@ export default {
     mouseleave() {
       this.isOpen = false;
     },
+    btnSearch(){
+      this.showSearch = true
+      this.$router.push('/product')
+    },
+    btnNoSearch(){
+      this.showSearch = false
+    },
+    async search(){
+        const keyword = this.$refs.keyword.value
+        await this.reqProductsFromSpring(keyword)
+    }
   }
 }
 

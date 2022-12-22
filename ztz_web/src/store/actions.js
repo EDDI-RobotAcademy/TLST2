@@ -19,11 +19,16 @@ import {
 import axios from "axios";
 
 export default {
-    reqProductsFromSpring({commit}) {
-        return axios.get('http://localhost:7777/ztz/products/list')
+    reqProductsFromSpring({commit}, keyword) {
+        console.log('상품 검색 키워드: ' + keyword)
+        let url = `http://localhost:7777/ztz/products/list`
+        if(keyword != undefined){
+            url += '?keyword='+encodeURIComponent(keyword)
+        }
+        return axios.get(url)
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
-                console.log(res.data)
+                console.log('상품 리스트 조회')
             })
     },
     reqFilteredProductsFromSpring({commit}, localName) {
