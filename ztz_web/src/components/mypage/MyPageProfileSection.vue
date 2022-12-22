@@ -1,76 +1,65 @@
 <template>
-  <section class="profile-section">
-    <div class="management-box first-box">
-      <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
-      <p class="email">{{ this.$store.state.resMember.email }}</p>
-    </div>
+    <section class="profile-section">
+        <div class="my-info-box">
+            <div>
+                <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
+                <p class="email">{{ this.$store.state.resMember.email }}</p>
+            </div> 
+            <button-white
+              small
+              width="64px"
+              style="padding: 0 16px 0 10px; font-size: 13px;"
+              btn-name="회원탈퇴"
+              @click="withdrawal()"
+            />
+        </div>
+        <ul>
+            <li>
+                <p class="head-text">
+                    주문내역
+                </p>
+                <p class="content-text">
+                    건
+                </p>
+            </li>
+            <li>
+                <p class="head-text">
+                    리뷰내역
+                </p>
+                <p class="content-text">
+                    건
+                </p>
+            </li>
+            <li>
+                <p class="head-text">
+                    예약내역
+                </p>
+                <p class="content-text">
+                    건
+                </p>
+            </li>
+        </ul>
 
-    <nav>
-      <ul class="sub-nav">
-        <li
-          v-for="(single, i) in mypageNavi"
-          :key="i"
-          @click="goToEachComponent(single)"
-        >
-          {{ single.menu }}
-        </li>
-
-        <li>
-          <router-link
-            :to="{
-              name: 'MyPageReview',
-              params: { memberId: resMember.id.toString() },
-            }"
-          >
-            상품 리뷰
-          </router-link>
-        </li>
-        <li><a @click="withdrawal">회원탈퇴</a></li>
-      </ul>
-    </nav>
-  </section>
-</template>
-
-<script>
-import { mapActions, mapState } from "vuex";
-export default {
-  name: "MyPageProfileSection",
-  data() {
-    return {
-      mypageNavi: [
-        { menu: "회원정보변경", componentsName: "", index: 0 },
-        { menu: "배송지관리", componentsName: "", index: 1 },
-        { menu: "주문관리", componentsName: "", index: 2 },
-        { menu: "상품 리뷰", componentsName: "", index: 3 },
-        { menu: "예약관리", componentsName: "MyReservationDetail", index: 4 },
-        { menu: "회원탈퇴", componentsName: "", index: 5 },
-      ],
-      propData: {},
-    };
-  },
-  computed: {
+    </section>
+  </template>
+  
+  <script>
+  import { mapActions, mapState } from "vuex";
+  export default {
+    name: "MyPageProfileSection",
+    computed: {
     ...mapState(["isAuthenticated", "resMember"]),
-  },
-  mounted() {
+    },
+    mounted() {
     if (this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem("userInfo");
       this.reqMemberInfoToSpring(token);
     } else {
-      console.log(
-        "내 상태가 로그인상태가 아니라면 자동으로 로그인창으로 넘어갈수 있나?"
-      );
       alert("로그인 상태가 아닙니다.");
     }
   },
   methods: {
     ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring"]),
-    goToEachComponent(single) {
-      alert(single.componentsName);
-      this.$router.push({
-        name: "MypageDetailView",
-        params: { name: single.componentsName, index: single.index },
-      });
-    },
     async withdrawal() {
       let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?");
 
@@ -86,8 +75,7 @@ export default {
         await this.$router.push({ name: "HomeView" });
       }
     },
-  },
-};
-</script>
-
-<style scoped></style>
+  }
+}
+  </script>
+  

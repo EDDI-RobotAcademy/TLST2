@@ -16,7 +16,6 @@ import OrderInfoView from "@/views/order/OrderInfoView";
 
 import MypageView from "@/views/mypage/MypageView";
 import MyPageReview from "@/views/mypage/MyPageReview";
-import MypageDetailView from "@/views/mypage/MypageDetailView";
 import ModifyAddressView from "@/views/mypage/ModifyAddressView";
 
 import QuestionListView from "@/views/boards/QuestionListView";
@@ -82,13 +81,7 @@ const routes = [
   {
     path: '/my-page',
     name: 'MyPageView',
-    component: MypageView
-  },
-  {
-    path: "/my-page-detail",
-    name: "MypageDetailView",
-    component: MypageDetailView,
-    // true로 설정하면 데이터를 props로도 받습니다.
+    component: MypageView,
     props: true
   },
   {

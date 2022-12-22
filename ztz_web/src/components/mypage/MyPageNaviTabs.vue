@@ -36,20 +36,18 @@ export default {
   },
   data() {
     return {
-      currentTab: "",
-      active_tab: 2,
+      currentTab: "MyPageDeliverySection",
+      active_tab: 0,
       navi: [
-        { menu: "회원정보변경", tab: "TestComponent1" },
-        { menu: "배송지관리", tab: "TestComponent1" },
-        { menu: "주문관리", tab: "TestComponent1" },
-        { menu: "리뷰관리", tab: "TestComponent1" },
-        { menu: "예약관리", tab: "MyReservationDetail" },
-        { menu: "회원탈퇴", tab: "TestComponent1" },
+        { menu: "배송지관리", tab: "MyPageDeliverySection" },
+        { menu: "주문관리", tab: "MyPageDeliverySection" },
+        { menu: "리뷰관리", tab: "MyPageReviewForm" },
+        { menu: "예약관리", tab: "MyReservationDetailSection" },
+        { menu: "회원정보변경", tab: "MyReservationDetailSection" },
       ],
     };
   },
   mounted() {
-    this.currentTab = this.name;
     this.active_tab = this.index;
     console.log("navi : " + this.currentTab);
   },

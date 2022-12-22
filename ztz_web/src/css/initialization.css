@@ -3,7 +3,6 @@
   width: 1200px;
   margin: 0 auto;
   padding: 40px 0 100px;
-  font-family: AppleSDGothicNeoM00;
 }
 .wrap ul {
   list-style: none !important;
@@ -20,6 +19,6 @@
   margin-bottom: 6px !important;
 }
 .menu-head-text {
-  font-size: 120px;
+  font-size: 100px;
   text-align: center;
 }
