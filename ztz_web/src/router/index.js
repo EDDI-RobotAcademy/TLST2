@@ -17,7 +17,6 @@ import MyPageReview from "@/views/mypage/MyPageReview";
 import FoundryView from "@/views/tour/FoundryView.vue";
 import ReservationView from "@/views/tour/ReservationView.vue";
 import ModifyAddressView from "@/views/mypage/ModifyAddressView";
-import ManagerView from "@/views/managerpage/ManagerView";
 import ProductRegisterView from "@/views/products/ProductRegisterView";
 import ProductModifyView from "@/views/products/ProductModifyView";
 import CompleteView from "@/views/tour/CompleteView";
@@ -78,11 +77,6 @@ const routes = [
     path: '/my-page',
     name: 'MyPageView',
     component: MypageView
-  },
-  {
-    path: '/manager',
-    name: 'ManagerView',
-    component: ManagerView
   },
 
   {

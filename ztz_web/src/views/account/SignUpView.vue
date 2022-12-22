@@ -19,7 +19,7 @@ export default {
       const { email, password, username, birthdate,  authorityNo, authorityName, managerCheck, managerCode, city, street , addressDetail , zipcode ,phoneNumber } = payload;
 
       axios.post("http://localhost:7777/ztz/member/sign-up", {
-        email, password, username, birthdate, authorityNo, authorityName, managerCheck, managerCode, city, street , addressDetail , zipcode ,phoneNumber
+        email, password, username, birthdate,authorityNo, authorityName, managerCheck, managerCode, city, street , addressDetail , zipcode ,phoneNumber
       })
       .then((res) => {
         alert("회원 가입이 완료되었습니다.")
