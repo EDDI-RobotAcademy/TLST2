@@ -14,6 +14,7 @@ public interface ProductsService {
     public List<Product> list();
     public List<Product> list(Local local);
     public List<Product> alcoholList(AlcoholType filterAlcohol);
+    public List<Product> listByView();
     public Product getProductInfo(Long productNo);
 
     public void registerProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductRequest productRequest);

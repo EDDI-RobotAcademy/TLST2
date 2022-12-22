@@ -46,6 +46,11 @@ public class ProductsController {
         return productsService.alcoholList(filterAlcohol);
     }
 
+    @PostMapping("/list/view")
+    public List<Product> listByView() {
+        return productsService.listByView();
+    }
+
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
         log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
