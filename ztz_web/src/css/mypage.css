@@ -1,48 +1,72 @@
-
 /* products list local-filter-area css*/
 
-.mypageWrap{
-    display:flex;
-    justify-content: space-evenly;
+.mypageWrap {
+  display: flex;
+  justify-content: space-evenly;
 }
 .profile-section {
-    width: 400px;
+  width: 400px;
 }
 
 .sub-nav {
-    padding-top: 30px;
+  padding-top: 30px;
 }
 .sub-nav li {
-    margin: 5px 0;
+  margin: 5px 0;
 }
 .sub-nav li a {
-    font-size: 13px;
-    color: #222222;
-    text-decoration: none;
+  font-size: 13px;
+  color: #222222;
+  text-decoration: none;
 }
 
 .management-section {
-    width: 800px;
-    border-left: 1px solid #eee;
+  width: 800px;
+  border-left: 1px solid #eee;
 }
 
 .management-box {
-    height: 250px;
-    padding: 30px;
-    border-bottom: 1px solid #eee;
+  height: 250px;
+  padding: 30px;
+  border-bottom: 1px solid #eee;
 }
 .management-box .small-button {
-    font-size: 13px;
+  font-size: 13px;
 }
 
-.first-box{
-    height: 160px !important;
+.first-box {
+  height: 160px !important;
 }
-.first-box .email{
-    font-size: 14px;
+.first-box .email {
+  font-size: 14px;
 }
 
 .head-area {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* my-page-reservation */
+.attention-box {
+  width: 1156px;
+  margin: 30px auto;
+  padding: 30px 30px 13px;
+  border-radius: 20px;
+  color: #888;
+  background-color: #f2f2f2;
+}
+.attention-box p {
+  margin-bottom: 8px;
+}
+.my-reservation-list {
+  padding-left: 0 !important;
+  margin: 0;
+}
+.my-reservation-list li .reservation-card {
+  width: 1180px;
+  border-radius: 20px;
+}
+.my-reservation-list li .reservation-card > div {
+  display: flex;
+  justify-content: space-between;
 }
