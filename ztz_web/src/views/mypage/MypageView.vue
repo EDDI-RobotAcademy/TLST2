@@ -1,21 +1,26 @@
 <template>
-  <div class="wrap mypageWrap">
+  <div class="wrap">
     <my-page-profile-section />
-    <my-page-content-section />
+    <my-page-navi-tabs />
   </div>
 </template>
-
 <script>
 import "@/css/initialization.css";
-import MyPageContentSection from "@/components/mypage/MyPageContentSection.vue";
+import MyPageNaviTabs from "@/components/mypage/MyPageNaviTabs.vue";
 import MyPageProfileSection from "@/components/mypage/MyPageProfileSection.vue";
-
 export default {
   name: "MypageView",
-  components: {MyPageProfileSection, MyPageContentSection}
-}
+  components: { 
+    MyPageNaviTabs,
+    MyPageProfileSection
+  },
+  data() {
+    return {
+      
+    };
+  },
+  mounted() {
+
+  },
+};
 </script>
-
-<style scoped>
-
-</style>
