@@ -45,13 +45,23 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
     @Override
+    public List<Product> listByView() {
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
+    }
+
+    @Override
     public Product getProductInfo(Long productNo) {
         Optional<Product> maybeProduct = repository.findById(productNo);
         if(productNo.equals(Optional.empty())) {
             log.info("해당 상품을 가져올 수 없음.");
             return null;
         }
-        return maybeProduct.get();
+        Product product = maybeProduct.get();
+        Integer cnt = 1;
+        product.setView(product.getView() + cnt);
+        repository.save(product);
+
+        return product;
     }
 
     @Override

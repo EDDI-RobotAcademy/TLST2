@@ -23,6 +23,9 @@ public class Product {
     @Column(nullable = false)
     private Integer deliveryFee;
 
+    @Column
+    private Integer view = 0;
+
     @Embedded
     private Classification classification;
     @Embedded

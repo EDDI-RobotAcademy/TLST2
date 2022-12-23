@@ -26,7 +26,7 @@ import QuestionModifyView from "@/views/boards/QuestionModifyView";
 import FoundryView from "@/views/tour/FoundryView.vue";
 import ReservationView from "@/views/tour/ReservationView.vue";
 import CompleteView from "@/views/tour/CompleteView";
-
+import MonthDrinkView from "@/views/month/MonthDrinkView";
 
 Vue.use(VueRouter)
 
@@ -134,7 +134,13 @@ const routes = [
         default: true,
     },
   },
+ 
   {
+    path: '/month',
+    name: 'MonthDrinkView',
+    component: MonthDrinkView
+  }
+
     path: '/tour',
     name: 'FoundryView',
     component: FoundryView
@@ -150,6 +156,7 @@ const routes = [
     name: "CompleteView",
     component: CompleteView,
   },
+
 
 ]
 
