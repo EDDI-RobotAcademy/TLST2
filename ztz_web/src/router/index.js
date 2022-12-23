@@ -134,13 +134,12 @@ const routes = [
         default: true,
     },
   },
- 
   {
     path: '/month',
     name: 'MonthDrinkView',
     component: MonthDrinkView
-  }
-
+  },
+  {
     path: '/tour',
     name: 'FoundryView',
     component: FoundryView

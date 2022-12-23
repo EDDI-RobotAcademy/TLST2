@@ -18,7 +18,8 @@ import {
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
     REQUEST_ALL_PAYMENT_FROM_SPRING,
     REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
-    REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING
+    REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
+    REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
 } from "./mutation-types"
 
 export default {
@@ -36,6 +37,9 @@ export default {
     },
     [REQUEST_FILTERED_PRODUCT_FROM_SPRING](state, passingData) {
         state.products = passingData
+    },
+    [REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING](state, passingData) {
+        state.bestProducts = passingData
     },
     [RESPONSE_MEMBER_OBJECT](state, passingData) {
         state.resMember = passingData
