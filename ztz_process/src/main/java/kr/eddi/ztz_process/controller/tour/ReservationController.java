@@ -1,10 +1,8 @@
 package kr.eddi.ztz_process.controller.tour;
 
 import kr.eddi.ztz_process.controller.tour.form.ReservationForm;
-import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.tour.Foundry;
 import kr.eddi.ztz_process.entity.tour.Reservation;
-import kr.eddi.ztz_process.service.member.MemberService;
 import kr.eddi.ztz_process.service.tour.FoundryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ public class ReservationController {
         return foundryservice.myReservationList(token);
     }
 
-    @DeleteMapping(path = "/{reservationId}", headers = "Token")
+    @DeleteMapping(path = "/my-reservation/{reservationId}", headers = "Token")
     public String cancelMyReservation (@PathVariable("reservationId") Long reservationId, @RequestHeader("Token") String token) {
         return foundryservice.cancelMyReservation(reservationId, token);
     }
