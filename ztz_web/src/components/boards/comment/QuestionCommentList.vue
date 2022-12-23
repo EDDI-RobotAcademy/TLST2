@@ -11,27 +11,58 @@
       </tr>
       </thead>
       <tbody>
+<!--      댓글 리스트-->
       <tr align="left">
         {{ questionComment.comment }}
-      </tr>
+<!--        {{ questionComment.member.id }}-->
+<!--        {{ this.$store.state.resMember }}-->
+
+<!--        댓글 삭제-->
+        <td align="right">
+            <div v-if="questionComment.member.id === resMember.id">
+        <v-btn @click="onCommentDelete(questionComment.questionCommentNo)" class="green white--text" rounded depressed small v-on="on">
+              삭제
+            </v-btn>
+            </div>
+        </td>
+        </tr>
       </tbody>
     </table>
   </v-container>
 </template>
 
 <script>
+
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: "QuestionCommentList",
   data() {
     return {
       commentWriter: this.$store.state.resMember.username,
+      deleteDialog: false,
+      deleteCommentTitle:"댓글 삭제",
     }
   },
   props: {
     questionComments: {
       type: Array
     },
-  }
+  },
+  computed: {
+    ...mapState(['resMember'])
+  },
+  methods: {
+    ...mapActions([
+      'requestDeleteQuestionCommentToSpring',
+      'reqMemberInfoToSpring'
+    ]),
+    async onCommentDelete(commentNo) {
+      const questionCommentsNo = commentNo;
+      await this.requestDeleteQuestionCommentToSpring(questionCommentsNo);
+      await this.$router.push({name: 'QuestionListView'})
+    },
+  },
 }
 </script>
 

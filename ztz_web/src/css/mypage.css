@@ -1,48 +1,67 @@
-
-/* products list local-filter-area css*/
-
-.mypageWrap{
-    display:flex;
-    justify-content: space-evenly;
-}
-.profile-section {
-    width: 400px;
+.profile-section{
+  width: 1160px;
+  margin: 0 auto 30px;
+  padding: 20px 30px 13px;
+  border-radius: 20px;
+  border: 1px solid #718679;
 }
 
-.sub-nav {
-    padding-top: 30px;
+.profile-section .my-info-box{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 8px;
+  align-items: center;
 }
-.sub-nav li {
-    margin: 5px 0;
+.profile-section .my-info-box > div{
+  display: flex;
+  justify-content: flex-start;
 }
-.sub-nav li a {
-    font-size: 13px;
-    color: #222222;
-    text-decoration: none;
-}
-
-.management-section {
-    width: 800px;
-    border-left: 1px solid #eee;
+.profile-section .my-info-box > div > p {
+  margin: 0 20px 0 0;
 }
 
-.management-box {
-    height: 250px;
-    padding: 30px;
-    border-bottom: 1px solid #eee;
+.profile-section > ul {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 10px !important;
 }
-.management-box .small-button {
-    font-size: 13px;
+.profile-section > ul > li {
+  display: flex;
+  justify-content: space-between;
+  width: 32%;
+  border-radius: 12px;
+  padding: 14px 20px;
+  background-color: #c7d6cd;
+}
+.profile-section > ul > li > p {
+  margin-top: 4px;
+  margin-bottom: 0;
+  color: #2c4636;
+  font-size: 14px;
 }
 
-.first-box{
-    height: 160px !important;
+/* my-page-reservation */
+.attention-box {
+  width: 1160px;
+  margin: 30px auto;
+  padding: 30px 30px 13px;
+  border-radius: 20px;
+  color: #888;
+  background-color: #f2f2f2;
 }
-.first-box .email{
-    font-size: 14px;
+.attention-box p {
+  margin-bottom: 8px;
 }
-
-.head-area {
-    display: flex;
-    justify-content: space-between;
+.my-reservation-list {
+  padding-left: 0 !important;
+  margin: 0;
+}
+.my-reservation-list li .reservation-card {
+  width: 1180px;
+  border-radius: 20px;
+}
+.my-reservation-list li .reservation-card > div {
+  display: flex;
+  justify-content: space-between;
 }

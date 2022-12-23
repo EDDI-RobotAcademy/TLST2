@@ -1,28 +1,24 @@
-
 /* common css */
 .wrap {
-    width: 1200px;
-    margin: 0 auto;
-    padding : 40px 0;
-    font-family: AppleSDGothicNeoM00;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 40px 0 100px;
 }
 .wrap ul {
-    list-style: none !important;
+  list-style: none !important;
 }
 .no-border-bottom {
-    border-bottom: none !important;
+  border-bottom: none !important;
 }
-
-
 
 /* text style css */
 .head-text {
-    font-size: 16px;
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 6px !important;
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 6px !important;
 }
 .menu-head-text {
-    font-size: 120px;
-    text-align: center;
+  font-size: 100px;
+  text-align: center;
 }

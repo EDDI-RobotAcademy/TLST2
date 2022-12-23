@@ -25,9 +25,19 @@ public class QuestionCommentController {
     }
 
     @PostMapping("/register")
-    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) {
+    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) { // URL 보낼거면 CommentRequest 양식에 맞게 보내셈!
         log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
-
+        log.info(commentRequest.getComment());
+        log.info(commentRequest.getCommentWriter()); // commentWriter의 데이터를 가져온걸 확인
+        log.info(commentRequest.getQuestion_no().toString());
+        log.info(commentRequest.getMember_no().toString()); // 통신은 됏지만 데이터값이 NULL값이 나와서
         questionCommentService.questionCommentRegister(commentRequest);
+    }
+
+    @DeleteMapping("/{questionCommentNo}")
+    public void questionCommentRemove (@PathVariable("questionCommentNo") Long questionCommentNo) {
+        log.info("questionBoardRemove()");
+
+        questionCommentService.questionCommentRemove(questionCommentNo);
     }
 }
