@@ -8,4 +8,5 @@ public class CommentRequest {
     private String commentWriter;
     private String comment;
     private Long question_no;
+    private Long member_no;
 }
