@@ -1,4 +1,5 @@
 import {
+
     REQUEST_PRODUCTS_LIST_FROM_SPRING,
     REQUEST_FILTERED_PRODUCT_FROM_SPRING,
     REQUEST_PRODUCT_FROM_SPRING,
@@ -10,16 +11,21 @@ import {
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
+    
     REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
+    REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
+    
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
-    REQUEST_ALL_PAYMENT_FROM_SPRING, REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
-} from "./mutation-types";
+    REQUEST_ALL_PAYMENT_FROM_SPRING, 
+    REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
 
+} from "./mutation-types";
 
 // npm install axios --save-dev
 import axios from "axios";
 
 export default {
+
     reqProductsFromSpring({commit}, keyword) {
         console.log('상품 검색 키워드: ' + keyword)
         let url = `http://localhost:7777/ztz/products/list`
@@ -82,6 +88,30 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data);
             });
     },
+    
+    reqMyReservationListToSpring({ commit }, token) {
+        return axios
+          .get("http://localhost:7777/ztz/tour/my-reservation", {
+            headers: { Token: token },
+          })
+          .then((res) => {
+            commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data);
+          });
+      },
+    reqCancelMyReservation({ commit }, payload) {
+        return axios
+          .delete(
+            `http://localhost:7777/ztz/tour/my-reservation/${payload.reservationId}`,
+            {
+              headers: { Token: payload.token },
+            }
+          )
+          .then((res) => {
+            commit(RESPONSE_MY_REQUEST, res.data);
+            console.log("서버 반환값" + res.data);
+          });
+      },
+          
     reqMemberProfileInfoToSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/member/user-profile`,
             {token: token})

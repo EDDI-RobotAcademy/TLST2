@@ -18,5 +18,6 @@ export default {
   questionComment: {},
   questionComments: [],
   orderedList:{},
-  paymentList:{}
+  paymentList:{},
+  myReservationList: [],
 };

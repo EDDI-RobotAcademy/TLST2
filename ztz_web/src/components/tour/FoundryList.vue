@@ -30,48 +30,44 @@
           </p>
         </div>
       </div>
-      <button v-on:click="goReservation(foundry)" v-show="isLoggedIn">예약하기</button>
+      <button v-on:click="goReservation(foundry)" v-show="isLoggedIn">
+        예약하기
+      </button>
     </li>
   </ul>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "FoundryList",
   props: {
     foundrys: {
       type: Array,
     },
-  },  
+  },
   computed: {
-    ...mapState([
-      'isAuthenticated',
-    ]),
+    ...mapState(["isAuthenticated"]),
   },
   mounted() {
     if (this.$store.state.isAuthenticated === true) {
-        console.log("로그인 상태")
-        this.isLoggedIn = true
+      console.log("로그인 상태");
+      this.isLoggedIn = true;
     } else {
-        console.log("로그인 필요")
+      console.log("로그인 필요");
     }
   },
   data() {
     return {
       show: false,
       isLoggedIn: false,
-      
     };
   },
   methods: {
     goReservation(foundry) {
-      const test = foundry;
-      console.log(test.name)
-      this.$store.commit('REQUEST_FOUNDRY_INFO', foundry)
-      this.$router.push({name: 'ReservationView'})
+      this.$store.commit("REQUEST_FOUNDRY_INFO", foundry);
+      this.$router.push({ name: "ReservationView" });
     },
-  
-  }
+  },
 };
 </script>
