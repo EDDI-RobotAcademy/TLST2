@@ -207,16 +207,27 @@ export default {
             })
     },
 
-    // 댓글 리스트 등록
+    // 댓글 리스트 등록 // 메소드 만들기
     // eslint-disable-next-line no-empty-pattern
     requestQuestionCommentRegisterToSpring ({ }, payload) {
-        console.log('requestQuestionCommentRegisterToSpring()')
-        const { comment, commentWriter, questionNo } = payload
+        console.log('requestQuestionCommentRegisterToSpring()') // F12 콘솔에서 잘 실행했니?
+        const { comment, commentWriter, questionNo, userNumber } = payload // 공간에서 빼와서 사용
         console.log("댓글 등록" + questionNo)
-        return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
-            { comment : comment, commentWriter: commentWriter, question_no : questionNo })
+        return axios.post('http://localhost:7777/ztz/boards/question/comment/register', // 스프링쪽으로 통신
+            { comment : comment, commentWriter: commentWriter, question_no : questionNo, member_no : userNumber })
+            // 왼쪽은 스프링 변수명 : 오른쪽은 뷰 변수명
             .then(() => {
                 alert('댓글 등록 성공')
+            })
+    },
+    // 댓글 삭제
+    // eslint-disable-next-line no-empty-pattern
+    requestDeleteQuestionCommentToSpring({}, questionCommentNo) {
+        console.log('requestDeleteQuestionToSpring()')
+
+        return axios.delete(`http://localhost:7777/ztz/boards/question/comment/${questionCommentNo}`)
+            .then(() => {
+                alert('삭제 완료했습니다!')
             })
     },
 
