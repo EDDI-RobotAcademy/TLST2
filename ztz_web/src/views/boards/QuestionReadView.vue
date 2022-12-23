@@ -52,6 +52,8 @@
         </router-link>
       </div>
       <br/>
+
+      <!--  댓글 삭제    /-->
       <table class="boards">
         <tr>
           <div>
@@ -79,8 +81,7 @@ export default {
   name: "QuestionReadView",
   data() {
     return {
-      deleteDialog: false,
-      deleteTitle:"게시글 삭제"
+      deleteTitle:"게시글 삭제",
     }
   },
   components: {
@@ -113,25 +114,19 @@ export default {
       await this.$router.push({name: 'QuestionListView'})
     },
     async onSubmitRegister( payload ) {
-      const { comment, commentWriter } = payload
+      const { comment, commentWriter, userNumber } = payload
       const questionNo = this.questionNo
       console.log("댓글 등록" + questionNo)
-      await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo} )
+      await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo, userNumber} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
       await this.$router.push({
         name: 'QuestionReadView', params: { questionNo: this.questionNo }
       })
-    },
-    cancelBtn() {
-      this.deleteDialog = false
     },
   },
   created() {
     this.requestQuestionFromSpring(this.questionNo)
     this.requestQuestionCommentListFromSpring(this.questionNo)
   },
-  // mounted() {
-  //   this.requestQuestionCommentListFromSpring(this.questionNo)
-  // }
 }
 </script>
 

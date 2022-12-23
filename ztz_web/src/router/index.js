@@ -78,7 +78,6 @@ const routes = [
     name: 'MyPageView',
     component: MypageView
   },
-
   {
     path: '/tour',
     name: 'FoundryView',
