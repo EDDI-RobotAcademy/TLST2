@@ -83,6 +83,7 @@ const routes = [
     name: 'MyPageView',
     component: MypageView,
     props: true
+
   },
   {
     path: '/my-page/review/:memberId',

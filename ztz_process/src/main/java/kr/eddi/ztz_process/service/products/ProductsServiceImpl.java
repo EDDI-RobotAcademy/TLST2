@@ -28,6 +28,12 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> list() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
     }
+
+    @Override
+    public List<Product> search(String keyword){
+        return repository.findSearchProduct(keyword,keyword);
+    }
+
     @Override
     public List<Product> list(Local local) {
         return repository.filterLoco(local);
