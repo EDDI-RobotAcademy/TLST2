@@ -21,6 +21,7 @@ import ProductRegisterView from "@/views/products/ProductRegisterView";
 import ProductModifyView from "@/views/products/ProductModifyView";
 import CompleteView from "@/views/tour/CompleteView";
 import QuestionListView from "@/views/boards/QuestionListView";
+import MonthDrinkView from "@/views/month/MonthDrinkView";
 
 Vue.use(VueRouter)
 
@@ -141,6 +142,11 @@ const routes = [
     props: {
       default: true
     }
+  },
+  {
+    path: '/month',
+    name: 'MonthDrinkView',
+    component: MonthDrinkView
   }
 ]
 
