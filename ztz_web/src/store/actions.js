@@ -11,14 +11,12 @@ import {
     REQUEST_READ_REVIEW_FROM_SPRING,
     REQUEST_QUESTION_LIST_FROM_SPRING,
     REQUEST_QUESTION_FROM_SPRING,
-    
     REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
     REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
-    
     REQUEST_ALL_ORDER_LIST_FROM_SPRING,
-    REQUEST_ALL_PAYMENT_FROM_SPRING, 
-    REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING
-
+    REQUEST_ALL_PAYMENT_FROM_SPRING,
+    REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
+    REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -88,7 +86,7 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data);
             });
     },
-    
+
     reqMyReservationListToSpring({ commit }, token) {
         return axios
           .get("http://localhost:7777/ztz/tour/my-reservation", {
@@ -111,7 +109,7 @@ export default {
             console.log("서버 반환값" + res.data);
           });
       },
-          
+
     reqMemberProfileInfoToSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/member/user-profile`,
             {token: token})
@@ -250,15 +248,14 @@ export default {
             })
     },
 
-    // 댓글 리스트 등록 // 메소드 만들기
+    // 댓글 리스트 등록
     // eslint-disable-next-line no-empty-pattern
     requestQuestionCommentRegisterToSpring ({ }, payload) {
-        console.log('requestQuestionCommentRegisterToSpring()') // F12 콘솔에서 잘 실행했니?
-        const { comment, commentWriter, questionNo, userNumber } = payload // 공간에서 빼와서 사용
+        console.log('requestQuestionCommentRegisterToSpring()')
+        const { comment, commentWriter, questionNo } = payload
         console.log("댓글 등록" + questionNo)
-        return axios.post('http://localhost:7777/ztz/boards/question/comment/register', // 스프링쪽으로 통신
-            { comment : comment, commentWriter: commentWriter, question_no : questionNo, member_no : userNumber })
-            // 왼쪽은 스프링 변수명 : 오른쪽은 뷰 변수명
+        return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
+            { comment : comment, commentWriter: commentWriter, question_no : questionNo })
             .then(() => {
                 alert('댓글 등록 성공')
             })
@@ -354,4 +351,13 @@ export default {
                 console.log(res)
             })
     },
+
+    reqBestProductsFromSpring({commit}) {
+        console.log('메인페이지 베스트 상품 리스트')
+
+        return axios.post('http://localhost:7777/ztz/products/list/view')
+            .then((res) => {
+                commit(REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING, res.data)
+            })
+    }
 }

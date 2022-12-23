@@ -3,6 +3,7 @@ export default {
   hideHeader: false,
   products: [],
   product: {},
+  bestProducts: [],
   resMyRequest: "",
   resMember: {},
   cartList: [],
