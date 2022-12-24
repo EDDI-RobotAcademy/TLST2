@@ -1,7 +1,9 @@
 <template>
   <footer>
     <nav class="footer-nav">
-      <li>Q&A</li>
+      <router-link style="text-decoration: none; font-weight: bold; " to="/question-list" >
+        <li>Q&A</li>
+      </router-link>
       <li>Admin</li>
     </nav>
     <div>
