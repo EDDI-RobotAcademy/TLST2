@@ -15,6 +15,16 @@
       </tr>
       </thead>
       <tbody>
+        <tr>
+          <th scope="row" cols="6" sm="3">
+            카테고리
+          </th>
+          <td>
+            <v-select v-bind:items="request" v-model="selectedRequest" class="member-request-select"/>
+          </td>
+      </tr>
+      </tbody>
+      <tbody>
       <tr>
         <th scope="row">
           작성자
@@ -56,6 +66,7 @@ export default {
   data() {
     return {
       title: '',
+      request:['전통주', '양조장', '결제질문', '배송질문', '기타'],
       writer: this.$store.state.resMember.username,
       content: '',
     }
