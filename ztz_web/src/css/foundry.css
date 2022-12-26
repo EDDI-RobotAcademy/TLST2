@@ -154,3 +154,13 @@
 .img-reservation img {
   width: 100%;
 }
+
+.announce-text-box {
+  width: 1200px;
+  margin-bottom: 80px;
+}
+
+.announce-text-box > p {
+  margin: 0 0 10px;
+  text-align: center;
+}
