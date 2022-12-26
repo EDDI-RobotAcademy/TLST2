@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment,Long> {
-    @Query("select p from Payment p join fetch p.member where p.member.id = :memberId")
+    @Query("select p from Payment p join fetch p.member where p.member.id = :memberId order by p.paymentId desc")
     List<Payment> findAllByMemberId(Long memberId);
 
 }

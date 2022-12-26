@@ -22,7 +22,7 @@
             주문 내역이 존재하지 않습니다.
           </td>
         </tr>
-        <tr v-for="(paymentItem,index) in paymentList" :key="index">
+        <tr v-else v-for="(paymentItem, index) in paymentList" :key="index">
           <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
           <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
           <td>{{ paymentItem.totalPaymentPrice }}</td>
@@ -40,10 +40,10 @@
 
     <template>
       <v-dialog v-model="showOrderDetail" width="800">
-        <order-detail-form :paymentId="this.paymentId"
-                           :paymentListIndex="this.paymentListIndex"
-                           @confirmPurchase="confirmPurchase"
-                           @returnProduct="returnProduct"
+        <all-order-detail-form :paymentId="this.paymentId"
+                               :paymentListIndex="this.paymentListIndex"
+                               @startDelivery="startDelivery"
+                               @finDelivery="finDelivery"
         />
       </v-dialog>
     </template>
@@ -53,14 +53,15 @@
 
 <script>
 import {mapActions, mapState} from "vuex";
-import OrderDetailForm from "@/components/mypage/OrderDetailForm";
+import AllOrderDetailForm from "@/components/managerpage/AllOrderDetailForm";
 
 export default {
-  name: "OrderManagement",
-  components: {OrderDetailForm},
+  name: "AllOrderManagement",
+  components: {AllOrderDetailForm},
   data() {
     return {
       showOrderDetail: false,
+
       paymentListIndex: 0,
       paymentId: 0,
     }
@@ -72,13 +73,8 @@ export default {
       'orderedList'
     ])
   },
-  async mounted() {
-    if (this.$store.state.isAuthenticated === true) {
-      let token = window.localStorage.getItem('userInfo')
-      await this.reqPaymentListFromSpring(token)
-    } else {
-      alert("로그인 상태가 아닙니다.")
-    }
+  mounted() {
+    this.reqPaymentListFromSpring()
   },
   methods: {
     ...mapActions([
@@ -89,21 +85,21 @@ export default {
     async showOrderDetails(paymentId, index) {
       this.paymentId = paymentId
       this.paymentListIndex = index
-      console.log("페이먼트리스트 인덱스: " + this.paymentListIndex)
       this.showOrderDetail = true
       await this.reqOrderedListFromSpring(paymentId)
     },
-
-    confirmPurchase(payload) {
-      const reqType ="구매확정"
-      const orderId = payload.confirmPurchaseOrderId
-      const paymentId = payload.confirmPurchasePaymentId
+    startDelivery(payload) {
+      const reqType ="배송시작"
+      const orderId = payload.startDeliveryOrderId
+      const paymentId = payload.startDeliveryPaymentId
+      console.log("배송시작 주문상태변수: "+reqType + orderId+ paymentId)
       this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
     },
-    returnProduct(payload) {
-      const reqType ="반품신청"
-      const orderId = payload.returnOrderId
-      const paymentId = payload.returnPaymentId
+    finDelivery(payload){
+      const reqType ="배송완료"
+      const orderId = payload.finDeliveryOrderId
+      const paymentId = payload.finDeliveryPaymentId
+      console.log("배송완료 주문상태변수: "+reqType + orderId+ paymentId)
       this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
     }
   },

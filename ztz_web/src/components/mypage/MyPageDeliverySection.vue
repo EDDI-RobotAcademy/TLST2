@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <div class="head-area">
+  <div class="mt-5 ml-5">
+    <div class="head-area " >
       <p class=" head-text">배송관리</p>
-      <button class="small-button" onclick='window.open("http://localhost:8080/modify-address", "/modify-address",
-   "width=550px, height=800px")'>
-        배송지 변경
-      </button>
-
     </div>
 
     <div>
@@ -15,7 +10,10 @@
       {{ this.$store.state.resMemberProfile.address.street }}
       {{ this.$store.state.resMemberProfile.address.addressDetail }}
       ({{ this.$store.state.resMemberProfile.address.zipcode }})
+      <button-white btn-name="배송지 변경" class="ml-5" small onclick='window.open("http://localhost:8080/modify-address", "/modify-address",
+   "width=550px, height=800px")'/>
     </div>
+
   </div>
 </template>
 

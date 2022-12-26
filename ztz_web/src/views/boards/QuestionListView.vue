@@ -6,15 +6,11 @@
       <question-list-form :questionBoards="questionBoards"/> <!-- 중요 : 앞하고 뒤 무조건 소문자로 시작 -->
     </div>
     <br/>
-    <div style="float: right">
+    <div style="float: right" class="mb-10">
       <router-link :to="{ name: 'QuestionRegisterView' }">
-        <v-btn class="green white--text" rounded depressed small
-               v-if="isLogin == false" @click.prevent="registerAccess">
-          게시물 작성
-        </v-btn>
-        <v-btn class="green white--text" rounded depressed small v-else>
-          게시글 작성
-        </v-btn>
+        <button-white depressed btn-name="게시글 작성"
+               v-if="isLogin == false" @click.prevent="registerAccess"/>
+        <button-white btn-name="게시글 작성" depressed v-else/>
       </router-link>
     </div>
   </v-container>
