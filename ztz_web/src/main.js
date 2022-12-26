@@ -6,6 +6,7 @@ import vuetify from "./plugins/vuetify"
 import ButtonGreen from "@/components/common/ButtonGreen"
 import ButtonWhite from "@/components/common/ButtonWhite"
 import VuePaginate from "vue-paginate"
+import VueCarousel from 'vue-carousel';
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,7 @@ import AddressForm from "@/components/common/AddressForm"
 Vue.filter('numberFormat', function (val) {
   return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 })
+Vue.use(VueCarousel)
 Vue.use(VuePaginate)
 Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
 Vue.component('MainFooter', MainFooter)
