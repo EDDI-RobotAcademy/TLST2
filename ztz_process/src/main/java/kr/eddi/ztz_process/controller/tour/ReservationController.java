@@ -39,4 +39,9 @@ public class ReservationController {
     public String cancelMyReservation (@PathVariable("reservationId") Long reservationId, @RequestHeader("Token") String token) {
         return foundryservice.cancelMyReservation(reservationId, token);
     }
+
+    @PutMapping(path = "/my-reservation/{reservationId}")
+    public String modifyMyReservation (@PathVariable("reservationId") Long reservationId, @RequestBody ReservationForm reservationForm) {
+        return foundryservice.modifyMyReservation(reservationId, reservationForm.toReservationRequest());
+    }
 }

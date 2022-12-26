@@ -41,7 +41,6 @@ public class FoundryServiceImpl implements FoundryService{
         return reservationRepository.findByMember(member);
     }
 
-
     @Override
     public String savedReservation(ReservationRequest reservationRequest) {
         Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
@@ -59,7 +58,6 @@ public class FoundryServiceImpl implements FoundryService{
         );
 
         reservationRepository.save(reservation);
-
         return "1";
     }
 
@@ -72,6 +70,23 @@ public class FoundryServiceImpl implements FoundryService{
         //토큰으로 찾은 내 아이디와 예약번호로 찾은 예약의 사용자와 동일한지 확인
         if(userId == reservationPersonId) {
             reservationRepository.deleteById(reservationId);
+            return "1";
+        }
+
+        return "-1";
+    }
+
+    @Override
+    public String modifyMyReservation(Long reservationId, ReservationRequest reservationRequest) {
+        Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
+        Reservation reservation = reservationRepository.findByReservationId(reservationId);
+        LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
+
+        if(reservation.getMember().getId() == id) {
+            reservation.setPhoneNumber(reservationRequest.phoneNumber());
+            reservation.setNumberOfMember(reservationRequest.numberOfMember());
+            reservation.setReservationDate(selectedDate);
+            reservationRepository.save(reservation);
             return "1";
         }
 
