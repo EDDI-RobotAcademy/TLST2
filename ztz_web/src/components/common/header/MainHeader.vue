@@ -170,7 +170,7 @@ export default {
       this.showSearch = false
     },
     goManagerPage(){
-      alert("관리자페이지")
+      this.$router.push({name: "ManagerView"})
       this.showSearch = false
     },
     mouseover() {
