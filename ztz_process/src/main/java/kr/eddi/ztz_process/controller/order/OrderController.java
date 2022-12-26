@@ -31,6 +31,7 @@ public class OrderController {
         return service.registerOrderInfo(paymentRegisterForm.toOrderRegisterRequest());
     }
 
+    // 주문관리 - 상세보기
     @PostMapping("/ReadAllOrder/{paymentId}")
     public List<OrderInfo> ReadAllOrder(@PathVariable("paymentId") Long paymentId){
         log.info("ReadAllOrder" + paymentId);
@@ -39,14 +40,21 @@ public class OrderController {
         System.out.println(orderInfoList.get(0).getOrderID());
         return orderInfoList;
     }
-
+    //주문관리 리스트
     @PostMapping("/ReadAllPayment")
-    public List<Payment> ReadAllPayemt(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm){
-        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+    public List<Payment> ReadAllPayment(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm){
+        if (memberLoggedInTokenForm.getToken() == null|| memberLoggedInTokenForm.getToken().length() == 0){
 
-        List<Payment> payments = service.readAllPayment(SubString);
-        return payments;
+            List<Payment> payments =  service.readManagerAllPayment();
+            return payments;
+
+        }else {
+            String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+            List<Payment> payments = service.readAllPayment(SubString);
+            return payments;
+        }
     }
+
 
     @PostMapping("/refundAllOrder/{refundPaymentId}")
     public Boolean refundAllOrder(@PathVariable("refundPaymentId") Long refundPaymentId, @RequestBody RefundRequest refundRequest) throws IamportResponseException, IOException {

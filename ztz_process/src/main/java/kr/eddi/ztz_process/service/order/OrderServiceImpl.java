@@ -19,6 +19,7 @@ import kr.eddi.ztz_process.service.security.RedisService;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -101,10 +102,17 @@ public class OrderServiceImpl implements OrderService{
 
         return payments;
     }
+
+    @Override
+    public List<Payment> readManagerAllPayment(){
+        List<Payment> payments = paymentRepository.findAll(Sort.by(Sort.Direction.DESC, "paymentId"));
+        return payments;
+    }
+
     @Override
     public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
-        String test_api_key = "7457766534132075";
-        String test_api_secret = "CG6nmGvTcWQiEqQGAf53yVQiuAesHTly0uJL5mHTdbzRhlbOinjSulKdE9vObOvAfjDpcS2cRzNxjHn8";
+        String test_api_key = "2701111347244503";
+        String test_api_secret = "J7xV8xenAUsYtgiuUjwAJNJ7o2Ax4VnSsaABT0G04YDwedek5x0Rzp0e1elG2od4sZTyUzVygtxUUwnp";
         IamportClient client = new IamportClient(test_api_key,test_api_secret);
 
         Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());

@@ -1,14 +1,13 @@
 package kr.eddi.ztz_process;
 
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
+import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.CartItemRepository;
 import kr.eddi.ztz_process.repository.order.CartRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.service.order.CartService;
 import kr.eddi.ztz_process.service.order.OrderService;
-import kr.eddi.ztz_process.service.order.request.CancelRequest;
-import kr.eddi.ztz_process.service.order.request.ModifyRequest;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,25 +47,11 @@ public class OrderTestCase {
         test2.add(1);
         OrderInfoRegisterForm orderInfoRegisterForms = new OrderInfoRegisterForm(test1,test1,test2);
 
-        PaymentRegisterRequest paymentRegisterRequestList = new PaymentRegisterRequest(10000,"pay_id",orderInfoRegisterForms);
+        PaymentRegisterRequest paymentRegisterRequestList = new PaymentRegisterRequest(
+                10000,"pay_id",orderInfoRegisterForms, "impid0000", "서울", "동대문구", "휘경동", "10202", "sendRequest");
 
         orderService.registerOrderInfo(paymentRegisterRequestList);
         orderService.registerOrderInfo(paymentRegisterRequestList);
-    }
-
-    @Test
-    void CancelAllOrderTest(){
-        CancelRequest cancelRequest = new CancelRequest(1,78636);
-
-        orderService.CancelAllOrder(cancelRequest);
-    }
-
-    @Test
-    void ModifyOrderCnt(){
-        List<ModifyRequest> modifyRequest = new ArrayList<>();
-        modifyRequest.add(new ModifyRequest(1,2330,"테스트상품",0));
-
-        orderService.ModifyOrder(modifyRequest);
     }
 
     @Test
@@ -92,4 +77,9 @@ public class OrderTestCase {
         System.out.println("장바구니 아이템 삭제 테스트");
     }
 
+    @Test
+    void readManagerAllPaymentTest(){
+        System.out.println("전체 결제주문리스트 조회: "+orderService.readManagerAllPayment());
+    }
+    
 }

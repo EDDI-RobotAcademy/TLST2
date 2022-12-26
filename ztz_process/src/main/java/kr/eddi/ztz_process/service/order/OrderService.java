@@ -20,4 +20,7 @@ public interface OrderService {
 
 
     public List<Payment> readAllPayment(String token);
+
+    public List<Payment> readManagerAllPayment();
+
 }
