@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
-import 'package:ztz_app/api/account/sign_up_infos/manager_sign_up_info.dart';
 import 'package:ztz_app/components/text_filed/common_text_filed.dart';
+import 'package:ztz_app/controller/account/sign_up_api.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/manager_sign_up_info.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/member_sign_up_info.dart';
 
-import '../../api/account/sign_up_api.dart';
-import '../../api/account/sign_up_infos/account_state.dart';
-import '../../api/account/sign_up_infos/member_sign_up_info.dart';
+
+import '../../controller/account/sign_up_infos/account_state.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_field_decoration.dart';
 import '../../utility/text_styles.dart';

@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../api/account/login_api.dart';
+
+import '../../controller/account/login_api.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_styles.dart';
 import '../text_filed/common_text_filed.dart';
@@ -25,6 +26,7 @@ class _LoginComponent extends State<LoginComponent>{
     super.initState();
     emailEditController = TextEditingController();
     passwordController = TextEditingController();
+    signInStorage.deleteAll();
   }
 
   @override
