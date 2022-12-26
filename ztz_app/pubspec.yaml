@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   flutter_secure_storage: ^6.0.0
+  remedi_kopo: ^0.0.1
+  get: ^4.6.5
 
 
 dev_dependencies:
