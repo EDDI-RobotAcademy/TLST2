@@ -1,59 +1,49 @@
 <template>
-    <section class="profile-section">
-        <div class="my-info-box">
-            <div>
-                <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
-                <p class="email">{{ this.$store.state.resMember.email }}</p>
-            </div> 
-            <button-white
-              small
-              width="64px"
-              style="padding: 0 16px 0 10px; font-size: 13px;"
-              btn-name="회원탈퇴"
-              @click="withdrawal()"
-            />
-        </div>
-        <ul>
-            <li>
-                <p class="head-text">
-                    주문내역
-                </p>
-                <p class="content-text">
-                    건
-                </p>
-            </li>
-            <li>
-                <p class="head-text">
-                    리뷰내역
-                </p>
-                <p class="content-text">
-                    건
-                </p>
-            </li>
-            <li>
-                <p class="head-text">
-                    예약내역
-                </p>
-                <p class="content-text">
-                    건
-                </p>
-            </li>
-        </ul>
+  <section class="profile-section">
+    <div class="my-info-box">
+      <div>
+        <p class="name head-text">{{ this.$store.state.resMember.username }}</p>
+        <p class="email">{{ this.$store.state.resMember.email }}</p>
+      </div>
+      <button-white
+        small
+        width="64px"
+        style="padding: 0 16px 0 10px; font-size: 13px"
+        btn-name="회원탈퇴"
+        @click="withdrawal()"
+      />
+    </div>
+    <ul>
+      <li>
+        <p class="head-text">주문내역</p>
+        <p class="content-text">건</p>
+      </li>
+      <li>
+        <p class="head-text">리뷰내역</p>
+        <p class="content-text">건</p>
+      </li>
+      <li>
+        <p class="head-text">예약내역</p>
+        <p class="content-text">
+          {{ this.$store.state.myReservationList.length }} 건
+        </p>
+      </li>
+    </ul>
+  </section>
+</template>
 
-    </section>
-  </template>
-  
-  <script>
-  import { mapActions, mapState } from "vuex";
-  export default {
-    name: "MyPageProfileSection",
-    computed: {
-    ...mapState(["isAuthenticated", "resMember"]),
-    },
-    mounted() {
+<script>
+import { mapActions, mapState } from "vuex";
+export default {
+  name: "MyPageProfileSection",
+  computed: {
+    ...mapState(["isAuthenticated", "resMember", "myReservationList"]),
+  },
+  mounted() {
     if (this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem("userInfo");
       this.reqMemberInfoToSpring(token);
+      this.reqMyReservationListToSpring(token);
     } else {
       alert("로그인 상태가 아닙니다.");
     }
@@ -75,7 +65,6 @@
         await this.$router.push({ name: "HomeView" });
       }
     },
-  }
-}
-  </script>
-  
+  },
+};
+</script>

@@ -73,6 +73,7 @@
                 medium
                 width="86px"
                 style="padding: 0 16px 0 10px"
+                @click="goModifyForm(reservation)"
                 btn-name="예약수정"
               />
             </div>
@@ -126,6 +127,10 @@ export default {
       } else {
         alert("예약 취소가 실패하였습니다.");
       }
+    },
+    goModifyForm(reservation) {
+      this.$store.commit("SAVE_RESERVATION_INFO", reservation);
+      this.$router.push({ name: "ModifyView" });
     },
   },
 };
