@@ -10,17 +10,9 @@ import MyPageNaviTabs from "@/components/mypage/MyPageNaviTabs.vue";
 import MyPageProfileSection from "@/components/mypage/MyPageProfileSection.vue";
 export default {
   name: "MypageView",
-  components: { 
+  components: {
     MyPageNaviTabs,
-    MyPageProfileSection
-  },
-  data() {
-    return {
-      
-    };
-  },
-  mounted() {
-
+    MyPageProfileSection,
   },
 };
 </script>
