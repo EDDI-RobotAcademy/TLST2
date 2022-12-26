@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="mt-5 ml-5">
     <div class="head-area">
       <p class=" head-text">주문관리</p>
-      <p>총 {{ lengthOfOrder }} 건</p>
+      <div align="right" class="mr-3 mb-3">총 {{ this.$store.state.paymentList.length }} 건</div>
     </div>
     <v-card outlined class="orderedInfo">
       <v-simple-table border="1">
@@ -17,14 +17,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="paymentItem in paymentList" :key="paymentItem">
+        <tr v-if="!paymentList || (Array.isArray(paymentList) && paymentList.length === 0)">
+          <td colspan="6" align="center">
+            주문 내역이 존재하지 않습니다.
+          </td>
+        </tr>
+        <tr v-for="(paymentItem,index) in paymentList" :key="index">
           <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
           <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
           <td>{{ paymentItem.totalPaymentPrice }}</td>
           <td>{{ paymentItem.paymentState }}</td>
           <td>{{ paymentItem.regData }}</td>
           <td>
-            <v-btn class="orderedBtn" @click="showOrderDetails(paymentItem.paymentId)">
+            <v-btn class="orderedBtn" @click="showOrderDetails(paymentItem.paymentId, index)">
               상세정보
             </v-btn>
           </td>
@@ -35,7 +40,11 @@
 
     <template>
       <v-dialog v-model="showOrderDetail" width="800">
-        <order-detail-form :paymentId="this.paymentId"/>
+        <order-detail-form :paymentId="this.paymentId"
+                           :paymentListIndex="this.paymentListIndex"
+                           @confirmPurchase="confirmPurchase"
+                           @returnProduct="returnProduct"
+        />
       </v-dialog>
     </template>
   </div>
@@ -52,8 +61,7 @@ export default {
   data() {
     return {
       showOrderDetail: false,
-      lengthOfOrder: 0,
-
+      paymentListIndex: 0,
       paymentId: 0,
     }
   },
@@ -68,7 +76,6 @@ export default {
     if (this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem('userInfo')
       await this.reqPaymentListFromSpring(token)
-      this.lengthOfOrder = this.$store.state.paymentList.length;
     } else {
       alert("로그인 상태가 아닙니다.")
     }
@@ -76,12 +83,28 @@ export default {
   methods: {
     ...mapActions([
       'reqPaymentListFromSpring',
-      'reqOrderedListFromSpring'
+      'reqOrderedListFromSpring',
+      'reqChangeOrderStateToSpring'
     ]),
-    async showOrderDetails(paymentId) {
+    async showOrderDetails(paymentId, index) {
       this.paymentId = paymentId
+      this.paymentListIndex = index
+      console.log("페이먼트리스트 인덱스: " + this.paymentListIndex)
       this.showOrderDetail = true
       await this.reqOrderedListFromSpring(paymentId)
+    },
+
+    confirmPurchase(payload) {
+      const reqType ="구매확정"
+      const orderId = payload.confirmPurchaseOrderId
+      const paymentId = payload.confirmPurchasePaymentId
+      this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
+    },
+    returnProduct(payload) {
+      const reqType ="반품신청"
+      const orderId = payload.returnOrderId
+      const paymentId = payload.returnPaymentId
+      this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
     }
   },
 }

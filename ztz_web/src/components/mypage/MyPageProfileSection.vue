@@ -16,7 +16,7 @@
     <ul>
       <li>
         <p class="head-text">주문내역</p>
-        <p class="content-text">건</p>
+        <p class="content-text">{{this.$store.state.paymentList.length}}건</p>
       </li>
       <li>
         <p class="head-text">리뷰내역</p>
@@ -37,19 +37,21 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "MyPageProfileSection",
   computed: {
-    ...mapState(["isAuthenticated", "resMember", "myReservationList"]),
+    ...mapState(["isAuthenticated", "resMember", "myReservationList", "paymentList"]),
   },
   mounted() {
     if (this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem("userInfo");
       this.reqMemberInfoToSpring(token);
       this.reqMyReservationListToSpring(token);
+      this.reqPaymentListFromSpring(token)
     } else {
       alert("로그인 상태가 아닙니다.");
     }
+
   },
   methods: {
-    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring"]),
+    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqPaymentListFromSpring"]),
     async withdrawal() {
       let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?");
 
