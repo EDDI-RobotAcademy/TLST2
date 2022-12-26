@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <div>
-      <h3>게시물 목록</h3>
       <table class="boards" border="1">
         <thead>
         <tr>

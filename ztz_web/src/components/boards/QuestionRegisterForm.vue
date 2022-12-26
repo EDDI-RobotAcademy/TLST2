@@ -46,13 +46,9 @@
       </tbody>
     </table>
     <div>
-      <v-btn class="green white--text" rounded depressed small type="submit">
-        등록
-      </v-btn>
+      <button-green btn-name="등록" depressed type="submit"/>
       <router-link :to="{ name: 'QuestionListView' }">
-        <v-btn class="green white--text" rounded depressed small>
-          취소
-        </v-btn>
+        <button-white btn-name="취소" depressed />
       </router-link>
     </div>
   </form>
