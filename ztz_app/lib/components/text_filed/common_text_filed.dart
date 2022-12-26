@@ -25,6 +25,8 @@ class _TextFiledComponent extends State<TextFiledComponent>{
   late FocusNode passwordCheckFocus;
   late FocusNode addressFocus;
   late FocusNode phoneNumberFocus;
+  late FocusNode birthdateFocus;
+  late FocusNode managerCodeFocus;
 
   late FocusNode useFocus;
   var textInputType = TextInputType.text;
@@ -41,6 +43,12 @@ class _TextFiledComponent extends State<TextFiledComponent>{
         hintText = "이름";
         nickNameFocus = FocusNode();
         useFocus = nickNameFocus;
+        textInputType = TextInputType.text;
+        break;
+      case "managerCode":
+        hintText = "관리자 코드";
+        managerCodeFocus = FocusNode();
+        useFocus = managerCodeFocus;
         textInputType = TextInputType.text;
         break;
       case "email":
@@ -73,6 +81,12 @@ class _TextFiledComponent extends State<TextFiledComponent>{
         useFocus = phoneNumberFocus;
         textInputType = TextInputType.number;
         break;
+      case "birthdate":
+        hintText = "생년월일";
+        birthdateFocus = FocusNode();
+        useFocus = birthdateFocus;
+        textInputType = TextInputType.text;
+        break;
     }
   }
 
@@ -90,6 +104,10 @@ class _TextFiledComponent extends State<TextFiledComponent>{
             (value) => CheckValidate().validatePassword(useFocus, value!):
         widget.usedPosition == "passwordCheck" ?
             (value) => CheckValidate().validatePassword(useFocus, value!):
+        widget.usedPosition == "phoneNumber" ?
+            (value) => CheckValidate().validatePhoneNumber(useFocus, value!):
+        widget.usedPosition == "birthdate" ?
+            (value) => CheckValidate().validateBirthday(useFocus, value!):
             (value) => CheckValidate().defaultValidate(useFocus, value!),
         onSaved: (value) {
           setState(()
