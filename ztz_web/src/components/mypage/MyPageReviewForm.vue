@@ -46,11 +46,12 @@ export default {
     ])
   },
   mounted() {
-    this.reqMyPageReviewFromSpring(this.memberId)
+    this.reqMyPageReviewFromSpring(this.resMember.id)
   },
   computed: {
     ...mapState([
-      'reviews'
+      'reviews',
+      'resMember'
     ])
   }
 }
