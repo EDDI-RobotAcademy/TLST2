@@ -4,6 +4,7 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.order.form.PaymentRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.service.order.OrderService;
@@ -64,6 +65,15 @@ public class OrderController {
 
         return service.refundAllOrder(refundRequest);
 
+    }
+
+    @PostMapping("/changeOrderState")
+    public List<OrderInfo> changeOrderState( @RequestBody ChangeOrderStateRequest changeOrderStateRequest){
+        log.info("주문상태 변경 주문아이디: " + changeOrderStateRequest.getOrderId());
+        log.info("주문상태 변경 타입: " + changeOrderStateRequest.getReqType());
+        log.info("주문상태 변경 결제번호: " + changeOrderStateRequest.getPaymentId());
+        List<OrderInfo> orderInfoList = service.changeOrderState(changeOrderStateRequest);
+        return orderInfoList;
     }
 
 

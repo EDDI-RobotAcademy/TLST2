@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.service.order;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
@@ -23,4 +24,5 @@ public interface OrderService {
 
     public List<Payment> readManagerAllPayment();
 
+    public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest);
 }

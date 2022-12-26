@@ -81,5 +81,10 @@ public class OrderTestCase {
     void readManagerAllPaymentTest(){
         System.out.println("전체 결제주문리스트 조회: "+orderService.readManagerAllPayment());
     }
-    
+
+    @Test
+    void changeOrderStateTest(){
+        ChangeOrderStateRequest request = new ChangeOrderStateRequest("배송시작", 11L, 6L);
+        orderService.changeOrderState(request);
+    }
 }
