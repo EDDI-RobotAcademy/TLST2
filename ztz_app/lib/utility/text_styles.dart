@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 TextStyle welcomeTitle(){
@@ -21,5 +21,13 @@ TextStyle hintTextStyle(){
       fontSize: 12,
       fontFamily: "Cafe24Ohsquare",
       color:ColorStyle.textGray
+  );
+}
+
+TextStyle defaultTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "Cafe24Ohsquare",
+      color: Colors.black
   );
 }

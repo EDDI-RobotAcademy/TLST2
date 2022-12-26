@@ -17,9 +17,30 @@ class CheckValidate{
     if(value.isEmpty) {
       focusNode.requestFocus();
       return '비밀번호를 입력하세요';
-    } else if(!value.isValidPassword()) {
+    } else {
+      return null;
+    }
+  }
+
+  String? validateBirthday(FocusNode focusNode, String value) {
+    if(value.isEmpty) {
       focusNode.requestFocus();
-      return '유효하지 않은 비밀번호입니다.';
+      return '생년월일 8자리를 입력 해주세요';
+    } else if(!value.isValidBirthday()) {
+      focusNode.requestFocus();
+      return '생년월일 8자리를 입력 해주세요';
+    } else {
+      return null;
+    }
+  }
+
+  String? validatePhoneNumber(FocusNode focusNode, String value) {
+    if(value.isEmpty) {
+      focusNode.requestFocus();
+      return '전화번호를 입력헤주세요';
+    } else if(!value.isValidPhoneNumber()) {
+      focusNode.requestFocus();
+      return '- 를 포함한 전화번호를 입력해주세요';
     } else {
       return null;
     }
@@ -40,7 +61,7 @@ extension InputValidate on String {
   //이메일 양식
   bool isValidEmail() {
     final emailRegExp = RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+        r'^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$');
 
     return emailRegExp.hasMatch(this);
   }
@@ -51,5 +72,19 @@ extension InputValidate on String {
         r"^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$");
 
     return passwordRegExp.hasMatch(this);
+  }
+
+  bool isValidBirthday(){
+    final birthdayRegExp = RegExp(
+      r"^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$");
+
+    return birthdayRegExp.hasMatch(this);
+  }
+
+  bool isValidPhoneNumber(){
+    final phoneNumberRegExp = RegExp(
+      r"/010-\d{4}-\d{4}/");
+
+    return phoneNumberRegExp.hasMatch(this);
   }
 }
