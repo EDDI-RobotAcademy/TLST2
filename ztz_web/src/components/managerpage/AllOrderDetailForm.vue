@@ -42,6 +42,8 @@
         <th>주문 금액</th>
         <th>수량</th>
         <th>상태</th>
+        <th v-if="paymentList[paymentListIndex].paymentState != '전액 취소 완료'">배송 관리</th>
+        <th v-else>환불 사유</th>
       </tr>
       </thead>
       <tbody>
@@ -58,6 +60,20 @@
         <td>{{ item.orderCnt * item.product.price}}</td>
         <td>{{ item.orderCnt }}</td>
         <td>{{ item.orderState }}</td>
+        <td>
+<!--          상태가 결제완료, 배송중, 배송완료, 반품신청, 구매확정 , 환불완료 -->
+          <p v-if="item.orderState == '환불 완료'">{{orderedList[0].refundReason}}</p>
+          <button-white v-else-if="item.orderState == '결제완료'"
+                        class="deliveryBtn" btn-name="배송 시작"
+                        @click="startDelivery(item.orderID, item.payment.paymentId, index)"/>
+          <button-white v-else-if="item.orderState == '배송중'"
+                        class="deliveryBtn" btn-name="배송 완료"
+                        @click="finishDelivery(item.orderID, item.payment.paymentId)"/>
+          <button-white v-else
+                        class="deliveryBtn" btn-name="배송 완료"
+                        :disabled="true"/>
+
+        </td>
       </tr>
       </tbody>
     </v-simple-table>
@@ -92,6 +108,22 @@ export default {
     paymentListIndex: Number,
   },
   methods:{
+    startDelivery(orderId, paymentId, index){
+      if(this.orderedList[index].orderState == '배송중'){
+        alert("이미 배송중인 주문입니다.")
+      }else{
+        const startDeliveryOrderId = orderId
+        const startDeliveryPaymentId = paymentId
+        console.log("배송시작 에밋: "+ startDeliveryOrderId+ startDeliveryPaymentId)
+        this.$emit('startDelivery', {startDeliveryOrderId, startDeliveryPaymentId})
+      }
+    },
+    finishDelivery(orderId, paymentId){
+      const finDeliveryOrderId = orderId
+      const finDeliveryPaymentId = paymentId
+      console.log("배송완료 에밋: "+ finDeliveryOrderId+ finDeliveryPaymentId)
+      this.$emit('finDelivery', {finDeliveryOrderId, finDeliveryPaymentId})
+    }
   }
 }
 </script>

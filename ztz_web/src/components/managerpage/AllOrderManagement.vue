@@ -42,6 +42,8 @@
       <v-dialog v-model="showOrderDetail" width="800">
         <all-order-detail-form :paymentId="this.paymentId"
                                :paymentListIndex="this.paymentListIndex"
+                               @startDelivery="startDelivery"
+                               @finDelivery="finDelivery"
         />
       </v-dialog>
     </template>
@@ -86,7 +88,20 @@ export default {
       this.showOrderDetail = true
       await this.reqOrderedListFromSpring(paymentId)
     },
-
+    startDelivery(payload) {
+      const reqType ="배송시작"
+      const orderId = payload.startDeliveryOrderId
+      const paymentId = payload.startDeliveryPaymentId
+      console.log("배송시작 주문상태변수: "+reqType + orderId+ paymentId)
+      this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
+    },
+    finDelivery(payload){
+      const reqType ="배송완료"
+      const orderId = payload.finDeliveryOrderId
+      const paymentId = payload.finDeliveryPaymentId
+      console.log("배송완료 주문상태변수: "+reqType + orderId+ paymentId)
+      this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
+    }
   },
 }
 </script>
