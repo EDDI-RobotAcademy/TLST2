@@ -61,7 +61,8 @@
         </tr>
       </table>
       <div>
-        <question-comment-register-form @submit="onSubmitRegister"/>
+      <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
+        <question-comment-register-form @submit="onSubmitRegister" v-if="this.$store.state.isAuthenticated && this.$store.state.resMember.managerCheck"/>
       </div>
     </div>
   </v-container>
@@ -96,14 +97,15 @@ export default {
     required: true
   },
   computed: {
-    ...mapState(['questionBoard', 'questionComments'])
+    ...mapState(['questionBoard', 'questionComments', 'resMember'])
   },
   methods: {
     ...mapActions([
       'requestQuestionFromSpring',
       'requestDeleteQuestionToSpring',
       'requestQuestionCommentListFromSpring',
-      'requestQuestionCommentRegisterToSpring'
+      'requestQuestionCommentRegisterToSpring',
+      "reqMemberInfoToSpring",
     ]),
     async onDelete() {
       await this.requestDeleteQuestionToSpring(this.questionNo);
@@ -122,6 +124,13 @@ export default {
   created() {
     this.requestQuestionFromSpring(this.questionNo)
     this.requestQuestionCommentListFromSpring(this.questionNo)
+  },
+
+  mounted() {
+    if (this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem("userInfo");
+      this.reqMemberInfoToSpring(token);
+    }
   },
 }
 </script>

@@ -44,12 +44,8 @@ export default {
     onSubmitRegister() {
       this.commentWriter = this.$store.state.resMember.username
       this.userNumber = this.$store.state.resMember.id
-      if (this.comment != '') {
         const {comment, commentWriter, userNumber} = this
         this.$emit('submit', {comment, commentWriter, userNumber})
-      } else {
-        alert("빈칸 없이 작성해주세요.")
-      }
     },
   }
 }

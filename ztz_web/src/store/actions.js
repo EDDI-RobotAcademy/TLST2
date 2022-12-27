@@ -252,10 +252,10 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestQuestionCommentRegisterToSpring ({ }, payload) {
         console.log('requestQuestionCommentRegisterToSpring()')
-        const { comment, commentWriter, questionNo } = payload
+        const { comment, commentWriter, questionNo, userNumber } = payload
         console.log("댓글 등록" + questionNo)
         return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
-            { comment : comment, commentWriter: commentWriter, question_no : questionNo })
+            { comment : comment, commentWriter: commentWriter, question_no : questionNo, member_no : userNumber})
             .then(() => {
                 alert('댓글 등록 성공')
             })
