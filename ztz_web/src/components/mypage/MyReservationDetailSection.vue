@@ -50,17 +50,17 @@
               >{{ reservation.foundry.name }}
             </p>
             <p style="font-size: 14px">
-              결제상태 <span class="mx-2" color="#ddd"> | </span>n
+              결제상태 <span class="mx-2" color="#ddd"> | </span>
+              <span v-if="reservation.paymentReservation.paymentState === true"
+                >Y</span
+              >
+              <span v-if="reservation.paymentReservation.paymentState === false"
+                >N</span
+              >
             </p>
           </div>
 
           <div class="pl-5 pr-6 pb-6">
-            <button-white
-              medium
-              width="86px"
-              style="padding: 0 16px 0 10px"
-              btn-name="선결제"
-            />
             <div>
               <button-white
                 medium
@@ -77,6 +77,14 @@
                 btn-name="예약수정"
               />
             </div>
+            <button-white
+              medium
+              width="86px"
+              style="padding: 0 16px 0 10px"
+              btn-name="선결제"
+              @click="goPaymentPage(reservation)"
+              v-show="reservation.paymentReservation.paymentState === false"
+            />
           </div>
         </v-card>
       </li>
@@ -131,6 +139,10 @@ export default {
     goModifyForm(reservation) {
       this.$store.commit("SAVE_RESERVATION_INFO", reservation);
       this.$router.push({ name: "ModifyView" });
+    },
+    goPaymentPage(reservation) {
+      this.$store.commit("SAVE_RESERVATION_INFO", reservation);
+      this.$router.push({ name: "PaymentView" });
     },
   },
 };

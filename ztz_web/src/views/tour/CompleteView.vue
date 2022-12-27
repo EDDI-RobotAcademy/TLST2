@@ -21,8 +21,6 @@ export default {
   },
   created() {
     this.myReservationInfo = this.$store.state.reservationInfo;
-    console.log(this.$store.state.reservationInfo);
-    console.log(this.myReservationInfo);
   },
 };
 </script>

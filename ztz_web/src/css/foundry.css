@@ -156,11 +156,49 @@
 }
 
 .announce-text-box {
-  width: 1200px;
   margin-bottom: 80px;
 }
 
 .announce-text-box > p {
   margin: 0 0 10px;
   text-align: center;
+}
+
+/* reservation-payment-view css */
+.invoice-card {
+  margin-top: 30px;
+  padding-bottom: 30px;
+  border-radius: 20px !important;
+}
+.invoice-card .announce-text-box {
+  width: 1140px;
+  margin: 0 auto;
+  padding: 25px 0 20px;
+  border-radius: 20px;
+  background-color: #f2f2f2;
+}
+.invoice-card .announce-text-box p {
+  margin-bottom: 8px;
+  color: #888;
+}
+.invoice-box {
+  padding: 20px 30px;
+  margin-left: -10px;
+}
+.invoice-box li {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+.invoice-box li p {
+  width: 48%;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.invoice-box li p span {
+  width: 120px;
+  margin: 20px;
+  font-weight: normal;
 }

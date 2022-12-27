@@ -26,9 +26,12 @@ import QuestionModifyView from "@/views/boards/QuestionModifyView";
 import FoundryView from "@/views/tour/FoundryView";
 import ReservationView from "@/views/tour/ReservationView";
 import CompleteView from "@/views/tour/CompleteView";
+import ModifyView from "@/views/tour/ModifyView";
+import PaymentView from "@/views/tour/PaymentView";
+
 import MonthDrinkView from "@/views/month/MonthDrinkView";
 import ManagerView from "@/views/managerpage/ManagerView";
-import ModifyView from "@/views/tour/ModifyView";
+
 
 Vue.use(VueRouter)
 
@@ -85,7 +88,6 @@ const routes = [
     name: 'MyPageView',
     component: MypageView,
     props: true
-
   },
   {
     path: '/my-page/review/:memberId',
@@ -159,16 +161,19 @@ const routes = [
   },
   {
     path: "/modifyReservation",
-    name: ModifyView,
+    name: "ModifyView",
     component: ModifyView,
+  },
+  {
+    path: "/paymentReservation",
+    name: "PaymentView",
+    component: PaymentView,
   },
   {
     path: '/manager',
     name: 'ManagerView',
     component: ManagerView
   },
-
-
 ]
 
 const router = new VueRouter({

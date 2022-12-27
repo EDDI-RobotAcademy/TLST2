@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.tour;
 
+import kr.eddi.ztz_process.controller.tour.form.PaymentReservationForm;
 import kr.eddi.ztz_process.controller.tour.form.ReservationForm;
 import kr.eddi.ztz_process.entity.tour.Foundry;
 import kr.eddi.ztz_process.entity.tour.Reservation;
@@ -44,4 +45,12 @@ public class ReservationController {
     public String modifyMyReservation (@PathVariable("reservationId") Long reservationId, @RequestBody ReservationForm reservationForm) {
         return foundryservice.modifyMyReservation(reservationId, reservationForm.toReservationRequest());
     }
+
+    @PostMapping("/my-reservation/payment")
+    public String savePaymentDetail(@RequestBody PaymentReservationForm paymentReservationForm){
+        log.info("savePaymentDetail" + paymentReservationForm);
+
+        return foundryservice.saveMyReservationPaymentDetail(paymentReservationForm.toPaymentReservationRequest()) ;
+    }
+
 }
