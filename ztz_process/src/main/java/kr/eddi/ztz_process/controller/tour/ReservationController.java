@@ -50,6 +50,7 @@ public class ReservationController {
     @GetMapping(path = "/allReservationList")
     public List<Reservation> allReservationList() {
         return foundryservice.allReservationList();
+    }
 
     @PostMapping("/my-reservation/payment")
     public String savePaymentDetail(@RequestBody PaymentReservationForm paymentReservationForm){
