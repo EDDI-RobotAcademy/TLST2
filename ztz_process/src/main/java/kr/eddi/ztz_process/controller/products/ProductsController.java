@@ -64,7 +64,11 @@ public class ProductsController {
         return productsService.getProductInfo(productNo);
     }
 
-
+    @PostMapping("/monthAlcohol/{productNo}")
+    public String checkMonthAlcohol(@PathVariable("productNo") Long productNo) {
+        log.info("이달의 술 선정: " + productNo);
+        return productsService.checkMonthAlcohol(productNo);
+    }
 
     @ResponseBody
     @PostMapping(value = "/register",
