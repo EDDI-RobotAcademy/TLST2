@@ -56,6 +56,7 @@
                   outlined color="grey darken-1"
                   dense
                   placeholder="브랜드를 입력해주세요"
+                  style="width: 200px"
                   v-model="brand">
               </v-text-field>
 
@@ -98,6 +99,7 @@
 
               <v-col cols="2"><h4>가격</h4></v-col>
               <v-text-field
+                  style="width: 200px"
                   type="number"
                   outlined color="grey darken-1"
                   dense
@@ -108,6 +110,7 @@
               <v-col cols="2" align="center"><h4>배송비</h4></v-col>
 
               <v-text-field
+                  style="width: 200px"
                   type="number"
                   outlined color="grey darken-1"
                   dense

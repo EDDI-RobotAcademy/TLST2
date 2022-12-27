@@ -4,11 +4,6 @@
       <p>모든 상품</p>
       <div class="local-filter">
         <ul>
-          <li v-if="this.$store.state.resMember.managerCheck && this.$store.state.isAuthenticated " >
-            <button-white @click="registerProduct" btn-name="상품 등록"/>
-          </li>
-        </ul>
-        <ul>
           <li>
             <button @click="reqProductsFromSpring">All</button>
           </li>
@@ -69,10 +64,6 @@ export default {
       let localName = this.localMenu[index]
       await this.reqFilteredProductsFromSpring(localName)
     },
-    registerProduct(){
-      this.$router.push({name: 'ProductRegisterView'})
-      alert("상품등록 페이지로 이동합니다.")
-    }
   },
 
 }

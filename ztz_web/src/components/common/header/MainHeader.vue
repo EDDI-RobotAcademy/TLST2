@@ -55,6 +55,7 @@
                             ref="keyword"
                             label="검색어를 입력해주세요"
                             type="text"
+                            color="gray"
                             append-icon="mdi-magnify"
                             @click:append="search"/>
             </div>

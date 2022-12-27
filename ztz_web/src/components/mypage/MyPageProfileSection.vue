@@ -51,7 +51,7 @@ export default {
 
   },
   methods: {
-    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqPaymentListFromSpring"]),
+    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqPaymentListFromSpring", "reqMyReservationListToSpring"]),
     async withdrawal() {
       let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?");
 

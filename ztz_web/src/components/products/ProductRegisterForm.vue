@@ -294,7 +294,7 @@ export default {
               alert(res.message)
             })
 
-        this.$router.push({name: 'ProductsView'})
+        this.$router.push({name: 'ManagerView'})
         //파일 업로드 하지 않은 경우
       } else{
         alert("상품 사진을 업로드해주세요")

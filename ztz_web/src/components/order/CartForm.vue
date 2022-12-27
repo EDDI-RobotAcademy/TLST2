@@ -20,8 +20,8 @@
              <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.product.price, item.count)" >
               <v-img class="ml-1"
                   :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)"
-                  max-width="320"
-                  max-height="240"
+                  max-width="200"
+                  max-height="150"
                   contain
               />
             <div class="c1">
@@ -241,24 +241,24 @@ export default {
 }
 .item-info .c1{
   position: relative;
-  margin-top: 70px;
+  margin-top: 40px;
   margin-left: 5%;
 }
 .item-info .c2 {
   position: relative;
-  margin-top: 100px;
+  margin-top: 50px;
   margin-left: 15%;
 }
 
 .item-info .r1 {
   position: relative;
-  margin-top: 105px;
+  margin-top: 60px;
   margin-left: 10%;
 }
 .item-info .r2 {
   position: relative;
-  margin-top: 90px;
-  margin-left: 5%;
+  margin-top: 50px;
+  margin-left: 10%;
 }
 
 
