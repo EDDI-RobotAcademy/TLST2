@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 import '../../controller/account/login_api.dart';
+import '../../pages/main_page/main_page.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_styles.dart';
 import '../text_filed/common_text_filed.dart';
@@ -42,7 +43,6 @@ class _LoginComponent extends State<LoginComponent>{
     var userTokenInfo = await signInStorage.read(key: "Log_in_token");
     if (userTokenInfo != null){
       showSuccessLogin();
-      // 메인 페이지로 이동
     }else{
       // 로그인 실패 알람
     }
@@ -90,7 +90,7 @@ class _LoginComponent extends State<LoginComponent>{
             FlatButton(
               child: const Text("Close"),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainPage() ));
               },
             ),
           ],
