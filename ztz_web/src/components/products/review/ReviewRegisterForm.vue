@@ -1,10 +1,5 @@
 <template>
   <div>
-    <v-dialog
-        v-model="dialog"
-        max-width="650"
-        persistent
-    >
       <v-card align="center">
         <v-card-title class="text-h5">
           리뷰쓰기
@@ -19,8 +14,8 @@
               contain
           ></v-img>
         </div>
-        <div>
-          <p class="mt-5 mb-3">상품은 만족하셨나요?</p>
+        <div class="mb-3">
+          <p class="mt-5 mb-3" style="font-size: 18px">상품은 만족하셨나요?</p>
           <v-rating
               v-model="rate"
               :value="rate"
@@ -30,7 +25,6 @@
               x-large
               hover
           ></v-rating>
-          <p>{{ rate }}</p>
         </div>
         <div>
           <v-textarea
@@ -63,11 +57,6 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <ButtonWhite
-              @click="cancel"
-              btn-name="취소"
-              large
-          />
           <ButtonGreen
               @click="submit"
               btn-name="등록"
@@ -76,7 +65,6 @@
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -87,7 +75,6 @@ export default {
   name: "ReviewRegisterForm",
   data() {
     return {
-      dialog: false,
       rate: 0,
       content: '',
       image: '',
@@ -152,10 +139,6 @@ export default {
         await this.reqRegisterReviewToSpring({memberId, productNo, rate, content})
       }
       await this.$router.go(this.$router.currentRoute)
-      this.dialog = false
-    },
-    cancel() {
-      this.dialog = false
     },
   },
   computed: {
@@ -163,17 +146,6 @@ export default {
       'resMember'
     ])
   },
-  watch: {
-    // dialog 상태가 변경되면 실행됨
-    dialog: function (val) {
-      if (val) {
-        this.image = ''
-        this.rate = 0
-        this.content = ''
-        this.preview = ''
-      }
-    }
-  }
 }
 </script>
 

@@ -80,13 +80,15 @@
         <td>
 <!--          리뷰메소드 연결 필요-->
           <button-white v-if="item.orderState == '구매확정'||item.orderState =='반품신청'"
-                        class="review-btn ma-2" btn-name="리뷰 작성" @click="registerReview"/>
+                        class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog"/>
           <button-white v-else
                         :disabled="true"
                         class="review-btn ma-2" btn-name="리뷰 작성"/>
-          <ReviewRegisterForm
-              :product="item.product"
-              ref="ReviewRegisterForm"/>
+          <template>
+            <v-dialog v-model="reviewDialog" width="650">
+                <ReviewRegisterForm :product="item.product"/>
+            </v-dialog>
+          </template>
         </td>
       </tr>
       </tbody>
@@ -109,12 +111,14 @@
 <script>
 import { mapState} from "vuex";
 import OrderRefundForm from "@/components/mypage/OrderRefundForm";
+import ReviewRegisterForm from "@/components/products/review/ReviewRegisterForm";
 
 export default {
   name: "OrderDetailForm",
-  components: {OrderRefundForm},
+  components: {ReviewRegisterForm, OrderRefundForm},
   data(){
     return{
+      reviewDialog: false,
       refundDialog : false,
       refundPrice:0,
       orderId:0,
@@ -164,10 +168,9 @@ export default {
       this.refundDialog = true
       this.allRefund = true
     },
-    registerReview() {
-      this.$refs.ReviewRegisterForm.dialog = true
+    showReviewDialog() {
+      this.reviewDialog = true
     },
-
   }
 }
 </script>
