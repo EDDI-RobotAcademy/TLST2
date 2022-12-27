@@ -29,8 +29,8 @@ public class QuestionCommentController {
         log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
         log.info(commentRequest.getComment());
         log.info(commentRequest.getCommentWriter()); // commentWriter의 데이터를 가져온걸 확인
-        log.info(commentRequest.getQuestion_no().toString());
-        log.info(commentRequest.getMember_no().toString()); // 통신은 됏지만 데이터값이 NULL값이 나와서
+//        log.info(commentRequest.getQuestion_no());
+//        log.info(commentRequest.getMember_no());
         questionCommentService.questionCommentRegister(commentRequest);
     }
 
