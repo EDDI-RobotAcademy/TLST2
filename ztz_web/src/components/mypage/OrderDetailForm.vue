@@ -80,10 +80,13 @@
         <td>
 <!--          리뷰메소드 연결 필요-->
           <button-white v-if="item.orderState == '구매확정'||item.orderState =='반품신청'"
-                        class="review-btn ma-2" btn-name="리뷰 작성"/>
+                        class="review-btn ma-2" btn-name="리뷰 작성" @click="registerReview"/>
           <button-white v-else
                         :disabled="true"
                         class="review-btn ma-2" btn-name="리뷰 작성"/>
+          <ReviewRegisterForm
+              :product="item.product"
+              ref="ReviewRegisterForm"/>
         </td>
       </tr>
       </tbody>
@@ -160,7 +163,11 @@ export default {
       this.refundPrice = refundPrice
       this.refundDialog = true
       this.allRefund = true
-    }
+    },
+    registerReview() {
+      this.$refs.ReviewRegisterForm.dialog = true
+    },
+
   }
 }
 </script>
