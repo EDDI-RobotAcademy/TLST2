@@ -28,17 +28,17 @@ class FirstPage extends StatelessWidget{
                   const SizedBox(height: 100),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage() ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage() ));
                     },
                     child: const Text("로그인",),
                     style: defaultElevatedButtonStyle(300,50),),
                   const SizedBox(height: 30,),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpPage() ));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage() ));
                     },
                     child: const Text("회원가입",),
-                    style: defaultElevatedButtonStyle(300,50),)
+                    style: defaultElevatedButtonStyle(300,50),),
                 ],
               ),
             ),

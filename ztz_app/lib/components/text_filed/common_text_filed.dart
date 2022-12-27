@@ -97,6 +97,9 @@ class _TextFiledComponent extends State<TextFiledComponent>{
         decoration: textFieldDecoration(hintText),
         keyboardType : textInputType,
         focusNode: useFocus,
+        obscureText: widget.usedPosition == "password"? true:
+          widget.usedPosition == "passwordCheck"?true:false,
+        obscuringCharacter: '*',
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: widget.usedPosition == "email"?
             (value) => CheckValidate().validateEmail(useFocus, value!):

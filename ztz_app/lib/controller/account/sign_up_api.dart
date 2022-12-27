@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:ztz_app/api/account/sign_up_infos/manager_sign_up_info.dart';
-import 'package:ztz_app/api/account/sign_up_infos/member_sign_up_info.dart';
 import 'package:http/http.dart' as http;
+import 'package:ztz_app/controller/account/sign_up_infos/manager_sign_up_info.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/member_sign_up_info.dart';
 
 import 'sign_up_infos/account_state.dart';
 

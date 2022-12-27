@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
-import 'package:ztz_app/api/account/sign_up_infos/manager_sign_up_info.dart';
 import 'package:ztz_app/components/text_filed/common_text_filed.dart';
+import 'package:ztz_app/controller/account/sign_up_api.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/manager_sign_up_info.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/member_sign_up_info.dart';
+import 'package:ztz_app/pages/account/login_page.dart';
 
-import '../../api/account/sign_up_api.dart';
-import '../../api/account/sign_up_infos/account_state.dart';
-import '../../api/account/sign_up_infos/member_sign_up_info.dart';
+
+import '../../controller/account/sign_up_infos/account_state.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_field_decoration.dart';
 import '../../utility/text_styles.dart';
@@ -73,7 +75,9 @@ class _SignUpComponent extends State<SignUpComponent>{
         city, street, addressDetailController.text, zipcode, phoneNumberController.text);
 
     await SignUpApi().memberSignUp(memberSignUpInfo);
-
+    if(AccountState.signUpResult){
+      showSuccessSignUp();
+    }
   }
   //관리자 회원가입 함수
   managerSignUpFunction() async {
@@ -115,7 +119,9 @@ class _SignUpComponent extends State<SignUpComponent>{
       padding: EdgeInsets.only(left: 25,right: 25),
       child: Column(
         children: [
-          Text("ZTZ 회원가입"),
+          SizedBox(height: 20,),
+          Text("ZTZ 회원가입",style: productTitleTextStyle(),),
+          SizedBox(height: 20,),
           ToggleButtons(
               children: const [
                 Padding(
@@ -176,6 +182,13 @@ class _SignUpComponent extends State<SignUpComponent>{
           SizedBox(height: 3,),
           SizedBox(
               width: double.infinity,
+              child: Text("이름",textAlign: TextAlign.left,style: defaultTextStyle(),)
+          ),
+          SizedBox(height: 3,),
+          TextFiledComponent(controller: userNameController, usedPosition: "nickName"),
+          SizedBox(height: 3,),
+          SizedBox(
+              width: double.infinity,
               child: Text("비밀번호",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
           SizedBox(height: 3,),
@@ -215,8 +228,9 @@ class _SignUpComponent extends State<SignUpComponent>{
                 showCheckEmail();
               }else if(!passManagerCodeValidate){
                 showCheckManagerCode();
+              }else{
+                managerSignUpFunction();
               }
-              managerSignUpFunction();
             },
             child: Text("회원 가입"),style:defaultElevatedButtonStyle(300,25),
           )
@@ -250,7 +264,19 @@ class _SignUpComponent extends State<SignUpComponent>{
           textBox("생년월일",birthdayController,"phoneNumber"),
           ElevatedButton(
               onPressed: (){
-                memberSignUpFunction();
+
+                String myPassword = passwordController.text;
+                int tmp = myPassword.compareTo(checkPasswordController.text);
+                debugPrint("myPassword : "+ myPassword
+                    +"passwordCheckController.text :"+ checkPasswordController.text + "tmp : "+tmp.toString());
+
+                if(tmp != 0){
+                  showCheckPassword();
+                }else if(!passEmailValidate){
+                  showCheckEmail();
+                }else{
+                  memberSignUpFunction();
+                }
               },
               child: Text("회원 가입"),style:defaultElevatedButtonStyle(300,25),
           )
@@ -300,6 +326,7 @@ class _SignUpComponent extends State<SignUpComponent>{
     );
   }
 
+  // 여기는 전부 알람창
   void showCheckPassword(){
     showDialog(
       context: context,
@@ -452,7 +479,7 @@ class _SignUpComponent extends State<SignUpComponent>{
             FlatButton(
               child: const Text("Close"),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage() ));
               },
             ),
           ],

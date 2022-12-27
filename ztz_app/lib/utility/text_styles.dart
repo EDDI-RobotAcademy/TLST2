@@ -31,3 +31,27 @@ TextStyle defaultTextStyle(){
       color: Colors.black
   );
 }
+
+TextStyle productTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black
+  );
+}
+
+TextStyle productHazeTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textGray
+  );
+}
+
+TextStyle productTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 18,
+      fontFamily: "NanumSquareNeo-eHv",
+      color: Colors.black
+  );
+}
