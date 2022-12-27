@@ -3,6 +3,7 @@ package kr.eddi.ztz_process.entity.tour;
 import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.products.ProductInfo;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,6 +30,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "Foundry_id")
     private Foundry foundry;
+    @Embedded
+    private PaymentReservation paymentReservation;
 
     public Reservation(Member member, String username, String phoneNumber, LocalDate reservationDate, int numberOfMember, Foundry foundry) {
         this.member = member;
@@ -37,6 +40,7 @@ public class Reservation {
         this.reservationDate = reservationDate;
         this.numberOfMember = numberOfMember;
         this.foundry = foundry;
+        this.paymentReservation = new PaymentReservation();
     }
 
 }

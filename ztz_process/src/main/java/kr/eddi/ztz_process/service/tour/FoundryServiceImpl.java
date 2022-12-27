@@ -2,11 +2,13 @@ package kr.eddi.ztz_process.service.tour;
 
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.tour.Foundry;
+import kr.eddi.ztz_process.entity.tour.PaymentReservation;
 import kr.eddi.ztz_process.entity.tour.Reservation;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.tour.FoundryRepository;
 import kr.eddi.ztz_process.repository.tour.ReservationRepository;
 import kr.eddi.ztz_process.service.security.RedisService;
+import kr.eddi.ztz_process.service.tour.request.PaymentReservationRequest;
 import kr.eddi.ztz_process.service.tour.request.ReservationRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,28 @@ public class FoundryServiceImpl implements FoundryService{
             reservation.setPhoneNumber(reservationRequest.phoneNumber());
             reservation.setNumberOfMember(reservationRequest.numberOfMember());
             reservation.setReservationDate(selectedDate);
+            reservationRepository.save(reservation);
+            return "1";
+        }
+
+        return "-1";
+    }
+
+    @Override
+    public String saveMyReservationPaymentDetail(PaymentReservationRequest paymentReservationRequest) {
+        Reservation reservation = reservationRepository.findByReservationId(paymentReservationRequest.reservationId());
+
+        //결제한 예약건의 사용자와 전달받은 사용자 아이디가 동일하면,
+        if(paymentReservationRequest.memberId() == reservation.getMember().getId()) {
+
+            PaymentReservation paymentReservation = new PaymentReservation(
+                    paymentReservationRequest.merchant_uid(),
+                    paymentReservationRequest.totalPaymentPrice(),
+                    paymentReservationRequest.paymentState()
+            );
+
+            reservation.setPaymentReservation(paymentReservation);
+            log.info(reservation.getPaymentReservation().toString());
             reservationRepository.save(reservation);
             return "1";
         }
