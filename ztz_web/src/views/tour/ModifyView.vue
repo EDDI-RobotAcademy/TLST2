@@ -44,6 +44,9 @@ export default {
       if (this.res === 1) {
         alert("성공적으로 예약이 수정되었습니다.");
         this.$router.push({ name: "MyPageView" });
+      } else {
+        alert("예약 수정 실패하였습니다. 관리자에게 문의 부탁드립니다.");
+        this.$router.push({ name: "HomeView" });
       }
     },
   },
