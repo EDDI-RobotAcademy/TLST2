@@ -96,6 +96,10 @@ public class FoundryServiceImpl implements FoundryService{
     }
 
     @Override
+    public List<Reservation> allReservationList(){
+        return reservationRepository.findAll();
+
+    @Override
     public String saveMyReservationPaymentDetail(PaymentReservationRequest paymentReservationRequest) {
         Reservation reservation = reservationRepository.findByReservationId(paymentReservationRequest.reservationId());
 

@@ -79,4 +79,16 @@ public class ProductsListTest {
         String keyword = "도원";
         System.out.println("검색키워드 상품 찾기"+ service.search(keyword));
     }
+
+    @Test
+    void checkMonthAlcoholTest(){
+        Long productNo = 1L;
+        service.checkMonthAlcohol(productNo);
+    }
+
+    @Test
+    void monthAlcoholListTest(){
+        System.out.println("이달의 술 리스트"+repository.findMonthAlcoholProducts());
+    }
+
 }

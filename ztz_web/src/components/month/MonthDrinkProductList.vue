@@ -26,7 +26,8 @@
                   <div class="item-info">
                     <p style="color: #568869; font-size: 14px">{{ product.brand }}</p>
                     <p>{{ product.name }}</p>
-                    <p style="font-weight: bold">{{ product.price | numberFormat }} 원</p>
+                    <p style="font-weight: bold">{{ product.price | numberFormat }} 원 <span style="color: red" >&nbsp;&nbsp;10%</span></p>
+
                   </div>
                 </v-card>
               </router-link>

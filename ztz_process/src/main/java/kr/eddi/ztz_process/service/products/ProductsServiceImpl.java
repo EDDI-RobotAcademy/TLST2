@@ -287,4 +287,33 @@ public class ProductsServiceImpl implements ProductsService{
     public void remove(Long productNo){
         repository.deleteById(productNo);
     }
+
+    public String checkMonthAlcohol(Long productNo){
+        double discountRate = 0.9;
+        String msg = "";
+
+        Optional<Product> maybeProduct = repository.findById(productNo);
+        if (maybeProduct.equals(Optional.empty())) {
+            log.info("Can't find product");
+        }
+        Product product = maybeProduct.get();
+
+        if(product.getMonthAlcoholCheck()){
+            product.setMonthAlcoholCheck(false);
+            product.setPrice((int) (product.getPrice() / discountRate));
+            msg ="이달의 술 등록이 해제되었습니다.";
+        }else{
+            product.setMonthAlcoholCheck(true);
+            product.setPrice((int) (product.getPrice() * discountRate));
+            msg ="이달의 술로 등록되었습니다.";
+        }
+
+        repository.save(product);
+
+        return msg;
+    }
+
+    public List<Product> monthAlcoholList(){
+        return repository.findMonthAlcoholProducts();
+    }
 }

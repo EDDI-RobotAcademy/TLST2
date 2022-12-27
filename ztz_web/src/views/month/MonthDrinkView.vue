@@ -25,9 +25,7 @@ export default {
   components: {MonthDrinkProductList},
   methods: {
     ...mapActions([
-      // 관리자가 등록된 상품 중 선택하여 이달의 술로 배치할 예정
-      // 일단 상품 리스트 불러옴
-        'reqProductsFromSpring'
+        'reqMonthAlcoholProductsFromSpring'
     ])
   },
   computed: {
@@ -36,9 +34,7 @@ export default {
     ])
   },
   mounted() {
-    // 관리자가 등록된 상품 중 선택하여 이달의 술로 배치할 예정
-    // 일단 상품 리스트 불러옴
-    this.reqProductsFromSpring()
+    this.reqMonthAlcoholProductsFromSpring()
   }
 }
 </script>

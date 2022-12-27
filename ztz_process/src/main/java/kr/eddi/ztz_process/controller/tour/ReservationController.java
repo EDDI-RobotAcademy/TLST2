@@ -46,6 +46,11 @@ public class ReservationController {
         return foundryservice.modifyMyReservation(reservationId, reservationForm.toReservationRequest());
     }
 
+
+    @GetMapping(path = "/allReservationList")
+    public List<Reservation> allReservationList() {
+        return foundryservice.allReservationList();
+
     @PostMapping("/my-reservation/payment")
     public String savePaymentDetail(@RequestBody PaymentReservationForm paymentReservationForm){
         log.info("savePaymentDetail" + paymentReservationForm);

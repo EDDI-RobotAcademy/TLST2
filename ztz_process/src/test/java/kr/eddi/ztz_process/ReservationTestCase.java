@@ -86,4 +86,10 @@ public class ReservationTestCase {
         repository.save(foundry5);
         repository.save(foundry6);
     }
+
+
+    @Test
+    void allReservationListTest(){
+        System.out.println("전체예약 리스트 조회:"+repository.findAll());
+    }
 }

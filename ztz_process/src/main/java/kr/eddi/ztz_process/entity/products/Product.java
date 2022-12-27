@@ -26,6 +26,9 @@ public class Product {
     @Column
     private Integer view = 0;
 
+    @Column
+    Boolean monthAlcoholCheck = false;
+
     @Embedded
     private Classification classification;
     @Embedded

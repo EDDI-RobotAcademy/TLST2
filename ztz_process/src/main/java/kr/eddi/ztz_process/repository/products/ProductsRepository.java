@@ -20,5 +20,7 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.name like %:name% or p.brand like %:brand% order by p.productNo desc")
     List<Product> findSearchProduct(String name, String brand);
 
+    @Query("select p from Product p where p.monthAlcoholCheck = true order by p.productNo desc")
+    List<Product> findMonthAlcoholProducts();
 
 }
