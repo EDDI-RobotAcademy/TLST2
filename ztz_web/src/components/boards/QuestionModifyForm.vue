@@ -46,14 +46,11 @@
       </table>
 
       <div>
-        <v-btn class="green white--text" rounded depressed small type="submit">
-          수정
-        </v-btn>
+        <button-white btn-name="수정" depressed type="submit"/>
         <router-link :to="{ name: 'QuestionReadView',
                             params: { questionNo: questionBoard.questionNo.toString() } }">
-          <v-btn class="green white--text" rounded depressed small>
-            취소
-          </v-btn>
+          <button-white btn-name="취소" depressed/>
+
         </router-link>
       </div>
 

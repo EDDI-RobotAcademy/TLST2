@@ -23,7 +23,7 @@
             <v-row class="mt-7">
               <table class="thumbTable" width="320px" height="240px">
                 <tr>
-                  <td>
+                  <td style="padding-bottom: 15px">
                     <div v-if="this.thumbnailFile.length > 0">
                       <v-icon align="right" style="align-items: end" @click="thumbnailCancel">mdi-close</v-icon>
                       <v-img :src="thumbnailPreview" width="200px" style="margin-left: auto; margin-right: auto; display: block;"/>
@@ -130,8 +130,8 @@
 
         <v-row class=" mt-7">
           <v-col cols="2"><h4>상품 상세 설명</h4></v-col>
-          <textarea
-              style="border-color: #888888" cols="95" rows="5"
+          <textarea class="ml-3"
+              style="border-color: #888888" cols="100" rows="5"
               placeholder="상품의 상세한 설명을 입력해주세요"
               v-model="description">
           </textarea>

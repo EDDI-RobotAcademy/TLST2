@@ -1,7 +1,8 @@
 <template>
 <div style="overflow-x: hidden;">
   <v-card>
-    <p class="pl-3 pt-5">상세 주문 정보  <v-btn class="cancel-btn" @click="showAllCancelDialog(paymentList[paymentId-1].totalPaymentPrice)">결제 취소</v-btn></p>
+    <p class="pl-3 pt-5">상세 주문 정보
+      <v-btn class="cancel-btn" v-if="paymentList[paymentListIndex].paymentState != '전액 취소 완료'" @click="refundBtn(paymentList[paymentListIndex].totalPaymentPrice)">결제 취소</v-btn></p>
     <v-divider class="mt-1 mb-3"/>
     <v-row>
       <p class="sub-title">수령인 </p>
@@ -19,17 +20,17 @@
     <v-row>
     <p class="sub-title">배송지 </p>
     <p class="content">
-      {{ paymentList[paymentId-1].address.city }}
-      {{ paymentList[paymentId-1].address.street }}
-      {{ paymentList[paymentId-1].address.addressDetail }}
-      ({{ paymentList[paymentId-1].address.zipcode }})
+      {{ paymentList[paymentListIndex].address.city }}
+      {{ paymentList[paymentListIndex].address.street }}
+      {{ paymentList[paymentListIndex].address.addressDetail }}
+      ({{ paymentList[paymentListIndex].address.zipcode }})
     </p>
     </v-row>
     <v-divider class="mt-1 mb-3"/>
     <v-row>
       <p class="sub-title">요청사항 </p>
       <p class="content">
-        {{ paymentList[paymentId-1].deliveryRequest }}
+        {{ paymentList[paymentListIndex].deliveryRequest }}
       </p>
     </v-row>
     <v-divider class="mt-1 mb-3"/>
@@ -42,16 +43,17 @@
         <th>주문 금액</th>
         <th>수량</th>
         <th>상태</th>
-        <th>후기 작성</th>
+        <th>구매확정관리</th>
+        <th>리뷰관리</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="item in orderedList" :key="item">
+      <tr v-for="(item, index) in orderedList" :key="index">
         <td>
           <v-row>
             <img :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)" class="ma-3" style="width: 70px">
             <v-col>
-              <p class="product-brand">brand: {{item.product.brand}}</p>
+              <p class="product-brand">{{item.product.brand}}</p>
               <p class="mt-0 pt-0">{{ item.product.name }}</p>
             </v-col>
           </v-row>
@@ -60,7 +62,33 @@
         <td>{{ item.orderCnt }}</td>
         <td>{{ item.orderState }}</td>
         <td>
-          <v-btn class="review-btn">후기 작성</v-btn>
+          <v-row>
+            <button-green v-if="item.orderState == '배송완료'"
+                          @click="confirmPurchaseBtn(item.orderID, item.payment.paymentId)"
+                          class="review-btn ma-2" btn-name="구매 확정"/>
+            <button-green v-else
+                          :disabled="true" class="review-btn ma-2" btn-name="구매 확정"/>
+          </v-row>
+          <v-row>
+            <button-white v-if="item.orderState == '배송완료'"
+                          @click="returnProductBtn(item.orderID, item.payment.paymentId)"
+                          class="review-btn ma-2" btn-name="반품 신청"/>
+            <button-white  v-else
+                           :disabled="true" class="review-btn ma-2" btn-name="반품 신청"/>
+          </v-row>
+        </td>
+        <td>
+<!--          리뷰메소드 연결 필요-->
+          <button-white v-if="item.orderState == '구매확정'||item.orderState =='반품신청'"
+                        class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog"/>
+          <button-white v-else
+                        :disabled="true"
+                        class="review-btn ma-2" btn-name="리뷰 작성"/>
+          <template>
+            <v-dialog v-model="reviewDialog" width="650">
+                <ReviewRegisterForm :product="item.product"/>
+            </v-dialog>
+          </template>
         </td>
       </tr>
       </tbody>
@@ -83,17 +111,19 @@
 <script>
 import { mapState} from "vuex";
 import OrderRefundForm from "@/components/mypage/OrderRefundForm";
+import ReviewRegisterForm from "@/components/products/review/ReviewRegisterForm";
 
 export default {
   name: "OrderDetailForm",
-  components: {OrderRefundForm},
+  components: {ReviewRegisterForm, OrderRefundForm},
   data(){
     return{
+      reviewDialog: false,
       refundDialog : false,
       refundPrice:0,
       orderId:0,
-
-      allRefund:false
+      allRefund:false,
+      startDeliveryNum : 0,
     }
   },
   computed:{
@@ -103,14 +133,44 @@ export default {
     ])
   },
   props:{
-    paymentId : Number
+    paymentId : Number,
+    paymentListIndex: Number
   },
   methods:{
+    // 배송중 상태인 주문리스트 존재하는 경우 결제취소 버튼 클릭 시 환불불가 메시지 출력
+    refundBtn(refundPrice){
+      this.startDeliveryNum = 0
+      for (let i = 0; i < this.orderedList.length ; i++) {
+        if(this.orderedList[i].orderState =='배송중'){
+          this.startDeliveryNum += 1
+        }
+      }
+      if(this.startDeliveryNum > 0){
+        alert("배송중인 상품이 있어 환불이 불가합니다. 상품QnA에 문의해주세요")
+      }else{
+        this.showAllCancelDialog(refundPrice)
+      }
+    },
+    // 상태가 결제완료, 배송중, 배송완료, 반품신청, 구매확정 , 환불완료
+    confirmPurchaseBtn(orderId, paymentId){
+        const confirmPurchaseOrderId = orderId
+        const confirmPurchasePaymentId = paymentId
+        this.$emit('confirmPurchase', {confirmPurchaseOrderId, confirmPurchasePaymentId})
+
+    },
+    returnProductBtn(orderId, paymentId){
+        const returnOrderId = orderId
+        const returnPaymentId = paymentId
+        this.$emit('returnProduct', {returnOrderId, returnPaymentId})
+    },
     showAllCancelDialog(refundPrice){
       this.refundPrice = refundPrice
       this.refundDialog = true
       this.allRefund = true
-    }
+    },
+    showReviewDialog() {
+      this.reviewDialog = true
+    },
   }
 }
 </script>
@@ -128,6 +188,11 @@ export default {
   padding-top: 15px;
   padding-left: 50px;
   font-size: 14px;
+}
+.review-btn{
+  font-size: 12px;
+  max-height: 20px;
+  max-width: 6px;
 }
 .review-btn{
   font-size: 12px;

@@ -39,9 +39,9 @@ export default {
       currentTab: "MyPageDeliverySection",
       active_tab: 0,
       navi: [
-        { menu: "배송지관리", tab: "MyPageDeliverySection" },
-        { menu: "주문관리", tab: "OrderManagement" },
-        { menu: "리뷰관리", tab: "MyPageReviewForm" },
+        { menu: "매출관리", tab: "MyReservationDetailSection" },
+        { menu: "주문관리", tab: "AllOrderManagement" },
+        { menu: "상품관리", tab: "MyReservationDetailSection" },
         { menu: "예약관리", tab: "MyReservationDetailSection" },
         { menu: "회원정보변경", tab: "MyReservationDetailSection" },
       ],
@@ -54,7 +54,7 @@ export default {
   computed: {
     componentLoader() {
       const tab = this.currentTab;
-      return () => import(`@/components/mypage/${tab}`);
+      return () => import(`@/components/managerpage/${tab}`);
     },
   },
   methods: {},
