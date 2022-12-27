@@ -92,4 +92,8 @@ public class FoundryServiceImpl implements FoundryService{
 
         return "-1";
     }
+    @Override
+    public List<Reservation> allReservationList(){
+        return reservationRepository.findAll();
+    }
 }

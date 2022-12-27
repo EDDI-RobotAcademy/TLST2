@@ -12,4 +12,5 @@ public interface FoundryService {
     List<Reservation> myReservationList(String token);
     String cancelMyReservation(Long reservationId, String token);
     String modifyMyReservation(Long reservationId, ReservationRequest reservationRequest);
+    List<Reservation> allReservationList();
 }

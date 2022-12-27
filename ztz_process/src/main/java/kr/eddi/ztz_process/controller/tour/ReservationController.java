@@ -44,4 +44,10 @@ public class ReservationController {
     public String modifyMyReservation (@PathVariable("reservationId") Long reservationId, @RequestBody ReservationForm reservationForm) {
         return foundryservice.modifyMyReservation(reservationId, reservationForm.toReservationRequest());
     }
+
+    @GetMapping(path = "/allReservationList")
+    public List<Reservation> allReservationList() {
+        return foundryservice.allReservationList();
+    }
+
 }
