@@ -5,18 +5,18 @@
       <v-divider></v-divider>
     </div>
     <div class="product">
-      <v-row>
-        <v-col cols="2" v-for="(product, idx) in products" :key="idx">
+      <carousel :per-page="5" autoplay="true" loop="true">
+        <slide v-for="(product, idx) in products" :key="idx">
           <router-link
               style="text-decoration: none"
               :to="{ name: 'ProductDetailView',
                                 params: { productNo: product.productNo.toString() }}">
-            <v-card width="200px" height="250px" elevation="1">
+            <v-card width="200px" height="250px" elevation="1" style="margin: 10px">
               <v-card-text style="padding: 10px 0 10px 0">
-              <v-img
-                  :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
-                  max-width="200px"
-                  max-height="150px" contain/>
+                <v-img
+                    :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
+                    max-width="200px"
+                    max-height="150px" contain/>
               </v-card-text>
               <div class="product-info">
                 <p style="color: #568869; font-size: 12px">{{ product.brand }}</p>
@@ -25,8 +25,8 @@
               </div>
             </v-card>
           </router-link>
-        </v-col>
-      </v-row>
+        </slide>
+      </carousel>
     </div>
   </div>
 </template>
@@ -51,11 +51,12 @@ export default {
 .product {
   margin-top: 20px;
 }
+
 .product .product-info {
   margin: 0 0 0 20px;
 }
 
-.product .product-info p{
+.product .product-info p {
   margin: 3px;
   font-size: 14px;
 }

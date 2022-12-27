@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   flutter_secure_storage: ^6.0.0
+  remedi_kopo: ^0.0.1
+  get: ^4.6.5
 
 
 dev_dependencies:
@@ -83,10 +85,26 @@ flutter:
       fonts:
         - asset: assets/fonts/Cafe24Ohsquare.ttf
           weight: 300
-#    - family: 폰트추가
-#      fonts:
-#        - asset: assets/fonts/폰트추가
-#          weight: 300
+    - family: NanumSquareNeo-aLt
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-aLt.ttf
+          weight: 300
+    - family: NanumSquareNeo-bRg
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-bRg.ttf
+          weight: 300
+    - family: NanumSquareNeo-cBd
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+          weight: 300
+    - family: NanumSquareNeo-dEb
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+          weight: 300
+    - family: NanumSquareNeo-eHv
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-eHv.ttf
+          weight: 300
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

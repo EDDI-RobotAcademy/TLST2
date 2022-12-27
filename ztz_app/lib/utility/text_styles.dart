@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 TextStyle welcomeTitle(){
@@ -21,5 +21,37 @@ TextStyle hintTextStyle(){
       fontSize: 12,
       fontFamily: "Cafe24Ohsquare",
       color:ColorStyle.textGray
+  );
+}
+
+TextStyle defaultTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "Cafe24Ohsquare",
+      color: Colors.black
+  );
+}
+
+TextStyle productTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black
+  );
+}
+
+TextStyle productHazeTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textGray
+  );
+}
+
+TextStyle productTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 18,
+      fontFamily: "NanumSquareNeo-eHv",
+      color: Colors.black
   );
 }

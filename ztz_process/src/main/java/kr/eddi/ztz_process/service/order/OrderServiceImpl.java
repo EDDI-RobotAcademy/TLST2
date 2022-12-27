@@ -5,6 +5,7 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
+import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Payment;
@@ -19,6 +20,7 @@ import kr.eddi.ztz_process.service.security.RedisService;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -101,10 +103,17 @@ public class OrderServiceImpl implements OrderService{
 
         return payments;
     }
+
+    @Override
+    public List<Payment> readManagerAllPayment(){
+        List<Payment> payments = paymentRepository.findAll(Sort.by(Sort.Direction.DESC, "paymentId"));
+        return payments;
+    }
+
     @Override
     public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
-        String test_api_key = "7457766534132075";
-        String test_api_secret = "CG6nmGvTcWQiEqQGAf53yVQiuAesHTly0uJL5mHTdbzRhlbOinjSulKdE9vObOvAfjDpcS2cRzNxjHn8";
+        String test_api_key = "2701111347244503";
+        String test_api_secret = "J7xV8xenAUsYtgiuUjwAJNJ7o2Ax4VnSsaABT0G04YDwedek5x0Rzp0e1elG2od4sZTyUzVygtxUUwnp";
         IamportClient client = new IamportClient(test_api_key,test_api_secret);
 
         Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());
@@ -183,5 +192,57 @@ public class OrderServiceImpl implements OrderService{
 
 
         return setOrderNum;
+    }
+
+    public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest){
+
+        //배송시작, 배송완료, 구매확정, 반품신청 4개 reqType
+        String reqType = changeOrderStateRequest.getReqType();
+        String stateName ="";
+        Boolean allSameOrderStateCheck = false;
+        int sameOrderStateNum = 0;
+
+        if(reqType.equals("배송시작")){
+            stateName = "배송중";
+        } else if (reqType.equals("배송완료")) {
+            stateName = "배송완료";
+        } else if (reqType.equals("구매확정")) {
+            stateName = "구매확정";
+        } else if(reqType.equals("반품신청")){
+            stateName = "반품신청";
+        }
+
+        // orderinfo는 그냥 각각 배송시작 상태 변경해주기
+        Optional<OrderInfo> maybeOrderInfo = orderRepository.findById(changeOrderStateRequest.getOrderId());
+        OrderInfo startOrderInfo = maybeOrderInfo.get();
+        startOrderInfo.setOrderState(stateName);
+
+        orderRepository.save(startOrderInfo);
+
+        //위에서 개별적으로 상태변경 후! 만약 if paymentid 동일한 그룹 내 -> "배송중" 상태 몇개인지 반복문 돌리기
+        List<OrderInfo> findOrderInfoPaymentList = orderRepository.findByPaymentId(changeOrderStateRequest.getPaymentId());
+
+        for (int i = 0; i < findOrderInfoPaymentList.size(); i++) {
+            if(findOrderInfoPaymentList.get(i).getOrderState().equals(stateName)){
+                sameOrderStateNum = sameOrderStateNum + 1;
+            }
+        }
+        if(findOrderInfoPaymentList.size() == sameOrderStateNum){
+            allSameOrderStateCheck = true;
+        }
+
+        //payment - 여기는 여러개 모든 paymentId의 구성요소 orderInfo들이 다 배송시작 된 경우 payment 그룹 상태 변경 -> 배송중
+        //payment 그룹 내 1개라도 배송중인 경우 부분배송 중으로 상태값 변경
+        Optional<Payment> maybePayment = paymentRepository.findById(changeOrderStateRequest.getPaymentId());
+        Payment payment = maybePayment.get();
+
+        if (allSameOrderStateCheck){
+            payment.setPaymentState(stateName);
+        }else {
+            payment.setPaymentState("부분 "+ stateName);
+        }
+        paymentRepository.save(payment);
+
+        return findOrderInfoPaymentList;
     }
 }

@@ -11,14 +11,12 @@
       <div v-if="this.$store.state.resMember.username == this.questionBoard.writer">
         <!--  게시물 수정   -->
         <router-link :to="{ name: 'QuestionModifyView', params: { questionNo } }">
-          <v-btn class="green white--text" rounded depressed small>게시물 수정</v-btn>&nbsp;
+          <button-white depressed btn-name="수정"/>&nbsp;
         </router-link>
         <!--  게시물 삭제   -->
         <v-dialog v-model="deleteDialog" persisten max-width="400">
           <template v-slot:activator="{on}">
-            <v-btn class="green white--text" rounded depressed small v-on="on">
-              삭제
-            </v-btn>
+            <button-green btn-name="삭제" depressed v-on="on"/>
           </template>
           <v-card>
             <v-card-title class="headline">
@@ -39,9 +37,7 @@
           </v-card>
         </v-dialog>
         <router-link :to="{ name: 'QuestionListView' }">
-          <v-btn class="green white--text" rounded depressed small>
-            돌아가기
-          </v-btn>
+          <button-white btn-name="BACK" depressed />
         </router-link>
       </div>
       <div v-else>

@@ -41,28 +41,17 @@
           prev: '« Back'
         }"></paginate-links>
     </div>
-    <!-- 리뷰 등록 버튼 나중에 마이페이지 쪽으로 이동 예정(?) -->
-    <div>
-      <ButtonGreen
-          btn-name="리뷰등록"
-          @click="registerReview"
-      />
-      <ReviewRegisterForm
-          :product="product"
-          ref="ReviewRegisterForm"/>
-    </div>
   </div>
 </template>
 
 <script>
 
 import ProductReviewContents from "@/components/products/review/ProductReviewContents";
-import ReviewRegisterForm from "@/components/products/review/ReviewRegisterForm";
 import {mapActions, mapState} from "vuex";
 
 export default {
   name: "ProductReviewForm",
-  components: {ReviewRegisterForm, ProductReviewContents},
+  components: {ProductReviewContents},
   data() {
     return {
       paginate: ['reviews'],
@@ -78,10 +67,7 @@ export default {
   methods: {
     ...mapActions([
       'reqReadReviewFromSpring'
-    ]),
-    registerReview() {
-      this.$refs.ReviewRegisterForm.dialog = true
-    },
+    ])
   },
   created() {
     const productNo = this.product.productNo
