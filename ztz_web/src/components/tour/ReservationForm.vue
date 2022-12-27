@@ -19,10 +19,13 @@
             v-model="phoneNumber"
             id="phoneNumber"
             type="text"
-            placeholder="연락처를 입력해주세요"
+            placeholder="-포함 핸드폰번호 11자리를 입력해주세요"
             class="reservation-text-field"
-            @blur="checkIsEmpty($event)"
+            required
           />
+          <p v-show="valid.phoneNumber" class="input-error">
+            핸드폰번호를 정확히 입력해주세요.
+          </p>
         </div>
 
         <div>
@@ -30,9 +33,10 @@
 
           <date-picker
             v-model="reservationDate"
+            :disabled-date="disabledDate"
             valueType="format"
-            @blur="checkIsEmpty($event)"
             class="date-picker-ui"
+            required
           />
         </div>
 
@@ -91,6 +95,11 @@ export default {
   beforeUpdate() {
     this.checkValidation();
   },
+  watch: {
+    phoneNumber: function () {
+      this.checkPhoneNumber();
+    },
+  },
   computed: {
     ...mapState(["isAuthenticated", "resMember"]),
   },
@@ -106,6 +115,11 @@ export default {
   },
   data() {
     return {
+      valid: {
+        phoneNumber: false,
+      },
+      phoneNumberHasError: false,
+
       username: "",
       numberOfMember: 1,
       reservationDate: "",
@@ -117,6 +131,9 @@ export default {
   },
   methods: {
     ...mapActions(["reqMemberInfoToSpring"]),
+    disabledDate(val) {
+      return val <= new Date();
+    },
     checkIsEmpty(event) {
       if (event.target.value.length === 0) {
         alert("필수 값입니다.");
@@ -154,6 +171,16 @@ export default {
     },
     qtyIncrease() {
       this.numberOfMember++;
+    },
+    checkPhoneNumber() {
+      const validatePhoneNumber = /^[0-9]+-[0-9]+-[0-9]{4}/;
+      if (!validatePhoneNumber.test(this.phoneNumber)) {
+        this.valid.phoneNumber = true;
+        this.phoneNumberHasError = true;
+        return;
+      }
+      this.valid.phoneNumber = false;
+      this.phoneNumberHasError = false;
     },
   },
 };
