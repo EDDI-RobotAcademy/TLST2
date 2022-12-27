@@ -69,6 +69,12 @@ public class ProductsController {
         log.info("이달의 술 선정: " + productNo);
         return productsService.checkMonthAlcohol(productNo);
     }
+    @GetMapping("/monthAlcohol/list")
+    public List<Product> monthAlcoholList() {
+        log.info("이달의 술 리스트 조회");
+
+        return productsService.monthAlcoholList();
+    }
 
     @ResponseBody
     @PostMapping(value = "/register",

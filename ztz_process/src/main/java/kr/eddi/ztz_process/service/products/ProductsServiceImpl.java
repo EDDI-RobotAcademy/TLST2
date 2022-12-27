@@ -313,4 +313,7 @@ public class ProductsServiceImpl implements ProductsService{
         return msg;
     }
 
+    public List<Product> monthAlcoholList(){
+        return repository.findMonthAlcoholProducts();
+    }
 }

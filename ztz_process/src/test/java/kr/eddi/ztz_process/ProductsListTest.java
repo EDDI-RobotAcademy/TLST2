@@ -86,4 +86,9 @@ public class ProductsListTest {
         service.checkMonthAlcohol(productNo);
     }
 
+    @Test
+    void monthAlcoholListTest(){
+        System.out.println("이달의 술 리스트"+repository.findMonthAlcoholProducts());
+    }
+
 }

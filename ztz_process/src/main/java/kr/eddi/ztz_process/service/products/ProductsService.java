@@ -26,4 +26,6 @@ public interface ProductsService {
     public void remove(Long productNo);
 
     public String checkMonthAlcohol(Long productNo);
+
+    public List<Product> monthAlcoholList();
 }
