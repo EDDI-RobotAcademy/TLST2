@@ -387,4 +387,11 @@ export default {
             })
     },
 
+    reqMonthAlcoholProductsFromSpring({commit}) {
+        return axios.get(`http://localhost:7777/ztz/products/monthAlcohol/list`)
+            .then((res) => {
+                commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
+            })
+    },
+
 }
