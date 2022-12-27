@@ -97,6 +97,15 @@ export default {
             commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data);
           });
       },
+
+    reqAllReservationListToSpring({commit}) {
+        return axios.get('http://localhost:7777/ztz/tour/allReservationList')
+            .then((res) => {
+                commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data)
+                console.log(res.data)
+            })
+    },
+
     reqCancelMyReservation({ commit }, payload) {
         return axios
           .delete(
