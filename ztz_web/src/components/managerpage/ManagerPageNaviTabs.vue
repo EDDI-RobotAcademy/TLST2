@@ -41,8 +41,8 @@ export default {
       navi: [
         { menu: "매출관리", tab: "MyReservationDetailSection" },
         { menu: "주문관리", tab: "AllOrderManagement" },
-        { menu: "상품관리", tab: "MyReservationDetailSection" },
-        { menu: "예약관리", tab: "MyReservationDetailSection" },
+        { menu: "상품관리", tab: "ProductManagementList" },
+        { menu: "예약관리", tab: "AllReservationDetailSection" },
         { menu: "회원정보변경", tab: "MyReservationDetailSection" },
       ],
     };

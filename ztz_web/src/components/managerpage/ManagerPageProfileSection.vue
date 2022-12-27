@@ -16,18 +16,18 @@
         <ul>
             <li>
                 <p class="head-text">
-                    주문내역
+                    매출액
                 </p>
                 <p class="content-text">
-                    {{this.$store.state.paymentList.length}}건
+                    원
                 </p>
             </li>
             <li>
                 <p class="head-text">
-                    리뷰내역
+                  주문내역
                 </p>
                 <p class="content-text">
-                    건
+                  {{this.$store.state.paymentList.length}} 건
                 </p>
             </li>
             <li>
@@ -35,7 +35,7 @@
                     예약내역
                 </p>
                 <p class="content-text">
-                    건
+                    {{this.$store.state.myReservationList.length}}건
                 </p>
             </li>
         </ul>
@@ -48,10 +48,11 @@
   export default {
     name: "MyPageProfileSection",
     computed: {
-    ...mapState(["isAuthenticated", "resMember", "paymentList"]),
+    ...mapState(["isAuthenticated", "resMember", "paymentList", "myReservationList"]),
     },
     mounted() {
       this.reqPaymentListFromSpring()
+      this.reqAllReservationListToSpring()
       if (this.$store.state.isAuthenticated === true) {
         let token = window.localStorage.getItem("userInfo");
         this.reqMemberInfoToSpring(token);
@@ -60,7 +61,7 @@
       }
   },
   methods: {
-    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring"]),
+    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqMyReservationListToSpring", "reqPaymentListFromSpring", "reqAllReservationListToSpring"]),
     async withdrawal() {
       let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?");
 

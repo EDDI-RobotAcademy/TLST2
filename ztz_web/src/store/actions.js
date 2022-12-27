@@ -93,6 +93,7 @@ export default {
             headers: { Token: token },
           })
           .then((res) => {
+              console.log("예약리스트 조회")
             commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data);
           });
       },
@@ -375,5 +376,15 @@ export default {
             .then((res) => {
                 commit(REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING, res.data)
             })
-    }
+    },
+
+    // eslint-disable-next-line no-empty-pattern
+    reqCheckMonthAlcoholToSpring({dispatch}, productNo){
+        return axios.post(`http://localhost:7777/ztz/products/monthAlcohol/${productNo}`)
+            .then((res) => {
+                alert(res.data)
+                dispatch('reqProductsFromSpring')
+            })
+    },
+
 }
