@@ -21,4 +21,5 @@ export default {
   orderedList:{},
   paymentList:{},
   myReservationList: [],
+  salesAmount: "",
 };

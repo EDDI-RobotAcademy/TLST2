@@ -57,7 +57,7 @@
             </v-col>
           </v-row>
         </td>
-        <td>{{ item.orderCnt * item.product.price}}</td>
+        <td>{{ item.orderPrice}}</td>
         <td>{{ item.orderCnt }}</td>
         <td>{{ item.orderState }}</td>
         <td>

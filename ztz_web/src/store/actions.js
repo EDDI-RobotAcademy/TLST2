@@ -17,6 +17,7 @@ import {
     REQUEST_ALL_PAYMENT_FROM_SPRING,
     REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
+    REQUEST_SALES_AMOUNT_TO_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -419,4 +420,10 @@ export default {
             })
     },
 
+    reqSalesAmountToSpring({commit}){
+        return axios.get(`http://localhost:7777/ztz/order/salesAmount`)
+            .then((res) => {
+                commit(REQUEST_SALES_AMOUNT_TO_SPRING, res.data)
+            })
+    }
 }
