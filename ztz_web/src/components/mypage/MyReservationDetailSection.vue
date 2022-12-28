@@ -68,6 +68,7 @@
                 style="padding: 0 16px 0 10px"
                 btn-name="예약취소"
                 @click="reqCancel(reservation)"
+                v-show="reservation.paymentReservation.paymentState === false"
               />
               <button-green
                 medium
