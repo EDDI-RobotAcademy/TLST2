@@ -37,7 +37,7 @@ class ProductCard extends StatelessWidget{
               width: double.infinity,
               child: Image(image: AssetImage("assets/images/item1.jpg")),
             ),
-            Text("$brand" , style: productHazeTextStyle()),
+            Text("$brand" , style: smallGrayTextStyle()),
             Text("$title" , style: productTextStyle()),
             Text("$price won" , style: productTextStyle()),
           ],
