@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ztz_app/pages/home_page.dart';
 
 
 import '../../controller/account/login_api.dart';
@@ -90,7 +91,7 @@ class _LoginComponent extends State<LoginComponent>{
             FlatButton(
               child: const Text("Close"),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainPage() ));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage() ));
               },
             ),
           ],
