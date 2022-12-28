@@ -11,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -100,4 +99,29 @@ public class ReviewServiceImpl implements ReviewService{
 
         reviewRepository.save(review);
     }
+
+    @Override
+    public List<Map<String, Object>> reviewAverage(Long productNo) {
+        List<Review> maybeReview = reviewRepository.findByProductNo(productNo);
+        if(maybeReview == null){
+            return null;
+        }else {
+            Double average = 0.0;
+            Integer reviewCnt = maybeReview.size();
+            for (int i = 0; i < maybeReview.size(); i++) {
+                average += maybeReview.get(i).getRate();
+            }
+            average = average/reviewCnt;
+            List<Map<String , Object>> productReview = new ArrayList<>();
+            Map<String , Object> reviewAverage = new HashMap<>();
+            reviewAverage.put("average",average);
+            reviewAverage.put("reviewCnt", reviewCnt);
+            productReview.add(reviewAverage);
+
+            System.out.println(reviewAverage.toString());
+            return productReview;
+        }
+    }
+
+
 }

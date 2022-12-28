@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -65,6 +66,13 @@ public class ReviewController {
         log.info(productNo + "상품의 리뷰 읽기");
 
         return reviewService.productReviewRead(productNo);
+    }
+
+    @PostMapping("/read/average/{productNo}")
+    public List<Map<String,Object>> reviewAverage(@PathVariable("productNo") Long productNo) {
+        log.info(productNo + "상품의 리뷰 읽기");
+
+        return reviewService.reviewAverage(productNo);
     }
 
     @PostMapping("/read/myPage/{memberId}")

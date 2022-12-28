@@ -4,6 +4,7 @@ import kr.eddi.ztz_process.controller.products.request.ReviewRequest;
 import kr.eddi.ztz_process.entity.products.Review;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewService {
 
@@ -21,5 +22,5 @@ public interface ReviewService {
 
     public void modifyWithImg(Long reviewNo, ReviewRequest reviewRequest, String thumbnailFileName);
 
-
+    public List<Map<String,Object>> reviewAverage(Long ProductNo);
 }
