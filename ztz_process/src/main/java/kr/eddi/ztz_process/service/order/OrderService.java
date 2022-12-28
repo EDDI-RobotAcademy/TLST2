@@ -25,4 +25,7 @@ public interface OrderService {
     public List<Payment> readManagerAllPayment();
 
     public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest);
+
+    public Integer salesAmount();
+
 }

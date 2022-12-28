@@ -24,6 +24,9 @@ public class OrderInfo {
     @Column(nullable = false)
     private Integer orderCnt;
 
+    @Column
+    private Integer orderPrice;
+
     @Column(nullable = false)
     private String orderState;
 
