@@ -20,6 +20,7 @@ import {
     REQUEST_MY_RESERVATION_LIST_FROM_SPRING,
     REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
+    REQUEST_SALES_AMOUNT_TO_SPRING
 } from "./mutation-types"
 
 export default {
@@ -85,6 +86,9 @@ export default {
     },
     [REQUEST_MY_RESERVATION_LIST_FROM_SPRING](state,passingData){
         state.myReservationList = passingData
+    },
+    [REQUEST_SALES_AMOUNT_TO_SPRING](state,passingData){
+        state.salesAmount = passingData
     }
 }
 

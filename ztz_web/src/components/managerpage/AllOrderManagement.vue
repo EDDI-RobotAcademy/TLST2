@@ -8,11 +8,11 @@
       <v-simple-table border="1">
         <thead>
         <tr>
-          <th>주문 번호</th>
+          <th class="text-center">주문 번호</th>
           <th>주문 갯수</th>
           <th>총 가격</th>
           <th>주문 상태</th>
-          <th>주문 날짜</th>
+          <th >주문 날짜</th>
           <th>주문 정보</th>
         </tr>
         </thead>

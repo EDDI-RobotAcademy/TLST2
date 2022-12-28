@@ -1,9 +1,6 @@
 <template>
   <v-container>
     <div align="center">
-      <p>
-        {{this.questionNo}}
-      </p>
       <div>
         <question-read v-if="questionBoard" :questionBoard="questionBoard"/>
         <p v-else>Loading .......</p>

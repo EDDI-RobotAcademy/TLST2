@@ -58,7 +58,7 @@
             </v-col>
           </v-row>
         </td>
-        <td>{{ item.orderCnt * item.product.price}}</td>
+        <td>{{ item.orderPrice}}</td>
         <td>{{ item.orderCnt }}</td>
         <td>{{ item.orderState }}</td>
         <td>
@@ -80,13 +80,13 @@
         <td>
 <!--          리뷰메소드 연결 필요-->
           <button-white v-if="item.orderState == '구매확정'||item.orderState =='반품신청'"
-                        class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog"/>
+                        class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog(item.product.productNo)"/>
           <button-white v-else
                         :disabled="true"
                         class="review-btn ma-2" btn-name="리뷰 작성"/>
           <template>
             <v-dialog v-model="reviewDialog" width="650">
-                <ReviewRegisterForm :product="item.product"/>
+                <ReviewRegisterForm :product="product"/>
             </v-dialog>
           </template>
         </td>
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 import OrderRefundForm from "@/components/mypage/OrderRefundForm";
 import ReviewRegisterForm from "@/components/products/review/ReviewRegisterForm";
 
@@ -130,6 +130,7 @@ export default {
     ...mapState([
       'orderedList',
       'paymentList',
+        'product'
     ])
   },
   props:{
@@ -137,6 +138,7 @@ export default {
     paymentListIndex: Number
   },
   methods:{
+    ...mapActions(['requestProductFromSpring']),
     // 배송중 상태인 주문리스트 존재하는 경우 결제취소 버튼 클릭 시 환불불가 메시지 출력
     refundBtn(refundPrice){
       this.startDeliveryNum = 0
@@ -168,8 +170,9 @@ export default {
       this.refundDialog = true
       this.allRefund = true
     },
-    showReviewDialog() {
+    showReviewDialog(productNo) {
       this.reviewDialog = true
+      this.requestProductFromSpring(productNo)
     },
   }
 }

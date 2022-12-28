@@ -36,10 +36,9 @@ export default {
   },
   data() {
     return {
-      currentTab: "MyPageDeliverySection",
+      currentTab: "AllOrderManagement",
       active_tab: 0,
       navi: [
-        { menu: "매출관리", tab: "MyReservationDetailSection" },
         { menu: "주문관리", tab: "AllOrderManagement" },
         { menu: "상품관리", tab: "ProductManagementList" },
         { menu: "예약관리", tab: "AllReservationDetailSection" },

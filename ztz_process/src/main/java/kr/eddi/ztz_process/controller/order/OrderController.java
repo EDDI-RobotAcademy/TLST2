@@ -7,6 +7,7 @@ import kr.eddi.ztz_process.controller.order.request.RefundRequest;
 import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.entity.order.Payment;
+import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,9 @@ public class OrderController {
         return orderInfoList;
     }
 
+    @GetMapping(path = "/salesAmount")
+    public Integer salesAmount() {
+        return service.salesAmount();
+    }
 
 }

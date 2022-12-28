@@ -6,26 +6,26 @@
     <table class="boards" v-else v-for="questionComment in questionComments" :key="questionComment.questionCommentNo"
            style="border: solid thin">
       <thead>
-      <tr align="left">
-        {{ questionComment.commentWriter }}
+      <tr>
+        <div>
+          {{ questionComment.commentWriter }}
+        </div>
+
       </tr>
       </thead>
       <tbody>
-<!--      댓글 리스트-->
-      <tr align="left">
-        {{ questionComment.comment }}
-<!--        {{ questionComment.member.id }}-->
-<!--        {{ this.$store.state.resMember }}-->
-
-<!--        댓글 삭제-->
-        <td align="right">
-            <div v-if="questionComment.member.id === resMember.id">
-        <v-btn @click="onCommentDelete(questionComment.questionCommentNo)" class="green white--text" rounded depressed small v-on="on">
+      <!--      댓글 리스트-->
+      <tr>
+        <v-row class="comment">
+          {{ questionComment.comment }}
+          <!--        댓글 삭제-->
+          <div v-if="questionComment.member.id === resMember.id" >
+            <v-btn @click="onCommentDelete(questionComment.questionCommentNo)" color="#205C37" class="comment-btn" rounded depressed small v-on="on">
               삭제
             </v-btn>
-            </div>
-        </td>
-        </tr>
+          </div>
+        </v-row>
+      </tr>
       </tbody>
     </table>
   </v-container>
@@ -78,5 +78,15 @@ table.boards {
 table.boards thead {
   background: darkseagreen;
   font-weight: bold;
+}
+.boards .comment{
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.boards .comment .comment-btn{
+  padding-left: 15px;
+  color: white;
+  margin-left: 370px;
 }
 </style>

@@ -68,6 +68,7 @@ public class OrderServiceImpl implements OrderService{
                         .orderNo(setOrderNum)
                         .orderCnt(OrderListInfo.getOrderCnt().get(i))
                         .orderState("결제완료")
+                        .orderPrice(OrderListInfo.getOrderPrice().get(i))
                         .product(maybeProduct.get())
                         .member(maybeMember.get())
                         .payment(payment)
@@ -244,5 +245,17 @@ public class OrderServiceImpl implements OrderService{
         paymentRepository.save(payment);
 
         return findOrderInfoPaymentList;
+    }
+
+    public Integer salesAmount(){
+        List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
+
+        Integer totalSalesAmount = 0;
+
+        for (int i = 0; i < salesOrderInfo.size(); i++) {
+            totalSalesAmount= totalSalesAmount + salesOrderInfo.get(i).getOrderPrice();
+        }
+
+        return totalSalesAmount;
     }
 }

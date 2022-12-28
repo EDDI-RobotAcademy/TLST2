@@ -45,7 +45,7 @@ public class OrderTestCase {
         test1.add(1L);
         List<Integer> test2 = new ArrayList<>();
         test2.add(1);
-        OrderInfoRegisterForm orderInfoRegisterForms = new OrderInfoRegisterForm(test1,test1,test2);
+        OrderInfoRegisterForm orderInfoRegisterForms = new OrderInfoRegisterForm(test1,test1,test2, test2);
 
         PaymentRegisterRequest paymentRegisterRequestList = new PaymentRegisterRequest(
                 10000,"pay_id",orderInfoRegisterForms, "impid0000", "서울", "동대문구", "휘경동", "10202", "sendRequest");
@@ -86,5 +86,10 @@ public class OrderTestCase {
     void changeOrderStateTest(){
         ChangeOrderStateRequest request = new ChangeOrderStateRequest("배송시작", 11L, 6L);
         orderService.changeOrderState(request);
+    }
+
+    @Test
+    void salesAmountTest(){
+        System.out.println("구매확정 상품 매출액: "+ orderService.salesAmount());
     }
 }

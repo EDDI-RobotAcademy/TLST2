@@ -45,13 +45,13 @@ export default {
   data() {
     return {
       cycle: true,
-      interval: 1000,
+      interval: 1500,
       model: null,
       images: [
+        require('@/assets/main/carouselImg/carousel_04.png'),
         require('@/assets/main/carouselImg/carousel_01.png'),
         require('@/assets/main/carouselImg/carousel_02.png'),
         require('@/assets/main/carouselImg/carousel_03.png'),
-        require('@/assets/main/carouselImg/carousel_04.png'),
       ],
     }
   },

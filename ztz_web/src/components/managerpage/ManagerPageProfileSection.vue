@@ -16,10 +16,10 @@
         <ul>
             <li>
                 <p class="head-text">
-                    매출액
+                    상품 매출액
                 </p>
                 <p class="content-text">
-                    원
+                    {{this.$store.state.salesAmount}}원
                 </p>
             </li>
             <li>
@@ -48,11 +48,12 @@
   export default {
     name: "MyPageProfileSection",
     computed: {
-    ...mapState(["isAuthenticated", "resMember", "paymentList", "myReservationList"]),
+    ...mapState(["isAuthenticated", "resMember", "paymentList", "myReservationList", "salesAmount"]),
     },
     mounted() {
       this.reqPaymentListFromSpring()
       this.reqAllReservationListToSpring()
+      this.reqSalesAmountToSpring()
       if (this.$store.state.isAuthenticated === true) {
         let token = window.localStorage.getItem("userInfo");
         this.reqMemberInfoToSpring(token);
@@ -61,7 +62,7 @@
       }
   },
   methods: {
-    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqMyReservationListToSpring", "reqPaymentListFromSpring", "reqAllReservationListToSpring"]),
+    ...mapActions(["reqDeleteMemberToSpring", "reqMemberInfoToSpring", "reqMyReservationListToSpring", "reqPaymentListFromSpring", "reqAllReservationListToSpring", "reqSalesAmountToSpring"]),
     async withdrawal() {
       let withdrawalMessage = confirm("회원 탈퇴하시겠습니까?");
 
