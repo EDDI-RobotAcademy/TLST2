@@ -64,7 +64,7 @@
               <v-icon> mdi-magnify</v-icon>
             </v-btn>
             </div>
-            <v-btn large elevation="0" text @click="goCartPage">
+            <v-btn large elevation="0" text @click="goCartPage" v-if="!this.$store.state.resMember.managerCheck">
               <v-icon> mdi-cart-outline</v-icon>
             </v-btn>
 
