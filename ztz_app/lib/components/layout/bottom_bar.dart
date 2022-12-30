@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ztz_app/pages/category/category_page.dart';
 import 'package:ztz_app/pages/main_page/main_page.dart';
-
-import '../../pages/account/login_page.dart';
+import 'package:ztz_app/pages/my_page/my_page.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -16,8 +16,9 @@ class _BottomBarState extends State<BottomBar> {
   static const List _pages = [
     //메인페이지, 검색페이지, 마이페이지로 추후 변경 예정
     MainPage(),
+    CategoryPage(),
     MainPage(),
-    LoginPage(),
+    MyPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -38,6 +39,10 @@ class _BottomBarState extends State<BottomBar> {
               label: 'Home',
           ),
           BottomNavigationBarItem(
+              icon: Icon(Icons.reorder),
+              label: 'Category'
+          ),
+          BottomNavigationBarItem(
               icon: Icon(Icons.search),
               label: 'Search'
           ),
@@ -54,6 +59,5 @@ class _BottomBarState extends State<BottomBar> {
         type: BottomNavigationBarType.fixed,
       ),
     );
-
   }
 }
