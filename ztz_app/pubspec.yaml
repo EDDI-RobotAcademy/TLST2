@@ -38,6 +38,9 @@ dependencies:
   flutter_secure_storage: ^6.0.0
   remedi_kopo: ^0.0.1
   get: ^4.6.5
+  flutter_rating_bar: ^4.0.1
+  intl: ^0.18.0
+  like_button: ^2.0.5
 
 
 dev_dependencies:
