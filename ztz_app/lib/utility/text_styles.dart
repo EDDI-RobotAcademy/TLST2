@@ -55,3 +55,12 @@ TextStyle productTitleTextStyle(){
       color: Colors.black
   );
 }
+
+TextStyle appBarTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 16,
+      fontFamily: "NanumSquareNeo-bRg",
+      fontWeight: FontWeight.bold,
+      color: Colors.white
+  );
+}
