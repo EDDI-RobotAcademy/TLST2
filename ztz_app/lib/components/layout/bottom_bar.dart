@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/pages/main_page/main_page.dart';
 
+import '../../pages/account/login_page.dart';
+
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class _BottomBarState extends State<BottomBar> {
     //메인페이지, 검색페이지, 마이페이지로 추후 변경 예정
     MainPage(),
     MainPage(),
-    MainPage(),
+    LoginPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,7 +37,6 @@ class _BottomBarState extends State<BottomBar> {
               icon: Icon(Icons.home),
               label: 'Home',
           ),
-
           BottomNavigationBarItem(
               icon: Icon(Icons.search),
               label: 'Search'

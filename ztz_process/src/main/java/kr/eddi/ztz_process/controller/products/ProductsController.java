@@ -24,7 +24,7 @@ public class ProductsController {
     @Autowired
     ProductsService productsService;
 
-    @GetMapping(path = "/list")
+    @PostMapping(path = "/list")
     public List<Product> productsList(String keyword) {
 
         if (keyword == null|| keyword.length() == 0){
