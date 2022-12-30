@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../utility/text_styles.dart';
 
@@ -16,30 +17,25 @@ class ProductCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    var numberFormat = NumberFormat('###,###,###,###');
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(
-          border:Border.all(
-            width:1,
-            color: Colors.black
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(3)
-          )
-        ),
         width: 160,
         padding: const EdgeInsets.all(3),
         margin: const EdgeInsets.all(3),
         child: Column(
           children: [
-            const SizedBox(
+            Container(
               width: double.infinity,
-              child: Image(image: AssetImage("assets/images/item1.jpg")),
+              child: Image(image: AssetImage("assets/images/Hongju.jpg")),
             ),
+            SizedBox(height: 3,),
             Text("$brand" , style: smallGrayTextStyle()),
+            SizedBox(height: 3,),
             Text("$title" , style: productTextStyle()),
-            Text("$price won" , style: productTextStyle()),
+            SizedBox(height: 5,),
+            Text(numberFormat.format(price)+"원" , style: xMediumBlackTextStyle()),
           ],
         ),
       ),
