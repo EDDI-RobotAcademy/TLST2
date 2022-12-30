@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/components/main_page_components/product_card.dart';
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
+import 'package:ztz_app/controller/reivew/review_controller.dart';
+import 'package:ztz_app/pages/product/product_detail_page.dart';
 
 import '../../controller/product/product_controller.dart';
-import '../../utility/text_styles.dart';
 
 class ToDaysRecommendComponent extends StatefulWidget {
   const ToDaysRecommendComponent({Key?key}) : super(key: key);
@@ -32,11 +33,6 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
     return Form(
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top:12 , bottom: 5,left: 3),
-              child: Text("👍 오늘의 추천 ZTZ",style: productTitleTextStyle(),textAlign: TextAlign.left,),
-            ),
             SizedBox(
               child: productList == false? isNullProductList():isProductList()
             )
@@ -73,7 +69,9 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
               child: ProductCard(
                 brand: ProductInfo.productList[index]['brand'],
                 price: ProductInfo.productList[index]['price'],
-                onTap: () {  },
+                onTap: () {
+                  selectProductCard(index);
+                },
                 title: ProductInfo.productList[index]['name'],
                 image: ProductInfo.productList[index]['productInfo']['thumbnailFileName'],
               ),
@@ -81,6 +79,12 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
         )
       ),
     );
+  }
+
+  selectProductCard(index) async {
+    await ProductController().requestProductDetailToSpring(ProductInfo.productList[index]['productNo']);
+    await ReviewController().requestReviewAverageToSpring(ProductInfo.productList[index]['productNo']);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductDetailPage() ));
   }
 
 }

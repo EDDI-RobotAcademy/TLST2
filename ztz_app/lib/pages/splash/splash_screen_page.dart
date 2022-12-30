@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:ztz_app/pages/account/first_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 
@@ -26,15 +25,8 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
   }
   void moveToMain() async {
     var isLogIn = await signInStorage.read(key: "Log_in_token");
-    if(isLogIn != null){
-      setState(() {// 로그인이 되어 있으면 메인 페이지 이동
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage() ));
-      });
-    }else{
-      setState(() {//비로그인시 로그인 or 회원 가입 선택 창으로 이동
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const FirstPage() ));
-      });
-    }
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage() ));
+
   }
 
   @override

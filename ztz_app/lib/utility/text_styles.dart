@@ -1,10 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/utility/colors.dart';
+//핑크색
+TextStyle xSmallPinkTextStyle(){
+  return const TextStyle(
+      fontSize: 15,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textPink
+  );
+}
+//햐얀색
+
+TextStyle lageWhiteTextStyle(){
+  return const TextStyle(
+      fontSize: 17,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.white
+  );
+}
+
+TextStyle xMediumWhiteTextStyle(){
+  return const TextStyle(
+      fontSize: 15,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.white
+  );
+}
+//검은색
+TextStyle lageBlackTextStyle(){
+  return const TextStyle(
+      fontSize: 17,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black
+  );
+}
+
+TextStyle xMediumBlackTextStyle(){
+  return const TextStyle(
+      fontSize: 15,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black
+  );
+}
+
+TextStyle MediumBlackTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black
+  );
+}
+
+TextStyle smallBlackTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black
+  );
+}
+//회색
+
+TextStyle xMediumGrayTextStyle(){
+  return const TextStyle(
+      fontSize: 15,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textGray
+  );
+}
+
+TextStyle mediumGrayTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textGray
+  );
+}
+
+TextStyle smallGrayTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: ColorStyle.textGray
+  );
+}
+//커스텀
+TextStyle productTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 18,
+      fontFamily: "NanumSquareNeo-eHv",
+      color: Colors.black
+  );
+}
+
+TextStyle appBarTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 16,
+      fontFamily: "NanumSquareNeo-bRg",
+      fontWeight: FontWeight.bold,
+      color: Colors.white
+  );
+}
+TextStyle productDetailTitle(){
+  return const TextStyle(
+      fontSize: 25,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black
+  );
+}
 
 TextStyle welcomeTitle(){
   return const TextStyle(
       fontSize: 30,
-      fontFamily: "Cafe24Ohsquare"
+      fontFamily: "NanumSquareNeo-eHv"
   );
 }
 
@@ -27,7 +133,7 @@ TextStyle hintTextStyle(){
 TextStyle defaultTextStyle(){
   return const TextStyle(
       fontSize: 12,
-      fontFamily: "Cafe24Ohsquare",
+      fontFamily: "NanumSquareNeo-cBd",
       color: Colors.black
   );
 }
@@ -37,30 +143,5 @@ TextStyle productTextStyle(){
       fontSize: 12,
       fontFamily: "NanumSquareNeo-cBd",
       color: Colors.black
-  );
-}
-
-TextStyle productHazeTextStyle(){
-  return const TextStyle(
-      fontSize: 10,
-      fontFamily: "NanumSquareNeo-cBd",
-      color: ColorStyle.textGray
-  );
-}
-
-TextStyle productTitleTextStyle(){
-  return const TextStyle(
-      fontSize: 18,
-      fontFamily: "NanumSquareNeo-eHv",
-      color: Colors.black
-  );
-}
-
-TextStyle appBarTitleTextStyle(){
-  return const TextStyle(
-      fontSize: 16,
-      fontFamily: "NanumSquareNeo-bRg",
-      fontWeight: FontWeight.bold,
-      color: Colors.white
   );
 }

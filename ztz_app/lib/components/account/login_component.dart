@@ -73,7 +73,14 @@ class _LoginComponent extends State<LoginComponent>{
               onPressed: (){
                 login();
               },
-              child: Text("로그인"))
+              child: Text("로그인")),
+          SizedBox(height: 15,),
+          ElevatedButton(
+              style: defaultElevatedButtonStyle(330,40),
+              onPressed: (){
+                login();
+              },
+              child: Text("회원가입"))
         ],
       )
     );
