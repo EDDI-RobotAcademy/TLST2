@@ -31,7 +31,7 @@ export default {
         if(keyword != undefined){
             url += '?keyword='+encodeURIComponent(keyword)
         }
-        return axios.get(url)
+        return axios.post(url)
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
                 console.log('상품 리스트 조회')
