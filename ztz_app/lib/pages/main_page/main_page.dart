@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ztz_app/components/layout/main_app_bar.dart';
+import 'package:ztz_app/components/layout/menu_app_bar.dart';
 
 import '../../components/main_page_components/main_component.dart';
 import '../../utility/text_styles.dart';
@@ -10,6 +11,7 @@ class MainPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MainAppBar(),
       body: SafeArea(
         child: Column(
           children: [

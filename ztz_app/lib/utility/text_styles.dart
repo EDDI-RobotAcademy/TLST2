@@ -91,6 +91,14 @@ TextStyle productTitleTextStyle(){
   );
 }
 
+TextStyle appBarTitleTextStyle(){
+  return const TextStyle(
+      fontSize: 16,
+      fontFamily: "NanumSquareNeo-bRg",
+      fontWeight: FontWeight.bold,
+      color: Colors.white
+  );
+}
 TextStyle productDetailTitle(){
   return const TextStyle(
       fontSize: 25,
