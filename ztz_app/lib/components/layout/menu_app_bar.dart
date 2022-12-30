@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
-class NaviAppBar extends StatefulWidget with PreferredSizeWidget {
-  const NaviAppBar({Key? key, required this.title}) : super(key: key);
+class MenuAppBar extends StatefulWidget with PreferredSizeWidget {
+  const MenuAppBar({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<NaviAppBar> createState() => _NaviAppBarState();
+  State<MenuAppBar> createState() => _MenuAppBarState();
 
   @override
   Size get preferredSize => Size.fromHeight(50);
 }
 
-class _NaviAppBarState extends State<NaviAppBar> {
+class _MenuAppBarState extends State<MenuAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
       // title => 카테고리, 검색, 마이페이지 등
-      title: Text(widget.title, style: appBarTitleTextStyle(),),
+      title: Text(widget.title, style: appBarTitleTextStyle(16),),
       centerTitle: true,
       actions: <Widget>[
         IconButton(
