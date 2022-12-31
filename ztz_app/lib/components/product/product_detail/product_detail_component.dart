@@ -17,11 +17,15 @@ class ProductDetailComponent extends StatefulWidget{
 
 class _ProductDetailComponent extends State<ProductDetailComponent>{
 
+  late final String image;
+
   var numberFormat = NumberFormat('###,###,###,###');
   IconData? _selectedIcon;
+
   @override
   void initState() {
     ProductInfo().setProductDetailINfo();
+    image = ProductInfo.thumbnailFileName;
     ReviewInfo().setReviewAve();
     super.initState();
   }
@@ -40,8 +44,8 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
         children: [
           Container(
             width: size.width,
-            child: const SizedBox(
-              child: Image(image: AssetImage("assets/images/Hongju.jpg")),
+            child: SizedBox(
+              child: Image(image: AssetImage("assets/images/uploadImg/${image}")),
             ),
           ),
           Container(

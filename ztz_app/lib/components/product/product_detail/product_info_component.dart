@@ -13,9 +13,11 @@ class ProductInfoComponent extends StatefulWidget{
 
 class _ProductInfoComponent extends State<ProductInfoComponent>{
 
+  late var productImagesName;
 
   @override
   void initState() {
+    productImagesName = ProductInfo.productImagesName;
     super.initState();
   }
   @override
@@ -163,7 +165,10 @@ class _ProductInfoComponent extends State<ProductInfoComponent>{
           ),
           SizedBox(height: 30,),
           Text(ProductInfo.description),
-          Image(image: AssetImage("assets/images/hongju1.jpg"),)
+            for(int i= 0; i< productImagesName.length ; i++)
+            Image(image: AssetImage("assets/images/uploadImg/${productImagesName[i]}"),)
+
+
         ],
       ),
     );

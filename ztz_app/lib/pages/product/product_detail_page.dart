@@ -6,6 +6,7 @@ import 'package:ztz_app/utility/colors.dart';
 import '../../components/product/product_detail/prdouct_buy_modal_component.dart';
 import '../../components/product/product_detail/product_detail_appbar.dart';
 import '../../components/product/product_detail/product_detail_component.dart';
+import '../../controller/product/product_infos/product_info.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_styles.dart';
 
@@ -18,6 +19,7 @@ class _ProductDetailPage extends State<ProductDetailPage>{
 
   @override
   void initState() {
+    ProductInfo().setProductDetailINfo();
     ReviewInfo().setReviewAve();
     super.initState();
   }

@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget{
           children: [
             Container(
               width: double.infinity,
-              child: Image(image: AssetImage("assets/images/Hongju.jpg")),
+              child: Image(image: AssetImage("assets/images/uploadImg/${image}")),
             ),
             SizedBox(height: 3,),
             Text("$brand" , style: smallGrayTextStyle()),
