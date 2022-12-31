@@ -4,7 +4,6 @@ import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.*;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
-import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -14,10 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -79,31 +80,35 @@ public class ProductsServiceImpl implements ProductsService{
 
         //3. productInfo 저장
         // productInfo-> String thumbnailFileName,List<String> productImagesName,List<String> String taste, String subTitle,String description
-
         ProductInfo productInfo = new ProductInfo();
         productInfo.setTaste(productRequest.getTaste());
         productInfo.setSubTitle(productRequest.getSubTitle());
         productInfo.setDescription(productRequest.getDescription());
 
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
         // 실제 파일 frontend 이미지 폴더 경로에 저장
         try {
             //1. 썸네일 저장
             for (MultipartFile multipartFile: thumbnail) {
                 log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
-                UUID thumbnailRandomName = UUID.randomUUID(); ;
-                String thumbnailReName = thumbnailRandomName + multipartFile.getOriginalFilename();
+                String thumbnailRandomName = now.format(dtf);
+                String thumbnailReName = 't'+thumbnailRandomName + multipartFile.getOriginalFilename();
 
                 //저장 경로 지정 + 파일네임
                 FileOutputStream writer1 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + thumbnailReName);
+                FileOutputStream appWriter1 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + thumbnailReName);
                 log.info("디렉토리에 파일 배치 성공!");
 
                 //파일 저장(저장할때는 byte 형식으로 저장해야 해서 파라미터로 받은 multipartFile 파일들의 getBytes() 메소드 적용해서 저장하는 듯)
                 writer1.write(multipartFile.getBytes());
+                appWriter1.write(multipartFile.getBytes());
 
                 productInfo.setThumbnailFileName(thumbnailReName);
 
                 writer1.close();
+                appWriter1.close();
             }
 
             //2. 상품 상세사진 저장
@@ -112,20 +117,21 @@ public class ProductsServiceImpl implements ProductsService{
                 for (MultipartFile multipartFile: fileList) {
                 log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
 
-                 UUID fileRandomName = UUID.randomUUID();
-                 String fileReName = fileRandomName+multipartFile.getOriginalFilename();
+                 String fileRandomName = now.format(dtf);
+                 String fileReName = 'f' + fileRandomName + multipartFile.getOriginalFilename();
 
-                //저장 경로 지정 + 파일네임
                 FileOutputStream writer2 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + fileReName);
+                FileOutputStream appWriter2 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + fileReName);
                 log.info("디렉토리에 파일 배치 성공!");
 
-                //파일 저장(저장할때는 byte 형식으로 저장해야 해서 파라미터로 받은 multipartFile 파일들의 getBytes() 메소드 적용해서 저장하는 듯)
                 writer2.write(multipartFile.getBytes());
+                appWriter2.write(multipartFile.getBytes());
 
                 //이미지리스트 이름 저장
                 imageList.add(fileReName);
 
                 writer2.close();
+                appWriter2.close();
             }
             productInfo.setProductImagesName(imageList);
             product.setProductInfo(productInfo);
@@ -221,25 +227,31 @@ public class ProductsServiceImpl implements ProductsService{
         productInfo.setSubTitle(productModifyRequest.getSubTitle());
         productInfo.setDescription(productModifyRequest.getDescription());
 
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
         // 실제 파일 frontend 이미지 폴더 경로에 저장
         try {
             //1. 썸네일 변경 있을 시
             if(thumbnail!= null ){
                 for (MultipartFile multipartFile: thumbnail) {
                     log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
-                    int thumbnailRandomName = setRandomOrderNo.makeIntCustomRandom(1,100000);
-                    String thumbnailReName = thumbnailRandomName + multipartFile.getOriginalFilename();
+                    String thumbnailRandomName = now.format(dtf);
+                    String thumbnailReName = 't' + thumbnailRandomName + multipartFile.getOriginalFilename();
 
                     //저장 경로 지정 + 파일네임
                     FileOutputStream writer1 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + thumbnailReName);
+                    FileOutputStream appWriter1 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + thumbnailReName);
+
                     log.info("디렉토리에 파일 배치 성공!");
 
-                    //파일 저장(저장할때는 byte 형식으로 저장해야 해서 파라미터로 받은 multipartFile 파일들의 getBytes() 메소드 적용해서 저장하는 듯)
                     writer1.write(multipartFile.getBytes());
+                    appWriter1.write(multipartFile.getBytes());
 
                     productInfo.setThumbnailFileName(thumbnailReName);
 
                     writer1.close();
+                    appWriter1.close();
                 }
             //2. 썸네일 변경 없을 시
             }else{
@@ -252,21 +264,22 @@ public class ProductsServiceImpl implements ProductsService{
 
                 for (MultipartFile multipartFile: fileList) {
                     log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
-
-                    int fileRandomName = setRandomOrderNo.makeIntCustomRandom(1,100000);
-                    String fileReName = fileRandomName+multipartFile.getOriginalFilename();
+                    String fileRandomName = now.format(dtf);
+                    String fileReName = 'f' + fileRandomName + multipartFile.getOriginalFilename();
 
                     //저장 경로 지정 + 파일네임
                     FileOutputStream writer2 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + fileReName);
+                    FileOutputStream appWriter2 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + fileReName);
                     log.info("디렉토리에 파일 배치 성공!");
 
-                    //파일 저장(저장할때는 byte 형식으로 저장해야 해서 파라미터로 받은 multipartFile 파일들의 getBytes() 메소드 적용해서 저장하는 듯)
                     writer2.write(multipartFile.getBytes());
+                    appWriter2.write(multipartFile.getBytes());
 
                     //이미지리스트 이름 저장
                     imageList.add(fileReName);
 
                     writer2.close();
+                    appWriter2.close();
                 }
                 productInfo.setProductImagesName(imageList);
             //2. 상세사진 변경 없을 시
