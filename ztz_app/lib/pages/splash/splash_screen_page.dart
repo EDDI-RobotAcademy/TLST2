@@ -1,21 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 
+import '../../controller/account/sign_up_infos/account_state.dart';
+
 class SplashScreenPage extends StatefulWidget{
   const SplashScreenPage({Key? key}) : super(key :key);
-
 
   @override
   _SplashScreenPageState createState() => _SplashScreenPageState();
 }
 
 class _SplashScreenPageState extends State<SplashScreenPage>{
-  static final signInStorage = new FlutterSecureStorage();
-
   @override
   void initState(){
     super.initState();
@@ -24,13 +24,13 @@ class _SplashScreenPageState extends State<SplashScreenPage>{
     });
   }
   void moveToMain() async {
-    var isLogIn = await signInStorage.read(key: "Log_in_token");
+    await AccountState.accountGet.isLoginCheck();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage() ));
-
   }
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AccountState());
     return Scaffold(
       body: Container(
           color: ColorStyle.mainColor,
