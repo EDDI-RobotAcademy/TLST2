@@ -5,12 +5,14 @@ import 'package:ztz_app/components/product/product_detail/product_info_component
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
 
+import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/product/product_infos/product_info.dart';
 import '../../../utility/text_styles.dart';
 import '../../main_page_components/todays_recommend_component.dart';
 class ProductDetailComponent extends StatefulWidget{
-  const ProductDetailComponent ({Key?key}) : super(key: key);
+  const ProductDetailComponent ({Key?key, required this.productNo}) : super(key: key);
 
+  final int productNo;
   @override
   _ProductDetailComponent createState() => _ProductDetailComponent();
 }
@@ -44,8 +46,8 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
         children: [
           Container(
             width: size.width,
-            child: SizedBox(
-              child: Image(image: AssetImage("assets/images/uploadImg/${image}")),
+            child: const SizedBox(
+              child: Image(image: AssetImage("assets/images/Hongju.jpg")),
             ),
           ),
           Container(

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 
-class ProductController extends GetxController{
+class ProductController{
   static const httpUri = '192.168.0.8:7777';
   requestAllProductToSpring(keyword) async{
     var data = {'keyword' : keyword};
