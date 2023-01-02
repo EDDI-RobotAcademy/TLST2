@@ -7,9 +7,10 @@ import '../../../controller/product/product_infos/product_info.dart';
 import '../../../utility/text_styles.dart';
 
 class ProductDetailAppbar extends StatelessWidget implements PreferredSizeWidget{
-  ProductDetailAppbar({Key?key, required this.reviewCnt}) :super(key:key);
+  ProductDetailAppbar({Key?key, required this.reviewCnt , required this.productName}) :super(key:key);
 
   final int reviewCnt;
+  final String productName;
   final numberFormat = NumberFormat('###,###,###,###');
   @override
   // TODO: implement preferredSize

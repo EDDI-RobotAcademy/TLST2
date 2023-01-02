@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ztz_app/components/main_page_components/product_card.dart';
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 import 'package:ztz_app/controller/reivew/review_controller.dart';
@@ -17,7 +19,7 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
   var productList = false;
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
     setProduct();
   }
 
@@ -34,7 +36,7 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
         child: Column(
           children: [
             SizedBox(
-              child: productList == false? isNullProductList():isProductList()
+              child: productList == false ? isNullProductList():isProductList()
             )
           ],
         )
@@ -84,7 +86,13 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
   selectProductCard(index) async {
     await ProductController().requestProductDetailToSpring(ProductInfo.productList[index]['productNo']);
     await ReviewController().requestReviewAverageToSpring(ProductInfo.productList[index]['productNo']);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductDetailPage() ));
+    await ReviewController().requestProductReviewToSpring(ProductInfo.productList[index]['productNo']);
+    Get.to(
+        ProductDetailPage(productNo: ProductInfo.productList[index]['productNo'],), //next page class
+        duration: Duration(milliseconds: 500), //duration of transitions, default 1 sec
+        transition: Transition.rightToLeft,//transition effect
+        popGesture : true // 슬라이드로 뒤로가기
+    );
   }
 
 }

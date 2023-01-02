@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class ProductInfo extends GetxController{
   static late var productList = [];
-  static late var product = {};
+  static late var product = {}; // 컨트롤러에서 받은 DB 값을 저장하고
 
   static late String productName;
   static late String productBrand;

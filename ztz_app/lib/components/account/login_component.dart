@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ztz_app/pages/account/signup_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
 
 
 import '../../controller/account/login_api.dart';
+import '../../controller/account/sign_up_infos/account_state.dart';
 import '../../pages/main_page/main_page.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_styles.dart';
@@ -78,7 +80,7 @@ class _LoginComponent extends State<LoginComponent>{
           ElevatedButton(
               style: defaultElevatedButtonStyle(330,40),
               onPressed: (){
-                login();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpPage() ));
               },
               child: Text("회원가입"))
         ],
@@ -97,8 +99,9 @@ class _LoginComponent extends State<LoginComponent>{
           actions: <Widget>[
             FlatButton(
               child: const Text("Close"),
-              onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage() ));
+              onPressed: () async {
+                await AccountState.accountGet.isLoginCheck();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage() ));
               },
             ),
           ],
