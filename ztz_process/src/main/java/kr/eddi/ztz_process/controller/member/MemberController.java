@@ -57,13 +57,23 @@ public class MemberController {
 
     @DeleteMapping(path = "/withdrawal", headers = "Token")
     public void withdrawal(@RequestHeader("Token") String token) {
-        String SubString = token.substring(1,37);
+        String SubString = "";
+        if(token.length() >= 37){
+            SubString = token.substring(1,37);
+        }else {
+            SubString = token;
+        }
         service.withdrawal(SubString);
     }
 
     @PostMapping("/user-verification")
     public Member userVerification(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
-        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        String SubString = "";
+        if(memberLoggedInTokenForm.getToken().length() >= 37){
+            SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        }else {
+            SubString = memberLoggedInTokenForm.getToken();
+        }
         Member member = service.returnMemberInfo(SubString);
         log.info(member.getEmail());
         return member;
@@ -71,7 +81,12 @@ public class MemberController {
 
     @PostMapping("/user-profile")
     public MemberProfile userProfile(@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
-        String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        String SubString = "";
+        if(memberLoggedInTokenForm.getToken().length() >= 37){
+            SubString = memberLoggedInTokenForm.getToken().substring(1,37);
+        }else {
+            SubString = memberLoggedInTokenForm.getToken();
+        }
         MemberProfile memberProfile = service.returnMemberProfile(SubString);
         log.info(memberProfile.getId().toString());
         log.info(memberProfile.getMember().toString());
