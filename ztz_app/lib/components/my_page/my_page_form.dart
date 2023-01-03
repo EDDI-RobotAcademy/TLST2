@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/controller/account/member_api.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/controller/reivew/review_controller.dart';
+import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
@@ -18,12 +20,13 @@ class _MyPageFormState extends State<MyPageForm> {
   void initState() {
     super.initState();
     MemberApi().userVerification(widget.token);
+    ReviewController().requestMyPageReviewToSpring(AccountState.memberInfo['id']);
   }
 
   var username = AccountState.memberInfo['username'];
   var myPageProfileList = [
     {'title': "주문 내역", 'count': 0},
-    {'title': "리뷰 내역", 'count': 0},
+    {'title': "리뷰 내역", 'count': ReviewInfo.memberReviews.length},
     {'title': "예약 내역", 'count': 0},
   ];
   var myPageNaviList = [
