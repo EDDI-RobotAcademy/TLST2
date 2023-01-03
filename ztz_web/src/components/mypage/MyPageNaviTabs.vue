@@ -43,7 +43,7 @@ export default {
         { menu: "주문관리", tab: "OrderManagement" },
         { menu: "리뷰관리", tab: "MyPageReviewForm" },
         { menu: "예약관리", tab: "MyReservationDetailSection" },
-        { menu: "회원정보변경", tab: "MyReservationDetailSection" },
+        { menu: "회원정보변경", tab: "MyPageProfileModify" },
       ],
     };
   },

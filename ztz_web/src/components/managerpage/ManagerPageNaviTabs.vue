@@ -42,7 +42,7 @@ export default {
         { menu: "주문관리", tab: "AllOrderManagement" },
         { menu: "상품관리", tab: "ProductManagementList" },
         { menu: "예약관리", tab: "AllReservationDetailSection" },
-        { menu: "회원정보변경", tab: "MyReservationDetailSection" },
+        { menu: "회원정보변경", tab: "MyPageProfileModify" },
       ],
     };
   },
@@ -53,7 +53,8 @@ export default {
   computed: {
     componentLoader() {
       const tab = this.currentTab;
-      return () => import(`@/components/managerpage/${tab}`);
+      if (this.currentTab == "MyPageProfileModify") { return () => import(`@/components/mypage/${tab}`); }
+      else { return () => import(`@/components/managerpage/${tab}`); }
     },
   },
   methods: {},

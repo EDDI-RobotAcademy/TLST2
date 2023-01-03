@@ -425,5 +425,22 @@ export default {
             .then((res) => {
                 commit(REQUEST_SALES_AMOUNT_TO_SPRING, res.data)
             })
-    }
+    },
+
+    // eslint-disable-next-line no-empty-pattern
+    reqMyPageProfileModifyFromSpring({}, payload) {
+        const { password, phoneNumber } = payload;
+
+        return axios.post("http://localhost:7777/ztz/products/profile/modify/myPage", {
+            password, phoneNumber
+        })
+            .then((res) => {
+                alert("회원정보 변경이 완료되었습니다!")
+                console.log(res)
+                this.$router.push("/my-page") // 변경 완료하고 바로 마이페이지로 이동!
+            })
+            .catch((res) => {
+                alert(res.response.data.message)
+            })
+    },
 }
