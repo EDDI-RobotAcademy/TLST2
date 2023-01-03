@@ -19,7 +19,8 @@ class ProductDetailAppbar extends StatelessWidget implements PreferredSizeWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      actions: [
+        elevation: 1,
+        actions: [
         Padding(
           padding: const EdgeInsets.only(top:6),
           child: IconButton(onPressed: (){
