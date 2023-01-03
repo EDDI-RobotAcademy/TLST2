@@ -5,7 +5,7 @@
       <div class="local-filter">
         <ul>
           <li>
-            <button @click="reqProductsFromSpring">All</button>
+            <button @click="allProduct">All</button>
           </li>
         </ul>
         <ul>
@@ -64,6 +64,9 @@ export default {
       let localName = this.localMenu[index]
       await this.reqFilteredProductsFromSpring(localName)
     },
+    allProduct(){
+      this.reqProductsFromSpring()
+    }
   },
 
 }
