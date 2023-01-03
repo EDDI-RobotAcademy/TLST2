@@ -41,4 +41,21 @@ class ReviewController{
       debugPrint("오류 발생 " + e.toString());
     }
   }
+
+  requestMyPageReviewToSpring(memberId) async {
+    try{
+      var reviewResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/review/read/myPage/$memberId'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(reviewResponse.statusCode == 200){
+        debugPrint("결과 : " + utf8.decode(reviewResponse.bodyBytes).toString());
+        ReviewInfo.memberReviews = jsonDecode(utf8.decode(reviewResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류" + reviewResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }
