@@ -74,7 +74,9 @@
 <script>
 import OrderAgreement from "@/components/order/OrderAgreement";
 const IMP = window.IMP;
-IMP.init("imp20030584");
+IMP.init("imp67851243");
+//imp20030584
+
 
 import {mapActions, mapState} from "vuex";
 
@@ -122,7 +124,8 @@ export default {
       sendInfo :{
         productID : [],
         memberID : [],
-        orderCnt : []
+        orderCnt : [],
+        orderPrice: []
       }
     }
   },
@@ -131,8 +134,6 @@ export default {
       let token = window.localStorage.getItem('userInfo')
       this.reqMemberInfoToSpring(token)
       this.reqMemberProfileInfoToSpring(token)
-    } else {
-      alert("로그인 상태가 아닙니다.")
     }
   },
   methods : {
@@ -146,11 +147,13 @@ export default {
         this.$set(this.sendInfo.productID, 0, this.$store.state.orderList.orderSave.product.productNo);
         this.$set(this.sendInfo.memberID, 0, this.$store.state.resMember.id);
         this.$set(this.sendInfo.orderCnt, 0, this.$store.state.orderList.orderSave.quantity);
+        this.$set(this.sendInfo.orderPrice, 0, (this.$store.state.orderList.orderSave.product.price * this.$store.state.orderList.orderSave.quantity));
       }else {
         for (let i = 0; i < this.totalCount; i++) {
           this.$set(this.sendInfo.productID, i, this.$store.state.orderList.orderSave.selectList[i].product.productNo);
           this.$set(this.sendInfo.memberID, i, this.$store.state.resMember.id);
           this.$set(this.sendInfo.orderCnt, i, this.$store.state.orderList.orderSave.selectList[i].count);
+          this.$set(this.sendInfo.orderPrice, i, (this.$store.state.orderList.orderSave.selectList[i].product.price * this.$store.state.orderList.orderSave.selectList[i].count));
 
           this.orderCartItemNo[i] = this.$store.state.orderList.orderSave.selectList[i].cartItemNo
         }
@@ -202,7 +205,7 @@ export default {
         pay_method: "card",
         merchant_uid: this.merchant_uid + this.randomNumber,
         name: "ZTZ 전통주 결제",
-        amount: 100 /*this.totalPrice*/,
+        amount: 100 /*this.paymentPrice*/,
         buyer_email: this.$store.state.resMember.email,
         buyer_name: this.$store.state.resMember.username,
         buyer_tel: this.$store.state.resMemberProfile.phoneNumber,
