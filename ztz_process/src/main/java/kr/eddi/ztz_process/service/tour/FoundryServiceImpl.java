@@ -38,14 +38,26 @@ public class FoundryServiceImpl implements FoundryService{
     }
     @Override
     public List<Reservation> myReservationList(String token) {
-        Long id = redisService.getValueByKey(token.substring(1, 37));
+        String SubString = "";
+        if(token.length() >= 37){
+            SubString = token.substring(1,37);
+        }else {
+            SubString = token;
+        }
+        Long id = redisService.getValueByKey(SubString);
         Member member = memberRepository.findByMemberId(id);
         return reservationRepository.findByMember(member);
     }
 
     @Override
     public String savedReservation(ReservationRequest reservationRequest) {
-        Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
+        String SubString = "";
+        if(reservationRequest.token().length() >= 37){
+            SubString = reservationRequest.token().substring(1,37);
+        }else {
+            SubString = reservationRequest.token();
+        }
+        Long id = redisService.getValueByKey(SubString);
         Member member = memberRepository.findByMemberId(id);
         Foundry foundry = foundryRepository.findByFoundryName(reservationRequest.foundryName());
         LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
@@ -65,7 +77,13 @@ public class FoundryServiceImpl implements FoundryService{
 
     @Override
     public String cancelMyReservation(Long reservationId, String token) {
-        Long userId = redisService.getValueByKey(token.substring(1, 37));
+        String SubString = "";
+        if(token.length() >= 37){
+            SubString = token.substring(1,37);
+        }else {
+            SubString = token;
+        }
+        Long userId = redisService.getValueByKey(SubString);
         Reservation reservation = reservationRepository.findByReservationId(reservationId);
         Long reservationPersonId = reservation.getMember().getId();
 
@@ -80,7 +98,13 @@ public class FoundryServiceImpl implements FoundryService{
 
     @Override
     public String modifyMyReservation(Long reservationId, ReservationRequest reservationRequest) {
-        Long id = redisService.getValueByKey(reservationRequest.token().substring(1, 37));
+        String SubString = "";
+        if(reservationRequest.token().length() >= 37){
+            SubString = reservationRequest.token().substring(1,37);
+        }else {
+            SubString = reservationRequest.token();
+        }
+        Long id = redisService.getValueByKey(SubString);
         Reservation reservation = reservationRepository.findByReservationId(reservationId);
         LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
 

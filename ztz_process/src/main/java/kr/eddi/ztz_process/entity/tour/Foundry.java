@@ -19,6 +19,10 @@ public class Foundry {
     private String address;
     @Column(nullable = false)
     private String tel;
+
+    @Column
+    private String imgName;
+
     @Embedded
     private MapPoint mapPoint;
 
@@ -27,7 +31,7 @@ public class Foundry {
     @Column(nullable = false)
     private int durationOfTime;
     @Column(nullable = false)
-    private long price;
+    private int price;
     @Column(nullable = false)
     private String content;
 
@@ -36,9 +40,10 @@ public class Foundry {
             String address,
             String tel,
             String content,
+            String imgName,
             int minMember,
             int durationOfTime,
-            long price,
+            int price,
             MapPoint mapPoint
 
     ) {
@@ -46,6 +51,7 @@ public class Foundry {
         this.address = address;
         this.tel = tel;
         this.content = content;
+        this.imgName = imgName;
         this.minMember = minMember;
         this.durationOfTime = durationOfTime;
         this.price = price;
