@@ -5,7 +5,6 @@ import 'package:ztz_app/components/product/product_detail/product_info_component
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
 
-import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/product/product_infos/product_info.dart';
 import '../../../utility/text_styles.dart';
 import '../../main_page_components/todays_recommend_component.dart';
@@ -46,9 +45,7 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
         children: [
           Container(
             width: size.width,
-            child: const SizedBox(
-              child: Image(image: AssetImage("assets/images/Hongju.jpg")),
-            ),
+            child: Image(image: AssetImage("assets/images/uploadImg/${image}"),fit:BoxFit.fill, width : size.width,),
           ),
           Container(
             margin: EdgeInsets.only(top:20, left: 15),

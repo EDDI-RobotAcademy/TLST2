@@ -24,7 +24,7 @@ public class ReservationTestCase {
         MapPoint mp3 = new MapPoint(36.678079 , 127.480009);
         MapPoint mp4 = new MapPoint(35.3451059 , 126.8128224);
         MapPoint mp5 = new MapPoint(36.7722669 , 128.3138075);
-        MapPoint mp6 = new MapPoint(36.7722669 , 126.3375372);
+        MapPoint mp6 = new MapPoint(33.444851 , 126.337548);
 
 
         Foundry foundry1 = new Foundry(
@@ -32,6 +32,7 @@ public class ReservationTestCase {
                 "경기도 포천시 화현면 화현리 512",
                 "031-531-9300",
                 "박물관 투어",
+                "sansawon2.jpg",
                 1, 1, 3500,
                 mp1
         );
@@ -41,6 +42,7 @@ public class ReservationTestCase {
                 "충주시 감금면 창동리 243",
                 "043 842 5005",
                 "전통주 체험",
+                "jungwondang2.jpg",
                 4, 2, 40000,
                 mp2
 
@@ -50,6 +52,7 @@ public class ReservationTestCase {
                 "청주시 청원구 사천로 19번길 5-2",
                 "043 218 7688",
                 "단양주 빚기",
+                "joeunsulsejong2.jpg",
                 10, 2, 25000,
                 mp3
         );
@@ -58,6 +61,7 @@ public class ReservationTestCase {
                 "전남 장성군 장성읍 남양촌길 19",
                 "061 393 4141",
                 "양조장 견학, 소개 및 시음",
+                "cheungsan.jpg",
                 1, 1, 20000,
                 mp4
         );
@@ -66,6 +70,7 @@ public class ReservationTestCase {
                 "경상북도 문경시 동로면 노은리 192",
                 "054 552 8252",
                 "양조장 투어 및 시음",
+                "mungeung.jpg",
                 12, 2, 20000,
                 mp5
         );
@@ -74,6 +79,7 @@ public class ReservationTestCase {
                 "제주시 애월읍 애원로 283",
                 "064 799 4225",
                 "제주샘주 칵테일 체험",
+                "jejusaemju2.jpg",
                 10, 1, 20000,
                 mp6
 

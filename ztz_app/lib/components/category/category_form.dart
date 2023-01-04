@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/pages/account/signup_page.dart';
+import 'package:ztz_app/pages/tour/foundry_page.dart';
 
 class CategoryForm extends StatefulWidget {
   const CategoryForm({Key? key}) : super(key: key);
@@ -52,7 +53,10 @@ class _CategoryFormState extends State<CategoryForm> {
           ),
           trailing: Icon(Icons.keyboard_arrow_right),
           onTap: () {
-            // 양조장 페이지로 이동
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FoundaryPage())
+            );
           },
         ),
       ],
