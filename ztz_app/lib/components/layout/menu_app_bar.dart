@@ -18,7 +18,7 @@ class _MenuAppBarState extends State<MenuAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       // title => 카테고리, 검색, 마이페이지 등
-      title: Text(widget.title, style: appBarTitleTextStyle(16),),
+      title: Text(widget.title, style: appBarTitleTextStyle(16)),
       centerTitle: true,
       actions: <Widget>[
         IconButton(
