@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class FoundryInfo extends GetxController{
   static late var foundryList = [];
   static late var selectedFoundry = {};
-  static late int reservationInfo;
+  static late int reservationResult;
 
   static late String foundryName;
   static late String foundryAddress;
