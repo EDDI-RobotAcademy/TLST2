@@ -52,13 +52,13 @@ class _TextFiledComponent extends State<TextFiledComponent>{
         textInputType = TextInputType.text;
         break;
       case "email":
-        hintText = "이메일";
+        hintText = "이메일을 입력해주세요";
         emailFocus = FocusNode();
         useFocus = emailFocus;
         textInputType = TextInputType.emailAddress;
         break;
       case "password":
-        hintText = "비밀번호";
+        hintText = "비밀번호를 입력해주세요";
         passwordFocus = FocusNode();
         useFocus = passwordFocus;
         textInputType = TextInputType.visiblePassword;

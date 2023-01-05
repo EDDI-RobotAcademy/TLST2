@@ -21,7 +21,7 @@ class _WhiteMenuAppBarState extends State<WhiteMenuAppBar> {
       iconTheme: IconThemeData(
         color: Colors.grey,
       ),
-      elevation: 0.1,
+      elevation: 0.3,
       // title => 카테고리, 검색, 마이페이지 등
       title: Text(widget.title, style: blackBoldTextStyle(16)),
       centerTitle: true,

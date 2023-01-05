@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ztz_app/pages/account/signup_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
-
-
 import '../../controller/account/login_api.dart';
 import '../../controller/account/sign_up_infos/account_state.dart';
-import '../../pages/main_page/main_page.dart';
 import '../../utility/button_style.dart';
-import '../../utility/text_styles.dart';
 import '../text_filed/common_text_filed.dart';
 
 class LoginComponent extends StatefulWidget{
@@ -30,7 +26,6 @@ class _LoginComponent extends State<LoginComponent>{
     super.initState();
     emailEditController = TextEditingController();
     passwordController = TextEditingController();
-    signInStorage.deleteAll();
   }
 
   @override
@@ -55,37 +50,56 @@ class _LoginComponent extends State<LoginComponent>{
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        padding: EdgeInsets.only(left: 25,right: 25),
-      child: Column(
-        children: [
-          SizedBox(height: 80,),
-          SizedBox(
-            width: double.infinity,
-            child: Text("ZTZ 로그인", style: welcomeTitle(), textAlign: TextAlign.left,),
-          ),
-          SizedBox(height: 20,),
-          SizedBox(child: Text("이메일",textAlign: TextAlign.left,),height: 20,width: double.infinity,),
-          TextFiledComponent(usedPosition: "email", controller: emailEditController,),
-          SizedBox(height: 10,),
-          SizedBox(child: Text("비밀번호",textAlign: TextAlign.left,),height: 20,width: double.infinity),
-          TextFiledComponent(usedPosition: "password", controller: passwordController,),
-          SizedBox(height: 20,),
-          ElevatedButton(
-              style: defaultElevatedButtonStyle(330,40),
-              onPressed: (){
-                login();
-              },
-              child: Text("로그인")),
-          SizedBox(height: 15,),
-          ElevatedButton(
-              style: defaultElevatedButtonStyle(330,40),
-              onPressed: (){
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpPage() ));
-              },
-              child: Text("회원가입"))
-        ],
-      )
-    );
+        padding: EdgeInsets.only(left: 25, right: 25),
+        child: Column(
+          children: [
+            SizedBox(height: 30),
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Text(
+                    "회원 가입하고",
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    "다양한 혜택을 받아보세요!",
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30),
+            TextFiledComponent(
+              usedPosition: "email",
+              controller: emailEditController,
+            ),
+            SizedBox(height: 15),
+            TextFiledComponent(
+              usedPosition: "password",
+              controller: passwordController,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+                style: defaultElevatedButtonStyle(360, 50),
+                onPressed: () {
+                  login();
+                },
+                child: Text("로그인", style: TextStyle(fontSize: 15))),
+            SizedBox(height: 15),
+            ElevatedButton(
+                style: defaultElevatedButtonStyle(360, 50),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpPage()));
+                },
+                child: Text("회원가입", style: TextStyle(fontSize: 15),))
+          ],
+        ));
   }
 
   void showSuccessLogin(){
