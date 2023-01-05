@@ -7,6 +7,7 @@ import 'package:ztz_app/controller/account/sign_up_api.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/manager_sign_up_info.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/member_sign_up_info.dart';
 import 'package:ztz_app/pages/account/login_page.dart';
+import 'package:ztz_app/utility/colors.dart';
 
 
 import '../../controller/account/sign_up_infos/account_state.dart';
@@ -120,16 +121,17 @@ class _SignUpComponent extends State<SignUpComponent>{
       child: Column(
         children: [
           SizedBox(height: 20,),
-          Text("ZTZ 회원가입",style: productTitleTextStyle(),),
-          SizedBox(height: 20,),
           ToggleButtons(
+            selectedBorderColor: ColorStyle.mainColor,
+              selectedColor: ColorStyle.mainColor,
+              fillColor: Colors.white,
               children: const [
                 Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Text("일반 회원가입"),
+                  padding: EdgeInsets.all(15),
+                  child: Text(" 일반 회원가입 "),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(15),
                   child: Text("관리자 회원가입"),),
               ],
               onPressed: (int index) {
@@ -141,6 +143,7 @@ class _SignUpComponent extends State<SignUpComponent>{
                 });
               },
               isSelected: isSelected),
+          SizedBox(height: 10),
           SizedBox(
             child: isSelected[0] ? memberSignUp() : managerSignUp(),
           )

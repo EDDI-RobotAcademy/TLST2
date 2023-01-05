@@ -92,7 +92,7 @@ class _LoginComponent extends State<LoginComponent>{
             ElevatedButton(
                 style: defaultElevatedButtonStyle(360, 50),
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const SignUpPage()));
