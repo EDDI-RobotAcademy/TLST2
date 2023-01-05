@@ -115,7 +115,11 @@ class _LoginComponent extends State<LoginComponent>{
               child: const Text("Close"),
               onPressed: () async {
                 await AccountState.accountGet.isLoginCheck();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage() ));
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    (route) => false
+                );
               },
             ),
           ],
