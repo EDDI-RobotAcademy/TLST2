@@ -87,8 +87,13 @@ class _MyPageFormState extends State<MyPageForm> {
                       children: [
                         SizedBox(width: 30),
                         SizedBox(
-                            child: Text(username.toString() + '님',
-                                style: blackBoldTextStyle(25)))
+                            child: Text(username.toString() + '님 ',
+                                style: blackBoldTextStyle(25))),
+                        Container(
+                            padding: EdgeInsets.fromLTRB(0, 12, 0, 0),
+                            child: Text(AccountState.memberInfo['email'],
+                                style: TextStyle(fontSize: 16, color: Colors.grey.shade700))
+                        )
                       ],
                     ),
                     SizedBox(height: 30),
@@ -136,17 +141,18 @@ class _MyPageFormState extends State<MyPageForm> {
         borderRadius: BorderRadius.circular(10),
         color: Color(0xffc7d6cd),
       ),
-      width: 250,
+      width: 350,
       height: 50,
       padding: EdgeInsets.only(left: 30, right: 30),
       margin: EdgeInsets.only(bottom: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title),
+          Text(title, style: TextStyle(fontSize: 14)),
           Text(
             cnt + ' 건',
             textAlign: TextAlign.right,
+            style: TextStyle(fontSize: 14),
           ),
         ],
       ),

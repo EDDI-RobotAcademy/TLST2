@@ -91,18 +91,9 @@ TextStyle productTitleTextStyle(){
   );
 }
 
-TextStyle appBarTitleTextStyle(double fontSize){
-  return TextStyle(
-      fontSize: fontSize,
-      fontFamily: "NanumSquareNeo-bRg",
-      fontWeight: FontWeight.bold,
-      color: Colors.white
-  );
-}
 TextStyle whiteBoldTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
-      fontFamily: "NanumSquareNeo-bRg",
       fontWeight: FontWeight.bold,
       color: Colors.white
   );
@@ -111,8 +102,21 @@ TextStyle whiteBoldTextStyle(double fontSize) {
 TextStyle blackBoldTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
-      fontFamily: "NanumSquareNeo-bRg",
       fontWeight: FontWeight.bold,
+      color: Colors.black
+  );
+}
+
+TextStyle whiteTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
+      color: Colors.white
+  );
+}
+
+TextStyle blackTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
       color: Colors.black
   );
 }

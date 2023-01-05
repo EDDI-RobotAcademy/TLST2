@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ztz_app/controller/account/member_api.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/pages/category/category_page.dart';
 import 'package:ztz_app/pages/main_page/main_page.dart';
 import 'package:ztz_app/pages/my_page/my_page.dart';
@@ -12,9 +15,35 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _selectedIndex = 0;
+  var loginInfoCheck = false;
 
-  static const List _pages = [
-    //메인페이지, 검색페이지, 마이페이지로 추후 변경 예정
+  @override
+  void initState() {
+    loginCheck();
+    super.initState();
+  }
+
+  void loginCheck() async {
+    await AccountState.accountGet.isLoginCheck();
+    debugPrint("로그인 체크" + AccountState.accountGet.isLogin.value.toString());
+    if (AccountState.accountGet.isLogin.value) {
+      await MemberApi().userVerification(AccountState.accountGet.token.value);
+      setState(() {
+        loginInfoCheck = true;
+      });
+    }
+  }
+
+  static const List _loginPages = [
+    //로그인 상태에서 보이는 페이지
+    MainPage(),
+    CategoryPage(),
+    MainPage(),
+    LoginPage(),
+  ];
+
+  static List _logoutPages = [
+    //로그아웃 상태에서 보이는 페이지
     MainPage(),
     CategoryPage(),
     MainPage(),
@@ -30,8 +59,9 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
+          child: loginInfoCheck == false
+              ? _loginPages.elementAt(_selectedIndex)
+              : _logoutPages.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
