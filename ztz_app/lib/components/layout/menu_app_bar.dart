@@ -13,10 +13,12 @@ class MenuAppBar extends StatefulWidget with PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(50);
 }
 
+// 초록색 앱 바 + 하얀색 글자 + 장바구니 버튼 있음
 class _MenuAppBarState extends State<MenuAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0.1,
       // title => 카테고리, 검색, 마이페이지 등
       title: Text(widget.title, style: appBarTitleTextStyle(16)),
       centerTitle: true,
