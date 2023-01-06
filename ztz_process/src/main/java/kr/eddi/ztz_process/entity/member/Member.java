@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.entity.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +36,9 @@ public class Member {
     private boolean managerCheck;
 
     @Getter
+    @JsonIgnore
     @JoinColumn(name ="authority_id")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Authority authority;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, orphanRemoval = true)
@@ -45,7 +47,7 @@ public class Member {
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST , orphanRemoval = true)
     private MemberProfile profile;
 
-    public Member(String email, String username, int birthdate, Authority authority,boolean managerCheck, MemberProfile memberProfile) {
+    public Member(String email, String username, int birthdate, Authority authority, boolean managerCheck, MemberProfile memberProfile) {
         this.email = email;
         this.username = username;
         this.birthdate = birthdate;

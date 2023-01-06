@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process;
 
+import kr.eddi.ztz_process.entity.member.AuthorityType;
 import kr.eddi.ztz_process.entity.member.ManagerCode;
 import kr.eddi.ztz_process.repository.member.ManagerCodeRepository;
 import kr.eddi.ztz_process.service.member.MemberService;
@@ -28,7 +29,7 @@ public class MemberTestCase {
     @Test
     void memberSignUpTest() {
         MemberRegisterRequest registerRequest = new MemberRegisterRequest(
-                "meme@me.com", "meme", "김미미", 19931106, 2L, "일반회원", false,null,
+                "meme@me.com", "meme", "김미미", 19931106, AuthorityType.MEMBER, false,null,
                 "서울특별시","중랑구","면목동","어딘가","010-0000-0000");
         service.signUp(registerRequest);
     }
@@ -36,7 +37,7 @@ public class MemberTestCase {
     @Test
     void managerSignUpTest() {
         MemberRegisterRequest registerRequest = new MemberRegisterRequest(
-                "manager@manager.com", "manager", "박관리", 19931106,  1L, "관리자",true,
+                "manager@manager.com", "manager", "박관리", 19931106, AuthorityType.MANAGER,true,
                 "010-0000-0000");
         service.signUp(registerRequest);
     }

@@ -1,6 +1,7 @@
 package kr.eddi.ztz_process.service.member.request;
 
 import kr.eddi.ztz_process.entity.member.Authority;
+import kr.eddi.ztz_process.entity.member.AuthorityType;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.member.MemberProfile;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,7 @@ public class MemberRegisterRequest {
     private final String username;
     private final int birthdate;
 
-    private final Long authorityNo;
-    private final String authorityName;
+    private final AuthorityType authorityName;
 
     private boolean managerCheck;
     private String managerCode;
@@ -29,12 +29,12 @@ public class MemberRegisterRequest {
     private String zipcode;
     private final String phoneNumber;
 
-    public MemberRegisterRequest(String email, String password, String username, int birthdate, Long authorityNo, String authorityName, boolean managerCheck, String city, String street, String addressDetail, String zipcode, String phoneNumber){
+    public MemberRegisterRequest(String email, String password, String username, int birthdate, AuthorityType authorityName, boolean managerCheck, String city, String street, String addressDetail, String zipcode, String phoneNumber){
         this.email= email;
         this.password = password;
         this.username= username;
         this.birthdate = birthdate;
-        this.authorityNo = authorityNo;
+//        this.authorityNo = authorityNo;
         this.authorityName = authorityName;
         this.managerCheck = managerCheck;
         this.city= city;
@@ -44,12 +44,12 @@ public class MemberRegisterRequest {
         this.phoneNumber = phoneNumber;
     }
 
-    public MemberRegisterRequest(String email, String password, String username, int birthdate,Long authorityNo, String authorityName,boolean managerCheck, String phoneNumber){
+    public MemberRegisterRequest(String email, String password, String username, int birthdate, AuthorityType authorityName,boolean managerCheck, String phoneNumber){
         this.email = email;
         this.password = password;
         this.username= username;
         this.birthdate = birthdate;
-        this.authorityNo = authorityNo;
+//        this.authorityNo = authorityNo;
         this.authorityName = authorityName;
         this.managerCheck = managerCheck;
         this.phoneNumber =phoneNumber;
@@ -60,7 +60,7 @@ public class MemberRegisterRequest {
                 email,
                 username,
                 birthdate,
-                Authority.ofMember(authorityNo, authorityName),
+                Authority.ofMember(authorityName),
                 managerCheck,
                 MemberProfile.of(city, street, addressDetail, zipcode,phoneNumber)
         );
@@ -71,7 +71,7 @@ public class MemberRegisterRequest {
                 email,
                 username,
                 birthdate,
-                Authority.ofMember(authorityNo, authorityName),
+                Authority.ofMember(authorityName),
                 managerCheck
         );
     }

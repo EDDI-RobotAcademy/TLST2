@@ -16,14 +16,15 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CartItemNo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="cart_id")
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_id")
-    private Product product;
+    private Product product= null;
 
     // 상품 개수
     private int count;
+
 }
