@@ -2,10 +2,7 @@ package kr.eddi.ztz_process.entity.products;
 
 import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.member.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -33,12 +30,11 @@ public class Review {
     @CreationTimestamp
     private LocalDate regDate;
 
-
     @JoinColumn(name = "member_id")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @JoinColumn(name = "product_no")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 }
