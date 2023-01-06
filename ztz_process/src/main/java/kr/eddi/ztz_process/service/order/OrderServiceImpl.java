@@ -9,6 +9,7 @@ import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Payment;
+import kr.eddi.ztz_process.entity.order.PaymentState;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.order.PaymentRepository;
@@ -67,7 +68,7 @@ public class OrderServiceImpl implements OrderService{
                         .builder()
                         .orderNo(setOrderNum)
                         .orderCnt(OrderListInfo.getOrderCnt().get(i))
-                        .orderState("결제완료")
+                        .orderState(PaymentState.PAYMENT_COMPLETE)
                         .orderPrice(OrderListInfo.getOrderPrice().get(i))
                         .product(maybeProduct.get())
                         .member(maybeMember.get())
@@ -86,10 +87,6 @@ public class OrderServiceImpl implements OrderService{
 
         List<OrderInfo> orderInfo = orderRepository.findByPaymentId(PaymentId);
 
-        System.out.println("주문 아이디"+ orderInfo.get(0).getOrderID());
-        System.out.println("주문 개수"+orderInfo.get(0).getOrderCnt());
-        System.out.println("상품 이름"+orderInfo.get(0).getProduct().getName());
-        System.out.println("결제 정보"+orderInfo.get(0).getPayment().getImp_uid());
         return orderInfo;
     }
 
@@ -127,9 +124,9 @@ public class OrderServiceImpl implements OrderService{
         try {
             client.cancelPaymentByImpUid(cancelData);
 
-            payment.setPaymentState("전액 취소 완료");
+            payment.setPaymentState(PaymentState.PAYMENT_REFUND);
             for (int i = 0; i < orderInfos.size(); i++) {
-                orderInfos.get(i).setOrderState("환불 완료");
+                orderInfos.get(i).setOrderState(PaymentState.PAYMENT_REFUND);
                 orderInfos.get(i).setRefundReason(refundRequest.getRefundReason());
                 orderRepository.save(orderInfos.get(i));
             }
@@ -142,6 +139,8 @@ public class OrderServiceImpl implements OrderService{
     }
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest){
+
+
         OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
         Integer TotalOrderedCnt = 0;
         Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.getMemberID().get(0));
@@ -162,7 +161,7 @@ public class OrderServiceImpl implements OrderService{
                 .totalPaymentPrice(paymentRegisterRequest.getPaymentPrice())
                 .imp_uid(paymentRegisterRequest.getImp_uid())
                 .OrderedCnt(TotalOrderedCnt)
-                .PaymentState("결제 완료")
+                .PaymentState(PaymentState.PAYMENT_COMPLETE)
                 .address(address)
                 .DeliveryRequest(paymentRegisterRequest.getSendRequest())
                 .member(maybeMember.get())
@@ -194,29 +193,28 @@ public class OrderServiceImpl implements OrderService{
 
         return setOrderNum;
     }
-
     public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest){
 
         //배송시작, 배송완료, 구매확정, 반품신청 4개 reqType
         String reqType = changeOrderStateRequest.getReqType();
-        String stateName ="";
+        PaymentState setState =null;
         Boolean allSameOrderStateCheck = false;
         int sameOrderStateNum = 0;
 
         if(reqType.equals("배송시작")){
-            stateName = "배송중";
+            setState = PaymentState.DELIVERY_ONGOING;
         } else if (reqType.equals("배송완료")) {
-            stateName = "배송완료";
+            setState = PaymentState.DELIVERY_COMPLETE;
         } else if (reqType.equals("구매확정")) {
-            stateName = "구매확정";
+            setState = PaymentState.PAYMENT_CONFIRM;
         } else if(reqType.equals("반품신청")){
-            stateName = "반품신청";
+            setState = PaymentState.REFUND_REQUEST;
         }
 
         // orderinfo는 그냥 각각 배송시작 상태 변경해주기
         Optional<OrderInfo> maybeOrderInfo = orderRepository.findById(changeOrderStateRequest.getOrderId());
         OrderInfo startOrderInfo = maybeOrderInfo.get();
-        startOrderInfo.setOrderState(stateName);
+        startOrderInfo.setOrderState(setState);
 
         orderRepository.save(startOrderInfo);
 
@@ -224,7 +222,7 @@ public class OrderServiceImpl implements OrderService{
         List<OrderInfo> findOrderInfoPaymentList = orderRepository.findByPaymentId(changeOrderStateRequest.getPaymentId());
 
         for (int i = 0; i < findOrderInfoPaymentList.size(); i++) {
-            if(findOrderInfoPaymentList.get(i).getOrderState().equals(stateName)){
+            if(findOrderInfoPaymentList.get(i).getOrderState().equals(setState)){
                 sameOrderStateNum = sameOrderStateNum + 1;
             }
         }
@@ -238,9 +236,9 @@ public class OrderServiceImpl implements OrderService{
         Payment payment = maybePayment.get();
 
         if (allSameOrderStateCheck){
-            payment.setPaymentState(stateName);
+            payment.setPaymentState(setState);
         }else {
-            payment.setPaymentState("부분 "+ stateName);
+            payment.setPaymentState(PaymentState.PART_DELIVERY_ONGOING);
         }
         paymentRepository.save(payment);
 
