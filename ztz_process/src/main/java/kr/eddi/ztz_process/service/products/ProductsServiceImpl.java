@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.service.products;
 
+import kr.eddi.ztz_process.controller.products.request.ProductLocalAndTypeRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.*;
@@ -28,6 +29,26 @@ public class ProductsServiceImpl implements ProductsService{
     @Override
     public List<Product> list() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
+    }
+
+    @Override
+    public List<Product> list(ProductLocalAndTypeRequest productLocalAndTypeRequest) {
+        try{
+            AlcoholType alcoholType = AlcoholType.valueOfAlcoholName(productLocalAndTypeRequest.getAlcoholType());
+            Local local = Local.valueOfLocalName(productLocalAndTypeRequest.getLocalName());
+            List<Product> ProductList = repository.findByLocalAndType(alcoholType,local);
+
+            if(ProductList.equals(Optional.empty())){
+                log.info("해당 상품이 존재 하지 않습니다.");
+                return null;
+            }else {
+                return ProductList;
+            }
+        }catch (Exception e){
+            System.out.println("오류" + e);
+            return null;
+        }
+
     }
 
     @Override
