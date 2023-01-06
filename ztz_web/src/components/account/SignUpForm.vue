@@ -203,8 +203,7 @@ export default {
     onSubmit() {
       if (this.$refs.form.validate()) {
         if (this.manager) {
-          const authorityNo = 1
-          const authorityName = "관리자"
+          const authorityName = "MANAGER"
           const managerCode = this.managerCode
           const managerCheck = this.manager
           const {email, password, username, birthdate, phoneNumber} = this
@@ -213,15 +212,13 @@ export default {
             password,
             username,
             birthdate,
-            authorityNo,
             authorityName,
             managerCheck,
             managerCode,
             phoneNumber
           })
         } else {
-          const authorityNo = 2
-          const authorityName = "일반회원"
+          const authorityName = "MEMBER"
           const managerCheck = this.manager
           const {email, password, username, birthdate, city, street, addressDetail, zipcode, phoneNumber} = this
           this.$emit("submit", {
@@ -229,7 +226,6 @@ export default {
             password,
             username,
             birthdate,
-            authorityNo,
             authorityName,
             managerCheck,
             city,
