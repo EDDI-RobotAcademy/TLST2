@@ -35,7 +35,7 @@
             {{ questionBoard.writer }}
           </td>
           <td align="center">
-            {{ questionBoard.regDate }}
+            {{ questionBoard.createDateTime }}
           </td>
         </tr>
         </tbody>

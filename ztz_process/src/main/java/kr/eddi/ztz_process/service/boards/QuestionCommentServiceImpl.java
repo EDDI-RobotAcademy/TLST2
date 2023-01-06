@@ -30,8 +30,8 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
 
     // 댓글 리스트
     @Override
-    public List<QuestionComment> questionCommentList() {
-        return questionCommentRepository.findAll(Sort.by(Sort.Direction.DESC, "questionCommentNo"));
+    public List<QuestionComment> questionCommentList(Long questionNo) {
+        return questionCommentRepository.findCommentByQuestionNo(questionNo);
     }
 
     // 댓글 등록

@@ -25,7 +25,7 @@
           작성일자
         </th>
         <td>
-          <input type="text" :value="questionBoard.regDate" readonly>
+          <input type="text" :value="questionBoard.createDateTime" readonly>
         </td>
       </tr>
       <tr>

@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.entity.boards;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.member.Member;
@@ -7,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -24,21 +26,21 @@ public class QuestionComment {
     private String commentWriter;
 
     @JoinColumn(name = "member_id")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
     @Lob
     private String comment;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_no")
-
     private QuestionBoard questionBoard;
 
     @CreationTimestamp
-    private Date regDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime regData = LocalDateTime.now();
 
     @UpdateTimestamp
-    private Date updDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime updData = LocalDateTime.now();
 }
