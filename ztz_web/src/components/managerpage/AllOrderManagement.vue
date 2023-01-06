@@ -26,7 +26,15 @@
           <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
           <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
           <td>{{ paymentItem.totalPaymentPrice }}</td>
-          <td>{{ paymentItem.paymentState }}</td>
+          <td>{{
+              paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료":
+                  paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료":
+                      paymentItem.paymentState == "DELIVERY_ONGOING" ? "배송중":
+                          paymentItem.paymentState == "PART_DELIVERY_ONGOING" ? "부분배송중":
+                              paymentItem.paymentState == "PAYMENT_CONFIRM" ? "구매확정":
+                                  paymentItem.paymentState == "REFUND_REQUEST" ? "반품신청":
+                                      paymentItem.paymentState == "DELIVERY_COMPLETE" ? "배송완료": "상태값이 존재하지 않습니다"
+            }}</td>
           <td>{{ paymentItem.regData }}</td>
           <td>
             <v-btn class="orderedBtn" @click="showOrderDetails(paymentItem.paymentId, index)">
