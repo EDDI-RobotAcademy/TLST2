@@ -18,6 +18,7 @@ export default {
   questionBoards: [],
   questionComment: {},
   questionComments: [],
+  managerPhoneNumber: "",
   orderedList:{},
   paymentList:{},
   myReservationList: [],

@@ -14,22 +14,22 @@
                 <div>
                   <div class="d-flex" v-if="this.$store.state.resMember.managerCheck">
                     <v-text-field v-model="manager_code" label="관리자 코드 입력" type="password" outlined color="black"
-                                  :rules="password_rule" :disabled="false" required/>
+                               :disabled="false" required/>
                   </div>
 
                   <div class="d-flex">
-                    <v-text-field v-model="password_confirm" label="현재 비밀번호 입력" type="password" outlined color="black"
-                                  :rules="password_confirm_rule" :disabled="false" required/>
+                    <v-text-field v-model="present_password" label="현재 비밀번호 입력" type="password" outlined color="black"
+                                  :rules="password_rule" :disabled="false" required/>
                   </div>
 
                   <div class="d-flex">
                     <v-text-field v-model="new_password" label="새 비밀번호" type="password" outlined color="black"
-                                  :rules="password_rule" :disabled="false" required/>
+                                  :rules="new_password_rule" :disabled="false" required/>
                   </div>
 
                   <div class="d-flex">
                     <v-text-field v-model="new_password_confirm" label="새 비밀번호 확인" type="password" outlined color="black"
-                                  :rules="password_confirm_rule" :disabled="false" required/>
+                                  :rules="new_password_confirm_rule" :disabled="false" required/>
                   </div>
 
                   <div class="d-flex">
@@ -43,6 +43,7 @@
                       x-large
                       style="height: 55px"
                       :disabled="(emailPass) == false"
+                      @click = "modifyMemberProfile"
                       btn-name="변경">
                   </button-green>
                 </div>
@@ -63,23 +64,27 @@ export default {
 
   data() {
     return {
-      phoneNumber: this.$store.state.resMemberProfile.phoneNumber, // 중요!!!!!
+//      phoneNumber: this.$store.state.resMember.managerCheck ? this.$store.state.managerPhoneNumber : this.$store.state.resMemberProfile.phoneNumber, // 중요!!!!!
+      phoneNumber: "",
       manager_code: "",
-      password: "",
-      password_confirm: "",
+      present_password: "",
       new_password: "",
       new_password_confirm: "",
+      memberId: "",
 
       manager: false,
-
       password_rule: [
+              v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
+              v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
+            ],
+      new_password_rule: [
         v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
         v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
       ],
-      password_confirm_rule: [
+      new_password_confirm_rule: [
         v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
         v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
-        v => v === this.password || '패스워드가 일치하지 않습니다.'
+        v => v === this.new_password || '패스워드가 일치하지 않습니다.'
       ],
       phoneNumber_rule: [
         v => !!v || '전화번호를 입력 해주세요.',
@@ -93,23 +98,38 @@ export default {
   },
   computed: {
     ...mapState([
-      'isAuthenticated', 'resMember', 'resMemberProfile'
+      'isAuthenticated', 'resMember', 'resMemberProfile', 'managerPhoneNumber'
     ])
   },
   async mounted() {
     if (this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem('userInfo')
-      await this.reqMyPageProfileModifyFromSpring(token);
       await this.reqMemberInfoToSpring(token);
-      await this.reqMemberProfileInfoToSpring(token);
+      if (this.$store.state.resMember.managerCheck === true) {
+        await this.reqManagerProfileInfoToSpring(token);
+        this.phoneNumber = this.$store.state.managerPhoneNumber;
+      } else {
+        await this.reqMemberProfileInfoToSpring(token);
+        this.phoneNumber = this.$store.state.resMemberProfile.phoneNumber;
+       }
     } else {
       alert("로그인 상태가 아닙니다.")
     }
   },
   methods: {
     ...mapActions([
-      'reqMyPageProfileModifyFromSpring', 'reqMemberInfoToSpring', 'reqMemberProfileInfoToSpring'
+      'reqMyPageProfileModifyFromSpring', 'reqMemberInfoToSpring', 'reqMemberProfileInfoToSpring', 'reqManagerProfileInfoToSpring',
     ]),
+    modifyMemberProfile() {
+
+    const memberId = this.$store.state.resMember.id;
+    const phoneNumber = this.phoneNumber;
+    const manager_code = this.manager_code;
+    const present_password = this.present_password;
+    const new_password = this.new_password;
+    console.log("멤버 id 확인" + memberId);
+    this.reqMyPageProfileModifyFromSpring({ phoneNumber, manager_code, present_password, new_password, memberId })
+    }
   }
 }
 </script>

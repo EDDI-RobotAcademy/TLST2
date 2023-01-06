@@ -17,7 +17,8 @@ import {
     REQUEST_ALL_PAYMENT_FROM_SPRING,
     REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
-    REQUEST_SALES_AMOUNT_TO_SPRING
+    REQUEST_SALES_AMOUNT_TO_SPRING,
+    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -142,7 +143,7 @@ export default {
             {token: token})
             .then((res) => {
                 commit(RESPONSE_MEMBER_PROFILE_OBJET, res.data)
-                console.log("profile :" + res.data)
+                console.log("profile : " + res.data)
             })
     },
 
@@ -429,13 +430,14 @@ export default {
 
     // eslint-disable-next-line no-empty-pattern
     reqMyPageProfileModifyFromSpring({}, payload) {
-        const { password, phoneNumber } = payload;
+        const { phoneNumber, manager_code, present_password, new_password, memberId } = payload;
+        console.log("actions 멤버 id 확인" + payload.memberId);
 
-        return axios.post("http://localhost:7777/ztz/products/profile/modify/myPage", {
-            password, phoneNumber
+        return axios.post("http://localhost:7777/ztz/member/modify-profile", {
+            phoneNumber, manager_code, password : present_password, new_password, id: memberId
         })
             .then((res) => {
-                alert("회원정보 변경이 완료되었습니다!")
+                alert(res.data)
                 console.log(res)
                 this.$router.push("/my-page") // 변경 완료하고 바로 마이페이지로 이동!
             })
@@ -443,4 +445,13 @@ export default {
                 alert(res.response.data.message)
             })
     },
+
+    reqManagerProfileInfoToSpring({commit}, token) {
+        return axios.post("http://localhost:7777/ztz/member/manager-profile",
+                    {token: token})
+                    .then((res) => {
+                        commit(REQUEST_MANAGER_PHONENUMBER_FROM_SPRING, res.data)
+                        console.log("profile : " + res.data)
+                    })
+    }
 }
