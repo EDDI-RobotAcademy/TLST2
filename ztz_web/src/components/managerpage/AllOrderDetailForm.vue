@@ -42,7 +42,7 @@
         <th>주문 금액</th>
         <th>수량</th>
         <th>상태</th>
-        <th v-if="paymentList[paymentListIndex].paymentState != '전액 취소 완료'">배송 관리</th>
+        <th v-if="paymentList[paymentListIndex].paymentState != 'PAYMENT_REFUND'">배송 관리</th>
         <th v-else>환불 사유</th>
       </tr>
       </thead>
@@ -59,14 +59,24 @@
         </td>
         <td>{{ item.orderPrice}}</td>
         <td>{{ item.orderCnt }}</td>
-        <td>{{ item.orderState }}</td>
+        <td>
+          {{
+            item.orderState == "PAYMENT_COMPLETE" ? "결제완료" :
+                item.orderState == "PAYMENT_REFUND" ? "환불완료" :
+                    item.orderState == "DELIVERY_ONGOING" ? "배송중" :
+                        item.orderState == "DELIVERY_COMPLETE" ? "배송완료" :
+                            item.orderState == "PAYMENT_CONFIRM" ? "구매확정" :
+                                item.orderState == "REFUND_REQUEST" ? "반품신청" :
+                                    "지정된 상태값이 없습니다"
+          }}
+        </td>
         <td>
 <!--          상태가 결제완료, 배송중, 배송완료, 반품신청, 구매확정 , 환불완료 -->
-          <p v-if="item.orderState == '환불 완료'">{{orderedList[0].refundReason}}</p>
-          <button-white v-else-if="item.orderState == '결제완료'"
+          <p v-if="item.orderState == 'PAYMENT_REFUND'">{{orderedList[0].refundReason}}</p>
+          <button-white v-else-if="item.orderState == 'PAYMENT_COMPLETE'"
                         class="deliveryBtn" btn-name="배송 시작"
                         @click="startDelivery(item.orderID, item.payment.paymentId, index)"/>
-          <button-white v-else-if="item.orderState == '배송중'"
+          <button-white v-else-if="item.orderState == 'DELIVERY_ONGOING'"
                         class="deliveryBtn" btn-name="배송 완료"
                         @click="finishDelivery(item.orderID, item.payment.paymentId)"/>
           <button-white v-else

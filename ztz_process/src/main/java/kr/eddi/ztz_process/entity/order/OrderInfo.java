@@ -28,22 +28,22 @@ public class OrderInfo {
     private Integer orderPrice;
 
     @Column(nullable = false)
-    private String orderState;
+    private PaymentState orderState;
 
     @Column
     private String refundReason;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Product_Id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Member_id")
     private Member member;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Payment_id")
     private Payment payment;
-
 
 
     @CreationTimestamp

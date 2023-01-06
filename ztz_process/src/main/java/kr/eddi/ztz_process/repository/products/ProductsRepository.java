@@ -23,4 +23,7 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.monthAlcoholCheck = true order by p.productNo desc")
     List<Product> findMonthAlcoholProducts();
 
+    @Query("select p from Product p where p.classification.alcoholType =:alcohol_type and p.classification.local =:local")
+    List<Product> findByLocalAndType(AlcoholType alcohol_type , Local local);
+
 }
