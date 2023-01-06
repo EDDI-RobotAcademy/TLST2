@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -32,12 +33,12 @@ public class ReviewTestCase {
         Optional<Member> maybeMember = memberRepository.findById((long) 1);
         Member member = maybeMember.get();
 
-        Optional<Product> maybeProduct = productsRepository.findById((long)2);
+        Optional<Product> maybeProduct = productsRepository.findById((long)1);
         Product product = maybeProduct.get();
 
-//        Review review = Review.builder()
-//                            .content("빌더 사용 리뷰").member(member).product(product).rate(5.0).thumbFileName("pd_01.png").build();
-//        reviewRepository.save(review);
+        Review review = Review.builder()
+                            .content("lazy test 리뷰2").member(member).product(product).rate(5.0).thumbnailFileName("pd_09.jpg").build();
+        reviewRepository.save(review);
 
     }
 

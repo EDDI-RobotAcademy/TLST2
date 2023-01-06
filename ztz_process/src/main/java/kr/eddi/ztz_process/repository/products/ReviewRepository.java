@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    @Query("select r from Review r join r.product p where p.productNo= :productNo")
+    @Query("select r from Review r join fetch r.member join fetch r.product p where p.productNo= :productNo")
     List<Review> findByProductNo(Long productNo);
 
-    @Query("select r from Review r join r.member m where m.id= :memberId")
+    @Query("select r from Review r join fetch r.product join fetch r.member m where m.id= :memberId")
     List<Review> findByMemberId(Long memberId);
 
 }
