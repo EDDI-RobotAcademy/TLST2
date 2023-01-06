@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ztz_app/pages/category_page.dart';
 
 class MainAppBar extends StatefulWidget with PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
@@ -15,6 +14,7 @@ class _MainAppBarState extends State<MainAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0.1,
       title: Image.asset("assets/images/logo/logo.png", width: 100, height: 30),
       centerTitle: true,
       actions: <Widget>[
