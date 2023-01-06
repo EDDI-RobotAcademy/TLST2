@@ -36,12 +36,12 @@ public class Payment {
     private Integer OrderedCnt;
 
     @Column(nullable = false)
-    private String PaymentState;
+    private PaymentState PaymentState;
 
     @Column(nullable = false)
     private String DeliveryRequest;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

@@ -11,11 +11,8 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfo, Long> {
     @Query("select o from OrderInfo o where o.orderNo = :orderNo")
     Optional<OrderInfo> findByOrderNo(String orderNo);
 
-    @Query("select o from OrderInfo o where o.payment.paymentId = :paymentId")
+    @Query("select o from OrderInfo o join fetch o.payment join fetch o.member join fetch o.product where o.payment.paymentId = :paymentId")
     List<OrderInfo> findByPaymentId(Long paymentId);
-
-    @Query("select o from OrderInfo o join fetch o.member where o.member.id = :memberId")
-    List<OrderInfo> findByMemberId(Long memberId);
 
     @Query("select o from OrderInfo o where o.orderState='구매확정'")
     List<OrderInfo> findSalesList();
