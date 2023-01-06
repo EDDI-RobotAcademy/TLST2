@@ -6,7 +6,6 @@
 
     <div>
       <p class="ma-0" style="font-size: 12px">기본 배송지</p>
-      {{ this.$store.state.resMemberProfile.address.city }}
       {{ this.$store.state.resMemberProfile.address.street }}
       {{ this.$store.state.resMemberProfile.address.addressDetail }}
       ({{ this.$store.state.resMemberProfile.address.zipcode }})

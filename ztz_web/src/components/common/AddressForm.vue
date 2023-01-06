@@ -70,7 +70,7 @@ export default {
           }
           this.city = data.sido;
           this.zipcode = data.zonecode;
-          this.street = data.sigungu + ' ' + fullRoadAddr;
+          this.street = fullRoadAddr;
         }
       }).open()
     },
