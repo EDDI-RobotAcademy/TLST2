@@ -18,10 +18,10 @@ public class QuestionCommentController {
     QuestionCommentService questionCommentService;
 
     @GetMapping("/{questionNo}")
-    public List<QuestionComment> questionCommentList() {
+    public List<QuestionComment> questionCommentList(@PathVariable("questionNo") Long questionNo) {
         log.info("questionCommentList()");
 
-        return questionCommentService.questionCommentList();
+        return questionCommentService.questionCommentList(questionNo);
     }
 
     @PostMapping("/register")

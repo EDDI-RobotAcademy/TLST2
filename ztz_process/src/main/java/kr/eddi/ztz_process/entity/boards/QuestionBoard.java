@@ -1,12 +1,15 @@
 package kr.eddi.ztz_process.entity.boards;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -29,8 +32,16 @@ public class QuestionBoard {
     private String content;
 
     @CreationTimestamp
-    private Date regDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate createDateTime;
 
     @UpdateTimestamp
-    private Date updDate;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate upDateTime;
+
+    @PrePersist
+    public void createDate(){
+        this.createDateTime = LocalDate.now();
+        this.upDateTime = LocalDate.now();
+    }
 }
