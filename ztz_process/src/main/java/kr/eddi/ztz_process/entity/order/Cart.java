@@ -21,16 +21,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long CartNo;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "cart")
-    private List<CartItem> cartItems = new ArrayList<>();
-
     //회원의 장바구니 등록 건수
-    private int totalCount;
+    private Integer totalCount;
 
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate createDate;

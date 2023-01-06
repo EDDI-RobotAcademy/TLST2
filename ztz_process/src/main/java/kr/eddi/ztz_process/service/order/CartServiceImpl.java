@@ -84,7 +84,9 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> cartList(String userToken){
         //유저토큰으로 멤버 아이디 찾기
         Long id = redisService.getValueByKey(userToken);
-        return cartItemRepository.findCartListByMemberId(id);
+        List<CartItem> cartItems = cartItemRepository.findCartListByMemberId(id);
+        log.info("장바구니 리스트 조회 멤버 아이디: "+ id);
+        return cartItems;
     }
 
     public void deleteCartItem(SelectCartItemRequest selectCartItemRequest){
