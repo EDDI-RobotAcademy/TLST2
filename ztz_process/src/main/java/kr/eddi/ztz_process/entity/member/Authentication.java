@@ -3,6 +3,7 @@ package kr.eddi.ztz_process.entity.member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 
@@ -11,6 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "authentication_type")
+@Setter
 public abstract class
 
 Authentication {

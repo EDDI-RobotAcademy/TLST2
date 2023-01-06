@@ -4,6 +4,7 @@ import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.member.MemberProfile;
 import kr.eddi.ztz_process.service.member.request.MemberAddressRequest;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
+import kr.eddi.ztz_process.service.member.request.MemberModifyRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
 
 
@@ -20,4 +21,9 @@ public interface MemberService {
     MemberProfile returnMemberProfile(String token);
 
     Boolean ModifyMemberAddress(MemberAddressRequest memberAddressRequest);
+
+    String ModifyMemberProfile(MemberModifyRequest memberModifyRequest);
+
+    String returnManagerProfile(String token);
+
 }

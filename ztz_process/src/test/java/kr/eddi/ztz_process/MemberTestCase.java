@@ -5,6 +5,7 @@ import kr.eddi.ztz_process.entity.member.ManagerCode;
 import kr.eddi.ztz_process.repository.member.ManagerCodeRepository;
 import kr.eddi.ztz_process.service.member.MemberService;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
+import kr.eddi.ztz_process.service.member.request.MemberModifyRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,11 @@ public class MemberTestCase {
     void emailValidationTest(){
         boolean emailCheck = service.emailValidation("he@he.com");
         System.out.println("이메일 중복 체크: " + emailCheck);
+    }
+
+    @Test
+    void memberModifyTest() {
+        MemberModifyRequest memberModifyRequest = new MemberModifyRequest("123", "ztz2022", "1234", "010-1234-4321", 1L);
+        service.ModifyMemberProfile(memberModifyRequest);
     }
 }
