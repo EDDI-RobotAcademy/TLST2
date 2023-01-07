@@ -150,7 +150,13 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Boolean ModifyMemberAddress(MemberAddressRequest memberAddressRequest) {
         try {
-            Long id = redisService.getValueByKey(memberAddressRequest.getToken().substring(1, 37));
+            String maybeToken = "";
+            if(memberAddressRequest.getToken().length() >= 37){
+                maybeToken = memberAddressRequest.getToken().substring(1,37);
+            }else {
+                maybeToken = memberAddressRequest.getToken();
+            }
+            Long id = redisService.getValueByKey(maybeToken);
             Member member = memberRepository.findByMemberId(id);
             MemberProfile memberProfile = memberProfileRepository.findProfileByMemberId(member.getId());
 
