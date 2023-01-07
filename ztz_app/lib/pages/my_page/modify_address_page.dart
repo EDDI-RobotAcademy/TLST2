@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:remedi_kopo/remedi_kopo.dart';
 import 'package:ztz_app/components/layout/white_menu_app_bar.dart';
 import 'package:ztz_app/controller/account/member_api.dart';
+import 'package:ztz_app/controller/account/member_modify_infos/modify_address_info.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/utility/button_style.dart';
 import 'package:ztz_app/utility/text_styles.dart';
@@ -151,7 +152,7 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
             child: ElevatedButton(
                 style:defaultElevatedButtonStyle(380,55),
                 onPressed: (){
-                  //수정
+                  modifyAddressFunction();
                 },
                 child: Text("저장", style: whiteBoldTextStyle(16),
                 ),
@@ -174,5 +175,56 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
     city = model.sido!;
     street = model.address! + ' ' +  model.buildingName!;
     zipcode = model.zonecode!;
+  }
+
+  // 배송지 수정 함수
+  modifyAddressFunction() async {
+    ModifyAddressInfo modifyAddressInfo = ModifyAddressInfo(
+        city, street, addressDetailController.text, zipcode, token);
+    await MemberApi().requestModifyAddressToSpring(modifyAddressInfo);
+    if(ModifyAddressInfo.modifyAddressResult) {
+      showSuccessModifyAddress();
+    } else {
+      showFailModifyAddress();
+    }
+  }
+
+  void showSuccessModifyAddress(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          content: Text("배송지를 수정하였습니다."),
+          actions: [
+            FlatButton(
+              child: Text("확인"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showFailModifyAddress(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("배송지 수정을 실패했습니다."),
+          actions: [
+            FlatButton(
+              child: Text("확인"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
