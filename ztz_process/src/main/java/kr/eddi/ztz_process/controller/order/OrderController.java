@@ -51,8 +51,13 @@ public class OrderController {
             return payments;
 
         }else {
-            String SubString = memberLoggedInTokenForm.getToken().substring(1,37);
-            List<Payment> payments = service.readAllPayment(SubString);
+            String tmpToken = "";
+            if(memberLoggedInTokenForm.getToken().length() >= 37){
+                tmpToken = memberLoggedInTokenForm.getToken().substring(1,37);
+            }else {
+                tmpToken = memberLoggedInTokenForm.getToken();
+            }
+            List<Payment> payments = service.readAllPayment(tmpToken);
             return payments;
         }
     }
