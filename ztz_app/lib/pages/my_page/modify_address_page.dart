@@ -7,6 +7,7 @@ import 'package:ztz_app/controller/account/member_api.dart';
 import 'package:ztz_app/controller/account/member_modify_infos/modify_address_info.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/utility/button_style.dart';
+import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
 class ModifyAddressPage extends StatefulWidget {
@@ -93,6 +94,9 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                       decoration: InputDecoration(
                         constraints: BoxConstraints.tightFor(width: 230),
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: ColorStyle.mainColor)
+                        ),
                       ),
                     ),
                     Container(
@@ -125,6 +129,9 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                   controller: addressController..text = street,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorStyle.mainColor)
+                    ),
                   ),
                 ),
               ],
@@ -141,6 +148,9 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                   controller: addressDetailController..text = addressDetail,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: ColorStyle.mainColor)
+                    ),
                   ),
                 ),
               ],
