@@ -10,6 +10,7 @@ class AccountState extends GetxController{
   static var signUpResult = false;
 
   static late var memberInfo = {}.obs;
+  static late var memberProfile = {}.obs;
 // AccountState.memberInfo['email'] 이메일 가져오기
 
 

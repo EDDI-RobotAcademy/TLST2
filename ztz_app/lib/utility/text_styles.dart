@@ -107,6 +107,14 @@ TextStyle blackBoldTextStyle(double fontSize) {
   );
 }
 
+TextStyle greenBoldTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
+      fontWeight: FontWeight.bold,
+      color: Color(0xff205C37)
+  );
+}
+
 TextStyle whiteTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
@@ -118,6 +126,13 @@ TextStyle blackTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
       color: Colors.black
+  );
+}
+
+TextStyle greenTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
+      color: Color(0xff205C37)
   );
 }
 
