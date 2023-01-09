@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.order.Cart;
 import kr.eddi.ztz_process.entity.products.Product;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Item {
 
     @Id
