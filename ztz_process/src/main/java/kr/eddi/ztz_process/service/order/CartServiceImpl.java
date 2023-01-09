@@ -1,16 +1,20 @@
 package kr.eddi.ztz_process.service.order;
 
 import kr.eddi.ztz_process.controller.order.request.AddCartRequest;
+import kr.eddi.ztz_process.controller.order.request.ChangeItemCountRequest;
 import kr.eddi.ztz_process.controller.order.request.SelectCartItemRequest;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.Cart;
-import kr.eddi.ztz_process.entity.order.CartItem;
 import kr.eddi.ztz_process.entity.products.Product;
+
+import kr.eddi.ztz_process.entity.order.Item;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
-import kr.eddi.ztz_process.repository.order.CartItemRepository;
 import kr.eddi.ztz_process.repository.order.CartRepository;
+
+import kr.eddi.ztz_process.repository.order.ItemRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.service.security.RedisService;
+import kr.eddi.ztz_process.utility.order.validationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,18 +28,17 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
-
     @Autowired
-    private CartItemRepository cartItemRepository;
+    ItemRepository itemRepository;
 
     @Autowired
     private MemberRepository memberRepository;
-
     @Autowired
     private ProductsRepository productsRepository;
-
     @Autowired
     private RedisService redisService;
+
+
 
     @Override
     public void addCartItem(AddCartRequest addCartRequest){//Long memberId, Long productId, Long count
@@ -69,7 +72,7 @@ public class CartServiceImpl implements CartService {
         Product product = maybeProduct.get();
 
         //4. 해당 회원의 장바구니에 아이템 등록
-        CartItem cartItem = CartItem.builder()
+        Item cartItem = Item.builder()
                 .cart(cart)
                 .product(product)
                 .count(count)           //실제 장바구니 아이템A의 갯수
@@ -78,23 +81,26 @@ public class CartServiceImpl implements CartService {
         //카트에 아이템 저장 시 뱃지 알림용-> 한 회원의 장바구니 아이템 갯수
         cart.setTotalCount(cart.getTotalCount()+1);
         cartRepository.save(cart);
-        cartItemRepository.save(cartItem);
+        itemRepository.save(cartItem);
 
-    }
-    public List<CartItem> cartList(String userToken){
-        //유저토큰으로 멤버 아이디 찾기
-        Long id = redisService.getValueByKey(userToken);
-        List<CartItem> cartItems = cartItemRepository.findCartListByMemberId(id);
-        log.info("장바구니 리스트 조회 멤버 아이디: "+ id);
-        return cartItems;
     }
 
     public void deleteCartItem(SelectCartItemRequest selectCartItemRequest){
         List<Long> deleteCartItemNo = selectCartItemRequest.getSelectCartItemNo();
 
         for (int i = 0; i <deleteCartItemNo.size() ; i++) {
-            cartItemRepository.deleteById(deleteCartItemNo.get(i));
+            itemRepository.deleteById(deleteCartItemNo.get(i));
         }
+    }
+
+
+    public List<Item> returnCartItemList(String userToken){
+        String returnToken = validationToken.validationToken(userToken);
+        Long id = redisService.getValueByKey(returnToken);
+        List<Item> cartItems = itemRepository.findCartListByMemberId(id);
+        log.info("장바구니 리스트 조회 멤버 아이디: "+ id);
+
+        return cartItems;
     }
 
 
