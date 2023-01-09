@@ -2,8 +2,8 @@
   <div class="infoCard">
     <p>예약을 성공하였습니다.</p>
     <ul class="completeList">
-      <li><span>예약자 </span> : {{ myReservationInfo.username }}</li>
-      <li><span>연락처 </span> : {{ myReservationInfo.phoneNumber }}</li>
+      <li><span>예약자 </span> : {{ myReservationInfo.booker }}</li>
+      <li><span>연락처 </span> : {{ myReservationInfo.contactNumber }}</li>
       <li><span>예약한 양조장 </span> : {{ myReservationInfo.foundryName }}</li>
       <li><span>예약일 </span> : {{ myReservationInfo.reservationDate }}</li>
       <li><span>예약인원 </span> : {{ myReservationInfo.numberOfMember }}</li>
