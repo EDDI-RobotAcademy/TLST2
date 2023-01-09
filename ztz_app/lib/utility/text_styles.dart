@@ -201,8 +201,7 @@ TextStyle hintTextStyle(){
 
 TextStyle defaultTextStyle(){
   return const TextStyle(
-      fontSize: 12,
-      fontFamily: "NanumSquareNeo-cBd",
+      fontSize: 14,
       color: Colors.black
   );
 }
