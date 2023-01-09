@@ -50,10 +50,42 @@ TextStyle MediumBlackTextStyle(){
   );
 }
 
+TextStyle mediumBlackLightTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-bRg",
+      color: Colors.black
+  );
+}
+
+TextStyle mediumBlackBoldTextStyle(){
+  return const TextStyle(
+      fontSize: 12,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black
+  );
+}
+
 TextStyle smallBlackTextStyle(){
   return const TextStyle(
       fontSize: 10,
       fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black
+  );
+}
+
+TextStyle smallBlackLightTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-bRg",
+      color: Colors.black
+  );
+}
+
+TextStyle smallBlackBoldTextStyle(){
+  return const TextStyle(
+      fontSize: 10,
+      fontFamily: "NanumSquareNeo-dEb",
       color: Colors.black
   );
 }
