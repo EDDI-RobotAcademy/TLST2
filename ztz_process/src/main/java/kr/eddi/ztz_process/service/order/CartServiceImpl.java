@@ -103,5 +103,13 @@ public class CartServiceImpl implements CartService {
         return cartItems;
     }
 
+    @Override
+    public List<Item> deleteCartItem(long itemNo, String token) {
+        String returnToken = validationToken.validationToken(token);
+        Long id = redisService.getValueByKey(returnToken);
+        itemRepository.deleteById(itemNo);
+
+        return itemRepository.findCartListByMemberId(id);
+    }
 
 }
