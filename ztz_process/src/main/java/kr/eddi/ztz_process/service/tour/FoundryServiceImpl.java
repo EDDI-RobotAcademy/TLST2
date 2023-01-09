@@ -64,8 +64,7 @@ public class FoundryServiceImpl implements FoundryService{
 
         Reservation reservation = new Reservation(
                 member,
-                reservationRequest.username(),
-                reservationRequest.phoneNumber(),
+                reservationRequest.contactNumber(),
                 selectedDate,
                 reservationRequest.numberOfMember(),
                 foundry
@@ -109,7 +108,7 @@ public class FoundryServiceImpl implements FoundryService{
         LocalDate selectedDate = LocalDate.parse(reservationRequest.reservationDate());
 
         if(reservation.getMember().getId() == id) {
-            reservation.setPhoneNumber(reservationRequest.phoneNumber());
+            reservation.setContactNumber(reservationRequest.contactNumber());
             reservation.setNumberOfMember(reservationRequest.numberOfMember());
             reservation.setReservationDate(selectedDate);
             reservationRepository.save(reservation);
