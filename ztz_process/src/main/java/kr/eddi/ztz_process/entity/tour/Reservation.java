@@ -20,9 +20,7 @@ public class Reservation {
     @JoinColumn(name = "Member_id")
     private Member member;
     @Column(nullable = false)
-    private String username;
-    @Column(nullable = false)
-    private String phoneNumber;
+    private String contactNumber;
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate reservationDate;
     @Column(nullable = false)
@@ -33,10 +31,9 @@ public class Reservation {
     @Embedded
     private PaymentReservation paymentReservation;
 
-    public Reservation(Member member, String username, String phoneNumber, LocalDate reservationDate, int numberOfMember, Foundry foundry) {
+    public Reservation(Member member, String contactNumber, LocalDate reservationDate, int numberOfMember, Foundry foundry) {
         this.member = member;
-        this.username = username;
-        this.phoneNumber = phoneNumber;
+        this.contactNumber = contactNumber;
         this.reservationDate = reservationDate;
         this.numberOfMember = numberOfMember;
         this.foundry = foundry;

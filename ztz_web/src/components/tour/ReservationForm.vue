@@ -3,27 +3,27 @@
     <v-form @submit.prevent="onReservationSubmit" ref="form">
       <div class="reservation-style-box">
         <div>
-          <label for="username">성함</label>
+          <label for="booker">성함</label>
           <input
-            id="username"
+            id="booker"
             type="text"
-            v-model="username"
+            v-model="booker"
             class="reservation-text-field"
             disabled
           />
         </div>
 
         <div>
-          <label for="phoneNumber">연락처</label>
+          <label for="contactNumber">연락처</label>
           <input
-            v-model="phoneNumber"
-            id="phoneNumber"
+            v-model="contactNumber"
+            id="contactNumber"
             type="text"
             placeholder="-포함 핸드폰번호 11자리를 입력해주세요"
             class="reservation-text-field"
             required
           />
-          <p v-show="valid.phoneNumber" class="input-error">
+          <p v-show="valid.contactNumber" class="input-error">
             핸드폰번호를 정확히 입력해주세요.
           </p>
         </div>
@@ -96,8 +96,8 @@ export default {
     this.checkValidation();
   },
   watch: {
-    phoneNumber: function () {
-      this.checkPhoneNumber();
+    contactNumber: function () {
+      this.checkContactNumber();
     },
   },
   computed: {
@@ -108,7 +108,7 @@ export default {
       this.token = window.localStorage.getItem("userInfo");
       this.reqMemberInfoToSpring(this.token);
       console.log(this.token);
-      this.username = this.$store.state.resMember.username;
+      this.booker = this.$store.state.resMember.username;
       this.numberOfMember = this.item.minMember;
     } else {
       alert("로그인 상태가 아닙니다.");
@@ -117,14 +117,14 @@ export default {
   data() {
     return {
       valid: {
-        phoneNumber: false,
+        contactNumber: false,
       },
-      phoneNumberHasError: false,
+      contactNumberHasError: false,
 
-      username: "",
+      booker: "",
       numberOfMember: "",
       reservationDate: "",
-      phoneNumber: "",
+      contactNumber: "",
       isActive: false,
       token: "",
       foundryName: this.item.name,
@@ -141,25 +141,25 @@ export default {
       }
     },
     checkValidation() {
-      if (this.phoneNumber.length != 0 && this.reservationDate.length != 0) {
+      if (this.contactNumber.length != 0 && this.reservationDate.length != 0) {
         this.isActive = true;
       }
     },
     onReservationSubmit() {
       const {
+        booker,
         foundryName,
-        username,
         numberOfMember,
         reservationDate,
-        phoneNumber,
+        contactNumber,
         token,
       } = this;
       this.$emit("submit", {
+        booker,
         foundryName,
-        username,
         numberOfMember,
         reservationDate,
-        phoneNumber,
+        contactNumber,
         token,
       });
     },
@@ -173,15 +173,15 @@ export default {
     qtyIncrease() {
       this.numberOfMember++;
     },
-    checkPhoneNumber() {
-      const validatePhoneNumber = /^[0-9]+-[0-9]+-[0-9]{4}/;
-      if (!validatePhoneNumber.test(this.phoneNumber)) {
-        this.valid.phoneNumber = true;
-        this.phoneNumberHasError = true;
+    checkContactNumber() {
+      const validateContactNumber = /^[0-9]+-[0-9]+-[0-9]{4}/;
+      if (!validateContactNumber.test(this.contactNumber)) {
+        this.valid.contactNumber = true;
+        this.contactNumberHasError = true;
         return;
       }
-      this.valid.phoneNumber = false;
-      this.phoneNumberHasError = false;
+      this.valid.contactNumber = false;
+      this.contactNumberHasError = false;
     },
   },
 };

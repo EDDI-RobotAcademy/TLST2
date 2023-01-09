@@ -7,27 +7,27 @@
     <v-form @submit.prevent="onReservationSubmit" ref="form">
       <div class="reservation-style-box">
         <div>
-          <label for="username">성함</label>
+          <label for="booker">성함</label>
           <input
-            id="username"
+            id="booker"
             type="text"
-            v-model="username"
+            v-model="booker"
             class="reservation-text-field"
             disabled
           />
         </div>
 
         <div>
-          <label for="phoneNumber">연락처</label>
+          <label for="contactNumber">연락처</label>
           <input
-            v-model="phoneNumber"
-            id="phoneNumber"
+            v-model="contactNumber"
+            id="contactNumber"
             type="text"
             placeholder="-포함 핸드폰번호 11자리를 입력해주세요"
             class="reservation-text-field"
             required
           />
-          <p v-show="valid.phoneNumber" class="input-error">
+          <p v-show="valid.contactNumber" class="input-error">
             핸드폰번호를 정확히 입력해주세요.
           </p>
         </div>
@@ -95,8 +95,8 @@ export default {
     },
   },
   watch: {
-    phoneNumber: function () {
-      this.checkPhoneNumber();
+    contactNumber: function () {
+      this.checkContactNumber();
     },
   },
   computed: {
@@ -112,14 +112,14 @@ export default {
   data() {
     return {
       valid: {
-        phoneNumber: false,
+        contactNumber: false,
       },
-      phoneNumberHasError: false,
+      contactNumberHasError: false,
 
-      username: this.item.username,
+      booker: this.item.member.username,
       numberOfMember: this.item.numberOfMember,
       reservationDate: this.item.reservationDate,
-      phoneNumber: this.item.phoneNumber,
+      contactNumber: this.item.contactNumber,
       token: "",
       foundryName: this.item.foundry.name,
       reservationId: this.item.reservationId,
@@ -134,7 +134,6 @@ export default {
       const {
         reservationId,
         foundryName,
-        username,
         numberOfMember,
         reservationDate,
         phoneNumber,
@@ -143,7 +142,6 @@ export default {
       this.$emit("submit", {
         reservationId,
         foundryName,
-        username,
         numberOfMember,
         reservationDate,
         phoneNumber,
@@ -161,15 +159,15 @@ export default {
     qtyIncrease() {
       this.numberOfMember++;
     },
-    checkPhoneNumber() {
-      const validatePhoneNumber = /^[0-9]+-[0-9]+-[0-9]{4}/;
-      if (!validatePhoneNumber.test(this.phoneNumber)) {
-        this.valid.phoneNumber = true;
-        this.phoneNumberHasError = true;
+    checkContactNumber() {
+      const validateContactNumber = /^[0-9]+-[0-9]+-[0-9]{4}/;
+      if (!validateContactNumber.test(this.contactNumber)) {
+        this.valid.contactNumber = true;
+        this.contactNumberHasError = true;
         return;
       }
-      this.valid.phoneNumber = false;
-      this.phoneNumberHasError = false;
+      this.valid.contactNumber = false;
+      this.contactNumberHasError = false;
     },
   },
 };

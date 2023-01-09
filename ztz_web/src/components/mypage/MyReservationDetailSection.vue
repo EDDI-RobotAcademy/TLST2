@@ -27,7 +27,7 @@
             >
               <p>
                 예약자 <v-icon color="#ddd">mdi-drag-vertical-variant</v-icon>
-                {{ reservation.username }}
+                {{ reservation.member.username }}
               </p>
               <p>
                 예약일 <v-icon color="#ddd">mdi-drag-vertical-variant</v-icon>
@@ -39,7 +39,7 @@
           <div class="px-6">
             <p style="font-size: 14px">
               연락처 <span class="mx-2" color="#ddd"> | </span
-              >{{ reservation.phoneNumber }}
+              >{{ reservation.contactNumber }}
             </p>
             <p style="font-size: 14px">
               예약인원 <span class="mx-2" color="#ddd"> | </span
