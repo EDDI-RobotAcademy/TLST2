@@ -111,5 +111,16 @@ public class CartServiceImpl implements CartService {
 
         return itemRepository.findCartListByMemberId(id);
     }
+    @Override
+    public String changeCartItemCount(ChangeItemCountRequest changeItemCountRequest) {
+        Item item = itemRepository.findItemByItemNo(changeItemCountRequest.getItemNo());
 
+        log.info(item.toString());
+        item.setCount(changeItemCountRequest.getCount());
+        item.setSelectedProductAmount(changeItemCountRequest.getSelectedProductAmount());
+
+        itemRepository.save(item);
+        String successNumber = "1";
+        return successNumber;
+    }
 }
