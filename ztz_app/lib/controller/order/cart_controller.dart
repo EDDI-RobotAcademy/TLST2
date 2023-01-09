@@ -6,18 +6,21 @@ class CartController extends GetxController{
   static late var reactiveCartList = [].obs;
   static RxBool obsCartStatus = false.obs;
   static var checkStatusMap = <String, bool>{ }.obs;
+  static Set selectedProduct = {};
+  static var totalAmount = 0.obs;
+  static var deliveryFee = 0.obs;
+  static var selectNum = 0.obs;
+  static get sum => totalAmount.value + deliveryFee.value;
 
   @override
   void onInit() {
     super.onInit();
     fetchData();
 
-
     once(reactiveCartList,(_){
       print("첫번재 빌드");
       obsCartStatus.value = true;
     });
-
     debounce(reactiveCartList,(_){
       print("변화감지");
       obsCartStatus.value = false;
@@ -26,10 +29,21 @@ class CartController extends GetxController{
         obsCartStatus.value = true;
       }
     }, time: Duration(seconds: 3));
+    ever(checkStatusMap, (_){
+      print("아이템 선택 감지");
+      selectNum.value = selectedProduct.length;
+      resetTotalAmount();
+    });
+    ever(totalAmount,(_){
+      if(totalAmount > 50000) {
+        deliveryFee.value = 0;
+      } else {
+        deliveryFee.value = 3000;
+      }
+    });
 
   }
-
-
+  
 
   Future<void> fetchData() async{
     await OrderService.fetchItems("6688e783-7d19-4edf-a967-0e09aeb1e56b");
@@ -42,6 +56,18 @@ class CartController extends GetxController{
     } else {
       print("change failed");
     }
+  }
+  reqDeleteItem(int itemNo, String token) async {
+    var res = await OrderService.requestDeleteItem(itemNo, token);
+    if(res == 1) {
+      fetchData();
+    } else {
+      print("failed");
+    }
+  }
+  reqSelectItems(List selectedProduct) async{
+    var res = await OrderService.requestSelectItems(selectedProduct);
+    print("선택한 것들 " + res.toString());
   }
 
   increment(int index){
@@ -63,5 +89,47 @@ class CartController extends GetxController{
         reactiveCartList[index]['count'],
         amount
     );
+  }
+  select(int index, String keyword) {
+    // 먼저 맵에서 true인 itemNo들을 찾아서 리스트에 넣는다.
+    // 맵을 toString하고 리스트를 to String 해서 동일한지 확인한다.
+    checkStatusMap.forEach((key, value) {
+      print('$key : $value');
+      if(value) {
+        selectedProduct.add(key);
+      } else {
+        selectedProduct.remove(key);
+      }
+      print(selectedProduct.toString());
+    });
+  }
+  delete(int index, int itemNo, token) {
+    selectedProduct.remove(reactiveCartList[index]['itemNo'].toString());
+    checkStatusMap.remove(reactiveCartList[index]['itemNo'].toString());
+    reactiveCartList.removeAt(index);
+    reqDeleteItem(itemNo, token);
+  }
+
+  //총액 구하기
+  resetTotalAmount() {
+    totalAmount.value = 0;
+    if(checkStatusMap.containsValue(true)) {
+      print("true있음.");
+      findCheckItemKey();
+    } else {
+      print("아무것도 선택되지 않았음");
+      totalAmount.value = 0;
+    }
+  }
+  findCheckItemKey() {
+    checkStatusMap.forEach((key, value) {
+      if(value) {
+        for (int i = 0; i < reactiveCartList.length; i++) {
+          if(key == reactiveCartList[i]['itemNo'].toString()){
+            totalAmount += reactiveCartList[i]['selectedProductAmount'];
+          }
+        }
+      }
+    });
   }
 }
