@@ -109,6 +109,7 @@ export default {
       this.reqMemberInfoToSpring(this.token);
       console.log(this.token);
       this.username = this.$store.state.resMember.username;
+      this.numberOfMember = this.item.minMember;
     } else {
       alert("로그인 상태가 아닙니다.");
     }
@@ -121,7 +122,7 @@ export default {
       phoneNumberHasError: false,
 
       username: "",
-      numberOfMember: 1,
+      numberOfMember: "",
       reservationDate: "",
       phoneNumber: "",
       isActive: false,
@@ -163,10 +164,10 @@ export default {
       });
     },
     qtyDecrease() {
-      if (this.numberOfMember > 0) {
+      if (this.numberOfMember > this.item.minMember) {
         this.numberOfMember--;
       } else {
-        this.numberOfMember = 0;
+        this.numberOfMember = this.item.minMember;
       }
     },
     qtyIncrease() {

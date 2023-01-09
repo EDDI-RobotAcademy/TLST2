@@ -38,7 +38,7 @@ public class CartController {
         return service.cartList(userToken);
     }
 
-    @DeleteMapping("/deleteCartItem")
+    @PostMapping("/deleteCartItem")
     public void deleteCartItem(@RequestBody SelectCartItemRequest selectCartItemRequest) {
 
         log.info("회원 카트 아이템 삭제");
