@@ -50,7 +50,7 @@ class OrderService {
     var body = json.encode(data);
 
     var req = await http.post(
-      Uri.http(httpUri, '/ztz/order/testChange'),
+      Uri.http(httpUri, '/ztz/order/change-item-count'),
       headers: {"Content-Type": "application/json"},
       body: body,
     );
@@ -61,23 +61,5 @@ class OrderService {
     }
 
   }
-  static requestSelectItems(List itemsNoList) async {
 
-    var data = {'selection': itemsNoList };
-    var body = json.encode(data);
-
-    var req = await http.post(
-      Uri.http(httpUri, '/ztz/order/select'),
-      headers: {"Content-Type": "application/json"},
-      body: body,
-    );
-
-    if (req.statusCode == 200) {
-      var jsonData = jsonDecode(utf8.decode(req.bodyBytes));
-      CartController.totalAmount.value = 0;
-      CartController.totalAmount.value = jsonData;
-      return jsonData;
-    }
-
-  }
 }

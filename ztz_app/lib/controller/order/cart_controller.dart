@@ -31,8 +31,13 @@ class CartController extends GetxController{
     }, time: Duration(seconds: 3));
     ever(checkStatusMap, (_){
       print("아이템 선택 감지");
-      selectNum.value = selectedProduct.length;
+      selectNum.value = 0;
       resetTotalAmount();
+      checkStatusMap.forEach((key, value) {
+        if(value){
+          selectNum.value ++;
+        }
+      });
     });
     ever(totalAmount,(_){
       if(totalAmount > 50000) {
@@ -43,10 +48,10 @@ class CartController extends GetxController{
     });
 
   }
-  
+
 
   Future<void> fetchData() async{
-    await OrderService.fetchItems("6688e783-7d19-4edf-a967-0e09aeb1e56b");
+    await OrderService.fetchItems("f63c1741-bbd2-4aed-8e11-4a961c00a551");
   }
   reqChangeItemCount(int itemNo, int count, int totalPrice) async {
     var res = await OrderService.requestChangeItemInfo(itemNo, count, totalPrice);
@@ -65,10 +70,7 @@ class CartController extends GetxController{
       print("failed");
     }
   }
-  reqSelectItems(List selectedProduct) async{
-    var res = await OrderService.requestSelectItems(selectedProduct);
-    print("선택한 것들 " + res.toString());
-  }
+
 
   increment(int index){
     reactiveCartList[index]['count'] ++;

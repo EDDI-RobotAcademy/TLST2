@@ -63,7 +63,7 @@ class _CartListItemState extends State<CartListItem> {
                       icon: Icon(Icons.close, color: Colors.black26),
                       onPressed: (){
                         setState((){
-                          CartController().delete(index, itemNo, "6688e783-7d19-4edf-a967-0e09aeb1e56b");
+                          CartController().delete(index, itemNo, "f63c1741-bbd2-4aed-8e11-4a961c00a551");
                           print("삭제요청 after" + itemNo.toString() );
                         });
                       }
