@@ -9,8 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.regex.Pattern;
 
 @Data
 @Entity
@@ -22,6 +20,9 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
+
+    @Column(nullable = false)
+    private String paymentTitle;
 
     @Column(nullable = false)
     private Integer totalPaymentPrice;
@@ -50,11 +51,11 @@ public class Payment {
     private Address address;
 
     @CreationTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd (HH시 mm분)", timezone = "Asia/Seoul")
     private LocalDateTime regData = LocalDateTime.now();
 
     @UpdateTimestamp
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd (HH시 mm분)", timezone = "Asia/Seoul")
     private LocalDateTime updData = LocalDateTime.now();
 
 }

@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.service.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
@@ -26,12 +27,14 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private final Integer MINORDERNUM = 1;
     private final Integer MAXORDERNUM = 99999;
 
@@ -52,7 +55,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Boolean registerOrderInfo(PaymentRegisterRequest paymentRegisterRequest) {
         try {
-             //결제 정보 저장
+            //결제 정보 저장
             Payment payment = registerPayment(paymentRegisterRequest);
 
             OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
@@ -77,13 +80,14 @@ public class OrderServiceImpl implements OrderService{
                 orderRepository.save(orderInfo);
             }
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("오류 발생" + e);
             return false;
         }
     }
+
     @Override
-    public List<OrderInfo> readAllOrders(Long PaymentId){
+    public List<OrderInfo> readAllOrders(Long PaymentId) {
 
         List<OrderInfo> orderInfo = orderRepository.findByPaymentId(PaymentId);
 
@@ -91,19 +95,48 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<Payment> readAllPayment(String token){
+    public List<Payment> readAllPayment(String token) {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
-        System.out.println("맴버 번호"+ member.getId());
+        System.out.println("맴버 번호" + member.getId());
 
 
         List<Payment> payments = paymentRepository.findAllByMemberId(member.getId());
-
         return payments;
     }
 
     @Override
-    public List<Payment> readManagerAllPayment(){
+    public List<Payment> readRangePaymentList(String token , String readData){
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        System.out.println("맴버 번호" + member.getId());
+
+        LocalDateTime nowData = LocalDateTime.now();
+        LocalDateTime endData;
+
+        switch (readData){
+            case "3개월":
+                endData = LocalDateTime.now().minusDays(1L);
+                break;
+            case "6개월":
+                endData = LocalDateTime.now().minusMonths(6L);
+                break;
+            case "1년":
+                endData = LocalDateTime.now().minusYears(1L);
+                break;
+            default:
+                System.out.println("해당하는 개월수가 없습니다");
+                return null;
+        }
+        System.out.println("staetDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+        System.out.println("endDate : " + endData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+
+        List<Payment> payments = paymentRepository.findByEndData(endData ,member.getId());
+        return payments;
+    }
+
+    @Override
+    public List<Payment> readManagerAllPayment() {
         List<Payment> payments = paymentRepository.findAll(Sort.by(Sort.Direction.DESC, "paymentId"));
         return payments;
     }
@@ -112,14 +145,14 @@ public class OrderServiceImpl implements OrderService{
     public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
         String test_api_key = "2701111347244503";
         String test_api_secret = "J7xV8xenAUsYtgiuUjwAJNJ7o2Ax4VnSsaABT0G04YDwedek5x0Rzp0e1elG2od4sZTyUzVygtxUUwnp";
-        IamportClient client = new IamportClient(test_api_key,test_api_secret);
+        IamportClient client = new IamportClient(test_api_key, test_api_secret);
 
         Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());
         Payment payment = maybePayment.get();
         List<OrderInfo> orderInfos = orderRepository.findByPaymentId(payment.getPaymentId());
         String uid = payment.getImp_uid();
         System.out.println(uid);
-        CancelData cancelData = new CancelData(uid,true);
+        CancelData cancelData = new CancelData(uid, true);
 
         try {
             client.cancelPaymentByImpUid(cancelData);
@@ -131,23 +164,23 @@ public class OrderServiceImpl implements OrderService{
                 orderRepository.save(orderInfos.get(i));
             }
             paymentRepository.save(payment);
-        }catch (IamportResponseException e){
+        } catch (IamportResponseException e) {
             System.out.println("결제 취소 실패");
             System.out.println("오류 :" + e);
         }
         return true;
     }
 
-    public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest){
-
+    public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest) {
 
         OrderInfoRegisterForm OrderListInfo = paymentRegisterRequest.getSendInfo();
+        Optional<Product> maybeProduct = productsRepository.findById(OrderListInfo.getProductID().get(0));
+        Product product = maybeProduct.get();
         Integer TotalOrderedCnt = 0;
         Optional<Member> maybeMember = memberRepository.findById(OrderListInfo.getMemberID().get(0));
         for (int i = 0; i < paymentRegisterRequest.getSendInfo().getOrderCnt().size(); i++) {
             TotalOrderedCnt += paymentRegisterRequest.getSendInfo().getOrderCnt().get(i);
         }
-
         Address address = Address.of(
                 paymentRegisterRequest.getCity(),
                 paymentRegisterRequest.getStreet(),
@@ -157,6 +190,10 @@ public class OrderServiceImpl implements OrderService{
 
         Payment payment = Payment.
                 builder()
+                .paymentTitle(
+                        OrderListInfo.getProductID().size() == 1 ?
+                                product.getName() :
+                                product.getName() + " 외 " + (OrderListInfo.getProductID().size() - 1) + "건")
                 .merchant_uid(paymentRegisterRequest.getMerchant_uid())
                 .totalPaymentPrice(paymentRegisterRequest.getPaymentPrice())
                 .imp_uid(paymentRegisterRequest.getImp_uid())
@@ -167,22 +204,24 @@ public class OrderServiceImpl implements OrderService{
                 .member(maybeMember.get())
                 .build();
 
+
         paymentRepository.save(payment);
 
         return payment;
     }
-    public String MakeOrderedNo(Long memberID){
+
+    public String MakeOrderedNo(Long memberID) {
         LocalDate createdDateAt;
         createdDateAt = LocalDate.now();
 
         String setOrderNum;
 
-        while (true){
-            setOrderNum = String.valueOf(setRandomOrderNo.makeIntCustomRandom(MINORDERNUM , MAXORDERNUM));
+        while (true) {
+            setOrderNum = String.valueOf(setRandomOrderNo.makeIntCustomRandom(MINORDERNUM, MAXORDERNUM));
             Optional<OrderInfo> maybeOrderNo = orderRepository.findByOrderNo(setOrderNum);
-            if (maybeOrderNo.isPresent()){
+            if (maybeOrderNo.isPresent()) {
                 System.out.println("주문 아이디 재생성" + maybeOrderNo.get());
-            }else {
+            } else {
                 setOrderNum += "-" + createdDateAt + "-";
                 setOrderNum += memberID;
                 break;
@@ -190,24 +229,24 @@ public class OrderServiceImpl implements OrderService{
         }
 
 
-
         return setOrderNum;
     }
-    public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest){
+
+    public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest) {
 
         //배송시작, 배송완료, 구매확정, 반품신청 4개 reqType
         String reqType = changeOrderStateRequest.getReqType();
-        PaymentState setState =null;
+        PaymentState setState = null;
         Boolean allSameOrderStateCheck = false;
         int sameOrderStateNum = 0;
 
-        if(reqType.equals("배송시작")){
+        if (reqType.equals("배송시작")) {
             setState = PaymentState.DELIVERY_ONGOING;
         } else if (reqType.equals("배송완료")) {
             setState = PaymentState.DELIVERY_COMPLETE;
         } else if (reqType.equals("구매확정")) {
             setState = PaymentState.PAYMENT_CONFIRM;
-        } else if(reqType.equals("반품신청")){
+        } else if (reqType.equals("반품신청")) {
             setState = PaymentState.REFUND_REQUEST;
         }
 
@@ -222,11 +261,11 @@ public class OrderServiceImpl implements OrderService{
         List<OrderInfo> findOrderInfoPaymentList = orderRepository.findByPaymentId(changeOrderStateRequest.getPaymentId());
 
         for (int i = 0; i < findOrderInfoPaymentList.size(); i++) {
-            if(findOrderInfoPaymentList.get(i).getOrderState().equals(setState)){
+            if (findOrderInfoPaymentList.get(i).getOrderState().equals(setState)) {
                 sameOrderStateNum = sameOrderStateNum + 1;
             }
         }
-        if(findOrderInfoPaymentList.size() == sameOrderStateNum){
+        if (findOrderInfoPaymentList.size() == sameOrderStateNum) {
             allSameOrderStateCheck = true;
         }
 
@@ -235,9 +274,9 @@ public class OrderServiceImpl implements OrderService{
         Optional<Payment> maybePayment = paymentRepository.findById(changeOrderStateRequest.getPaymentId());
         Payment payment = maybePayment.get();
 
-        if (allSameOrderStateCheck){
+        if (allSameOrderStateCheck) {
             payment.setPaymentState(setState);
-        }else {
+        } else {
             payment.setPaymentState(PaymentState.PART_DELIVERY_ONGOING);
         }
         paymentRepository.save(payment);
@@ -245,13 +284,13 @@ public class OrderServiceImpl implements OrderService{
         return findOrderInfoPaymentList;
     }
 
-    public Integer salesAmount(){
+    public Integer salesAmount() {
         List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
 
         Integer totalSalesAmount = 0;
 
         for (int i = 0; i < salesOrderInfo.size(); i++) {
-            totalSalesAmount= totalSalesAmount + salesOrderInfo.get(i).getOrderPrice();
+            totalSalesAmount = totalSalesAmount + salesOrderInfo.get(i).getOrderPrice();
         }
 
         return totalSalesAmount;
