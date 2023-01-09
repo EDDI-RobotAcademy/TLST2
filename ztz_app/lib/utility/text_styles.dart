@@ -182,3 +182,28 @@ TextStyle productTextStyle(){
       color: Colors.black
   );
 }
+
+
+
+
+TextStyle productInCartNameTextStyle() {
+  return const TextStyle(
+      fontSize: 16,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black87
+  );
+}
+TextStyle productInCartPriceTextStyle() {
+  return const TextStyle(
+      fontSize: 14,
+      fontFamily: "NanumSquareNeo-dEb",
+      color: Colors.black87
+  );
+}
+TextStyle buttonTextStyle() {
+  return const TextStyle(
+      fontSize: 16,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.white
+  );
+}
