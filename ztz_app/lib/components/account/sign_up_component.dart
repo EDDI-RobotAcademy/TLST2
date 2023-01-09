@@ -158,65 +158,68 @@ class _SignUpComponent extends State<SignUpComponent>{
       padding: const EdgeInsets.all(3),
       child: Column(
         children: [
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("관리자 검증",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: managerCodeController, usedPosition: "managerCode"),
+          SizedBox(height: 5,),
           ElevatedButton(//관리자 검증 버튼
               onPressed: (){
                 managerCodeValidation();
               },
-              child: Text("관리자 코드 확인"),style:defaultElevatedButtonStyle(300,25)),
-          SizedBox(height: 3,),
+              child: Text("관리자 코드 확인", style: whiteTextStyle(16),),style:defaultElevatedButtonStyle(360,50)),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("이메일",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: emailEditController, usedPosition: "email"),
+          SizedBox(height: 5,),
           ElevatedButton(//이메일 중복 버튼
               onPressed: (){
                 emailValidation();
               },
-              child: Text("이메일 중복"),style:defaultElevatedButtonStyle(300,25)),
-          SizedBox(height: 3,),
+              child: Text("이메일 중복", style: whiteTextStyle(16),),style:defaultElevatedButtonStyle(360,50)),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("이름",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: userNameController, usedPosition: "nickName"),
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("비밀번호",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: passwordController, usedPosition: "password"),
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("비밀번호 확인",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: checkPasswordController, usedPosition: "passwordCheck"),
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("전화번호",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: phoneNumberController, usedPosition: "phoneNumber"),
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
               width: double.infinity,
               child: Text("생년월일",textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: birthdayController, usedPosition: "birthdate"),
+          SizedBox(height: 12,),
           ElevatedButton(//회원가입 버튼
             onPressed: (){
 
@@ -235,7 +238,7 @@ class _SignUpComponent extends State<SignUpComponent>{
                 managerSignUpFunction();
               }
             },
-            child: Text("회원 가입"),style:defaultElevatedButtonStyle(300,25),
+            child: Text("가입하기", style: whiteTextStyle(16),),style:defaultElevatedButtonStyle(360,50),
           )
         ],
       ),
@@ -248,40 +251,50 @@ class _SignUpComponent extends State<SignUpComponent>{
       child: Column(
         children: [
           textBox("이메일",emailEditController,"email"),
+          SizedBox(height: 5),
           ElevatedButton(
               onPressed: (){
                 emailValidation();
               },
-              child: Text("이메일 중복"),style:defaultElevatedButtonStyle(300,25)),
+              child: Text("이메일 중복 확인", style: whiteTextStyle(16),),style:defaultElevatedButtonStyle(360,50)),
           textBox("이름",userNameController,"nickName"),
           textBox("비밀번호",passwordController,"password"),
           textBox("비밀번호 확인",checkPasswordController,"passwordCheck"),
-          ElevatedButton(
-              onPressed: (){
-                HapticFeedback.mediumImpact();
-                _addressApi();
-          }, child: Text("주소찾기"),style:defaultElevatedButtonStyle(300,25)),
+          // SizedBox(height: 7),
+          // ElevatedButton(
+          //     onPressed: (){
+          //       HapticFeedback.mediumImpact();
+          //       _addressApi();
+          // }, child: Text("주소찾기"),style:defaultElevatedButtonStyle(300,25)),
+          SizedBox(height: 7),
+          SizedBox(
+              width: double.infinity,
+              child: Text("주소",textAlign: TextAlign.left,style: defaultTextStyle(),)
+          ),
+          SizedBox(height: 7,),
           addressTextFromField(),
           textBox("상세 주소",addressDetailController,"addressDetail"),
           textBox("전화번호",phoneNumberController,"phoneNumber"),
-          textBox("생년월일",birthdayController,"phoneNumber"),
+          textBox("생년월일",birthdayController,"birthdate"),
+          SizedBox(height: 12),
           ElevatedButton(
-              onPressed: (){
+            onPressed: (){
 
-                String myPassword = passwordController.text;
-                int tmp = myPassword.compareTo(checkPasswordController.text);
-                debugPrint("myPassword : "+ myPassword
-                    +"passwordCheckController.text :"+ checkPasswordController.text + "tmp : "+tmp.toString());
+              String myPassword = passwordController.text;
+              int tmp = myPassword.compareTo(checkPasswordController.text);
+              debugPrint("myPassword : "+ myPassword
+                  +"passwordCheckController.text :"+ checkPasswordController.text + "tmp : "+tmp.toString());
 
-                if(tmp != 0){
-                  showCheckPassword();
-                }else if(!passEmailValidate){
-                  showCheckEmail();
-                }else{
-                  memberSignUpFunction();
-                }
-              },
-              child: Text("회원 가입"),style:defaultElevatedButtonStyle(300,25),
+              if(tmp != 0){
+                showCheckPassword();
+              }else if(!passEmailValidate){
+                showCheckEmail();
+              }else{
+                memberSignUpFunction();
+              }
+            },
+            child: Text("가입하기", style: whiteTextStyle(16),),
+            style:defaultElevatedButtonStyle(360,50),
           )
         ],
       ),
@@ -297,8 +310,8 @@ class _SignUpComponent extends State<SignUpComponent>{
         )
     );
     addressController.text = '${model.zonecode!} ${model.address!} ${model.buildingName!}';
-    city = model.address!;
-    street = model.buildingName!;
+    city = model.sido!;
+    street = model.address! + ' ' +  model.buildingName!;
     zipcode = model.zonecode!;
   }
 
@@ -307,12 +320,12 @@ class _SignUpComponent extends State<SignUpComponent>{
     return SizedBox(
       child: Column(
         children: [
-          SizedBox(height: 3,),
+          SizedBox(height: 7,),
           SizedBox(
             width: double.infinity,
             child: Text(inputText,textAlign: TextAlign.left,style: defaultTextStyle(),)
           ),
-          SizedBox(height: 3,),
+          SizedBox(height: 5,),
           TextFiledComponent(controller: controller, usedPosition: usedPosition)
         ],
       )
@@ -324,7 +337,20 @@ class _SignUpComponent extends State<SignUpComponent>{
   Widget addressTextFromField(){
     return TextFormField(
       controller: addressController,
-      decoration: textFieldDecoration("주소"),
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+          focusedBorder:
+          OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.black, width: 2.0)),
+        hintText: '도로명, 지번, 건물명 검색',
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search),
+          color: Colors.black,
+          onPressed: () {
+            _addressApi();
+          },
+        )
+      ),
       readOnly: true,
     );
   }
