@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:ztz_app/components/review/product_review_component.dart';
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
@@ -8,9 +7,8 @@ import 'package:ztz_app/utility/colors.dart';
 import '../../components/product/product_detail/prdouct_buy_modal_component.dart';
 import '../../components/product/product_detail/product_detail_appbar.dart';
 import '../../components/product/product_detail/product_detail_component.dart';
+import '../../components/reivew/product_review_component.dart';
 import '../../controller/product/product_infos/product_info.dart';
-import '../../controller/product/product_controller.dart';
-import '../../controller/reivew/review_controller.dart';
 import '../../utility/button_style.dart';
 import '../../utility/text_styles.dart';
 

@@ -18,7 +18,8 @@ class ProductController{
 
       debugPrint(requestProductListResponse.statusCode.toString());
       if(requestProductListResponse.statusCode == 200){
-        debugPrint("결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+        debugPrint("모든 상품 조회 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
         ProductInfo.productList = jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
       }
     }catch(e){
@@ -35,6 +36,64 @@ class ProductController{
       if(requestProductResponse.statusCode == 200){
         debugPrint("결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
         ProductInfo.product = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestProductByAlcoholType(alcoholType) async {
+    try{
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/alcoholList/$alcoholType'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("알코올 타입으로 조회 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
+        ProductInfo.productList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestProductByLocal(localName) async {
+    try{
+      var requestProductResponse = await http.get(
+        Uri.http(httpUri, 'ztz/products/list/$localName'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("지역 으로 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
+        ProductInfo.productList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestProductByLocalAndAlcoholType(alcoholType , localName) async {
+    var data = {'alcoholType' : alcoholType , 'localName' : localName};
+    var body = json.encode(data);
+    try{
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/list/by-local-type'),
+        headers: {"Content-Type": "application/json"},
+        body: body
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("지역과 타입으로 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
+        ProductInfo.productList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
       }else{
         debugPrint("통신 오류 " + requestProductResponse.statusCode.toString());
       }

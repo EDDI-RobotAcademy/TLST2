@@ -9,6 +9,7 @@ import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/my_page/modify_address_page.dart';
+import 'package:ztz_app/pages/my_page/order_management/order_management_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
@@ -52,7 +53,7 @@ class _MyPageFormState extends State<MyPageForm> {
 
   var myPageNaviList = [
     // page -> 이동할 페이지
-    {'title': "주문 관리", 'page': LoginPage()},
+    {'title': "주문 관리", 'page': OrderManagementPage()},
     {'title': "리뷰 관리", 'page': LoginPage()},
     {'title': "예약 관리", 'page': LoginPage()},
     {'title': "1:1 문의", 'page': LoginPage()},
