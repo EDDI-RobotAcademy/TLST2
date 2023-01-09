@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ztz_app/pages/account/signup_page.dart';
 import 'package:ztz_app/pages/tour/foundry_page.dart';
+
+import '../../pages/product/product_list_page.dart';
 
 class CategoryForm extends StatefulWidget {
   const CategoryForm({Key? key}) : super(key: key);
@@ -67,14 +71,41 @@ class _CategoryFormState extends State<CategoryForm> {
   Widget _drinksSubCategory() {
     return Column(
       children: [
-        //추후 각각의 페이지 추가 예정
-        _drinkItems('전체보기', SignUpPage()),
-        _drinkItems('소주증류주', SignUpPage()),
-        _drinkItems('리큐르', SignUpPage()),
-        _drinkItems('막걸리', SignUpPage()),
-        _drinkItems('약주청주', SignUpPage()),
-        _drinkItems('과실주', SignUpPage()),
-        _drinkItems('기타주류', SignUpPage()),
+        _drinkItems(
+            '전체보기',
+            ProductListPage(
+              drinkItemIndex: 0,
+            )),
+        _drinkItems(
+            '소주증류주',
+            ProductListPage(
+              drinkItemIndex: 1,
+            )),
+        _drinkItems(
+            '리큐르',
+            ProductListPage(
+              drinkItemIndex: 2,
+            )),
+        _drinkItems(
+            '막걸리',
+            ProductListPage(
+              drinkItemIndex: 3,
+            )),
+        _drinkItems(
+            '소주증류주',
+            ProductListPage(
+              drinkItemIndex: 4,
+            )),
+        _drinkItems(
+            '리큐르',
+            ProductListPage(
+              drinkItemIndex: 5,
+            )),
+        _drinkItems(
+            '막걸리',
+            ProductListPage(
+              drinkItemIndex: 6,
+            )),
       ],
     );
   }
@@ -85,8 +116,12 @@ class _CategoryFormState extends State<CategoryForm> {
         title: Text(title),
         tileColor: Colors.grey[100],
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => linkedPage));
+          Get.to(
+              linkedPage, //next page class
+              duration: Duration(milliseconds: 500), //duration of transitions, default 1 sec
+              transition: Transition.rightToLeft,//transition effect
+              popGesture : true // 슬라이드로 뒤로가기
+          );
         });
   }
 }

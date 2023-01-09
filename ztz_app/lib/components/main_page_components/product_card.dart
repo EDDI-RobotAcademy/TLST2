@@ -23,13 +23,13 @@ class ProductCard extends StatelessWidget{
       onTap: onTap,
       child: Container(
         width: 160,
-        padding: const EdgeInsets.all(3),
-        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(0),
+        margin: const EdgeInsets.only(left: 10),
         child: Column(
           children: [
             Container(
-              width: double.infinity,
-              child: Image(image: AssetImage("assets/images/uploadImg/${image}"), width: 160, height: 160,),
+              width: 160,
+              child: Image(image: AssetImage("assets/images/uploadImg/$image"), fit: BoxFit.fill,),
             ),
             SizedBox(height: 8,),
             Text("$title" , style: xMediumBlackTextStyle()),

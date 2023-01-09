@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.controller.order;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
+import kr.eddi.ztz_process.controller.order.form.PaymentDataRangeForm;
 import kr.eddi.ztz_process.controller.order.form.PaymentRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
 import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
@@ -51,17 +52,31 @@ public class OrderController {
             return payments;
 
         }else {
-            String tmpToken = "";
+            String SubString = "";
             if(memberLoggedInTokenForm.getToken().length() >= 37){
-                tmpToken = memberLoggedInTokenForm.getToken().substring(1,37);
+                SubString = memberLoggedInTokenForm.getToken().substring(1,37);
             }else {
-                tmpToken = memberLoggedInTokenForm.getToken();
+                SubString = memberLoggedInTokenForm.getToken();
             }
-            List<Payment> payments = service.readAllPayment(tmpToken);
+            List<Payment> payments = service.readAllPayment(SubString);
             return payments;
         }
     }
 
+    @PostMapping("/readPayment/byDate")
+    public List<Payment> readPaymentByData(@RequestBody PaymentDataRangeForm paymentDataRangeForm){
+        log.info(paymentDataRangeForm.getReadData());
+        String readData = paymentDataRangeForm.getReadData();
+        String SubString = "";
+        if(paymentDataRangeForm.getToken().length() >= 37){
+            SubString = paymentDataRangeForm.getToken().substring(1,37);
+        }else {
+            SubString = paymentDataRangeForm.getToken();
+        }
+        List<Payment> payments = service.readRangePaymentList(SubString, readData);
+
+        return payments;
+    }
 
     @PostMapping("/refundAllOrder/{refundPaymentId}")
     public Boolean refundAllOrder(@PathVariable("refundPaymentId") Long refundPaymentId, @RequestBody RefundRequest refundRequest) throws IamportResponseException, IOException {
@@ -70,8 +85,9 @@ public class OrderController {
         log.info("refundAllOrder" + refundRequest.getRefundPaymentId());
 
         return service.refundAllOrder(refundRequest);
-
     }
+
+
 
     @PostMapping("/changeOrderState")
     public List<OrderInfo> changeOrderState( @RequestBody ChangeOrderStateRequest changeOrderStateRequest){

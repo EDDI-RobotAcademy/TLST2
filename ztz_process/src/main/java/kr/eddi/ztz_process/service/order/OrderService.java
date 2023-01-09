@@ -22,6 +22,8 @@ public interface OrderService {
 
     public List<Payment> readAllPayment(String token);
 
+    public List<Payment> readRangePaymentList(String token , String rangeData);
+
     public List<Payment> readManagerAllPayment();
 
     public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest);

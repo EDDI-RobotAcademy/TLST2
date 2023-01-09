@@ -15,7 +15,7 @@ class SignUpApi{
     var data = {'email' : memberSignUpInfo.email, 'password' : memberSignUpInfo.password , 'username' : memberSignUpInfo.username,
       'birthdate' : memberSignUpInfo.birthdate, 'city' : memberSignUpInfo.city,'street':memberSignUpInfo.street,
       'addressDetail' : memberSignUpInfo.addressDetail , 'zipcode' : memberSignUpInfo.zipcode , 'phoneNumber' : memberSignUpInfo.phoneNumber,
-      'authorityNo' : 2 , 'authorityName' : '일반회원' , 'managerCheck' : false};
+      'authorityNo' : 2 , 'authorityName' : 'MEMBER' , 'managerCheck' : false};
     var body = json.encode(data);
 
     debugPrint(body);
@@ -40,7 +40,7 @@ class SignUpApi{
   managerSignUp(ManagerSignUpInfo managerSignUpInfo) async {
     var data = {'email' : managerSignUpInfo.email , 'password' : managerSignUpInfo.password , 'username' : managerSignUpInfo.username,
     'birthdate' : managerSignUpInfo.birthdate ,'phoneNumber' : managerSignUpInfo.phoneNumber,
-    'authorityNo' : 1 , 'authorityName' : '관리자' , 'managerCheck' : true};
+    'authorityNo' : 1 , 'authorityName' : 'MANAGER' , 'managerCheck' : true};
 
     var body = json.encode(data);
     debugPrint(body);

@@ -1,6 +1,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeBanner extends StatefulWidget {
   const HomeBanner({Key? key}) : super(key: key);
@@ -19,10 +20,11 @@ class _HomeBannerState extends State<HomeBanner> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return CarouselSlider(
       options: CarouselOptions(
+        viewportFraction: 1,
         height:200,
-        enlargeCenterPage: true,
         autoPlay: true,
         initialPage: 2,
         onPageChanged: (position, reason) {
@@ -33,9 +35,9 @@ class _HomeBannerState extends State<HomeBanner> {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-              width: double.infinity,
-              decoration:
-              BoxDecoration(image: DecorationImage(image: AssetImage(i)) ),
+              padding: EdgeInsets.only(bottom: 18),
+              width: size.width,
+              child: Image(image: AssetImage(i)),
             );
           },
         );

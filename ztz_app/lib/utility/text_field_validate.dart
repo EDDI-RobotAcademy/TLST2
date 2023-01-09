@@ -83,7 +83,7 @@ extension InputValidate on String {
 
   bool isValidPhoneNumber(){
     final phoneNumberRegExp = RegExp(
-      r"/010-\d{4}-\d{4}/");
+      r"010-\d{4}-\d{4}");
 
     return phoneNumberRegExp.hasMatch(this);
   }
