@@ -53,4 +53,25 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
+
+  requestOrderInfoByPaymentId(paymentId) async {
+    try{
+      var orderInfoResponse = await http.post(
+        Uri.http(httpUri, 'ztz/order/ReadAllOrder/$paymentId'),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if(orderInfoResponse.statusCode == 200){
+        var tmpOrderList = [];
+        debugPrint("orderInfoResponse 결과: " + utf8.decode(orderInfoResponse.bodyBytes).toString());
+        tmpOrderList = jsonDecode(utf8.decode(orderInfoResponse.bodyBytes));
+        OrderInfo.orderInfoList.clear();
+        OrderInfo.orderInfoList = tmpOrderList.obs;
+      }else {
+        debugPrint("orderInfo 통신 오류" + orderInfoResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생" + e.toString());
+    }
+  }
 }

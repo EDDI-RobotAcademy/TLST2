@@ -32,7 +32,7 @@ class _OrderListAppbar extends State<OrderListAppbar>  with TickerProviderStateM
       backgroundColor: Colors.white,
       title: Text(
         "주문 내역",
-        style: xMediumBlackTextStyle(),
+        style: blackTextStyle(15),
       ),
       centerTitle: true,
       actions: [
