@@ -96,7 +96,7 @@ class _ProductDetailPage extends State<ProductDetailPage>{
                             }
                         );
                       },
-                      child: Text("바로 구매",style: lageWhiteTextStyle(),)),
+                      child: Text("구매하기",style: lageWhiteTextStyle(),)),
                 )
               ],
             ),

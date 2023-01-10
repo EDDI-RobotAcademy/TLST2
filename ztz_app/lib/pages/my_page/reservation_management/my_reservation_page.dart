@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ztz_app/components/layout/white_menu_app_bar.dart';
-import 'package:ztz_app/components/my_page/my_reservation_list.dart';
+import 'package:ztz_app/components/my_page/reservation_management/my_reservation_list.dart';
 
 class MyReservationPage extends StatefulWidget {
   const MyReservationPage({Key? key}) : super(key: key);

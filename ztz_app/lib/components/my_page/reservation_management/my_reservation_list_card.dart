@@ -4,10 +4,12 @@ import 'package:ztz_app/controller/tour/foundry_infos/foundry_info.dart';
 import 'package:ztz_app/controller/tour/reservation_controller.dart';
 import 'package:ztz_app/utility/colors.dart';
 
-import '../../controller/account/sign_up_infos/account_state.dart';
-import '../../pages/home_page.dart';
-import '../../pages/my_page/my_reservation_modify_detail_page.dart';
-import '../../pages/tour/reservation_payment.dart';
+import '../../../controller/account/sign_up_infos/account_state.dart';
+import '../../../pages/home_page.dart';
+import '../../../pages/my_page/reservation_management/my_reservation_modify_detail_page.dart';
+import '../../../pages/tour/reservation_payment.dart';
+
+
 
 class MyReservationListCard extends StatefulWidget{
   const MyReservationListCard({Key? key,

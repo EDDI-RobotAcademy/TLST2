@@ -35,14 +35,19 @@ class _MainComponent extends State<MainComponent>{
           subMenuIcon(),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top:20 , bottom: 12,left: 3),
-            child: Text("👍 오늘의 추천 ZTZ",style: productTitleTextStyle(),textAlign: TextAlign.left,),
+            margin: EdgeInsets.only(top:40 , bottom: 10,left: 3),
+            child: Text("  이 상품 어때요?",style: TextStyle(fontSize: 20, fontWeight:FontWeight.w700 ),textAlign: TextAlign.left,),
           ),
+          // Container(
+          //   width: double.infinity,
+          //   margin: EdgeInsets.only(left: 3, bottom: 10),
+          //   child: Text("  👍 회원님을 위한 오늘의 추천 ZTZ", textAlign: TextAlign.left, style:TextStyle(fontSize: 15, fontWeight: FontWeight.w700),),
+          // ),
           ToDaysRecommendComponent(),
           Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top:30 , bottom: 12,left: 3),
-            child: Text("🏫 TOUR + EXPERIENCE", style: productTitleTextStyle(),textAlign: TextAlign.left,),
+            margin: EdgeInsets.only(top:40 , bottom: 10,left: 3),
+            child: Text("  전통주 양조장 체험", style: TextStyle(fontSize: 20, fontWeight:FontWeight.w700 ),textAlign: TextAlign.left,),
           ),
           MainFoundryListComponent(),
         ],
@@ -60,7 +65,7 @@ class _MainComponent extends State<MainComponent>{
             Column(
               children: [
                 Container(
-                    margin: const EdgeInsets.only(left: 5, right:5),
+                    margin: const EdgeInsets.only(left: 5, right:5, top: 5),
                     decoration: BoxDecoration(
                         color: ColorStyle.termGray,
                         borderRadius: BorderRadius.circular(25),

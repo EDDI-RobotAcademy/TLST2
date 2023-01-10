@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'package:ztz_app/utility/text_styles.dart';
 
-import '../../components/layout/menu_app_bar.dart';
-import '../../components/my_page/my_reservation_modify_form_component.dart';
+import '../../../components/layout/menu_app_bar.dart';
+import '../../../components/my_page/reservation_management/my_reservation_modify_form_component.dart';
+
 
 class MyReservationModifyDetailPage extends StatefulWidget {
   const MyReservationModifyDetailPage({Key? key}) : super(key: key);

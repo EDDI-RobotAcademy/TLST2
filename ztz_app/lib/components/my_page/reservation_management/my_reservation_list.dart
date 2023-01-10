@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ztz_app/components/my_page/my_reservation_list_card.dart';
 
-import '../../controller/account/sign_up_infos/account_state.dart';
-import '../../controller/tour/foundry_infos/foundry_info.dart';
-import '../../controller/tour/reservation_controller.dart';
+
+import '../../../controller/account/sign_up_infos/account_state.dart';
+import '../../../controller/tour/foundry_infos/foundry_info.dart';
+import '../../../controller/tour/reservation_controller.dart';
+import 'my_reservation_list_card.dart';
 
 class MyReservationList extends StatefulWidget {
   const MyReservationList({Key? key}) : super(key: key);
