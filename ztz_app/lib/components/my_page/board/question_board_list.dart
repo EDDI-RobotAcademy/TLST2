@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/controller/board/board_controller.dart';
 import 'package:ztz_app/controller/board/board_infos/board_info.dart';
+import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 
 class QuestionBoardList extends StatefulWidget {
   const QuestionBoardList({Key? key}) : super(key: key);
@@ -76,8 +76,12 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                    child: Image.asset("assets/images/letter-q.png", width: 25, height: 25, fit: BoxFit.fill)),
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Image.asset(
+                                        "assets/images/letter-q.png",
+                                        width: 25,
+                                        height: 25,
+                                        fit: BoxFit.fill)),
                                 SizedBox(width: 10),
                                 Container(
                                   width: size.width - 120,
@@ -96,16 +100,20 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                                   width: size.width - 180,
                                 ),
                                 TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                    },
                                     child: Text(
                                       "수정",
                                       style: TextStyle(
                                           color: Colors.grey.shade700),
                                     )),
                                 TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                        "삭제",
+                                    onPressed: () {
+                                      deleteQuestionFunction(
+                                        memberQuestionList[index]['questionNo'],
+                                      );
+                                    },
+                                    child: Text("삭제",
                                         style: TextStyle(
                                             color: Colors.grey.shade700)))
                               ],
@@ -118,5 +126,30 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                 )),
       ),
     );
+  }
+
+  void deleteQuestionFunction(questionNo) async {
+    await BoardController().requestDeleteQuestionToSpring(questionNo);
+    if (BoardInfo.deleteQuestionResult) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionBoardPage()),
+      ).then((value) => setState(() {}));
+    } else {
+      showSnackBar("삭제에 실패했습니다. 다시 시도해주세요.");
+    }
+  }
+
+  void showSnackBar(String text) {
+    final snackBar = SnackBar(
+      content: Text(text),
+      action: SnackBarAction(
+        label: '확인',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
