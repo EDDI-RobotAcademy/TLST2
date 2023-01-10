@@ -51,7 +51,7 @@ class CartController extends GetxController{
 
 
   Future<void> fetchData() async{
-    await OrderService.fetchItems("f63c1741-bbd2-4aed-8e11-4a961c00a551");
+    await OrderService.fetchItems();
   }
   reqChangeItemCount(int itemNo, int count, int totalPrice) async {
     var res = await OrderService.requestChangeItemInfo(itemNo, count, totalPrice);
@@ -62,8 +62,8 @@ class CartController extends GetxController{
       print("change failed");
     }
   }
-  reqDeleteItem(int itemNo, String token) async {
-    var res = await OrderService.requestDeleteItem(itemNo, token);
+  reqDeleteItem(int itemNo) async {
+    var res = await OrderService.requestDeleteItem(itemNo);
     if(res == 1) {
       fetchData();
     } else {
@@ -105,11 +105,11 @@ class CartController extends GetxController{
       print(selectedProduct.toString());
     });
   }
-  delete(int index, int itemNo, token) {
+  delete(int index, int itemNo) {
     selectedProduct.remove(reactiveCartList[index]['itemNo'].toString());
     checkStatusMap.remove(reactiveCartList[index]['itemNo'].toString());
     reactiveCartList.removeAt(index);
-    reqDeleteItem(itemNo, token);
+    reqDeleteItem(itemNo);
   }
 
   //총액 구하기

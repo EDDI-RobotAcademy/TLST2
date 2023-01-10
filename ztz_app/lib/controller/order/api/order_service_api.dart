@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/order/cart_controller.dart';
 
+import '../../account/sign_up_infos/account_state.dart';
+
 
 
 class OrderService {
   static const String httpUri = '192.168.200.175:7777';
 
-  static fetchItems(String token) async {
+  static fetchItems() async {
     var response = await http.get(
       Uri.http(httpUri, '/ztz/order/myCart',),
       headers: {
-        "Token": token,
+        "Token": AccountState.accountGet.token.value,
         "Content-Type": "application/json"
       },
     );
@@ -23,13 +25,13 @@ class OrderService {
     }
   }
 
-  static requestDeleteItem(int itemNo, token) async {
+  static requestDeleteItem(int itemNo) async {
 
     try{
       var reqChangeStatus = await http.delete(
         Uri.http(httpUri, '/ztz/order/$itemNo'),
         headers: {
-          "Token": token,
+          "Token": AccountState.accountGet.token.value,
           "Content-Type": "application/json"
         },
       );
