@@ -57,4 +57,22 @@ class BoardController {
       debugPrint("memberQuestionBoard 오류 발생" + e.toString());
     }
   }
+
+  requestDeleteQuestionToSpring(questionNo) async {
+    try {
+      var deleteQuestionResponse = await http.delete(
+        Uri.http(httpUri, 'ztz/boards/question/$questionNo'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (deleteQuestionResponse.statusCode == 200) {
+        debugPrint("질문 삭제 성공");
+        BoardInfo.deleteQuestionResult = true;
+      } else {
+        debugPrint(
+            "질문 삭제 통신 오류" + deleteQuestionResponse.statusCode.toString());
+      }
+    } catch (e) {
+      debugPrint("질문 삭제 오류 발생 " + e.toString());
+    }
+  }
 }
