@@ -8,9 +8,7 @@
         </th>
         <th scope="cols">
           <input type="text" size="40" v-model="title"
-                 placeholder="제목을 입력해 주세요."
-                 onfocus="this.placeholder=''"
-                 onblur="this.placeholder='제목을 입력해 주세요.'">
+                 placeholder="제목을 입력해 주세요.">
         </th>
       </tr>
       </thead>
@@ -20,7 +18,7 @@
             카테고리
           </th>
           <td>
-            <v-select v-bind:items="request" v-model="selectedRequest" class="member-request-select"/>
+            <v-select v-bind:items="categoryList" v-model="categoryType" class="member-request-select"/>
           </td>
       </tr>
       </tbody>
@@ -30,16 +28,14 @@
           작성자
         </th>
         <td>
-          {{ this.$store.state.resMember.username }}
+          {{ writer }}
         </td>
       </tr>
       <tr>
         <th scope="row">내용</th>
         <td>
           <textarea cols="50" rows="20" v-model="content"
-                    placeholder="내용을 입력해 주세요."
-                    onfocus="this.placeholder=''"
-                    onblur="this.placeholder='내용을 입력해 주세요.'">
+                    placeholder="내용을 입력해 주세요.">
           </textarea>
         </td>
       </tr>
@@ -62,9 +58,11 @@ export default {
   data() {
     return {
       title: '',
-      request:['전통주', '양조장', '결제질문', '배송질문', '기타'],
+      categoryList :['주문/결제문의', '상품문의', '배송문의', '반품/교환문의', '양조장문의', '기타문의'],
+      categoryType: '',
       writer: this.$store.state.resMember.username,
       content: '',
+
     }
   },
   methods: {
@@ -73,9 +71,10 @@ export default {
     ]),
 
     onSubmit() {
-      if (this.title && this.content != '') {
-        const {title, writer, content} = this
-        this.$emit('submit', {title, writer, content})
+      if (this.title !='' && this.content != '') {
+        const {title, writer, content, categoryType} = this
+        const memberId = this.resMember.id
+        this.$emit('submit', {title, writer, content, memberId, categoryType})
       } else {
         alert("빈칸 없이 작성해주세요!")
       }
