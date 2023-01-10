@@ -24,12 +24,21 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     MemberRepository memberRepository;
-    
+
+    @Autowired
+    RedisService redisService;
+
 
     // 질문게시판 리스트 UI
     @Override
     public List<QuestionBoard> questionList() {
         return questionRepository.findAll(Sort.by(Sort.Direction.DESC, "questionNo"));
+    }
+
+    @Override
+    public List<QuestionBoard> memberQuestionList(String token) {
+        Long memberId = redisService.getValueByKey(token);
+        return questionRepository.findByMemberId(memberId);
     }
 
     // 질문게시판 조회(읽기)

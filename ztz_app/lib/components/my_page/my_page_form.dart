@@ -10,6 +10,7 @@ import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/my_page/modify_address_page.dart';
 import 'package:ztz_app/pages/my_page/order_management/order_management_page.dart';
+import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
@@ -56,7 +57,7 @@ class _MyPageFormState extends State<MyPageForm> {
     {'title': "주문 관리", 'page': OrderManagementPage()},
     {'title': "리뷰 관리", 'page': LoginPage()},
     {'title': "예약 관리", 'page': LoginPage()},
-    {'title': "1:1 문의", 'page': LoginPage()},
+    {'title': "1:1 문의", 'page': QuestionBoardPage()},
     {'title': "배송지 관리", 'page': ModifyAddressPage()},
     {'title': "개인 정보 수정", 'page': LoginPage()},
   ];
