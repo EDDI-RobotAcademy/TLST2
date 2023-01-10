@@ -99,4 +99,27 @@ class ReservationController extends GetxController{
       debugPrint("오류 발생 " + e.toString());
     }
   }
+
+  //스프링 getMapping- headers: token 방식
+  requestDeleteReservationToSpring(reservationId, Token) async{
+    var token = json.encode(Token);
+    Map<String, String> Headers = {"Content-Type": "application/json", "token": token};
+
+    debugPrint("나의 양조장 조회: 토큰 "+token);
+
+    try{
+      var requestDeleteMyReservationResponse = await http.delete(
+        Uri.http(httpUri,'ztz/tour/my-reservation/$reservationId'),
+        headers: Headers,
+      );
+
+      debugPrint(requestDeleteMyReservationResponse.statusCode.toString());
+      if(requestDeleteMyReservationResponse.statusCode == 200){
+        debugPrint("나의 예약 리스트 결과 : " + utf8.decode(requestDeleteMyReservationResponse.bodyBytes).toString());
+        FoundryInfo.reservationResult = jsonDecode(utf8.decode(requestDeleteMyReservationResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }
