@@ -8,13 +8,15 @@ import kr.eddi.ztz_process.entity.order.Item;
 import java.util.List;
 
 public interface CartService {
-    public void addCartItem(AddCartRequest addCartRequest);
+    //public void addCartItem(AddCartRequest addCartRequest);
     public void deleteCartItem(SelectCartItemRequest selectCartItemRequest);
 
 
     List<Item> returnCartItemList(String userToken);
     List<Item> deleteCartItem(long itemNo, String token);
     String changeCartItemCount (ChangeItemCountRequest changeItemCountRequest);
+    String addProductInCart(AddCartRequest addCartRequest);
+
 
 
 }
