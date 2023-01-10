@@ -204,10 +204,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, writer, memberId, categoryType} = payload
-        console.log(payload)
+        const {title, content, writer} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
