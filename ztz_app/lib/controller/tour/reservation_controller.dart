@@ -28,7 +28,7 @@ class ReservationController extends GetxController{
 
   requestSaveReservationToSpring(username, numberOfMember, reservationDate, phoneNumber, token, foundryName) async{
     var data = {'username' : username, 'numberOfMember' : numberOfMember, 'reservationDate' : reservationDate,
-                 'phoneNumber' : phoneNumber, 'token' : token, 'foundryName' : foundryName};
+                 'contactNumber' : phoneNumber, 'token' : token, 'foundryName' : foundryName};
     var body = json.encode(data);
     try{
       var requestReserveaionResponse = await http.post(
@@ -47,4 +47,28 @@ class ReservationController extends GetxController{
     }
   }
 
+  //스프링 getMapping- headers: token 방식
+  requestMyReservationToSpring(Token) async{
+    var token = json.encode(Token);
+    Map<String, String> Headers = {"Content-Type": "application/json", "token": token};
+
+    debugPrint("나의 양조장 조회: 토큰 "+token);
+
+    try{
+      var requestMyReservationListResponse = await http.get(
+        Uri.http(httpUri,'ztz/tour/my-reservation'),
+        headers: Headers,
+      );
+
+      debugPrint(requestMyReservationListResponse.statusCode.toString());
+      if(requestMyReservationListResponse.statusCode == 200){
+        debugPrint("나의 예약 리스트 결과 : " + utf8.decode(requestMyReservationListResponse.bodyBytes).toString());
+        FoundryInfo.reservationList = jsonDecode(utf8.decode(requestMyReservationListResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+ 
 }
