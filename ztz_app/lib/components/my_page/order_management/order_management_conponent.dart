@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ztz_app/components/my_page/order_management/order_list_card.dart';
+import 'package:ztz_app/pages/my_page/order_management/order_detail_page.dart';
 
 import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/order/order_controller.dart';
@@ -50,6 +53,18 @@ class _OrderManagementComponent extends State<OrderManagementComponent> {
     });
   }
 
+  void callOrderList(paymentId , index) async {
+    await OrderController().requestOrderInfoByPaymentId(paymentId);
+    Get.to(
+        OrderDetailPage(paymentState: OrderInfo.paymentList[index]['paymentState'],),
+        //next page class
+        duration: Duration(milliseconds: 500),
+        //duration of transitions, default 1 sec
+        transition: Transition.rightToLeft,
+        //transition effect
+        popGesture: true // 슬라이드로 뒤로가기
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,7 +93,9 @@ class _OrderManagementComponent extends State<OrderManagementComponent> {
                             ['paymentTitle'],
                         totalPrice: OrderInfo.paymentList[index]
                             ['totalPaymentPrice'],
-                        onTap: () {},
+                        onTap: () {
+                          callOrderList(OrderInfo.paymentList[index]['paymentId'] , index);
+                        },
                         index: index)),
               ),
             ),

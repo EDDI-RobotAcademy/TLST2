@@ -118,36 +118,36 @@ class OrderListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
-        index == 0
-            ? const SizedBox()
-            : const Divider(
-                thickness: 8,
-              ),
-        ListTile(
-          visualDensity: VisualDensity(vertical: -3),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 6 , left: 3),
-            child: Text(paymentDate, style: mediumBlackBoldTextStyle()),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+          child: Column(
+        children: [
+          index == 0
+              ? const SizedBox()
+              : const Divider(
+                  thickness: 8,
+                ),
+          ListTile(
+            visualDensity: VisualDensity(vertical: -3),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 6 , left: 3),
+              child: Text(paymentDate, style: mediumBlackBoldTextStyle()),
+            ),
+            trailing: Text("주문 상세 > ", style: mediumBlackBoldTextStyle()),
           ),
-          trailing: Text("주문 상세 > ", style: mediumBlackBoldTextStyle()),
-          onTap: () {
-            onTap;
-          },
-        ),
-        const Divider(
-          thickness: 0.7,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 20),
-          child: paymentContent(context),
-        ),
-        SizedBox(
-          height: 10,
-        )
-      ],
-    ));
+          const Divider(
+            thickness: 0.7,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 20),
+            child: paymentContent(context),
+          ),
+          SizedBox(
+            height: 10,
+          )
+        ],
+      )),
+    );
   }
 }
