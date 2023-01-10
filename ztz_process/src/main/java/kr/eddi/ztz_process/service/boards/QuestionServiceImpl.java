@@ -4,7 +4,9 @@ import kr.eddi.ztz_process.controller.boards.BoardsRequest;
 import kr.eddi.ztz_process.entity.boards.BoardCategory;
 import kr.eddi.ztz_process.entity.boards.BoardCategoryType;
 import kr.eddi.ztz_process.entity.boards.QuestionBoard;
+import kr.eddi.ztz_process.entity.boards.QuestionComment;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.repository.boards.QuestionCommentRepository;
 import kr.eddi.ztz_process.repository.boards.QuestionRepository;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.service.security.RedisService;
@@ -27,6 +29,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     RedisService redisService;
+
+    @Autowired
+    QuestionCommentRepository questionCommentRepository;
+
+    @Autowired
+    BoardCategoryRepository categoryRepository;
 
 
     // 질문게시판 리스트 UI
@@ -111,6 +119,19 @@ public class QuestionServiceImpl implements QuestionService {
     // 질문게시판 게시물 삭제
     @Override
     public void questionRemove(Long questionNo) {
-        questionRepository.deleteById(Long.valueOf(questionNo));
+
+        List<QuestionComment> commentList = questionCommentRepository.findCommentByQuestionNo(questionNo);
+
+        // 댓글 삭제
+        for (QuestionComment comment : commentList) {
+            questionCommentRepository.delete(comment);
+        }
+
+        Optional<QuestionBoard> maybeBoard = questionRepository.findById(questionNo);
+        Long categoryId = maybeBoard.get().getBoardCategory().getId();
+
+        questionRepository.deleteById(questionNo); // 보드를 먼저 삭제 후
+
+        categoryRepository.deleteById(categoryId); // 카테고리 삭제 가능
     }
 }
