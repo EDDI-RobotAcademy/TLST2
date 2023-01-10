@@ -84,7 +84,7 @@ class _CartListItemState extends State<CartListItem> {
                         color: const Color(0xffd5e3d8),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Image.asset("assets/images/uploadImg/${CartController.reactiveCartList[index]['productInfo']['thumbnailFileName']}", fit: BoxFit.fitHeight),
+                      child: Image.asset("assets/images/uploadImg/${CartController.reactiveCartList[index]['product']['productInfo']['thumbnailFileName']}", fit: BoxFit.fitHeight),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

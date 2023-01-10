@@ -16,7 +16,7 @@ public interface CartService {
     List<Item> deleteCartItem(long itemNo, String token);
     String changeCartItemCount (ChangeItemCountRequest changeItemCountRequest);
     String addProductInCart(AddCartRequest addCartRequest);
-
+    Item isExistItemCheck(AddCartRequest addCartRequest, long id);
 
 
 }

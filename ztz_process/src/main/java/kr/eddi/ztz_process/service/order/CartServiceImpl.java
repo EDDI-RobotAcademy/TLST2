@@ -96,28 +96,28 @@ public class CartServiceImpl implements CartService {
 
 
 
+
         List<Item> myCartItems = itemRepository.findCartListByMemberId(id);
         Long productNo = addCartRequest.getProductNo();
         if(!myCartItems.isEmpty()) {
             log.info("상품 이미 있음");
-            for (Item item : myCartItems) {
-                log.info("내 카트 안의 상품 번호 " + item.getProduct().getProductNo() + "새로 추가할 상품 번호" + productNo);
-                if(Objects.equals(item.getProduct().getProductNo(), productNo)) {
-                    int addCount = item.getCount() + addCartRequest.getCount();
-                    item.setCount(addCount);
-                    item.setSelectedProductAmount(addCount * item.getProduct().getPrice());
-                    itemRepository.save(item);
-                } else {
-                    Cart cart = cartRepository.findCartByMemberId(id);
-                    int count = addCartRequest.getCount();
-                    Product product = productsRepository.findProductByProductNo(productNo);
+            Item isExistItem = isExistItemCheck(addCartRequest, id);
+            if(isExistItem == null) {
+                Cart cart = cartRepository.findCartByMemberId(id);
+                int count = addCartRequest.getCount();
+                Product product = productsRepository.findProductByProductNo(productNo);
 
-                    int totalMount = count * product.getPrice();
-                    Item item1 = new Item(cart, product, count, totalMount);
+                int totalMount = count * product.getPrice();
+                Item item1 = new Item(cart, product, count, totalMount);
 
-                    itemRepository.save(item1);
-                }
+                itemRepository.save(item1);
+            } else {
+                int addCount = isExistItem.getCount() + addCartRequest.getCount();
+                isExistItem.setCount(addCount);
+                isExistItem.setSelectedProductAmount(addCount * isExistItem.getProduct().getPrice());
+                itemRepository.save(isExistItem);
             }
+
         } else {
             //없으면 아래처럼 저장
             Cart cart = cartRepository.findCartByMemberId(id);
@@ -133,6 +133,21 @@ public class CartServiceImpl implements CartService {
 
 
         return "success";
+    }
+
+    @Override
+    public Item isExistItemCheck(AddCartRequest addCartRequest, long id) {
+
+        List<Item> myCartItems = itemRepository.findCartListByMemberId(id);
+        Long productNo = addCartRequest.getProductNo();
+
+        for (Item item : myCartItems) {
+            log.info("내 카트 안의 상품 번호 " + item.getProduct().getProductNo() + "새로 추가할 상품 번호" + productNo);
+            if(Objects.equals(item.getProduct().getProductNo(), productNo)) {
+                return item;
+            }
+        }
+        return null;
     }
 
 }
