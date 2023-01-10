@@ -122,4 +122,25 @@ class ReservationController extends GetxController{
       debugPrint("오류 발생 " + e.toString());
     }
   }
+
+  requestSaveReservationPaymentToSpring(merchant_uid, reservationId, memberId, totalPaymentPrice, paymentState) async{
+    var data = {'merchant_uid' : merchant_uid, 'reservationId' : reservationId, 'memberId' : memberId,
+      'totalPaymentPrice' : totalPaymentPrice, 'paymentState' : paymentState};
+    var body = json.encode(data);
+    try{
+      var requestReserveaionPaymentResponse = await http.post(
+        Uri.http(httpUri,'ztz/tour/my-reservation/payment'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      debugPrint(requestReserveaionPaymentResponse.statusCode.toString());
+      if(requestReserveaionPaymentResponse.statusCode == 200){
+        debugPrint("양조장 리스트 결과 : " + utf8.decode(requestReserveaionPaymentResponse.bodyBytes).toString());
+        FoundryInfo.reservationPaymentResult = jsonDecode(utf8.decode(requestReserveaionPaymentResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }
