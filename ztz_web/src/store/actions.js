@@ -455,11 +455,11 @@ export default {
     },
        // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
-    const {memberId, productId, count} = payload
-    console.log('장바구니 추가 상품번호: ' + productId + ' 수량: ' + count)
+    const {productNo, count, token} = payload
+    console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
 
-    return axios.post(`http://localhost:7777/ztz/order/addCartItem/${memberId}`,
-        {memberId, productId, count})
+    return axios.post(`http://localhost:7777/ztz/order/add`,
+        {productNo, count, token})
         .then(() => {
         })
     },
