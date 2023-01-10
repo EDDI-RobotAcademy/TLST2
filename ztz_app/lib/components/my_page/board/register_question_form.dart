@@ -2,6 +2,10 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:ztz_app/components/layout/white_menu_app_bar.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/controller/board/board_controller.dart';
+import 'package:ztz_app/controller/board/board_infos/register_question_info.dart';
+import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/button_style.dart';
 import 'package:ztz_app/utility/text_field_decoration.dart';
 import 'package:ztz_app/utility/text_styles.dart';
@@ -14,6 +18,9 @@ class RegisterQuestionForm extends StatefulWidget {
 }
 
 class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
+  int memberId = AccountState.memberInfo['id'];
+  String writer = AccountState.memberInfo['username'];
+
   List<String> categoryList = [
     '주문/결제문의',
     '상품문의',
@@ -93,9 +100,10 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
                   if (selectedCategory == '' ||
                       titleController.text == '' ||
                       contentController.text == '') {
-                    showRegisterFail();
+                    showTextDialog("작성을 완료해주세요.");
                   } else {
                     // 문의 등록
+                    registerQuestionFunction();
                   }
                 },
               ),
@@ -104,6 +112,24 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
         ),
       ),
     );
+  }
+
+  registerQuestionFunction() async {
+    RegisterQuestionInfo registerQuestionInfo = RegisterQuestionInfo(
+        titleController.text,
+        writer,
+        contentController.text,
+        memberId,
+        selectedCategory);
+    await BoardController()
+        .requestRegisterQuestionToSpring(registerQuestionInfo);
+    if(RegisterQuestionInfo.registerQuestionResult) {
+      Navigator.pop(context);
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QuestionBoardPage()),)
+          .then((value) => setState(() {}));
+    } else {
+      showTextDialog("문의 등록을 실패했습니다.");
+    }
   }
 
   void showModal(context) {
@@ -135,12 +161,12 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
         });
   }
 
-  void showRegisterFail() {
+  void showTextDialog(String content) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text('작성을 완료해주세요'),
+            content: Text(content),
             actions: <Widget>[
               TextButton(
                 child: Text(
@@ -153,4 +179,5 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
           );
         });
   }
+  
 }
