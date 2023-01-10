@@ -5,7 +5,7 @@ import 'package:ztz_app/pages/home_page.dart';
 
 import '../../controller/account/sign_up_infos/account_state.dart';
 import '../../utility/colors.dart';
-import '../my_page/my_reservation_page.dart';
+import '../my_page/reservation_management/my_reservation_page.dart';
 
 class ReservationPaymentResult extends StatefulWidget {
   final Map<String, String> result;
