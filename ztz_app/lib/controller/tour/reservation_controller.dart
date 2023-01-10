@@ -70,5 +70,33 @@ class ReservationController extends GetxController{
     }
   }
 
- 
+  //스프링 getMapping- headers: token 방식
+  requestModifyReservationToSpring(reservationId, username, numberOfMember, reservationDate, phoneNumber, token, foundryName) async{
+    var data = {'username' : username, 'numberOfMember' : numberOfMember, 'reservationDate' : reservationDate,
+      'contactNumber' : phoneNumber, 'token' : token, 'foundryName' : foundryName};
+    var body = json.encode(data);
+
+    debugPrint("나의 양조장 수정: 예약 아이디 "+reservationId.toString());
+    debugPrint("나의 양조장 수정: 예약 명수 "+numberOfMember.toString());
+    debugPrint("나의 양조장 수정: 예약 날짜 "+reservationDate);
+    debugPrint("나의 양조장 수정: 예약 전화번호 "+phoneNumber);
+    debugPrint("나의 양조장 수정: 예약자 "+username);
+
+
+    try{
+      var requestModfyReservationResponse = await http.put(
+        Uri.http(httpUri,'ztz/tour/my-reservation/$reservationId'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      debugPrint(requestModfyReservationResponse.statusCode.toString());
+      if(requestModfyReservationResponse.statusCode == 200){
+        debugPrint("나의 예약 수정 결과 : " + utf8.decode(requestModfyReservationResponse.bodyBytes).toString());
+        FoundryInfo.reservationResult = jsonDecode(utf8.decode(requestModfyReservationResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }
