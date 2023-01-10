@@ -11,12 +11,12 @@
               style="text-decoration: none"
               :to="{ name: 'ProductDetailView',
                                 params: { productNo: product.productNo.toString() }}">
-            <v-card width="200px" height="250px" elevation="1" style="margin: 10px">
+            <v-card width="200px" height="380px" elevation="1" style="margin: 10px">
               <v-card-text style="padding: 10px 0 10px 0">
                 <v-img
                     :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
-                    max-width="200px"
-                    max-height="150px" contain/>
+                    max-width="300px"
+                    max-height="250px" contain/>
               </v-card-text>
               <div class="product-info">
                 <p style="color: #568869; font-size: 12px">{{ product.brand }}</p>

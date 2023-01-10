@@ -37,7 +37,7 @@ class _HomeBannerState extends State<HomeBanner> {
             return Container(
               padding: EdgeInsets.only(bottom: 18),
               width: size.width,
-              child: Image(image: AssetImage(i)),
+              child: Image(image: AssetImage(i),fit: BoxFit.fitWidth,),
             );
           },
         );
