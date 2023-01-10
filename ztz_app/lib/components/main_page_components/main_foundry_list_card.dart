@@ -20,7 +20,7 @@ class MainFoundryListCard extends StatelessWidget{
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 160, height: 240,
+        width: 160,
         padding: const EdgeInsets.all(3),
         margin: const EdgeInsets.all(5),
         // color: Colors.blue,

@@ -59,7 +59,7 @@ class _CategoryFormState extends State<CategoryForm> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FoundaryPage())
+              MaterialPageRoute(builder: (context) => FoundryPage())
             );
           },
         ),
