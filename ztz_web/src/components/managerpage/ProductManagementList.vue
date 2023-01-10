@@ -18,12 +18,12 @@
           <v-row>
             <v-col cols="auto" v-for="(item, idx) in products" :key="idx">
 
-                <v-card width="170px" height="320px">
+                <v-card width="200px" height="400px">
                   <v-card-text style="padding: 20px 0 0 0">
                   <v-img
                       :src="require(`@/assets/products/uploadImg/${item.productInfo.thumbnailFileName}`)"
-                      max-width="160px"
-                      max-height="130px"
+                      max-width="250px"
+                      max-height="200px"
                       contain/>
                   </v-card-text>
                   <div class="item-info">

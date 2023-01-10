@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:ztz_app/utility/text_styles.dart';
+
+import '../../pages/cart.dart';
 
 class MenuAppBar extends StatefulWidget with PreferredSizeWidget {
   const MenuAppBar({Key? key, required this.title}) : super(key: key);
@@ -26,6 +30,7 @@ class _MenuAppBarState extends State<MenuAppBar> {
         IconButton(
           icon: const Icon(Icons.shopping_cart_outlined),
           onPressed: () {
+            Get.to(() => Cart());
             // 장바구니 페이지로 이동
           },
         )

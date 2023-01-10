@@ -282,7 +282,7 @@ export default {
 .item-info .c2 {
   position: relative;
   margin-top: 50px;
-  margin-left: 15%;
+  margin-left: 10%;
 }
 
 .item-info .r1 {

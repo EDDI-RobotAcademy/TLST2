@@ -5,7 +5,7 @@
           cycle
           v-model="model"
           hide-delimiters
-          max-height="500px">
+          max-height="400px">
         <v-carousel-item v-for="image in images" :key="image">
           <v-img :src="image" contain></v-img>
         </v-carousel-item>
@@ -48,10 +48,10 @@ export default {
       interval: 1500,
       model: null,
       images: [
-        require('@/assets/main/carouselImg/carousel_04.png'),
-        require('@/assets/main/carouselImg/carousel_01.png'),
-        require('@/assets/main/carouselImg/carousel_02.png'),
-        require('@/assets/main/carouselImg/carousel_03.png'),
+        require('@/assets/main/carouselImg/carousel04_sized.jpg'),
+        require('@/assets/main/carouselImg/carousel01_sized.jpg'),
+        require('@/assets/main/carouselImg/carousel02_sized.jpg'),
+        require('@/assets/main/carouselImg/carousel03_sized.jpg'),
       ],
     }
   },
@@ -78,7 +78,7 @@ export default {
 .container {
   width: 1200px;
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 0px 0;
 }
 
 

@@ -405,7 +405,7 @@ class _OrderDetailManagementComponent
                 Container(
                   padding: EdgeInsets.only(left: 20, bottom: 20),
                   width: 80,
-                  height: 120,
+                  // height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,7 +446,7 @@ class _OrderDetailManagementComponent
                         maxLines: 2,
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 24,
                       ),
                       Text("종이포장재"),
                       SizedBox(

@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.controller.tour.form;
 
-import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.service.tour.request.ReservationRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
