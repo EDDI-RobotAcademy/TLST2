@@ -17,7 +17,7 @@
     <div class="item-info" v-for="(item, index) in cartList" :key="index">
       <div class="l">
           <v-row>
-             <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.id" @change="selectItem(item.product.price, item.count)" >
+             <input type="checkbox" style="accent-color: green;" name="products" :value="item" v-model="selectList" :id="item.itemNo" @change="selectItem(item.product.price, item.count)" >
               <v-img class="ml-1"
                   :src="require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)"
                   max-width="200"
@@ -48,7 +48,7 @@
                           </v-btn>
                         </div>
             <div class="r1">
-              <p>{{  item.product.price | numberFormat }} 원</p>
+              <p>{{  item.count * item.product.price | numberFormat }} 원</p>
             </div>
             <div class="r2">
               <ButtonWhite class="ml-0"
@@ -90,7 +90,7 @@
 
 <script>
 
-import {mapState} from "vuex";
+import {mapState, mapActions} from "vuex";
 
 export default {
   name: "CartForm",
@@ -130,21 +130,56 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+      'reqCartItemCountChangeToSpring'
+    ]),
+
     selectItem(price, count){
       console.log("가격과 수량: " +price +count)
       console.log("셀렉트 아이템 리스트: " +this.selectList)
       this.totalPrice = this.totalPrice +(price * count)
     },
-    qtyDecrease(item) {
+
+    async qtyDecrease(item) {
       if (item.count> 0) {
         item.count--
       } else {
         item.count = 0
       }
+      var payload =  {
+        'itemNo':item.itemNo, 
+        'count':item.count, 
+        'selectedProductAmount': item.product.price * item.count
+      }
+      await this.reqCartItemCountChangeToSpring(payload);
+      this.res = this.$store.state.resMyRequest;
+
+      if (this.res === 1) {
+        console.log("수량 변경 성공");
+      } else {
+        console.log("실패")
+      }
     },
-    qtyIncrease(item) {
+    async qtyIncrease(item) {
       item.count++
+      
+      var payload =  {
+        'itemNo':item.itemNo, 
+        'count':item.count, 
+        'selectedProductAmount': item.product.price * item.count
+      }
+      await this.reqCartItemCountChangeToSpring(payload);
+      this.res = this.$store.state.resMyRequest;
+
+      if (this.res === 1) {
+        console.log("수량 변경 성공");
+      } else {
+        console.log("실패")
+      }
     },
+    
+
+
     btnDeleteCartItem(){
       let deleteCartMessage = confirm("선택 상품을 삭제하시겠습니까?")
 
@@ -165,7 +200,7 @@ export default {
       this.directCartList = this.cartList[index]
       this.quantity = this.cartList[index].count
       this.cartNo = this.cartList[index].cart.cartNo
-      this.cartItemNo =  this.cartList[index].cartItemNo
+      this.cartItemNo =  this.cartList[index].itemNo
 
       this.$store.commit('REQUEST_ORDER_LIST_FROM_SPRING',
           {orderSave: {directOrderCheck:true ,cartInfoCheck:true, tmpCartItemOrderNo: this.cartItemNo, cartNo: this.cartNo,

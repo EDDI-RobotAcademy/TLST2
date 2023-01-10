@@ -16,7 +16,7 @@ export default {
   },
   methods:{
     ...mapActions([
-      'reqCartListFromSpring', 'reqDeleteCartItemFromSpring'
+      'reqMyCartListFromSpring', 'reqDeleteCartItemFromSpring'
     ]),
     deleteCartItem(payload){
       const selectCartItemNo= payload
@@ -27,7 +27,7 @@ export default {
   mounted() {
     if(this.$store.state.isAuthenticated === true) {
       let token = window.localStorage.getItem('userInfo')
-      this.reqCartListFromSpring(token)
+      this.reqMyCartListFromSpring(token)
     }
 
   },

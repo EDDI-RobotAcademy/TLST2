@@ -31,8 +31,13 @@ class CartController extends GetxController{
     }, time: Duration(seconds: 3));
     ever(checkStatusMap, (_){
       print("아이템 선택 감지");
-      selectNum.value = selectedProduct.length;
+      selectNum.value = 0;
       resetTotalAmount();
+      checkStatusMap.forEach((key, value) {
+        if(value){
+          selectNum.value ++;
+        }
+      });
     });
     ever(totalAmount,(_){
       if(totalAmount > 50000) {
@@ -43,10 +48,10 @@ class CartController extends GetxController{
     });
 
   }
-  
+
 
   Future<void> fetchData() async{
-    await OrderService.fetchItems("6688e783-7d19-4edf-a967-0e09aeb1e56b");
+    await OrderService.fetchItems();
   }
   reqChangeItemCount(int itemNo, int count, int totalPrice) async {
     var res = await OrderService.requestChangeItemInfo(itemNo, count, totalPrice);
@@ -57,18 +62,15 @@ class CartController extends GetxController{
       print("change failed");
     }
   }
-  reqDeleteItem(int itemNo, String token) async {
-    var res = await OrderService.requestDeleteItem(itemNo, token);
+  reqDeleteItem(int itemNo) async {
+    var res = await OrderService.requestDeleteItem(itemNo);
     if(res == 1) {
       fetchData();
     } else {
       print("failed");
     }
   }
-  reqSelectItems(List selectedProduct) async{
-    var res = await OrderService.requestSelectItems(selectedProduct);
-    print("선택한 것들 " + res.toString());
-  }
+
 
   increment(int index){
     reactiveCartList[index]['count'] ++;
@@ -103,11 +105,11 @@ class CartController extends GetxController{
       print(selectedProduct.toString());
     });
   }
-  delete(int index, int itemNo, token) {
+  delete(int index, int itemNo) {
     selectedProduct.remove(reactiveCartList[index]['itemNo'].toString());
     checkStatusMap.remove(reactiveCartList[index]['itemNo'].toString());
     reactiveCartList.removeAt(index);
-    reqDeleteItem(itemNo, token);
+    reqDeleteItem(itemNo);
   }
 
   //총액 구하기

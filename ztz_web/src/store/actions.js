@@ -147,35 +147,6 @@ export default {
             })
     },
 
-    // eslint-disable-next-line no-empty-pattern
-    reqAddCartToSpring({}, payload) {
-        const {memberId, productId, count} = payload
-        console.log('장바구니 추가 상품번호: ' + productId + ' 수량: ' + count)
-
-        return axios.post(`http://localhost:7777/ztz/order/addCartItem/${memberId}`,
-            {memberId, productId, count})
-            .then(() => {
-            })
-    },
-    reqCartListFromSpring({commit}, token) {
-        return axios.post('http://localhost:7777/ztz/order/cartList',
-            {token: token})
-            .then((res) => {
-                commit(REQUEST_CART_LIST_FROM_SPRING, res.data)
-                console.log("장바구니 리스트 출력")
-            })
-    },
-    // eslint-disable-next-line no-empty-pattern
-    reqDeleteCartItemFromSpring({}, payload) {
-        const selectCartItemNo = payload
-
-        console.log('장바구니 아이템 삭제 전')
-
-        return axios.post(`http://localhost:7777/ztz/order/deleteCartItem`,
-            {selectCartItemNo})
-            .then(() => {
-            })
-    },
     reqRegisterReviewToSpring(_, payload) {
         console.log('이미지 미포함 리뷰 등록하기')
 
@@ -453,5 +424,44 @@ export default {
                         commit(REQUEST_MANAGER_PHONENUMBER_FROM_SPRING, res.data)
                         console.log("profile : " + res.data)
                     })
-    }
+    },
+
+
+    reqMyCartListFromSpring({commit}, token) {
+        return axios.get('http://localhost:7777/ztz/order/myCart',{headers: { Token: token },
+            }).then((res) => {
+                commit(REQUEST_CART_LIST_FROM_SPRING, res.data)
+                console.log("수정된 리스트 출력" + res.data)
+            })
+    },
+    reqCartItemCountChangeToSpring({commit}, payload) {
+        console.log("payload : " + payload)
+        return axios.post("http://localhost:7777/ztz/order/change-item-count", payload)
+            .then((res) => {
+                commit(RESPONSE_MY_REQUEST, res.data);
+            });
+    },
+    // eslint-disable-next-line no-empty-pattern
+    reqDeleteCartItemFromSpring({}, payload) {
+        const selectCartItemNo = payload
+
+        console.log('장바구니 아이템 삭제 전')
+
+        return axios.post(`http://localhost:7777/ztz/order/delete-items`,
+            {selectCartItemNo})
+            .then(() => {
+            })
+    },
+       // eslint-disable-next-line no-empty-pattern
+    reqAddCartToSpring({}, payload) {
+    const {memberId, productId, count} = payload
+    console.log('장바구니 추가 상품번호: ' + productId + ' 수량: ' + count)
+
+    return axios.post(`http://localhost:7777/ztz/order/addCartItem/${memberId}`,
+        {memberId, productId, count})
+        .then(() => {
+        })
+    },
+
+   
 }

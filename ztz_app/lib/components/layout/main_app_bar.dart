@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../pages/cart.dart';
 
 class MainAppBar extends StatefulWidget with PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _MainAppBarState extends State<MainAppBar> {
         IconButton(
           icon: const Icon(Icons.shopping_cart_outlined),
           onPressed: () {
-            // 장바구니 페이지로 이동
+            Get.to(() => Cart()); // 장바구니 페이지로 이동
           },
         )
       ],
