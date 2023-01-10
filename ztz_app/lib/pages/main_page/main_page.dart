@@ -19,10 +19,7 @@ class MainPage extends StatelessWidget{
           child: Column(
             children: [
               HomeBanner(),
-              MainComponent(),
-              ElevatedButton(onPressed: (){
-                MemberApi().userVerification(c.token.string);
-                }, child: const Text("requestMemberInfo"))
+              MainComponent()
             ],
           ),
         ),

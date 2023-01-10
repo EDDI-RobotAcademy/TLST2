@@ -11,22 +11,22 @@ import '../../../pages/home_page.dart';
 import '../../../utility/colors.dart';
 
 
-class ReservationFormComponent extends StatefulWidget {
-  const ReservationFormComponent({Key? key}) : super(key: key);
+class MyReservationModifyFormComponent extends StatefulWidget {
+  const MyReservationModifyFormComponent({Key? key}) : super(key: key);
 
   @override
-  _ReservationFormComponent createState() => _ReservationFormComponent();
+  _MyReservationModifyFormComponent createState() => _MyReservationModifyFormComponent();
 }
 
-class _ReservationFormComponent extends State<ReservationFormComponent> {
+class _MyReservationModifyFormComponent extends State<MyReservationModifyFormComponent> {
   TextEditingController dateinput = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
 
   var loginInfoCheck = false;
   late var name= "";
-  int minMember = FoundryInfo.foundryMinMember;
-  late int selectedAmount = minMember;
-  String foundryName = FoundryInfo.foundryName;
+  int minMember = FoundryInfo.reservationInfo['foundryMinMember'];
+  late int selectedAmount = FoundryInfo.reservationInfo['numberOfMember'];
+  String foundryName = FoundryInfo.reservationInfo['foundryName'];
   late int reservationResult = 0;
 
   @override
@@ -79,6 +79,28 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
       child: Column(
           children: [
             Row(
+              children: [
+                SizedBox(width: 40),
+                Text("양조장    ", style: TextStyle(fontSize:15, fontWeight: FontWeight.w800), ),
+                SizedBox(width: 15),
+                Container(
+                  width: 200,
+                  height:40,
+                  child:
+                  TextField(
+                    style: TextStyle(fontSize: 14.0, height: 0.5, color: Colors.black),
+                    decoration: InputDecoration(
+                      enabled: false,
+                      labelText: FoundryInfo.reservationInfo['foundryName'],
+                      border: OutlineInputBorder(),
+                    ),),
+                ),
+              ],
+            ),
+            Container(
+              height: 20,
+            ),
+            Row(
             children: [
               SizedBox(width: 40),
               Text("예약자    ", style: TextStyle(fontSize:15, fontWeight: FontWeight.w800), ),
@@ -113,7 +135,7 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
                       controller: phoneNumber,
                       style: TextStyle(fontSize: 14.0, height: 0.5, color: Colors.black),
                       decoration: InputDecoration(
-                        labelText: '-포함 핸드폰 번호 11자리를 입력해주세요',
+                        labelText: FoundryInfo.reservationInfo['phoneNumber'],
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -137,6 +159,7 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
                     style: TextStyle(fontSize: 14.0, height: 0.5, color: Colors.black),
                     readOnly: true,
                     decoration: InputDecoration(
+                      labelText: FoundryInfo.reservationInfo['reservationDate'],
                       border: OutlineInputBorder(),
                     ),
                       onTap: () async {
@@ -192,7 +215,14 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
                         primary: Color(0xff205C37),
                       ),
                       onPressed:() async{
-                        await ReservationController().requestSaveReservationToSpring(
+                        if(phoneNumber.text.isEmpty){
+                          phoneNumber.text = FoundryInfo.reservationInfo['phoneNumber'];
+                        }
+                        if(dateinput.text.isEmpty){
+                          dateinput.text = FoundryInfo.reservationInfo['reservationDate'];
+                        }
+                        await ReservationController().requestModifyReservationToSpring(
+                            FoundryInfo.reservationInfo['reservationId'],
                             name,
                             selectedAmount,
                             dateinput.text,
@@ -203,13 +233,13 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
                         reservationResult= FoundryInfo.reservationResult;
 
                         if(reservationResult == 1){
-                          showSuccessReservation();
+                          showSuccessModifyReservation();
                         } else{
-                          showFailReservation();
+                          showFailModifyReservation();
                         }
                         },
 
-                      child: const Text("예약하기")),
+                      child: const Text("예약수정")),
                 ),
 
                 SizedBox(width: 15),
@@ -257,13 +287,13 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
     );
   }
 
-  void showSuccessReservation(){
+  void showSuccessModifyReservation(){
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("예약이 완료되었습니다."),
+          title: new Text("예약이 수정이 완료되었습니다."),
           content: new Text("감사합니다."),
           actions: <Widget>[
             FlatButton(
@@ -280,13 +310,13 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
     );
   }
 
-  void showFailReservation(){
+  void showFailModifyReservation(){
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("예약에 실패하였습니다."),
+          title: new Text("예약 수정에 실패하였습니다."),
           content: new Text("다시 시도해주세요."),
           actions: <Widget>[
             FlatButton(

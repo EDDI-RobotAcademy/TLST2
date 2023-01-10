@@ -21,42 +21,41 @@ class FoundryPageListCard extends StatelessWidget{
       onTap: onTap,
       child: Container(
         // width: double.infinity,
-        height: 160,
-        padding: EdgeInsets.all(3),
-        margin:  EdgeInsets.all(10),
-        // color: Colors.grey,
+        padding: EdgeInsets.all(10),
+        margin:  EdgeInsets.only(top: 10, bottom: 10),
+
+        decoration: BoxDecoration(
+        ),
         child: Row(
           children: [
             Column(
               children: [
-                SizedBox(width: 8,)
+                SizedBox(width: 5,)
               ],
             ),
             Column(
               children: [
-                Image(image: AssetImage("assets/images/foundryImg/${image}"), width: 150, height: 150,),
+                Image(image: AssetImage("assets/images/foundryImg/${image}"), width: 170, height: 170,),
               ]
             ),
             Column(
               children: [
-              SizedBox(width: 20,)
+              SizedBox(width: 10,)
             ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // width: double.infinity,
-              children: [
-              Text("$name", style: xMediumBlackTextStyle(), ),
-              SizedBox(height: 8,),
-              Text("$address", style: MediumBlackTextStyle(), ),
-              SizedBox(height: 8,),
-              Text("$content", style: MediumBlackTextStyle(), ),
-              SizedBox(height: 5,),
-              Text("$tel" ),
-              SizedBox(height: 5,),
-            ]
-            // SizedBox(height: 8,),
-            )
+             Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                Text("$name", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w700), ),
+                SizedBox(height: 15,),
+                Text("$address", style: MediumBlackTextStyle(), ),
+                SizedBox(height: 15,),
+                Text("$content", style: xMediumBlackTextStyle(), ),
+                SizedBox(height: 15,),
+                Text("$tel" ),
+                ]
+              // SizedBox(height: 8,),
+              ),
           ],
         ),
       ),

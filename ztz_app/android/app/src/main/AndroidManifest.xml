@@ -3,10 +3,12 @@
    <application
         android:label="ztz_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
+       <!-- 아임포트 결제 설정추가부분 android:usesCleartextTraffic="true"-->
 
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="여기에 구글 안드로이드 API키 넣기"/>
+           android:value="AIzaSyC7Z5e-sW-7y3WJgG8rgtNThBI3cKtkx6Y"/>
 
         <activity
             android:name=".MainActivity"

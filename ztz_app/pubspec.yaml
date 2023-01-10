@@ -45,6 +45,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+3
   carousel_slider: ^4.2.1
   sticky_headers: ^0.2.0
+  iamport_flutter: ^0.10.0
 
 
 dev_dependencies:
