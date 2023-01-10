@@ -185,7 +185,7 @@ export default {
 
       if(deleteCartMessage){
         for (let i = 0; i < this.selectList.length; i++) {
-          this.selectCartItemNo[i] = this.selectList[i].cartItemNo
+          this.selectCartItemNo[i] = this.selectList[i].itemNo
         }
         this.$emit('deleteCartItem', this.selectCartItemNo)
       }

@@ -174,9 +174,9 @@ export default {
       this.quantity++
     },
     btnCart() {
-      const productId = this.product.productNo
+      var productNo = this.product.productNo
       const count = this.quantity
-      this.$emit('addCart', {productId, count})
+      this.$emit('addCart', {productNo, count})
     },
     async btnDirectPurchase() {
       if(this.$store.state.isAuthenticated){

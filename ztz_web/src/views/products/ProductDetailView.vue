@@ -36,12 +36,11 @@ export default {
     ]),
     async addCart(payload){
       if(this.isAuthenticated){
-        const {productId, count} = payload
+        const {productNo, count} = payload
         let token = window.localStorage.getItem('userInfo')
         await this.reqMemberInfoToSpring(token)
-        const memberId = this.resMember.id
-
-        await this.reqAddCartToSpring({memberId, productId, count})
+        console.log("뭔데 이거" + productNo)
+        await this.reqAddCartToSpring({productNo, count, token})
         let cartMessage = confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")
         if(cartMessage){
           await this.$router.push({name: 'CartView'})

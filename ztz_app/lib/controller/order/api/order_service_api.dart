@@ -24,7 +24,26 @@ class OrderService {
       CartController.reactiveCartList.value = jsonData;
     }
   }
+  static requestAddToCart(int productNo, int count) async {
 
+    var data = {
+      'productNo': productNo,
+      'count': count,
+      'token':AccountState.accountGet.token.value
+    };
+    var body = json.encode(data);
+
+    var req = await http.post(
+      Uri.http(httpUri, '/ztz/order/add'),
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
+
+    if (req.statusCode == 200) {
+      var jsonData = jsonDecode(utf8.decode(req.bodyBytes));
+      return jsonData;
+    }
+  }
   static requestDeleteItem(int itemNo) async {
 
     try{

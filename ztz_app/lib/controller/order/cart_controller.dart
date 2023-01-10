@@ -53,6 +53,14 @@ class CartController extends GetxController{
   Future<void> fetchData() async{
     await OrderService.fetchItems();
   }
+  reqAddItem(int productNo, int count) async {
+    var res = await OrderService.requestAddToCart(productNo, count);
+    if(res == 1) {
+      fetchData();
+    } else {
+      print("add failed");
+    }
+  }
   reqChangeItemCount(int itemNo, int count, int totalPrice) async {
     var res = await OrderService.requestChangeItemInfo(itemNo, count, totalPrice);
     if(res == 1) {
@@ -72,6 +80,9 @@ class CartController extends GetxController{
   }
 
 
+  add(int productNo, int count) {
+
+  }
   increment(int index){
     reactiveCartList[index]['count'] ++;
     int amount =

@@ -204,10 +204,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, writer, memberId, categoryType} = payload
-        console.log(payload)
+        const {title, content, writer} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
@@ -455,11 +454,11 @@ export default {
     },
        // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
-    const {memberId, productId, count} = payload
-    console.log('장바구니 추가 상품번호: ' + productId + ' 수량: ' + count)
+    const {productNo, count, token} = payload
+    console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
 
-    return axios.post(`http://localhost:7777/ztz/order/addCartItem/${memberId}`,
-        {memberId, productId, count})
+    return axios.post(`http://localhost:7777/ztz/order/add`,
+        {productNo, count, token})
         .then(() => {
         })
     },
