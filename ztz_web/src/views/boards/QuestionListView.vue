@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div class="wrap">
     <div id="question-board">
       <h1>상품 Q&A</h1>
       <br/>
@@ -13,8 +13,7 @@
       </router-link>
     </div>
     <br/>
-
-  </v-container>
+  </div>
 </template>
 
 <script>
