@@ -56,6 +56,7 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: WhiteMenuAppBar(title: "배송지 관리"),
       body: Column(
@@ -92,7 +93,7 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                       controller: zipcodeController..text = zipcode,
                       onChanged: (text) => {},
                       decoration: InputDecoration(
-                        constraints: BoxConstraints.tightFor(width: 230),
+                        constraints: BoxConstraints.tightFor(width: size.width/1.8),
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: ColorStyle.mainColor)
@@ -103,7 +104,7 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                       margin: EdgeInsets.only(left: 10),
                       child: OutlinedButton(
                         style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(Size(130, 55)),
+                          fixedSize: MaterialStateProperty.all(Size(size.width/3.2, 55)),
                         ),
                         child: Text("배송지 수정", style: greenTextStyle(14),),
                         onPressed: () {

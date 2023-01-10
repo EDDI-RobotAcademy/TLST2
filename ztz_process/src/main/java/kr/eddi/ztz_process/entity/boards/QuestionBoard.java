@@ -1,8 +1,8 @@
 package kr.eddi.ztz_process.entity.boards;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import kr.eddi.ztz_process.entity.member.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,6 +30,16 @@ public class QuestionBoard {
 
     @Lob
     private String content;
+
+    @JsonIgnore
+    @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
+    @JsonIgnore
+    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private BoardCategory boardCategory;
 
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-mm-dd")
