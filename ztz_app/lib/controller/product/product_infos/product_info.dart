@@ -4,6 +4,7 @@ class ProductInfo extends GetxController{
   static late var productList = [];
   static late var product = {}; // 컨트롤러에서 받은 DB 값을 저장하고
 
+  static late int productNo;
   static late String productName;
   static late String productBrand;
   static late String subTitle;
@@ -15,6 +16,7 @@ class ProductInfo extends GetxController{
   static late var productImagesName = [];
 
   void setProductDetailINfo(){
+    productNo = product['productNo'];
     productName = product['name'];
     productBrand = product['brand'];
     subTitle = product['productInfo']['subTitle'];

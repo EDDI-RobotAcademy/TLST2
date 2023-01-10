@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ztz_app/utility/colors.dart';
 
+import '../../../controller/order/cart_controller.dart';
 import '../../../controller/product/product_infos/product_info.dart';
+import '../../../pages/cart.dart';
 import '../../../utility/button_style.dart';
 import '../../../utility/text_styles.dart';
 
@@ -17,7 +20,7 @@ class ProductBuyModalComponent extends StatefulWidget{
 class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
 
   late final String image, productName , subTitle;
-  late final int productPrice;
+  late final int productPrice, productNo;
   var numberFormat = NumberFormat('###,###,###,###');
 
   int selectedAmount = 1;
@@ -28,6 +31,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
     productName = ProductInfo.productName;
     subTitle = ProductInfo.subTitle;
     productPrice = ProductInfo.productPrice;
+    productNo = ProductInfo.productNo;
   }
   @override
   Widget build(BuildContext context) {
@@ -136,7 +140,13 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
               padding: EdgeInsets.all(5),
               child: Row(
                 children: [
-                  ElevatedButton(onPressed: (){}, child: Text("장바구니",style: xMediumWhiteTextStyle(),),style: defaultElevatedButtonStyle((size.width/2)-10,50),),
+                  ElevatedButton(
+                    onPressed: (){
+                      CartController().reqAddItem(productNo, selectedAmount);
+                      Get.to(() => Cart());
+                    },
+                    child: Text("장바구니",style: xMediumWhiteTextStyle(),),
+                    style: defaultElevatedButtonStyle((size.width/2)-10,50),),
                   SizedBox(width: 10,),
                   ElevatedButton(onPressed: (){}, child: Text("결제하기",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
