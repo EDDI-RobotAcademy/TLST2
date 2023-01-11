@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ztz_app/components/order/order_form.dart';
+import 'package:ztz_app/pages/order/order.dart';
 
-import '../components/order/cart_list_builder.dart';
-import '../controller/order/cart_controller.dart';
-import '../utility/text_styles.dart';
+import '../../components/order/cart_list_builder.dart';
+import '../../controller/order/cart_controller.dart';
+import '../../utility/text_styles.dart';
 
 
 class Cart extends StatelessWidget {
@@ -128,7 +130,7 @@ class Cart extends StatelessWidget {
                             style: buttonTextStyle()
                         ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {Get.to(() => OrderPage());},
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Color(0xff276039)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

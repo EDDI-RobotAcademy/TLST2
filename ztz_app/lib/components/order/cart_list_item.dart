@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ztz_app/components/order/cart_list_builder.dart';
 import 'package:ztz_app/controller/order/cart_controller.dart';
 import '../../utility/colors.dart';
-
 import '../../utility/text_styles.dart';
 
 

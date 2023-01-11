@@ -80,9 +80,7 @@ class CartController extends GetxController{
   }
 
 
-  add(int productNo, int count) {
 
-  }
   increment(int index){
     reactiveCartList[index]['count'] ++;
     int amount =

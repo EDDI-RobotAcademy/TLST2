@@ -6,7 +6,7 @@ import 'package:ztz_app/utility/colors.dart';
 
 import '../../../controller/order/cart_controller.dart';
 import '../../../controller/product/product_infos/product_info.dart';
-import '../../../pages/cart.dart';
+import '../../../pages/order/cart.dart';
 import '../../../utility/button_style.dart';
 import '../../../utility/text_styles.dart';
 

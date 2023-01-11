@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 
 class ProductController{
-  static const httpUri = '192.168.0.8:7777';
+  static const httpUri = '192.168.200.175:7777';
   requestAllProductToSpring(keyword) async{
     var data = {'keyword' : keyword};
     var body = json.encode(data);
