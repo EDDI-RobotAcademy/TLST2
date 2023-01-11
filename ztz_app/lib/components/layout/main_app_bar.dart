@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../pages/cart.dart';
+import '../../pages/order/cart.dart';
 
 class MainAppBar extends StatefulWidget with PreferredSizeWidget {
   const MainAppBar({Key? key}) : super(key: key);
