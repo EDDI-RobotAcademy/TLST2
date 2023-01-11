@@ -3,6 +3,8 @@ import 'package:ztz_app/components/layout/white_menu_app_bar.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/controller/board/board_controller.dart';
 import 'package:ztz_app/controller/board/board_infos/board_info.dart';
+import 'package:ztz_app/controller/board/board_infos/register_question_info.dart';
+import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/button_style.dart';
 import 'package:ztz_app/utility/text_field_decoration.dart';
 import 'package:ztz_app/utility/text_styles.dart';
@@ -149,6 +151,7 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
                       showTextDialog("내용을 입력해주세요");
                     } else {
                       //문의 수정
+                      modifyQuestionFunction();
                     }
                   },
                 ),
@@ -157,6 +160,27 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
           ),
         ));
   }
+
+  void modifyQuestionFunction() async {
+    RegisterQuestionInfo registerQuestionInfo = RegisterQuestionInfo(
+        titleController.text,
+        writer,
+        contentController.text,
+        memberId,
+        selectedCategory);
+    await BoardController()
+        .requestModifyQuestionToSpring(widget.questionNo, registerQuestionInfo);
+    if (BoardInfo.modifyQuestionResult) {
+      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionBoardPage()),
+      ).then((value) => setState(() {}));
+    } else {
+      showTextDialog("수정을 실패했습니다.");
+    }
+  }
+
 
   void showModal(context) {
     showModalBottomSheet(

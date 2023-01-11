@@ -75,4 +75,55 @@ class BoardController {
       debugPrint("질문 삭제 오류 발생 " + e.toString());
     }
   }
+
+  requestQuestionBoardFromSpring(questionNo) async {
+    try {
+      var questionResponse = await http.get(
+        Uri.http(httpUri, 'ztz/boards/question/$questionNo'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (questionResponse.statusCode == 200) {
+        var result = {};
+        result = jsonDecode(utf8.decode(questionResponse.bodyBytes));
+        BoardInfo.questionBoard = result;
+        debugPrint("questionBoard 결과 : "
+            + utf8.decode(questionResponse.bodyBytes).toString());
+      } else {
+        debugPrint("questionBoard 통신 오류"
+            + questionResponse.statusCode.toString());
+      }
+    } catch (e) {
+      debugPrint("questionBoard 오류 발생 " + e.toString());
+    }
+  }
+
+  requestModifyQuestionToSpring(questionNo,
+      RegisterQuestionInfo registerQuestionInfo) async {
+    try {
+      var data = {
+        'title': registerQuestionInfo.title,
+        'writer': registerQuestionInfo.writer,
+        'content': registerQuestionInfo.content,
+        'memberId': registerQuestionInfo.memberId,
+        'categoryType': registerQuestionInfo.categoryType
+      };
+      var body = json.encode(data);
+      debugPrint(body);
+
+      var modifyQuestionResponse = await http.put(
+        Uri.http(httpUri, 'ztz/boards/question/$questionNo'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+      if (modifyQuestionResponse.statusCode == 200) {
+        debugPrint("question 수정 성공");
+        BoardInfo.modifyQuestionResult = true;
+      } else {
+        debugPrint(
+            "question 수정 통신 오류" + modifyQuestionResponse.statusCode.toString());
+      }
+    } catch (e) {
+      debugPrint("question 수정 오류 발생" + e.toString());
+    }
+  }
 }
