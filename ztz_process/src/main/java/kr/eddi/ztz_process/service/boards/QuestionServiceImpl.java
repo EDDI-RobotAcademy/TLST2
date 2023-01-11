@@ -40,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
     // 질문게시판 리스트 UI
     @Override
     public List<QuestionBoard> questionList() {
-        return questionRepository.findAll(Sort.by(Sort.Direction.DESC, "questionNo"));
+        return questionRepository.findAllBy();
     }
 
     @Override
@@ -52,14 +52,14 @@ public class QuestionServiceImpl implements QuestionService {
     // 질문게시판 조회(읽기)
     @Override
     public QuestionBoard questionRead(Long questionNo) {
-        Optional<QuestionBoard> maybeBoard = questionRepository.findById(Long.valueOf(questionNo));
+        Optional<QuestionBoard> maybeBoard = Optional.ofNullable(questionRepository.findBoardById(questionNo));
 
         if (maybeBoard.equals(Optional.empty())) {
-            log.info("조회할 수 없습니다!");
+            log.info("해당하는 questionBoard 없음!");
             return null;
+        } else {
+            return maybeBoard.get();
         }
-
-        return maybeBoard.get();
     }
 
      // 질문게시판 게시물 등록
@@ -68,19 +68,21 @@ public class QuestionServiceImpl implements QuestionService {
 
         QuestionBoard questionBoard = new QuestionBoard();
 
+        BoardCategory boardCategory = new BoardCategory(registerBoardCategory(boardsRequest.getCategoryType()));
+
         Optional<Member> maybeMember = memberRepository.findById(boardsRequest.getMemberId());
 
         questionBoard.setTitle(boardsRequest.getTitle());
         questionBoard.setContent(boardsRequest.getContent());
         questionBoard.setWriter(boardsRequest.getWriter());
         questionBoard.setMember(maybeMember.get());
-        questionBoard.setBoardCategory(registerBoardCategory(boardsRequest.getCategoryType()));
+        questionBoard.setBoardCategory(boardCategory);
 
         questionRepository.save(questionBoard);
     }
 
     //질문 등록 시 카테고리 타입 지정하는 메소드
-    public BoardCategory registerBoardCategory(String categoryTypeRequest) {
+    public BoardCategoryType registerBoardCategory(String categoryTypeRequest) {
         String inputCategory = categoryTypeRequest;
 
         BoardCategoryType categoryType = null;
@@ -105,15 +107,30 @@ public class QuestionServiceImpl implements QuestionService {
                 categoryType = BoardCategoryType.OTHER;
                 break;
         }
-
-        BoardCategory boardCategory = new BoardCategory(categoryType);
-        return boardCategory;
+        log.info(categoryType.toString());
+        return categoryType;
     }
 
      // 질문게시판 게시물 수정
     @Override
-    public void questionModify(QuestionBoard questionBoard) {
-        questionRepository.save(questionBoard);
+    public void modify(Long questionNo, BoardsRequest boardsRequest) {
+        Optional<QuestionBoard> maybeBoard = Optional.ofNullable(questionRepository.findBoardById(questionNo));
+        QuestionBoard questionBoard = maybeBoard.get();
+
+        // 카테고리 지정
+        Optional<BoardCategory> maybeCategory = categoryRepository.findById(questionBoard.getBoardCategory().getId());
+        BoardCategory boardCategory = maybeCategory.get();
+        boardCategory.setCategoryType(registerBoardCategory(boardsRequest.getCategoryType()));
+        categoryRepository.save(boardCategory);
+
+        if (maybeBoard.equals(Optional.empty())) {
+            log.info("해당하는 questionBoard 없음!");
+        } else {
+            questionBoard.setTitle(boardsRequest.getTitle());
+            questionBoard.setContent(boardsRequest.getContent());
+            questionBoard.setBoardCategory(boardCategory);
+            questionRepository.save(questionBoard);
+        }
     }
 
     // 질문게시판 게시물 삭제

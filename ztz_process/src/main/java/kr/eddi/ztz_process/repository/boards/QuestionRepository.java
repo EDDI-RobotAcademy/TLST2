@@ -10,7 +10,11 @@ public interface QuestionRepository extends JpaRepository<QuestionBoard, Long> {
     @Query("select qb from QuestionBoard qb join fetch qb.boardCategory join fetch qb.member m where m.id = :memberId")
     List<QuestionBoard> findByMemberId(Long memberId);
 
-//    @Query("select qb from QuestionBoard qb join fetch qb.member")
-//    List<QuestionBoard> findAllBy();
+    // findById 사용 시 boardCategory lazy-Proxy 오류 발생으로 query 작성
+    @Query("select qb from QuestionBoard qb join fetch qb.boardCategory join fetch qb.member where qb.questionNo = :questionNo")
+    QuestionBoard findBoardById(Long questionNo);
+
+    @Query("select qb from QuestionBoard qb join fetch qb.boardCategory order by qb.questionNo desc ")
+    List<QuestionBoard> findAllBy();
 
 }

@@ -1,14 +1,12 @@
 package kr.eddi.ztz_process.entity.boards;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 public class BoardCategory {
 
     @Id
@@ -16,6 +14,7 @@ public class BoardCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private BoardCategoryType categoryType;
 
     public BoardCategory(BoardCategoryType categoryType) {
