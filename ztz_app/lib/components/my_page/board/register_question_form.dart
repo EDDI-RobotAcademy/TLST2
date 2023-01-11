@@ -97,10 +97,12 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
                   style: whiteTextStyle(16),
                 ),
                 onPressed: () {
-                  if (selectedCategory == '' ||
-                      titleController.text == '' ||
-                      contentController.text == '') {
-                    showTextDialog("작성을 완료해주세요.");
+                  if (selectedCategory == '') {
+                    showTextDialog("문의 유형을 선택해주세요");
+                  } else if (titleController.text == '') {
+                    showTextDialog("제목을 입력해주세요");
+                  } else if (contentController.text == '') {
+                    showTextDialog("내용을 입력해주세요");
                   } else {
                     // 문의 등록
                     registerQuestionFunction();
