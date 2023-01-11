@@ -14,7 +14,7 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfo, Long> {
     @Query("select o from OrderInfo o join fetch o.payment join fetch o.member join fetch o.product where o.payment.paymentId = :paymentId")
     List<OrderInfo> findByPaymentId(Long paymentId);
 
-    @Query("select o from OrderInfo o where o.orderState='구매확정'")
+    @Query("select o from OrderInfo o where o.orderState = kr.eddi.ztz_process.entity.order.PaymentState.PAYMENT_CONFIRM ")
     List<OrderInfo> findSalesList();
 
 }
