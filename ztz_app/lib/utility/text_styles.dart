@@ -134,8 +134,16 @@ TextStyle whiteBoldTextStyle(double fontSize) {
 TextStyle blackBoldTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w600,
       color: Colors.black
+  );
+}
+
+TextStyle grayLightTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w300,
+      color: Colors.grey
   );
 }
 

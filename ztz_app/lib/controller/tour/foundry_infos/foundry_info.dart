@@ -4,6 +4,9 @@ class FoundryInfo extends GetxController{
   static late var foundryList = [];
   static late var selectedFoundry = {};
   static late int reservationResult;
+  static late var reservationList = [];
+  static late var reservationInfo = {};
+  static late int reservationPaymentResult;
 
   static late String foundryName;
   static late String foundryAddress;

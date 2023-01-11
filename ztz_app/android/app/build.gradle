@@ -56,7 +56,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ztz_app"
-        minSdkVersion 20 // Update this code
+        minSdkVersion 23 // Update this code
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:ztz_app/components/order/order_form.dart';
 import 'package:ztz_app/pages/order/order.dart';
 
-import '../../components/order/cart_list_builder.dart';
-import '../../controller/order/cart_controller.dart';
-import '../../utility/text_styles.dart';
+import '../components/layout/menu_app_bar.dart';
+import '../components/order/cart_list_builder.dart';
+import '../controller/order/cart_controller.dart';
+import '../utility/text_styles.dart';
+
 
 
 class Cart extends StatelessWidget {
@@ -16,18 +18,7 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(CartController());
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black87),
-        centerTitle: true,
-        title: const Text(
-          'My Cart',
-          style: TextStyle(color: Colors.black87)
-        ),
-        backgroundColor: Colors.white,
-        shadowColor: Colors.transparent,
-        elevation: 0,
-
-      ),
+      appBar: MenuAppBar(title:'My Cart'),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(13, 10, 15, 20),
           child: SingleChildScrollView(
@@ -130,7 +121,7 @@ class Cart extends StatelessWidget {
                             style: buttonTextStyle()
                         ),
                     ),
-                    onPressed: () {Get.to(() => OrderPage());},
+                    onPressed: () {},
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Color(0xff276039)),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

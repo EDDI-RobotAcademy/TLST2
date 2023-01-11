@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ztz_app/components/tour/reservation_detail/reservation_Info.dart';
 
-import 'package:ztz_app/components/layout/main_app_bar.dart';
 import 'package:ztz_app/components/tour/reservation_detail/foundry_map.dart';
 import 'package:ztz_app/components/tour/reservation_detail/reservation_component.dart';
 import 'package:ztz_app/controller/tour/foundry_infos/foundry_info.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
+import '../../components/layout/menu_app_bar.dart';
 import '../../components/tour/reservation_detail/reservation_form_component.dart';
 
 class FoundryDetailPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _FoundryDetailPage extends State<FoundryDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MainAppBar(),
+        appBar: MenuAppBar(title: "양조장",),
         body: SingleChildScrollView(
             child:Column(
                 children:[

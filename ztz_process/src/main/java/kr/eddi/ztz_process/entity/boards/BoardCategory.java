@@ -2,11 +2,13 @@ package kr.eddi.ztz_process.entity.boards;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class BoardCategory {
 
     @Id

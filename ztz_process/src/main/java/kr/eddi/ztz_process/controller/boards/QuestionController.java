@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.boards;
 
+import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.entity.boards.QuestionBoard;
 import kr.eddi.ztz_process.service.boards.QuestionService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,19 @@ public class QuestionController {
         log.info("questionBoardList()");
 
         return questionService.questionList();
+    }
+
+    @PostMapping("/list/member")
+    public List<QuestionBoard> memberQuestionBoardList (@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
+        log.info("memberQuestionBoardList()");
+        String tmpToken = "";
+        if(memberLoggedInTokenForm.getToken().length() >= 37){
+            tmpToken = memberLoggedInTokenForm.getToken().substring(1,37);
+        }else {
+            tmpToken = memberLoggedInTokenForm.getToken();
+        }
+
+        return questionService.memberQuestionList(tmpToken);
     }
 
      // 질문게시판 게시물 조회(읽기)

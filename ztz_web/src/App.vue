@@ -4,7 +4,7 @@
       <v-main>
         <main-header v-if="!$route.meta.hideHeader" />
         <router-view />
-        <new-footer />
+        <new-footer class="mt-15" />
       </v-main>
     </div>
   </v-app>

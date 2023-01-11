@@ -7,6 +7,7 @@ import '../../../controller/account/member_api.dart';
 import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/tour/foundry_infos/foundry_info.dart';
 import '../../../controller/tour/reservation_controller.dart';
+import '../../../pages/home_page.dart';
 import '../../../utility/colors.dart';
 
 
@@ -26,6 +27,7 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
   int minMember = FoundryInfo.foundryMinMember;
   late int selectedAmount = minMember;
   String foundryName = FoundryInfo.foundryName;
+  late int reservationResult = 0;
 
   @override
   void initState() {
@@ -190,13 +192,21 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
                         primary: Color(0xff205C37),
                       ),
                       onPressed:() async{
-                        ReservationController().requestSaveReservationToSpring(
+                        await ReservationController().requestSaveReservationToSpring(
                             name,
                             selectedAmount,
                             dateinput.text,
                             phoneNumber.text,
                             AccountState.accountGet.token.value,
                             foundryName);
+
+                        reservationResult= FoundryInfo.reservationResult;
+
+                        if(reservationResult == 1){
+                          showSuccessReservation();
+                        } else{
+                          showFailReservation();
+                        }
                         },
 
                       child: const Text("예약하기")),
@@ -247,5 +257,49 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
     );
   }
 
+  void showSuccessReservation(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("예약이 완료되었습니다."),
+          content: new Text("감사합니다."),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("Close"),
+              onPressed: (){
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        HomePage()), (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+  void showFailReservation(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("예약에 실패하였습니다."),
+          content: new Text("다시 시도해주세요."),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("Close"),
+              onPressed: (){
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        HomePage()), (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

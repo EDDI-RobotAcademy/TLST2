@@ -148,7 +148,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                     child: Text("장바구니",style: xMediumWhiteTextStyle(),),
                     style: defaultElevatedButtonStyle((size.width/2)-10,50),),
                   SizedBox(width: 10,),
-                  ElevatedButton(onPressed: (){}, child: Text("결제하기",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
+                  ElevatedButton(onPressed: (){}, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
               ),
             )

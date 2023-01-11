@@ -20,7 +20,7 @@ class MainFoundryListCard extends StatelessWidget{
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 160, height: 240,
+        width: 160,
         padding: const EdgeInsets.all(3),
         margin: const EdgeInsets.all(5),
         // color: Colors.blue,
@@ -31,12 +31,15 @@ class MainFoundryListCard extends StatelessWidget{
               child: Image(image: AssetImage("assets/images/foundryImg/${image}"), width: 150, height: 150,),
             ),
             SizedBox(height: 8,),
-            Text("$name", style: xMediumBlackTextStyle() ),
-            SizedBox(height: 8,),
-            Text("$address", style: smallBlackTextStyle(), ),
-            SizedBox(height: 8,),
-            Text("$content" ),
+            Text("$name", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700) ),
             SizedBox(height: 5,),
+            Container(
+              height: 20,
+              child:  Text("$address", style: TextStyle(fontSize: 14) ),
+            ),
+            SizedBox(height: 5,),
+            Text("$content" ),
+            SizedBox(height: 20,),
             
           ],
         ),
