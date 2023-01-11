@@ -1,10 +1,8 @@
 package kr.eddi.ztz_process.entity.boards;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public enum BoardCategoryType {
 
     ORDER_PAYMENT("주문/결제문의"),
@@ -14,6 +12,12 @@ public enum BoardCategoryType {
     TOUR("양조장문의"),
     OTHER("기타문의");
 
-    private final String boardCategory;
+    private final String label;
 
+    BoardCategoryType(String label) {
+        this.label = label;
+    }
+    public String label() {
+        return label;
+    }
 }

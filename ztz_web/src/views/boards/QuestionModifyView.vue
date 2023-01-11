@@ -32,9 +32,9 @@ export default {
       'requestQuestionModifyToSpring'
     ]),
     async onSubmit (payload) {
-      const { title, content, writer, regDate } = payload
+      const { title, content, writer, memberId, categoryType} = payload
       const questionNo = this.questionNo
-      await this.requestQuestionModifyToSpring({ questionNo, title, content, writer, regDate })
+      await this.requestQuestionModifyToSpring({ questionNo, title, content, writer, memberId, categoryType })
       await this.$router.push({
         name: 'QuestionReadView',
         params: { questionNo: this.questionNo }

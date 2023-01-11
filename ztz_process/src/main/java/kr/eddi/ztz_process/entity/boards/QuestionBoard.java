@@ -36,7 +36,6 @@ public class QuestionBoard {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @JsonIgnore
     @JoinColumn(name = "category_id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private BoardCategory boardCategory;

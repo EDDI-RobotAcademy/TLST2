@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ztz_app/components/my_page/board/modify_question_form.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/controller/board/board_controller.dart';
 import 'package:ztz_app/controller/board/board_infos/board_info.dart';
@@ -54,8 +55,7 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
             memberQuestionList.length,
             (index) => ExpansionTile(
                   textColor: Color(0xff205C37),
-                  title: Container(
-                      child: Text(memberQuestionList[index]['title'])),
+                  title: Text(memberQuestionList[index]['title']),
                   subtitle: Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
@@ -71,6 +71,17 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // 카테고리
+                          Container(
+                              margin: EdgeInsets.only(bottom: 15),
+                              child: Text(
+                                memberQuestionList[index]['boardCategory']['categoryType'] == "ORDER_PAYMENT"? "주문/결제문의"
+                                    : memberQuestionList[index]['boardCategory']['categoryType'] == "PRODUCT"? "상품문의"
+                                    : memberQuestionList[index]['boardCategory']['categoryType'] == "DELIVERY"? "배송문의"
+                                    : memberQuestionList[index]['boardCategory']['categoryType'] == "RETURN_CHANGE"? "반품/교환문의"
+                                    : memberQuestionList[index]['boardCategory']['categoryType'] == "TOUR"? "양조장문의"
+                                    : memberQuestionList[index]['boardCategory']['categoryType'] == "OTHER"? "기타문의" : "카테고리오류",
+                                style: TextStyle(fontSize: 14, color: Colors.grey),
+                              )),
                           Container(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,11 +107,17 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                           Container(
                             child: Row(
                               children: [
-                                SizedBox(
-                                  width: size.width - 180,
-                                ),
+                                SizedBox(width: size.width - 180),
                                 TextButton(
                                     onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ModifyQuestionForm(
+                                                    memberQuestionList[index]
+                                                        ['questionNo'])),
+                                      );
                                     },
                                     child: Text(
                                       "수정",
