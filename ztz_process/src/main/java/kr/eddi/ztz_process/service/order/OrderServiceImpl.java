@@ -137,7 +137,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Payment> readManagerAllPayment() {
-        List<Payment> payments = paymentRepository.findAll(Sort.by(Sort.Direction.DESC, "paymentId"));
+        List<Payment> payments = paymentRepository.findAllPaymentList();
         return payments;
     }
 
@@ -286,7 +286,7 @@ public class OrderServiceImpl implements OrderService {
 
     public Integer salesAmount() {
         List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
-
+        log.info("구매완료된 리스트: ");
         Integer totalSalesAmount = 0;
 
         for (int i = 0; i < salesOrderInfo.size(); i++) {
