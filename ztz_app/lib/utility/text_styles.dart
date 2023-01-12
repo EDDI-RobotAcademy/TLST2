@@ -224,7 +224,20 @@ TextStyle productTextStyle(){
 
 
 
-
+TextStyle smallOrderGreenTextStyle(){
+  return const TextStyle(
+      fontSize: 13,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Color(0xff308148)
+  );
+}
+TextStyle smallOrderTextStyle(){
+  return const TextStyle(
+      fontSize: 13,
+      fontFamily: "NanumSquareNeo-cBd",
+      color: Colors.black87
+  );
+}
 TextStyle productInCartNameTextStyle() {
   return const TextStyle(
       fontSize: 16,

@@ -6,7 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/order/order_infos/order_info.dart';
 
 class OrderController{
-  static const httpUri = '192.168.0.8:7777';
+  static const httpUri = '192.168.200.175:7777';
+  static var deliveryMessage = [
+    "문 앞에 두고 가주세요",
+    "조심히 안전하게 와주세요",
+    "배송 후에 문자 부탁드립니다 ",
+    "부재 시 경비실에 놔주세요",
+  ];
 
   requestPaymentListFromSpring(token) async {
     var data = {'token' : token};
@@ -30,7 +36,6 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
-
   requestPaymentListByDataFromSpring(token , readData) async {
     var data = {'token' : token , 'readData' : readData};
     var body = json.encode(data);
@@ -53,7 +58,6 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
-
   requestOrderInfoByPaymentId(paymentId) async {
     try{
       var orderInfoResponse = await http.post(
@@ -74,4 +78,6 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
+
+
 }
