@@ -21,8 +21,9 @@
             {{ questionBoard.questionNo }}
           </td>
           <td align="left">
-            <router-link :to="{ name: 'QuestionReadView',
-                              params: { questionNo: questionBoard.questionNo.toString() }}">
+            <router-link
+                :to="{ name: 'QuestionReadView',params: { questionNo: questionBoard.questionNo.toString() }}"
+                style="color: black; text-decoration: none">
               <div v-if="isLogin == false" @click.prevent="readAccess">
                 {{ questionBoard.title }}
               </div>
@@ -54,7 +55,7 @@ export default {
       isLogin: false
     }
   },
-  mounted () {
+  mounted() {
     if (this.$store.state.isAuthenticated != false) {
       this.isLogin = true
     } else {
@@ -63,13 +64,13 @@ export default {
   },
   methods: {
     readAccess() {
-      if(this.isLogin == false) {
+      if (this.isLogin == false) {
         alert("로그인이 필요한 기능입니다.")
         this.$router.push("/sign-in")
       }
     }
   },
-  computed : {
+  computed: {
     ...mapState([
       'isAuthenticated',
       'resMember',
