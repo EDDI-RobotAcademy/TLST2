@@ -9,6 +9,8 @@ public interface QuestionCommentService {
     // 댓글 리스트
     public List<QuestionComment> questionCommentList(Long questionNo);
 
+    public QuestionComment questionComment(Long questionNo);
+
     // 댓글 등록
     public void questionCommentRegister(CommentRequest commentRequest);
 

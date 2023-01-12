@@ -34,6 +34,11 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
         return questionCommentRepository.findCommentByQuestionNo(questionNo);
     }
 
+    @Override
+    public QuestionComment questionComment(Long questionNo) {
+        return questionCommentRepository.findByQuestionNo(questionNo);
+    }
+
     // 댓글 등록
     @Override
     public void questionCommentRegister(CommentRequest commentRequest) {
