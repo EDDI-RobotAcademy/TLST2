@@ -15,6 +15,8 @@ import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
+import '../../pages/my_page/review_management/reivew_management_page.dart';
+
 class MyPageForm extends StatefulWidget {
   const MyPageForm({Key? key, required this.token}) : super(key: key);
 
@@ -56,7 +58,7 @@ class _MyPageFormState extends State<MyPageForm> {
   var myPageNaviList = [
     // page -> 이동할 페이지
     {'title': "주문 관리", 'page': OrderManagementPage()},
-    {'title': "리뷰 관리", 'page': LoginPage()},
+    {'title': "리뷰 관리", 'page': ReviewManagementPage()},
     {'title': "예약 관리", 'page': MyReservationPage()},
     {'title': "1:1 문의", 'page': QuestionBoardPage()},
     {'title': "배송지 관리", 'page': ModifyAddressPage()},
