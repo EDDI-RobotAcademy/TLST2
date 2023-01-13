@@ -142,6 +142,7 @@ class CartController extends GetxController{
         if(selectedItem.isEqual(reactiveCartList[i]['itemNo'])){
           var tmpData = {
             'itemNo':reactiveCartList[i]['itemNo'],
+            'productNo':reactiveCartList[i]['product']['productNo'],
             'productName' : reactiveCartList[i]['product']['name'],
             'count': reactiveCartList[i]['count'],
             'selectedProductAmount': reactiveCartList[i]['selectedProductAmount'],
@@ -154,7 +155,6 @@ class CartController extends GetxController{
     priceData.add(totalAmount);
     priceData.add(deliveryFee);
     priceData.add(sum);
-    print(priceData.toString());
 
     if(!selectedProduct.isEmpty) {
       Get.to(()=> OrderPage(),arguments:[orderData, priceData]);

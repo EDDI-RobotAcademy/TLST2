@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ztz_app/components/order/select_box.dart';
+import 'package:ztz_app/controller/order/order_controller.dart';
 
 
 import '../../components/order/order_amount_widget.dart';
 import '../../components/order/order_list_builder.dart';
 import '../../components/order/order_my_info_widget.dart';
-import '../../controller/account/sign_up_infos/account_state.dart';
+import '../../components/order/order_payment.dart';
 import '../../utility/text_styles.dart';
 
 class OrderPage extends StatelessWidget {
@@ -16,7 +17,6 @@ class OrderPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    print("야호" + getPriceData.toString());
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black87),
@@ -67,7 +67,9 @@ class OrderPage extends StatelessWidget {
                     child: ElevatedButton(
                       child: Text( "주문하기",
                               style: buttonTextStyle()),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() =>  OrderPayment(),arguments:getOrderData);
+                      },
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Color(0xff276039)),
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

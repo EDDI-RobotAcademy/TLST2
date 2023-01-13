@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:ztz_app/components/reivew/photo_review_component.dart';
 import 'package:ztz_app/controller/order/cart_controller.dart';
+import 'package:ztz_app/controller/order/order_controller.dart';
 
 import '../../account/sign_up_infos/account_state.dart';
 
@@ -82,5 +84,25 @@ class OrderService {
     }
 
   }
+  static requestOrder(var imp, var merchantUid, List items) async {
+    var data = {
+      "token": AccountState.accountGet.token.value,
+      "impUid": imp,
+      "merchantUid": merchantUid,
+      "items" : items,
+      "deliveryMessage" :OrderController.deliveryMessage
+    };
+    var body = json.encode(data);
 
+    var req = await http.post(
+      Uri.http(httpUri, '/ztz/order/save-order'),
+      headers: {"Content-Type": "application/json"},
+      body: body,
+    );
+
+    if (req.statusCode == 200) {
+      var jsonData = jsonDecode(utf8.decode(req.bodyBytes));
+      return jsonData;
+    }
+  }
 }

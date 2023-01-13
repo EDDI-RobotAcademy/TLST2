@@ -22,7 +22,6 @@ class _OrderItemsListState extends State<OrderItemsList> {
   void initState() {
     super.initState();
     orderItems = widget.receivedData;
-    print("list builder :" + orderItems.toString());
   }
 
   @override
