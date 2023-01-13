@@ -1,10 +1,14 @@
 package kr.eddi.ztz_process.service.products;
 
+import com.siot.IamportRestClient.response.payco.OrderStatus;
 import kr.eddi.ztz_process.controller.products.request.ReviewRequest;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
+import kr.eddi.ztz_process.entity.order.PaymentState;
 import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.entity.products.Review;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
+import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.repository.products.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,10 +30,15 @@ public class ReviewServiceImpl implements ReviewService{
     @Autowired
     private ProductsRepository productsRepository;
 
+    @Autowired
+    private OrderInfoRepository orderInfoRepository;
     @Override
     public void register(ReviewRequest reviewRequest) {
         Optional<Member> maybeMember = memberRepository.findById(reviewRequest.getMemberId());
         Member member = maybeMember.get();
+
+        Optional<OrderInfo> maybeOrderInfo = orderInfoRepository.findById(reviewRequest.getOrderId());
+        OrderInfo orderInfo = maybeOrderInfo.get();
 
         Optional<Product> maybeProduct = productsRepository.findById(reviewRequest.getProductNo());
         Product product = maybeProduct.get();
@@ -38,7 +47,11 @@ public class ReviewServiceImpl implements ReviewService{
                 .product(product)
                 .rate(reviewRequest.getRate())
                 .content(reviewRequest.getContent())
+                .orderInfo(orderInfo)
                 .build();
+
+        orderInfo.setOrderState(PaymentState.WRITE_REVIEW);
+        orderInfoRepository.save(orderInfo);
         reviewRepository.save(review);
 
     }
@@ -47,6 +60,9 @@ public class ReviewServiceImpl implements ReviewService{
     public void registerWithImg(ReviewRequest reviewRequest, String thumbnailFileName) {
         Optional<Member> maybeMember = memberRepository.findById(reviewRequest.getMemberId());
         Member member = maybeMember.get();
+
+        Optional<OrderInfo> maybeOrderInfo = orderInfoRepository.findById(reviewRequest.getOrderId());
+        OrderInfo orderInfo = maybeOrderInfo.get();
 
         Optional<Product> maybeProduct = productsRepository.findById(reviewRequest.getProductNo());
         Product product = maybeProduct.get();
@@ -58,7 +74,12 @@ public class ReviewServiceImpl implements ReviewService{
                 .rate(reviewRequest.getRate())
                 .content(reviewRequest.getContent())
                 .thumbnailFileName(thumbnailFileName)
+                .orderInfo(orderInfo)
                 .build();
+
+        orderInfo.setOrderState(PaymentState.WRITE_REVIEW);
+        orderInfoRepository.save(orderInfo);
+
         reviewRepository.save(review);
     }
 

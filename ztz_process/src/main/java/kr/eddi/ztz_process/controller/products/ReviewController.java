@@ -31,8 +31,9 @@ public class ReviewController {
         reviewService.register(reviewRequest);
     }
 
-    @ResponseBody
-    @PostMapping(value = "/registerWithImg", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/registerWithImg", consumes = {
+            MediaType.MULTIPART_FORM_DATA_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public void registerWithImg(
             @RequestPart(value = "image") MultipartFile image,
             @RequestPart(value = "info") ReviewRequest reviewRequest) {
@@ -46,13 +47,16 @@ public class ReviewController {
             FileOutputStream writer = new FileOutputStream(
                     "../ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
             );
+            FileOutputStream appWriter = new FileOutputStream(
+                    "../ztz_app/assets/images/uploadImg/" + image.getOriginalFilename()
+            );
 
             log.info("디렉토리에 파일 배치 성공");
 
             writer.write(image.getBytes());
-
+            appWriter.write(image.getBytes());
             writer.close();
-
+            appWriter.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException((e));
         } catch (IOException e) {
@@ -70,7 +74,7 @@ public class ReviewController {
 
     @PostMapping("/read/average/{productNo}")
     public List<Map<String,Object>> reviewAverage(@PathVariable("productNo") Long productNo) {
-        log.info(productNo + "상품의 리뷰 읽기");
+        log.info(productNo + "상품의 리뷰 평균");
 
         return reviewService.reviewAverage(productNo);
     }
@@ -117,11 +121,16 @@ public class ReviewController {
                     "../ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
             );
 
+            FileOutputStream appWriter = new FileOutputStream(
+                    "../ztz_app/assets/images/uploadImg/" + image.getOriginalFilename()
+            );
             log.info("디렉토리에 파일 배치 성공");
 
             writer.write(image.getBytes());
+            appWriter.write(image.getBytes());
 
             writer.close();
+            appWriter.close();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException((e));
