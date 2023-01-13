@@ -1,6 +1,7 @@
 package kr.eddi.ztz_process.service.order;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import kr.eddi.ztz_process.controller.order.form.OrderForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
 import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
@@ -16,9 +17,7 @@ public interface OrderService {
 
     public Boolean refundAllOrder(RefundRequest refundRequest) throws IamportResponseException, IOException;
 
-
     public List<OrderInfo> readAllOrders(Long PaymentId);
-
 
     public List<Payment> readAllPayment(String token);
 
@@ -29,5 +28,8 @@ public interface OrderService {
     public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest);
 
     public Integer salesAmount();
+
+    public Boolean registerOrderInfo(OrderForm orderForm);
+    Payment savePayment(OrderForm orderForm);
 
 }

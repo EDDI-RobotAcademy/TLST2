@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.controller.order;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
+import kr.eddi.ztz_process.controller.order.form.OrderForm;
 import kr.eddi.ztz_process.controller.order.form.PaymentDataRangeForm;
 import kr.eddi.ztz_process.controller.order.form.PaymentRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
@@ -30,7 +31,6 @@ public class OrderController {
     @PostMapping("/OrderRegister")
     public Boolean orderRegister(@RequestBody PaymentRegisterForm paymentRegisterForm){
         log.info("orderRegister" + paymentRegisterForm);
-
         return service.registerOrderInfo(paymentRegisterForm.toOrderRegisterRequest());
     }
 
@@ -103,4 +103,10 @@ public class OrderController {
         return service.salesAmount();
     }
 
+
+    @PostMapping("/save-order")
+    public Boolean order(@RequestBody OrderForm orderForm){
+        log.info("orderRegister" + orderForm);
+        return service.registerOrderInfo(orderForm);
+    }
 }

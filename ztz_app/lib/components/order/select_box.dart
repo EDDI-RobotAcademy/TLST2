@@ -27,14 +27,15 @@ class _MessageSelectBoxState extends State<MessageSelectBox> {
               height: 350,
               alignment: Alignment.center,
               child: ListView.builder(
-                  itemCount: OrderController.deliveryMessage.length,
+                  itemCount: OrderController.deliveryMessageList.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(OrderController.deliveryMessage[index]),
+                      title: Text(OrderController.deliveryMessageList[index]),
                       onTap: () {
                         setState(() {
-                          selectedMessage = OrderController.deliveryMessage[index];
+                          selectedMessage = OrderController.deliveryMessageList[index];
                           categoryController.text = selectedMessage;
+                          OrderController.deliveryMessage = selectedMessage;
                         });
                         Navigator.of(context).pop();
                       },

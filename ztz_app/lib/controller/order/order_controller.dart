@@ -1,12 +1,27 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:ztz_app/components/order/order_payment.dart';
 import 'package:ztz_app/controller/order/order_infos/order_info.dart';
 
+import 'api/order_service_api.dart';
+
 class OrderController{
-  static const httpUri = '192.168.0.8:7777';
+  static const httpUri = '192.168.200.175:7777';
+  static var deliveryMessageList = [
+    "문 앞에 두고 가주세요",
+    "조심히 안전하게 와주세요",
+    "배송 후에 문자 부탁드립니다 ",
+    "부재 시 경비실에 놔주세요",
+  ];
+  static var deliveryMessage = '';
+  static String city = "";
+  static String street = "";
+  static String addressDetail = "";
+  static String zipcode = "";
 
   requestPaymentListFromSpring(token) async {
     var data = {'token' : token};
@@ -30,7 +45,6 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
-
   requestPaymentListByDataFromSpring(token , readData) async {
     var data = {'token' : token , 'readData' : readData};
     var body = json.encode(data);
@@ -53,7 +67,6 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
-
   requestOrderInfoByPaymentId(paymentId) async {
     try{
       var orderInfoResponse = await http.post(
@@ -74,4 +87,16 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
+
+  goToPayment(var orderItems, var totalAmount) {
+
+
+  }
+
+  payment(var imp, var merchantUid, List items) async{
+    // var imp, var merchantUid, List items
+    await OrderService.requestOrder(imp,merchantUid,items);
+  }
+
+
 }

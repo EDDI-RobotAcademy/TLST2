@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:ztz_app/controller/order/api/order_service_api.dart';
 
+import '../../pages/order/order.dart';
+
 
 class CartController extends GetxController{
   static late var reactiveCartList = [].obs;
@@ -25,7 +27,6 @@ class CartController extends GetxController{
       print("변화감지");
       obsCartStatus.value = false;
       if(reactiveCartList.isNotEmpty) {
-        print(reactiveCartList.value.toString());
         obsCartStatus.value = true;
       }
     }, time: Duration(seconds: 3));
@@ -40,7 +41,7 @@ class CartController extends GetxController{
       });
     });
     ever(totalAmount,(_){
-      if(totalAmount > 50000) {
+      if(totalAmount > 49999) {
         deliveryFee.value = 0;
       } else {
         deliveryFee.value = 3000;
@@ -119,6 +120,51 @@ class CartController extends GetxController{
     checkStatusMap.remove(reactiveCartList[index]['itemNo'].toString());
     reactiveCartList.removeAt(index);
     reqDeleteItem(itemNo);
+  }
+  order() {
+    // selectedProduct에서 선택한 아이템 번호를 찾는다.
+    // 아이템 번호로 reactiveCartList에서
+    // 해당 아이템의 정보와 count, selectedProductAmount, thumbnail명을 setting한다.
+    // 해당 정보를 get argument로 넘긴다.
+    var orderData = [];
+    var priceData = [];
+    if(selectedProduct.isEmpty) {
+      Get.snackbar(
+          'Failed',
+          '선택한 상품이 없습니다.',
+          snackPosition: SnackPosition.TOP);
+    }
+
+    for(String keyword in selectedProduct) {
+      int selectedItem = int.parse(keyword);
+
+      for(int i = 0; i < reactiveCartList.length; i++) {
+        if(selectedItem.isEqual(reactiveCartList[i]['itemNo'])){
+          var tmpData = {
+            'itemNo':reactiveCartList[i]['itemNo'],
+            'productNo':reactiveCartList[i]['product']['productNo'],
+            'productName' : reactiveCartList[i]['product']['name'],
+            'count': reactiveCartList[i]['count'],
+            'selectedProductAmount': reactiveCartList[i]['selectedProductAmount'],
+            'thumbnail': reactiveCartList[i]['product']['productInfo']['thumbnailFileName']
+          };
+          orderData.addAll({tmpData});
+        }
+      }
+    }
+    priceData.add(totalAmount);
+    priceData.add(deliveryFee);
+    priceData.add(sum);
+
+    if(!selectedProduct.isEmpty) {
+      Get.to(()=> OrderPage(),arguments:[orderData, priceData]);
+    } else {
+        Get.snackbar(
+            'Failed',
+            '선택한 상품이 없습니다.',
+            snackPosition: SnackPosition.TOP);
+    }
+
   }
 
   //총액 구하기

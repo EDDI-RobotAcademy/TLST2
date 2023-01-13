@@ -1,14 +1,15 @@
 package kr.eddi.ztz_process.service.order;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CancelData;
+import kr.eddi.ztz_process.controller.order.form.OrderForm;
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.RefundRequest;
 import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.member.MemberProfile;
 import kr.eddi.ztz_process.entity.order.Payment;
 import kr.eddi.ztz_process.entity.order.PaymentState;
 import kr.eddi.ztz_process.entity.products.Product;
@@ -18,11 +19,12 @@ import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
 import kr.eddi.ztz_process.service.order.request.PaymentRegisterRequest;
+import kr.eddi.ztz_process.service.order.request.ReceivedOrderItem;
 import kr.eddi.ztz_process.service.security.RedisService;
 import kr.eddi.ztz_process.utility.order.setRandomOrderNo;
+import kr.eddi.ztz_process.utility.order.validationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -85,6 +87,82 @@ public class OrderServiceImpl implements OrderService {
             return false;
         }
     }
+
+
+    @Override
+    public Payment savePayment(OrderForm orderForm) {
+        String returnToken = validationToken.validationToken(orderForm.getToken());
+        Long id = redisService.getValueByKey(returnToken);
+        Member member = memberRepository.findByMemberId(id);
+        MemberProfile mp = memberRepository.findProfileByMemberId(id);
+
+        int totalOrderedCnt = 0;
+        int sum = 0;
+        List<ReceivedOrderItem> items = orderForm.getItems();
+        for(ReceivedOrderItem item : items) {
+            sum += item.getSelectedProductAmount();
+            totalOrderedCnt += item.getCount();
+        }
+
+        Address address = Address.of(
+                mp.getAddress().getCity(),
+                mp.getAddress().getStreet(),
+                mp.getAddress().getAddressDetail(),
+                mp.getAddress().getZipcode()
+        );
+
+        Payment payment = Payment.
+                builder()
+                .paymentTitle(
+                        items.size() == 1 ?
+                            items.get(0).getProductName():
+                            items.get(0).getProductName() + " 외 " + (items.size() - 1) + "건")
+                .merchant_uid(orderForm.getMerchantUid())
+                .totalPaymentPrice(sum)
+                .imp_uid(orderForm.getImpUid())
+                .OrderedCnt(totalOrderedCnt)
+                .PaymentState(PaymentState.PAYMENT_COMPLETE)
+                .address(address)
+                .DeliveryRequest(orderForm.getDeliveryMessage())
+                .member(member)
+                .build();
+
+
+        paymentRepository.save(payment);
+
+        return payment;
+    }
+
+    @Override
+    public Boolean registerOrderInfo(OrderForm orderForm) {
+        try {
+            Payment payment = savePayment(orderForm);
+            String setOrderNum = MakeOrderedNo(payment.getMember().getId());
+
+            for (int i = 0; i < orderForm.getItems().size(); i++) {
+                Optional<Product> maybeProduct = productsRepository.findById(orderForm.getItems().get(i).getProductNo());
+                Optional<Member> maybeMember = memberRepository.findById(payment.getMember().getId());
+
+                OrderInfo orderInfo = OrderInfo
+                        .builder()
+                        .orderNo(setOrderNum)
+                        .orderCnt(orderForm.getItems().get(i).getCount())
+                        .orderState(PaymentState.PAYMENT_COMPLETE)
+                        .orderPrice(orderForm.getItems().get(i).getSelectedProductAmount())
+                        .product(maybeProduct.get())
+                        .member(maybeMember.get())
+                        .payment(payment)
+                        .build();
+                orderRepository.save(orderInfo);
+            }
+        return true;
+        } catch (Exception e) {
+            System.out.println("오류 발생" + e);
+            return false;
+        }
+    }
+
+
 
     @Override
     public List<OrderInfo> readAllOrders(Long PaymentId) {
@@ -170,6 +248,8 @@ public class OrderServiceImpl implements OrderService {
         }
         return true;
     }
+
+
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest) {
 
@@ -295,4 +375,6 @@ public class OrderServiceImpl implements OrderService {
 
         return totalSalesAmount;
     }
+
+
 }
