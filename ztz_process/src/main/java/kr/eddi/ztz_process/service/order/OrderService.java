@@ -19,6 +19,7 @@ public interface OrderService {
 
     public List<OrderInfo> readAllOrders(Long PaymentId);
 
+    public OrderInfo readOrder(Long orderId);
     public List<Payment> readAllPayment(String token);
 
     public List<Payment> readRangePaymentList(String token , String rangeData);
@@ -31,5 +32,7 @@ public interface OrderService {
 
     public Boolean registerOrderInfo(OrderForm orderForm);
     Payment savePayment(OrderForm orderForm);
+
+    public List<OrderInfo> reviewWritableList(String token);
 
 }
