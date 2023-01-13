@@ -24,6 +24,13 @@ public class QuestionCommentController {
         return questionCommentService.questionCommentList(questionNo);
     }
 
+    @GetMapping("read/{questionNo}")
+    public QuestionComment questionComment(@PathVariable("questionNo") Long questionNo) {
+        log.info("questionCommentList()");
+
+        return questionCommentService.questionComment(questionNo);
+    }
+
     @PostMapping("/register")
     public void questionCommentRegister(@RequestBody CommentRequest commentRequest) { // URL 보낼거면 CommentRequest 양식에 맞게 보내셈!
         log.info("questionCommentRegister()" + commentRequest.getQuestion_no());

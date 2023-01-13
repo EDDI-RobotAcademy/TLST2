@@ -58,8 +58,13 @@
         </tr>
       </table>
       <div>
-      <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
-        <question-comment-register-form @submit="onSubmitRegister" v-if="this.$store.state.isAuthenticated && this.$store.state.resMember.managerCheck"/>
+        <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
+        <question-comment-register-form
+            @submit="onSubmitRegister"
+            v-if="this.$store.state.isAuthenticated
+            && this.$store.state.resMember.managerCheck
+            && this.questionComments.length == 0"
+        />
       </div>
     </div>
   </v-container>
@@ -145,11 +150,13 @@ table.boards {
   border: 1px solid #ccc;
   margin: 20px 10px;
 }
+
 table.boards thead {
   border-right: 1px solid #ccc;
   border-left: 1px solid #ccc;
   background: darkseagreen;
 }
+
 table.boards thead th {
   padding: 10px;
   font-weight: bold;
@@ -157,6 +164,7 @@ table.boards thead th {
   border-right: 1px solid #ccc;
   color: #fff;
 }
+
 table.boards tbody th {
   width: 150px;
   padding: 10px;
@@ -165,12 +173,14 @@ table.boards tbody th {
   border-bottom: 1px solid #ccc;
   background: #ececec;
 }
+
 table.boards td {
   width: 350px;
   padding: 10px;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
 }
+
 .comment {
   display: flex;
   flex-direction: column-reverse;

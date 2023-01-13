@@ -10,4 +10,7 @@ public interface QuestionCommentRepository extends JpaRepository<QuestionComment
 
     @Query("select c from QuestionComment c join fetch c.member join fetch c.questionBoard q where q.questionNo = :questionNo")
     List<QuestionComment> findCommentByQuestionNo(Long questionNo);
+
+    @Query("select c from QuestionComment c join fetch c.member join fetch c.questionBoard q where q.questionNo = :questionNo")
+    QuestionComment findByQuestionNo(Long questionNo);
 }
