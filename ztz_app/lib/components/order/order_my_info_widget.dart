@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ztz_app/components/order/select_box.dart';
+import 'package:ztz_app/controller/order/order_controller.dart';
 import '../../controller/account/member_api.dart';
 import '../../controller/account/sign_up_infos/account_state.dart';
 import '../../pages/my_page/modify_address_page.dart';
@@ -13,7 +14,6 @@ class OrderMyInfo extends StatefulWidget {
 }
 
 class _OrderMyInfoState extends State<OrderMyInfo> {
-
   String city = "";
   String street = "";
   String addressDetail = "";
@@ -32,6 +32,10 @@ class _OrderMyInfoState extends State<OrderMyInfo> {
       street = AccountState.memberProfile['address']['street'];
       addressDetail = AccountState.memberProfile['address']['addressDetail'];
       zipcode = AccountState.memberProfile['address']['zipcode'];
+      OrderController.city = AccountState.memberProfile['address']['city'];
+      OrderController.street = AccountState.memberProfile['address']['street'];
+      OrderController.addressDetail = AccountState.memberProfile['address']['addressDetail'];
+      OrderController.zipcode = AccountState.memberProfile['address']['zipcode'];
     });
   }
 
@@ -89,8 +93,7 @@ class _OrderMyInfoState extends State<OrderMyInfo> {
                     )
                   ],
                 ),
-                Text(
-                    "$zipcode $city $street $addressDetail"),
+                Text('$city $street $addressDetail $zipcode', textAlign: TextAlign.left),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 1,
