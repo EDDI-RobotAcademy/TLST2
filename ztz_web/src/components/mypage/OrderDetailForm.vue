@@ -94,13 +94,13 @@
           <td>
             <!--          리뷰메소드 연결 필요-->
             <button-white v-if="item.orderState == 'PAYMENT_CONFIRM'||item.orderState =='REFUND_REQUEST'"
-                          class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog(item.product.productNo)"/>
+                          class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog(item.product.productNo , item.orderID)"/>
             <button-white v-else
                           :disabled="true"
                           class="review-btn ma-2" btn-name="리뷰 작성"/>
             <template>
               <v-dialog v-model="reviewDialog" width="650">
-                <ReviewRegisterForm :product="product"/>
+                <ReviewRegisterForm :product="product" :orderInfo="orderInfo"/>
               </v-dialog>
             </template>
           </td>
@@ -144,7 +144,8 @@ export default {
     ...mapState([
       'orderedList',
       'paymentList',
-      'product'
+      'product',
+      'orderInfo'
     ])
   },
   props: {
@@ -152,7 +153,7 @@ export default {
     paymentListIndex: Number
   },
   methods: {
-    ...mapActions(['requestProductFromSpring']),
+    ...mapActions(['requestProductFromSpring', 'reqOrderInfoById']),
     // 배송중 상태인 주문리스트 존재하는 경우 결제취소 버튼 클릭 시 환불불가 메시지 출력
     refundBtn(refundPrice) {
       this.startDeliveryNum = 0
@@ -184,9 +185,10 @@ export default {
       this.refundDialog = true
       this.allRefund = true
     },
-    showReviewDialog(productNo) {
+    async showReviewDialog(productNo , orderNo) {
       this.reviewDialog = true
-      this.requestProductFromSpring(productNo)
+      await this.requestProductFromSpring(productNo)
+      await this.reqOrderInfoById(orderNo)
     },
   }
 }
