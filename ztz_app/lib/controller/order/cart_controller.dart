@@ -41,7 +41,7 @@ class CartController extends GetxController{
       });
     });
     ever(totalAmount,(_){
-      if(totalAmount > 50000) {
+      if(totalAmount > 49999) {
         deliveryFee.value = 0;
       } else {
         deliveryFee.value = 3000;
