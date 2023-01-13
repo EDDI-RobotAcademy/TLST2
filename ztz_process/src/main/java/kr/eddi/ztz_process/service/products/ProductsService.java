@@ -29,4 +29,5 @@ public interface ProductsService {
     public String checkMonthAlcohol(Long productNo);
 
     public List<Product> monthAlcoholList();
+    public List<Product> monthLocalList(Local local);
 }

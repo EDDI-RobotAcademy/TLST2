@@ -350,4 +350,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> monthAlcoholList(){
         return repository.findMonthAlcoholProducts();
     }
+
+    @Override
+    public List<Product> monthLocalList(Local local) {
+        return repository.filterMonthLocal(local);
+    }
 }

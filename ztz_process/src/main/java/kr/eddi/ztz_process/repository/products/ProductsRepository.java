@@ -29,4 +29,8 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.productNo = :productNo")
     Product findProductByProductNo(Long productNo);
 
+    @Query("select p from Product p where p.monthAlcoholCheck = true and p.classification.local = :local")
+    List<Product> filterMonthLocal(Local local);
+
+
 }

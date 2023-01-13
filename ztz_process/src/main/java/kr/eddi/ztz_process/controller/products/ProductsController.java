@@ -123,4 +123,13 @@ public class ProductsController {
 
         productsService.remove(productNo);
     }
+
+    @GetMapping(path = "/list/month/{localName}")
+    public List<Product> localMonthList(@PathVariable("localName") String localName) {
+        log.info("받은 지역데이터:" +localName);
+        String tmp = localName;
+        Local filterLocal = Local.valueOfLocalName(tmp);
+
+        return productsService.monthLocalList(filterLocal);
+    }
 }
