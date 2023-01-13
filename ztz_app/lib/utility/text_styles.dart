@@ -172,7 +172,7 @@ TextStyle blackTextStyle(double fontSize) {
 TextStyle greenTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,
-      color: Color(0xff205C37)
+      color: ColorStyle.mainColor
   );
 }
 
@@ -202,7 +202,7 @@ TextStyle welcomeSubTitle(){
 TextStyle hintTextStyle(){
   return const TextStyle(
       fontSize: 12,
-      fontFamily: "Cafe24Ohsquare",
+      fontFamily: "NanumSquareNeo-cBd",
       color:ColorStyle.textGray
   );
 }
@@ -259,3 +259,4 @@ TextStyle buttonTextStyle() {
       color: Colors.white
   );
 }
+
