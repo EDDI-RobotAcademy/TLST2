@@ -64,17 +64,19 @@
           </div>
         </div>
         <div v-if="!this.$store.state.resMember.managerCheck">
-          <div align="center" style="margin-top: 20px">
+          <div align="center" style="margin-top: 20px" >
+            <v-btn v-if="!this.productFavoriteInfo.productFavoriteFlag" icon color="#568869" @click="btnFavorite" x-large><v-icon>mdi-heart-outline</v-icon></v-btn>
+            <v-btn v-else icon color="red" @click="btnFavorite" x-large><v-icon>mdi-heart</v-icon></v-btn>
             <ButtonWhite
                 @click="btnCart"
                 btn-name="장바구니"
-                width="265px"
+                width="240px"
                 x-large
             />
             <ButtonGreen
                 @click="btnDirectPurchase"
                 btn-name="바로구매"
-                width="265px"
+                width="240px"
                 x-large
             />
           </div>
@@ -160,6 +162,10 @@ export default {
     product: {
       type: Object,
       required: true,
+    },
+    productFavoriteInfo :{
+      type: Object,
+      required: true,
     }
   },
   methods: {
@@ -198,6 +204,15 @@ export default {
     },
     btnDeleteProduct(){
       this.$emit('deleteProduct', this.product.productNo)
+    },
+    btnFavorite(){
+      if(this.$store.state.isAuthenticated){
+        const productNo = this.product.productNo
+        this.$emit('saveFavorite', {productNo})
+      } else{
+        alert("로그인이 필요한 기능입니다.")
+      }
+
     }
   },
   beforeUpdate() {

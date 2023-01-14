@@ -22,7 +22,8 @@ import {
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
     REQUEST_SALES_AMOUNT_TO_SPRING,
     REQUEST_MANAGER_PHONENUMBER_FROM_SPRING,
-    REQUEST_ORDER_FROM_SPRING
+    REQUEST_ORDER_FROM_SPRING,
+    REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING
 } from "./mutation-types"
 
 export default {
@@ -97,6 +98,9 @@ export default {
     },
     [REQUEST_ORDER_FROM_SPRING](state , passingData){
         state.orderInfo = passingData
+    },
+    [REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING](state, passingData){
+        state.productFavoriteInfo = passingData
     }
 }
 
