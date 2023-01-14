@@ -46,6 +46,8 @@ dependencies:
   carousel_slider: ^4.2.1
   sticky_headers: ^0.2.0
   iamport_flutter: ^0.10.0
+  image_picker: ^0.8.6
+  dio: ^4.0.6
 
 
 dev_dependencies:

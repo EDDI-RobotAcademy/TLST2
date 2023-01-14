@@ -1,6 +1,10 @@
 package kr.eddi.ztz_process.repository.order;
 
 import kr.eddi.ztz_process.entity.order.OrderInfo;
+import kr.eddi.ztz_process.entity.order.PaymentState;
+import kr.eddi.ztz_process.entity.products.AlcoholType;
+import kr.eddi.ztz_process.entity.products.Local;
+import kr.eddi.ztz_process.entity.products.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,10 +15,14 @@ public interface OrderInfoRepository extends JpaRepository<OrderInfo, Long> {
     @Query("select o from OrderInfo o where o.orderNo = :orderNo")
     Optional<OrderInfo> findByOrderNo(String orderNo);
 
+    @Query("select o from OrderInfo o join fetch o.payment join fetch o.member join fetch o.product where o.orderID = :orderID")
+    Optional<OrderInfo> findByOrderID(Long orderID);
     @Query("select o from OrderInfo o join fetch o.payment join fetch o.member join fetch o.product where o.payment.paymentId = :paymentId")
     List<OrderInfo> findByPaymentId(Long paymentId);
 
     @Query("select o from OrderInfo o where o.orderState = kr.eddi.ztz_process.entity.order.PaymentState.PAYMENT_CONFIRM ")
     List<OrderInfo> findSalesList();
 
+    @Query("select o from OrderInfo o join fetch o.member join fetch o.product join fetch o.payment where (o.member.id =:memberId) and (o.orderState =:PAYMENT_CONFIRM or o.orderState =:REFUND_REQUEST)")
+    List<OrderInfo> findByPaymentState(PaymentState PAYMENT_CONFIRM,PaymentState REFUND_REQUEST, Long memberId);
 }

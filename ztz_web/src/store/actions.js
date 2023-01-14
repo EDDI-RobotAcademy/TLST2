@@ -18,7 +18,8 @@ import {
     REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
     REQUEST_SALES_AMOUNT_TO_SPRING,
-    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING
+    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING,
+    REQUEST_ORDER_FROM_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -310,6 +311,14 @@ export default {
         return axios.post(`http://localhost:7777/ztz/order/ReadAllOrder/${paymentId}`)
             .then((res) => {
                 commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data)
+                console.log("reqOrderedListFromSpring : " + res.data)
+            })
+    },
+
+    reqOrderInfoById({commit}, orderInfoId){
+        return axios.post(`http://localhost:7777/ztz/order/readOrder/${orderInfoId}`)
+            .then((res) => {
+                commit(REQUEST_ORDER_FROM_SPRING, res.data)
                 console.log("reqOrderedListFromSpring : " + res.data)
             })
     },

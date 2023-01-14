@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.entity.products;
 
 import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.member.Member;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -37,4 +38,8 @@ public class Review {
     @JoinColumn(name = "product_no")
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
+
+    @JoinColumn(name = "order_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private OrderInfo orderInfo;
 }

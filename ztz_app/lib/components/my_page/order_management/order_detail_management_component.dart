@@ -2,73 +2,114 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ztz_app/controller/order/order_infos/order_info.dart';
+import 'package:ztz_app/pages/my_page/order_management/order_detail_page.dart';
 
+import '../../../controller/order/order_controller.dart';
+import '../../../pages/reivew/review_register_page.dart';
 import '../../../utility/button_style.dart';
+import '../../../utility/colors.dart';
 import '../../../utility/text_styles.dart';
+import 'order_refund_modal_component.dart';
 
 class OrderDetailManagementComponent extends StatefulWidget {
-  const OrderDetailManagementComponent({Key? key, required this.paymentState}) : super(key: key);
+  const OrderDetailManagementComponent({Key? key, required this.paymentState})
+      : super(key: key);
 
   final String paymentState;
+
   @override
   State<OrderDetailManagementComponent> createState() =>
       _OrderDetailManagementComponent();
 }
 
-class _OrderDetailManagementComponent
-    extends State<OrderDetailManagementComponent> {
+class _OrderDetailManagementComponent extends State<OrderDetailManagementComponent> {
   bool _productExpanded = true;
   bool _paymentExpanded = false;
   bool _orderInfoExpanded = false;
   bool _deliveryInfoExpanded = false;
-  bool isLoading = false;
+  bool isLoading = true;
+
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      child: Column(
-        children: [
-          orderedProductTile(context),
-          Divider(
-            thickness: 8,
-          ),
-          paymentInfoPanel(),
-          Divider(
-            thickness: 8,
-          ),
-          orderedInfoPanel(),
-          Divider(
-            thickness: 8,
-          ),
-          deliveryInfoPanel(context),
-          Divider(
-            thickness: 8,
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            "결제취소는 전 상품 [결제완료] 상태일 경우에만 가능합니다.",
-            style: grayLightTextStyle(13),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: widget.paymentState ==
-                    "PAYMENT_COMPLETE"
-                ? ElevatedButton(
-                    onPressed: () {},
-                    child: Text("전체 상품 결제 취소"),
-                    style: defaultElevatedButtonStyle((size.width - 40), 50),
-                  )
-                : ElevatedButton(
-                    onPressed: null,
-                    child: Text("전체 상품 결제 취소"),
-                    style: disableElevatedButtonStyle((size.width - 40), 50),
-                  ),
-          )
-        ],
-      ),
+      child: !isLoading
+          ? const Padding(
+              // 로딩시 나오는 동그라미 동글동글
+              padding: EdgeInsets.all(100),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: ColorStyle.mainColor,
+                ),
+              ),
+            )
+          : Column(
+              children: [
+                orderedProductTile(context),
+                Divider(
+                  thickness: 8,
+                ),
+                paymentInfoPanel(),
+                Divider(
+                  thickness: 8,
+                ),
+                orderedInfoPanel(),
+                Divider(
+                  thickness: 8,
+                ),
+                deliveryInfoPanel(context),
+                Divider(
+                  thickness: 8,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  "결제취소는 전 상품 [결제완료] 상태일 경우에만 가능합니다.",
+                  style: grayLightTextStyle(13),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: widget.paymentState == "PAYMENT_COMPLETE"
+                      ? ElevatedButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (BuildContext context){
+                                  return AnimatedPadding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    duration: const Duration(milliseconds: 100),
+                                    curve: Curves.decelerate,
+                                    child: Container(
+                                        height: 230,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            OrderRefundModalComponent(
+                                              refundPaymentId: OrderInfo.orderInfoList[0]['payment']['paymentId'],
+                                              paymentState: widget.paymentState,),
+                                          ],
+                                        )
+                                    ),
+                                  );
+                                }
+                            );
+                          },
+                          child: Text("전체 상품 결제 취소"),
+                          style:
+                              defaultElevatedButtonStyle((size.width - 40), 50),
+                        )
+                      : ElevatedButton(
+                          onPressed: null,
+                          child: Text("전체 상품 결제 취소"),
+                          style:
+                              disableElevatedButtonStyle((size.width - 40), 50),
+                        ),
+                )
+              ],
+            ),
     );
   }
 
@@ -100,6 +141,15 @@ class _OrderDetailManagementComponent
             )),
       ],
     );
+  }
+
+  void sendOrderStateUpdate(index , state) async {
+    await await OrderController().requestModifyOrderState(state,
+        OrderInfo.orderInfoList[index]['orderID'],
+        OrderInfo.orderInfoList[index]['payment']['paymentId']);
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderDetailPage(paymentState: widget.paymentState,)),)
+        .then((value) => setState(() {}));
   }
 
   Widget orderedProductTileContent(BuildContext context, index) {
@@ -182,16 +232,42 @@ class _OrderDetailManagementComponent
                     orderState == "DELIVERY_COMPLETE"
                         ? Row(
                             children: [
+                              SizedBox(width: size.width / 20,),
                               OutlinedButton(
-                                  onPressed: () {}, child: Text("구매 확정")),
+                                  style: defaultOutlinedButtonStyle(100,30),
+                                  onPressed: () {
+                                    sendOrderStateUpdate(index, "구매확정");
+                                  },
+                                  child: Text("구매 확정",style: greenTextStyle(14),)),
+                              SizedBox(width: 10,),
                               OutlinedButton(
-                                  onPressed: () {}, child: Text("반품 신청"))
+                                  style: defaultOutlinedButtonStyle(100,30),
+                                  onPressed: () {
+                                    sendOrderStateUpdate(index, "반품신청");
+                                  },
+                                  child: Text("반품 신청",style: greenTextStyle(14),))
                             ],
                           )
                         : orderState == "PAYMENT_CONFIRM" ||
                                 orderState == "REFUND_REQUEST"
-                            ? OutlinedButton(
-                                onPressed: () {}, child: Text("리뷰 작성"))
+                            ? SizedBox(
+                              width: size.width- 150,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  OutlinedButton(
+                                      style: defaultOutlinedButtonStyle(100,10),
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
+                                            ReviewRegisterPage(
+                                              productName: OrderInfo.orderInfoList[index]['product']['name'],
+                                              productId: OrderInfo.orderInfoList[index]['product']['productNo'],
+                                              orderID: OrderInfo.orderInfoList[index]['orderID'],
+                                            )));
+                                      }, child: Text("리뷰 작성" , style: greenTextStyle(14),)),
+                                ],
+                              ),
+                            )
                             : SizedBox()
                   ],
                 ),

@@ -90,7 +90,11 @@ export default {
     product: {
       type: Object,
       required: true,
-    }
+    },
+    orderInfo : {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     ...mapActions([
@@ -126,7 +130,8 @@ export default {
           memberId: this.resMember.id,
           productNo: this.product.productNo,
           rate: this.rate,
-          content: this.content
+          content: this.content,
+          orderId :this.orderInfo.orderID
         }
         formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
         await this.reqRegisterReviewWithImageToSpring(formData)
@@ -136,7 +141,8 @@ export default {
         const {rate, content} = this
         const memberId = this.resMember.id
         const productNo = this.product.productNo
-        await this.reqRegisterReviewToSpring({memberId, productNo, rate, content})
+        const orderId = this.orderInfo.orderID
+        await this.reqRegisterReviewToSpring({memberId, productNo, rate, content , orderId})
       }
       await this.$router.go(this.$router.currentRoute)
     },

@@ -109,4 +109,25 @@ public class OrderController {
         log.info("orderRegister" + orderForm);
         return service.registerOrderInfo(orderForm);
     }
+    @PostMapping("/writableReview")
+    public List<OrderInfo> writableReview(@RequestBody MemberLoggedInTokenForm form){
+        log.info("writableReview");
+        String SubString = "";
+        if(form.getToken().length() >= 37){
+            SubString = form.getToken().substring(1,37);
+        }else {
+            SubString = form.getToken();
+        }
+        log.info("writableReview" + SubString );
+
+        List<OrderInfo> orderInfoList = service.reviewWritableList(SubString);
+        return orderInfoList;
+    }
+
+    @PostMapping("/readOrder/{orderInfoId}")
+    public OrderInfo readOrderInfo(@PathVariable("orderInfoId") Long orderInfoId){
+        log.info("readOrderInfo" + orderInfoId.toString() );
+
+        return service.readOrder(orderInfoId);
+    }
 }
