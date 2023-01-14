@@ -4,6 +4,8 @@
                          :product="product"
                          @addCart="addCart"
                          @deleteProduct = "deleteProduct"
+                         @saveFavorite = "saveFavorite"
+                         :productFavoriteInfo = "productFavoriteInfo"
     />
   </div>
 </template>
@@ -23,23 +25,35 @@ export default {
   },
   computed: {
     ...mapState([
-      'product', 'isAuthenticated', 'resMember'
+      'product', 'isAuthenticated', 'resMember', 'productFavoriteInfo'
     ])
   },
-  created() {
-    this.requestProductFromSpring(this.productNo)
+  async created(){
+    await this.requestProductFromSpring(this.productNo)
+    if(this.isAuthenticated){
+      let token = window.localStorage.getItem('userInfo')
+      await this.reqMemberInfoToSpring(token)
+      const memberId = this.$store.state.resMember.id
+      const productNo = this.productNo
+      const favoriteType = "favoriteCheck"
+      await this.reqSaveFavoriteToSpring({memberId, productNo, favoriteType})
+    }else {
+      const memberId = null
+      const productNo = this.productNo
+      const favoriteType = "favoriteCheck"
+      await this.reqSaveFavoriteToSpring({memberId, productNo, favoriteType})
+    }
   },
 
   methods: {
     ...mapActions([
-        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring', 'requestDeleteProductToSpring'
+        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring', 'requestDeleteProductToSpring', 'reqSaveFavoriteToSpring'
     ]),
     async addCart(payload){
       if(this.isAuthenticated){
         const {productNo, count} = payload
         let token = window.localStorage.getItem('userInfo')
         await this.reqMemberInfoToSpring(token)
-        console.log("뭔데 이거" + productNo)
         await this.reqAddCartToSpring({productNo, count, token})
         let cartMessage = confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")
         if(cartMessage){
@@ -53,6 +67,15 @@ export default {
       const productNo = payload
       await this.requestDeleteProductToSpring(productNo);
       await this.$router.push({ name: 'ProductsView' })
+    },
+    async saveFavorite(payload){
+      let token = window.localStorage.getItem('userInfo')
+      await this.reqMemberInfoToSpring(token)
+      const memberId = this.$store.state.resMember.id
+      const productNo = payload.productNo
+      const favoriteType = "favoriteLike"
+      console.log("상품페이지:" +memberId+productNo)
+      await this.reqSaveFavoriteToSpring({memberId, productNo, favoriteType})
     }
   },
 
