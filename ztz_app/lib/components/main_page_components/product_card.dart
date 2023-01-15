@@ -10,11 +10,13 @@ class ProductCard extends StatelessWidget{
     required this.title,
     required this.brand,
     required this.onTap,
-    required this.price,}) : super(key: key);
+    required this.price,
+    required this.monthCheck}) : super(key: key);
 
   final String image, title, brand;
   final int price;
   final VoidCallback onTap;
+  final bool monthCheck;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +28,29 @@ class ProductCard extends StatelessWidget{
         padding: const EdgeInsets.all(0),
         margin: const EdgeInsets.only(left: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: 160,
               child: Image(image: AssetImage("assets/images/uploadImg/$image"), fit: BoxFit.fill,),
             ),
             SizedBox(height: 8,),
+            Text("$brand" , style: productTextStyle()),
+            SizedBox(height: 8,),
             Container(
               height: 20,
               child: Text("$title" , style: TextStyle(fontSize: 15)),
             ),
             SizedBox(height: 8,),
-            Text("$brand" , style: productTextStyle()),
-            SizedBox(height: 8,),
-            Text(numberFormat.format(price)+"원" , style: xMediumBlackTextStyle()),
+            Row(
+              children: [
+                monthCheck ? Text(" 10% ",
+                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 15,))
+                    : Text(""),
+                Text(numberFormat.format(price) + "원",
+                    style: xMediumBlackTextStyle()),
+              ],
+            ),
           ],
         ),
       ),

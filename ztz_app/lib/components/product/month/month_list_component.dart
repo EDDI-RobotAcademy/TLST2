@@ -1,67 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:ztz_app/components/main_page_components/product_card.dart';
+import 'package:ztz_app/controller/product/product_controller.dart';
+import 'package:ztz_app/controller/product/product_infos/product_info.dart';
+import 'package:ztz_app/controller/reivew/review_controller.dart';
+import 'package:ztz_app/pages/product/product_detail_page.dart';
+import 'package:ztz_app/utility/colors.dart';
+import 'package:ztz_app/utility/text_styles.dart';
 
-import '../../../controller/product/product_controller.dart';
-import '../../../controller/product/product_infos/product_info.dart';
-import '../../../controller/reivew/review_controller.dart';
-import '../../../pages/product/product_detail_page.dart';
-import '../../../utility/colors.dart';
-import '../../../utility/text_styles.dart';
-import '../../main_page_components/product_card.dart';
-
-class ProductListComponent extends StatefulWidget {
-  const ProductListComponent({Key? key, required this.drinkItem}) : super(key: key);
-
-  final String drinkItem;
+class MonthListComponent extends StatefulWidget {
+  const MonthListComponent({Key? key}) : super(key: key);
 
   @override
-  State<ProductListComponent> createState() => _ProductListComponent();
+  State<MonthListComponent> createState() => _MonthListComponentState();
 }
 
-class _ProductListComponent extends State<ProductListComponent> {
+class _MonthListComponentState extends State<MonthListComponent> {
 
-  bool isLoading = false;
   List<String> _localList = ['전체지역','서울경기','강원','충청','경상','전라','제주'];
-  var _selectedLocal = '전체지역';
+  String _selectedLocal = '전체지역';
+  double _removableWidgetSize = 150;
+  bool isLoading = false;
+  bool _isStickyOnTop = false;
+
   ScrollController _mainScrollController = ScrollController();
   ScrollController _subScrollController = ScrollController();
 
-  double _removableWidgetSize = 150;
-  bool _isStickyOnTop = false;
 
-  void setProduct() async {
-    switch (widget.drinkItem) {
-      case "전체보기":
-        await ProductController().requestAllProductToSpring("");
-        break;
-      case "소주증류주":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-      case "리큐르":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-      case "막걸리":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-      case "약주청주":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-      case "과실주":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-      case "기타주류":
-        await ProductController().requestProductByAlcoholType(widget.drinkItem);
-        break;
-    }
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  @override
   void initState() {
-    super.initState();
     _mainScrollController.addListener(() {
       if (_mainScrollController.offset >= _removableWidgetSize &&
           !_isStickyOnTop) {
@@ -73,7 +39,15 @@ class _ProductListComponent extends State<ProductListComponent> {
         setState(() {});
       }
     });
-    setProduct();
+    getMonthProduct();
+    super.initState();
+  }
+
+  void getMonthProduct() async{
+    await ProductController().requestMonthProductFromSpring();
+    setState(() {
+      isLoading = true;
+    });
   }
 
   @override
@@ -88,8 +62,8 @@ class _ProductListComponent extends State<ProductListComponent> {
         ),
       );
     } else {
-      return Container( // 로딩 되면 나오는 위젯
-        child: gridList(),
+      return Container(
+        child: gridList(),// 로딩 되면 나오는 위젯
       );
     }
   }
@@ -106,7 +80,7 @@ class _ProductListComponent extends State<ProductListComponent> {
                 children: [
                   Container(
                       height: _removableWidgetSize,
-                      child: Image(image: AssetImage("assets/images/bigSale.jpg"),fit: BoxFit.fill,)),
+                      child: Image(image: AssetImage("assets/images/banner/month_banner.png"),fit: BoxFit.fill,)),
                   _getStickyWidget(),
                   GridView.count(
                     controller: _subScrollController,
@@ -140,69 +114,52 @@ class _ProductListComponent extends State<ProductListComponent> {
       ],
     );
   }
-
   Container _getStickyWidget() {
     Size size = MediaQuery.of(context).size;
     return Container(
-      color: Colors.white,
-      padding: EdgeInsets.only(left: 30 , top: 5, bottom: 5),
-      child: Row(
-        children: [
-          Text("총" + ProductInfo.productList.length.toString() +"개",style: MediumBlackTextStyle(),),
-          SizedBox(
-            width: size.width - (size.width / 2.5),
-          ),
-          DropdownButton(
-            style: MediumBlackTextStyle(),
-            underline : Container(),
-            value: _selectedLocal,
-            items: _localList.map(
+        color: Colors.white,
+        padding: EdgeInsets.only(left: 30 , top: 5, bottom: 5),
+        child: Row(
+          children: [
+            Text("총" + ProductInfo.productList.length.toString() +"개",style: MediumBlackTextStyle(),),
+            SizedBox(
+              width: size.width - (size.width / 2.5),
+            ),
+            DropdownButton(
+              style: MediumBlackTextStyle(),
+              underline : Container(),
+              value: _selectedLocal,
+              items: _localList.map(
                     (String value) {
-                      return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value)
-                      );
-                    },
-            ).toList(),
-            onChanged: (String? value) {
-              setState(() {
-                isLoading = false;
-                _selectedLocal = value!;
-                if(widget.drinkItem == "전체보기"){
+                  return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value)
+                  );
+                },
+              ).toList(),
+              onChanged: (String? value) {
+                setState(() {
+                  isLoading = false;
+                  _selectedLocal = value!;
                   if(_selectedLocal == "전체지역"){
-                    setProduct();
+                    getMonthProduct();
                   }else{
-                    requestProductByLocal(_selectedLocal);
+                    requestMonthProductByLocal(_selectedLocal);
                   }
-                }else{
-                  if(_selectedLocal == "전체지역"){
-                    setProduct();
-                  }else{
-                    requestProductByLocalAndType(widget.drinkItem , _selectedLocal);
-                  }
-                }
-              });
-            },
-          )
-        ],
-      )
+                });
+              },
+            )
+          ],
+        )
     );
   }
 
-  void requestProductByLocal(localName) async {
-    await ProductController().requestProductByLocal(localName);
+  void requestMonthProductByLocal(localName) async {
+    await ProductController().requestMonthProductByLocal(localName);
     setState(() {
       isLoading = true;
     });
   }
-
-  void requestProductByLocalAndType(alcoholType , localName) async {
-    await ProductController().requestProductByLocalAndAlcoholType(alcoholType , localName);
-    setState(() {
-      isLoading = true;
-    });
-  }
-
 
   void selectProductCard(int index) async {
     await ProductController().requestProductDetailToSpring(
@@ -224,8 +181,4 @@ class _ProductListComponent extends State<ProductListComponent> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

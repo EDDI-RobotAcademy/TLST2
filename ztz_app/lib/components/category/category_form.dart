@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:ztz_app/pages/account/signup_page.dart';
+import 'package:ztz_app/pages/product/month/month_list_page.dart';
 import 'package:ztz_app/pages/tour/foundry_page.dart';
 
 import '../../pages/product/product_list_page.dart';
@@ -45,6 +45,7 @@ class _CategoryFormState extends State<CategoryForm> {
           trailing: Icon(Icons.keyboard_arrow_right),
           onTap: () {
             // 이달의 술 페이지로 이동
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const MonthListPage()));
           },
         ),
         ListTile(

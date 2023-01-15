@@ -86,9 +86,16 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
             margin: EdgeInsets.only(top:20, left: 15 , bottom: 20),
             child: SizedBox(
               width: size.width,
-              child: Text( numberFormat.format(ProductInfo.productPrice) +'원', textAlign: TextAlign.left, style: TextStyle(
-              fontFamily: "NanumSquareNeo-bRg",fontSize: 20
-              ),),
+              child: Row(
+                children: [
+                  ProductInfo.monthCheck ? Text(" 10% ",
+                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20,))
+                      : Text(""),
+                  Text( numberFormat.format(ProductInfo.productPrice) +'원', textAlign: TextAlign.left, style: TextStyle(
+                  fontFamily: "NanumSquareNeo-bRg",fontSize: 20
+                  ),),
+                ],
+              ),
             ),
           ),
           const Divider(thickness : 1),
