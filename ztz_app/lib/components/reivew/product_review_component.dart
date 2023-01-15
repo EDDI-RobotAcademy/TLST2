@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ztz_app/components/reivew/reivew_card.dart';
 
+import '../../controller/account/sign_up_infos/account_state.dart';
+import '../../controller/reivew/review_controller.dart';
 import '../../controller/reivew/review_infos/review_info.dart';
 
 class ProductReviewComponent extends StatefulWidget{
@@ -48,7 +50,14 @@ class _ProductReviewComponent extends State<ProductReviewComponent>{
                         productName: ReviewInfo.productReviews[index]['product']['name'],
                         regDate: ReviewInfo.productReviews[index]['regDate'],
                         thumbnailFileName: ReviewInfo.productReviews[index]['thumbnailFileName'] ?? "NoImage",
-                        rate: 4.0,),
+                        rate: 4.0, isWrittenByBuyer:  ReviewInfo.productReviews[index]['member']['id'] == AccountState.memberInfo['id']  ? true:false,
+                        deleteReview: () {
+                          ReviewController().requestDeleteReview(ReviewInfo.productReviews[index]['reviewNo']);
+                        },
+                        productId: ReviewInfo.productReviews[index]['product']['productNo'],
+                        reviewNo: ReviewInfo.productReviews[index]['reviewNo'],
+                        orderId: ReviewInfo.productReviews[index]['orderInfo']['orderID'],
+                      ),
                     ))
             ),
           ],

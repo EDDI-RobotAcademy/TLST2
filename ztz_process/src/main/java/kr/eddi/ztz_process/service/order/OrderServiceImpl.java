@@ -319,6 +319,8 @@ public class OrderServiceImpl implements OrderService {
         PaymentState setState = null;
         Boolean allSameOrderStateCheck = false;
         int sameOrderStateNum = 0;
+        int isDeliveryOnGoingNum = 0;
+        int isWriteReviewNun = 0;
 
         if (reqType.equals("배송시작")) {
             setState = PaymentState.DELIVERY_ONGOING;
@@ -328,6 +330,8 @@ public class OrderServiceImpl implements OrderService {
             setState = PaymentState.PAYMENT_CONFIRM;
         } else if (reqType.equals("반품신청")) {
             setState = PaymentState.REFUND_REQUEST;
+        } else if(reqType.equals("리뷰작성")){
+            setState = PaymentState.WRITE_REVIEW;
         }
 
         // orderinfo는 그냥 각각 배송시작 상태 변경해주기
@@ -344,10 +348,17 @@ public class OrderServiceImpl implements OrderService {
             if (findOrderInfoPaymentList.get(i).getOrderState().equals(setState)) {
                 sameOrderStateNum = sameOrderStateNum + 1;
             }
+            if(findOrderInfoPaymentList.get(i).getOrderState().equals(PaymentState.DELIVERY_ONGOING)){
+                isDeliveryOnGoingNum = isDeliveryOnGoingNum + 1;
+            }
+            if(findOrderInfoPaymentList.get(i).getOrderState().equals(PaymentState.WRITE_REVIEW)){
+                isWriteReviewNun = isWriteReviewNun + 1;
+            }
         }
         if (findOrderInfoPaymentList.size() == sameOrderStateNum) {
             allSameOrderStateCheck = true;
         }
+
 
         //payment - 여기는 여러개 모든 paymentId의 구성요소 orderInfo들이 다 배송시작 된 경우 payment 그룹 상태 변경 -> 배송중
         //payment 그룹 내 1개라도 배송중인 경우 부분배송 중으로 상태값 변경
@@ -356,14 +367,24 @@ public class OrderServiceImpl implements OrderService {
 
         if (allSameOrderStateCheck) {
             payment.setPaymentState(setState);
-        } else {
+        } else if(isDeliveryOnGoingNum >= 1){
             payment.setPaymentState(PaymentState.PART_DELIVERY_ONGOING);
+        } else if(isWriteReviewNun >= 1){
+            payment.setPaymentState(PaymentState.PART_WRITE_REVIEW);
+        } else{
+            payment.setPaymentState(PaymentState.ABLE_WRITE_REVIEW);
         }
         paymentRepository.save(payment);
 
         return findOrderInfoPaymentList;
     }
 
+    public OrderInfo readOrder(Long orderId){
+        Optional<OrderInfo> maybeOrderInfo = orderRepository.findByOrderID(orderId);
+        OrderInfo orderInfo = maybeOrderInfo.get();
+
+        return orderInfo;
+    }
     public Integer salesAmount() {
         List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
         log.info("구매완료된 리스트: ");
@@ -376,5 +397,16 @@ public class OrderServiceImpl implements OrderService {
         return totalSalesAmount;
     }
 
+
+
+    public List<OrderInfo> reviewWritableList(String token){
+        Long id = redisService.getValueByKey(token);
+        Member member = memberRepository.findByMemberId(id);
+        System.out.println(member.getId());
+        PaymentState paymentConfirm = PaymentState.PAYMENT_CONFIRM;
+        PaymentState refundRequest = PaymentState.REFUND_REQUEST;
+        List<OrderInfo> orderInfoList = orderRepository.findByPaymentState(paymentConfirm,refundRequest ,member.getId());
+        return orderInfoList;
+    }
 
 }

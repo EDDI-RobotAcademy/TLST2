@@ -104,13 +104,19 @@ class OrderListCard extends StatelessWidget {
                                       ? "반품신청"
                                       : orderState == "DELIVERY_COMPLETE"
                                           ? "배송완료"
-                                          : "상태값이 존재하지 않습니다",
+                                          : orderState == "PART_WRITE_REVIEW"
+                                              ? "일부 리뷰 작성 완료"
+                                              : orderState ==
+                                                      "ABLE_WRITE_REVIEW"
+                                                  ? "리뷰작성가능"
+                                                  : orderState,
               style: mediumBlackBoldTextStyle()),
           SizedBox(
             height: 10,
           ),
           Text(deliveryRequest,
-              overflow: TextOverflow.ellipsis, style: mediumBlackBoldTextStyle()),
+              overflow: TextOverflow.ellipsis,
+              style: mediumBlackBoldTextStyle()),
         ],
       ),
     );
@@ -131,7 +137,7 @@ class OrderListCard extends StatelessWidget {
           ListTile(
             visualDensity: VisualDensity(vertical: -3),
             title: Padding(
-              padding: const EdgeInsets.only(top: 6 , left: 3),
+              padding: const EdgeInsets.only(top: 6, left: 3),
               child: Text(paymentDate, style: mediumBlackBoldTextStyle()),
             ),
             trailing: Text("주문 상세 > ", style: mediumBlackBoldTextStyle()),

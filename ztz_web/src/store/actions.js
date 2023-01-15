@@ -18,7 +18,9 @@ import {
     REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
     REQUEST_SALES_AMOUNT_TO_SPRING,
-    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING
+    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING,
+    REQUEST_ORDER_FROM_SPRING,
+    REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -314,6 +316,14 @@ export default {
             })
     },
 
+    reqOrderInfoById({commit}, orderInfoId){
+        return axios.post(`http://localhost:7777/ztz/order/readOrder/${orderInfoId}`)
+            .then((res) => {
+                commit(REQUEST_ORDER_FROM_SPRING, res.data)
+                console.log("reqOrderedListFromSpring : " + res.data)
+            })
+    },
+
     //주문리스트 조회
     reqPaymentListFromSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/order/ReadAllPayment`,
@@ -452,7 +462,7 @@ export default {
             .then(() => {
             })
     },
-       // eslint-disable-next-line no-empty-pattern
+    // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
     const {productNo, count, token} = payload
     console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
@@ -462,6 +472,12 @@ export default {
         .then(() => {
         })
     },
-
-   
+    reqSaveFavoriteToSpring({commit}, payload) {
+        const {memberId, productNo, favoriteType} = payload
+        console.log("좋아요 상품 : " + payload.productNo + payload.productNo + payload.favoriteType)
+        return axios.post("http://localhost:7777/ztz/products/favorite/changeFavoriteStatus", {memberId, productNo, favoriteType})
+            .then((res) => {
+                commit(REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING, res.data);
+            });
+    },
 }

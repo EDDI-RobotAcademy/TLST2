@@ -14,4 +14,5 @@ public class ReviewRequest {
     private Long productNo;
     private Double rate;
     private String content;
+    private Long orderId;
 }

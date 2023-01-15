@@ -88,6 +88,87 @@ class OrderController{
     }
   }
 
+  requestModifyOrderState(reqType, orderId , paymentId) async {
+    var data = {'reqType' : reqType , 'orderId' : orderId , 'paymentId' : paymentId};
+    var body = json.encode(data);
+
+    try{
+      var orderInfoResponse = await http.post(
+        Uri.http(httpUri, 'ztz/order/changeOrderState'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      if(orderInfoResponse.statusCode == 200){
+        var tmpOrderList = [];
+        debugPrint("ModifyOrderState 결과 =" + utf8.decode(orderInfoResponse.bodyBytes).toString());
+        tmpOrderList = jsonDecode(utf8.decode(orderInfoResponse.bodyBytes));
+        OrderInfo.orderInfoList.clear();
+        OrderInfo.orderInfoList = tmpOrderList.obs;
+      }else{
+        debugPrint("오류 발생" + orderInfoResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생" + e.toString());
+    }
+  }
+
+  requestRefundOrder(refundPaymentId , refundReason) async {
+    var data = {'refundPaymentId' : refundPaymentId , 'refundReason' : refundReason};
+    var body = json.encode(data);
+
+    try{
+      var orderRefundResponse = await http.post(
+        Uri.http(httpUri, 'ztz/order/refundAllOrder/$refundPaymentId'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      if(orderRefundResponse.statusCode == 200){
+        debugPrint("결과 = " + utf8.decode(orderRefundResponse.bodyBytes));
+
+        if(jsonDecode(orderRefundResponse.body) == true){
+          debugPrint("실행?");
+          OrderInfo.refundResult = true.obs;
+          debugPrint("실행? =" + OrderInfo.refundResult.toString());
+        }else{
+          debugPrint("실행?2");
+          OrderInfo.refundResult = false.obs;
+          debugPrint("실행?2 =" + OrderInfo.refundResult.toString());
+        }
+      }else{
+        debugPrint("오류 발생" + orderRefundResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생" + e.toString());
+    }
+  }
+
+  requestWritableOrderList(token) async {
+    var data = {'token' : token};
+    var body = json.encode(data);
+
+    try{
+      var writableOrderListResponse = await http.post(
+        Uri.http(httpUri, 'ztz/order/writableReview'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      if(writableOrderListResponse.statusCode == 200){
+        var tmpWritableOrderList = [];
+        debugPrint("writableOrderListResponse 결과 =" + utf8.decode(writableOrderListResponse.bodyBytes).toString());
+        tmpWritableOrderList = jsonDecode(utf8.decode(writableOrderListResponse.bodyBytes));
+        OrderInfo.writableOrderInfoList.clear();
+        OrderInfo.writableOrderInfoList = tmpWritableOrderList.obs;
+      }else{
+        debugPrint("통신 오류 발생" + writableOrderListResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생" + e.toString());
+    }
+  }
+
   goToPayment(var orderItems, var totalAmount) {
 
 

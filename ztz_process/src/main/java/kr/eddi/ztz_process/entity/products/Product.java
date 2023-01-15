@@ -27,6 +27,9 @@ public class Product {
     private Integer view = 0;
 
     @Column
+    private Integer favoriteNum = 0;
+
+    @Column
     Boolean monthAlcoholCheck = false;
 
     @Embedded

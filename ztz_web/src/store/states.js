@@ -23,4 +23,6 @@ export default {
   paymentList:{},
   myReservationList: [],
   salesAmount: "",
+  orderInfo: [],
+  productFavoriteInfo: {}
 };
