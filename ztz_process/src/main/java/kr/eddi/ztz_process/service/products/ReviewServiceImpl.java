@@ -224,6 +224,9 @@ public class ReviewServiceImpl implements ReviewService{
                 average += maybeReview.get(i).getRate();
             }
             average = average/reviewCnt;
+            if (average.isNaN()) {
+                average = 0.0;
+            }
             List<Map<String , Object>> productReview = new ArrayList<>();
             Map<String , Object> reviewAverage = new HashMap<>();
             reviewAverage.put("average",average);
