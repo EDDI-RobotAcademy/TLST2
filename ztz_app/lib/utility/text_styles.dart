@@ -162,6 +162,14 @@ TextStyle whiteTextStyle(double fontSize) {
   );
 }
 
+TextStyle whiteLightTextStyle(double fontSize) {
+  return TextStyle(
+      fontSize: fontSize,
+      fontWeight: FontWeight.w300,
+      color: Colors.white
+  );
+}
+
 TextStyle blackTextStyle(double fontSize) {
   return TextStyle(
       fontSize: fontSize,

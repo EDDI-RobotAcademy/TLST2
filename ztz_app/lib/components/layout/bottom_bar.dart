@@ -6,6 +6,8 @@ import 'package:ztz_app/pages/category/category_page.dart';
 import 'package:ztz_app/pages/main_page/main_page.dart';
 import 'package:ztz_app/pages/my_page/my_page.dart';
 
+import '../../pages/search/product_search_page.dart';
+
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
 
@@ -38,7 +40,7 @@ class _BottomBarState extends State<BottomBar> {
     //로그인 상태에서 보이는 페이지
     MainPage(),
     CategoryPage(),
-    MainPage(),
+    ProductSearchPage(),
     LoginPage(),
   ];
 
@@ -46,7 +48,7 @@ class _BottomBarState extends State<BottomBar> {
     //로그아웃 상태에서 보이는 페이지
     MainPage(),
     CategoryPage(),
-    MainPage(),
+    ProductSearchPage(),
     MyPage(),
   ];
 
