@@ -30,4 +30,9 @@ public interface ProductsService {
 
     public List<Product> monthAlcoholList();
     public List<Product> monthLocalList(Local local);
+    public List<Product> bestLocalList(Local local);
+
+    public List<Product> bestLocalAndAlcoholList(ProductLocalAndTypeRequest request);
+
+    public List<Product> bestAlcoholList(AlcoholType alcoholType);
 }
