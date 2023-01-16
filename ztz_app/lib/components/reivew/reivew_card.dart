@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/reivew/review_modify_page.dart';
 
 import '../../pages/reivew/photo_review_page.dart';
@@ -168,6 +169,8 @@ class ReviewCard extends StatelessWidget {
               child: const Text("삭제"),
               onPressed: () {
                 deleteReview();
+                Navigator.pop(context);
+                showSuccessDelete(context);
               },
             ),
             FlatButton(
@@ -182,4 +185,27 @@ class ReviewCard extends StatelessWidget {
     );
   }
 
+  void showSuccessDelete(context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("삭제가 성공적으로 되었습니다!"),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("확인"),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => HomePage()),
+                        (route) => false
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
