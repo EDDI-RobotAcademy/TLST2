@@ -10,6 +10,7 @@ import 'package:ztz_app/utility/button_style.dart';
 
 import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/reivew/review_infos/review_info.dart';
+import '../../../pages/home_page.dart';
 import '../../../pages/my_page/my_page.dart';
 import '../../../utility/text_field_decoration.dart';
 import '../../../utility/text_styles.dart';
@@ -176,7 +177,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
                 ReviewInfo.reviewRegister = false.obs;
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: (context) => MyPage()),
+                        builder: (context) => HomePage()),
                         (route) => false
                 );
               },
@@ -202,7 +203,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
                 ReviewInfo.reviewRegister = false.obs;
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                        builder: (context) => MyPage()),
+                        builder: (context) => HomePage()),
                         (route) => false
                 );
               },
