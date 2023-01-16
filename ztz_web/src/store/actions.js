@@ -18,9 +18,7 @@ import {
     REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING,
     REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING,
     REQUEST_SALES_AMOUNT_TO_SPRING,
-    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING,
-    REQUEST_ORDER_FROM_SPRING,
-    REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING
+    REQUEST_MANAGER_PHONENUMBER_FROM_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -55,7 +53,7 @@ export default {
             })
     },
     reqFilteredAlcoholProductsFromSpring ({ commit }, alcoholType) {
-        return axios.get(`http://localhost:7777/ztz/products/alcoholList/${alcoholType}`)
+        return axios.post(`http://localhost:7777/ztz/products/alcoholList/${alcoholType}`)
             .then((res) => {
                 commit(REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING, res.data)
             })
@@ -206,9 +204,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, writer, memberId, categoryType} = payload
+        const {title, content, writer} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
@@ -219,10 +217,10 @@ export default {
     requestQuestionModifyToSpring({}, payload) {
         console.log('requestQuestionModifyToSpring()')
 
-        const {title, content, questionNo, writer, memberId, categoryType} = payload
+        const {title, content, questionNo, writer, regDate} = payload
 
         return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer, regDate})
             .then(() => {
                 alert('수정 완료했습니다!')
             })
@@ -312,14 +310,6 @@ export default {
         return axios.post(`http://localhost:7777/ztz/order/ReadAllOrder/${paymentId}`)
             .then((res) => {
                 commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data)
-                console.log("reqOrderedListFromSpring : " + res.data)
-            })
-    },
-
-    reqOrderInfoById({commit}, orderInfoId){
-        return axios.post(`http://localhost:7777/ztz/order/readOrder/${orderInfoId}`)
-            .then((res) => {
-                commit(REQUEST_ORDER_FROM_SPRING, res.data)
                 console.log("reqOrderedListFromSpring : " + res.data)
             })
     },
@@ -462,7 +452,7 @@ export default {
             .then(() => {
             })
     },
-    // eslint-disable-next-line no-empty-pattern
+       // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
     const {productNo, count, token} = payload
     console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
@@ -472,12 +462,17 @@ export default {
         .then(() => {
         })
     },
-    reqSaveFavoriteToSpring({commit}, payload) {
-        const {memberId, productNo, favoriteType} = payload
-        console.log("좋아요 상품 : " + payload.productNo + payload.productNo + payload.favoriteType)
-        return axios.post("http://localhost:7777/ztz/products/favorite/changeFavoriteStatus", {memberId, productNo, favoriteType})
+    
+    // eslint-disable-next-line no-empty-pattern
+    reqReadRangePaymentList({ commit }, payload) {
+        const { token, readData } = payload
+
+        console.log('월 주문 내역')
+
+        return axios.post(`http://localhost:7777/ztz/order/readPayment/byDate`,
+            { token, readData })
             .then((res) => {
-                commit(REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING, res.data);
+                commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data);
             });
     },
 }
