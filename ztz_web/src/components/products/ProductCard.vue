@@ -8,7 +8,7 @@
     <p class="brand" >{{ product.brand }}</p>
     <p class="productName" >{{ product.name }}</p>
     <div class="price" >
-      <p>{{ product.price }}</p>
+      <p>{{ product.price | numberFormat }}</p>
       <p>won</p>
     </div>
   </div>

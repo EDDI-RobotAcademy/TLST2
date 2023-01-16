@@ -6,6 +6,7 @@
                          @deleteProduct = "deleteProduct"
                          @saveFavorite = "saveFavorite"
                          :productFavoriteInfo = "productFavoriteInfo"
+                         :reviewInfo = "reviewInfo"
     />
   </div>
 </template>
@@ -25,11 +26,12 @@ export default {
   },
   computed: {
     ...mapState([
-      'product', 'isAuthenticated', 'resMember', 'productFavoriteInfo'
+      'product', 'isAuthenticated', 'resMember', 'productFavoriteInfo', "reviewInfo"
     ])
   },
   async created(){
     await this.requestProductFromSpring(this.productNo)
+    await this.reqProductReviewAvgFromSpring(this.productNo)
     if(this.isAuthenticated){
       let token = window.localStorage.getItem('userInfo')
       await this.reqMemberInfoToSpring(token)
@@ -47,7 +49,13 @@ export default {
 
   methods: {
     ...mapActions([
-        'requestProductFromSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqCartListFromSpring', 'requestDeleteProductToSpring', 'reqSaveFavoriteToSpring'
+      'requestProductFromSpring',
+      'reqAddCartToSpring',
+      'reqMemberInfoToSpring',
+      'reqCartListFromSpring',
+      'requestDeleteProductToSpring',
+      'reqSaveFavoriteToSpring',
+      'reqProductReviewAvgFromSpring'
     ]),
     async addCart(payload){
       if(this.isAuthenticated){
