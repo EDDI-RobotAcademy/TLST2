@@ -10,6 +10,7 @@ import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/my_page/modify_address_page.dart';
 import 'package:ztz_app/pages/my_page/order_management/order_management_page.dart';
+import 'package:ztz_app/pages/my_page/personal_info_management/profile_modify_page.dart';
 import 'package:ztz_app/pages/my_page/reservation_management/my_reservation_page.dart';
 import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/colors.dart';
@@ -43,6 +44,7 @@ class _MyPageFormState extends State<MyPageForm> {
     await ReviewController()
         .requestMyPageReviewToSpring(AccountState.memberInfo['id']);
     await OrderController().requestPaymentListFromSpring(widget.token);
+    await MemberApi().requestMemberProfileFromSpring(AccountState.accountGet.token.value);
     setState(() {
       username = AccountState.memberInfo['username'];
       orderCnt = OrderInfo.paymentList.length;
@@ -62,7 +64,7 @@ class _MyPageFormState extends State<MyPageForm> {
     {'title': "예약 관리", 'page': MyReservationPage()},
     {'title': "1:1 문의", 'page': QuestionBoardPage()},
     {'title': "배송지 관리", 'page': ModifyAddressPage()},
-    {'title': "개인 정보 수정", 'page': LoginPage()},
+    {'title': "개인 정보 수정", 'page': ProfileModifyPage()},
   ];
 
   @override

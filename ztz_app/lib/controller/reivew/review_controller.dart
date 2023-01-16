@@ -125,7 +125,7 @@ class ReviewController {
 
   requestDeleteReview(reviewNo) async {
     try {
-      var reviewResponse = await http.post(
+      var reviewResponse = await http.delete(
         Uri.http(httpUri, 'ztz/products/review/delete/$reviewNo'),
         headers: {"Content-Type": "application/json"},
       );
@@ -144,7 +144,7 @@ class ReviewController {
     var dio = Dio();
     final MultipartFile image = MultipartFile.fromFileSync(sendImage.path,
         contentType: MediaType('image', 'jpg'));
-
+    debugPrint('reviewNo -' + reviewNo.toString());
     var _formData = FormData.fromMap({
       'image': image,
       'info': MultipartFile.fromString(jsonEncode({
@@ -158,7 +158,7 @@ class ReviewController {
     });
 
     try {
-      var registerReviewResponse = await dio.post(
+      var registerReviewResponse = await dio.put(
           'http://192.168.0.8:7777/ztz/products/review/modifyWithImg/$reviewNo',
           data: _formData);
       if (registerReviewResponse.statusCode == 200) {
@@ -182,8 +182,8 @@ class ReviewController {
     var body = json.encode(data);
 
     try {
-      var registerReviewResponse = await http.post(
-          Uri.http(httpUri, 'ztz/products/review/modify/{$reviewNo'),
+      var registerReviewResponse = await http.put(
+          Uri.http(httpUri, 'ztz/products/review/modify/$reviewNo'),
           headers: {"Content-Type": "application/json"},
           body: body);
       if (registerReviewResponse.statusCode == 200) {

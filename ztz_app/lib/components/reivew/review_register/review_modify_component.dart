@@ -1,31 +1,35 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ztz_app/controller/reivew/review_controller.dart';
-import 'package:ztz_app/utility/button_style.dart';
 
 import '../../../controller/account/sign_up_infos/account_state.dart';
+import '../../../controller/reivew/review_controller.dart';
 import '../../../controller/reivew/review_infos/review_info.dart';
 import '../../../pages/home_page.dart';
 import '../../../pages/my_page/my_page.dart';
+import '../../../utility/button_style.dart';
 import '../../../utility/text_field_decoration.dart';
 import '../../../utility/text_styles.dart';
 
-class ReviewRegisterComponent extends StatefulWidget{
-  const ReviewRegisterComponent({Key?key,required this.orderId, required this.productName , required this.productId}) : super(key: key);
+class ReviewModifyComponent extends StatefulWidget{
+  const ReviewModifyComponent({Key?key,
+    required this.productName ,
+    required this.productId ,
+    required this.reviewNo,
+    required this.orderId
+  }): super(key: key );
+
 
   final String productName;
-  final int productId , orderId;
+  final int productId, reviewNo , orderId;
   @override
-  State<ReviewRegisterComponent> createState() => _ReviewRegisterComponent();
+  State<ReviewModifyComponent> createState() => _ReviewModifyComponent();
 }
 
-class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
-
+class _ReviewModifyComponent extends State<ReviewModifyComponent>{
   IconData? _selectedIcon;
   double _selectedRating = 0.0;
 
@@ -56,7 +60,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
           Row(
             children: [
               Container(
-                width: size.width -170 ,
+                width: size.width - 170,
                 padding: const EdgeInsets.all(8.0),
                 child: Text(widget.productName , style: blackBoldTextStyle(15)),
               ),
@@ -86,8 +90,8 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  border: Border.all(width: 1)
+                    borderRadius: BorderRadius.circular(2),
+                    border: Border.all(width: 1)
                 ),
                 child: IconButton(
                   onPressed: () {
@@ -123,7 +127,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
 
   void upLoadNonImageReview() async {
     debugPrint("텍스트");
-    await ReviewController().registerNonImageReview(AccountState.memberInfo['id'], widget.productId, _selectedRating, contentController.text , widget.orderId);
+    await ReviewController().requestModifyNonImgReview(AccountState.memberInfo['id'], widget.productId, _selectedRating, contentController.text , widget.reviewNo , widget.orderId);
     if(ReviewInfo.reviewRegister.value == true){
       showSuccessRegisterReview();
     }else{
@@ -133,7 +137,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
 
   void upLoadImageReview() async {
     debugPrint("이미지");
-    await ReviewController().registerImageReview(imageFile!, AccountState.memberInfo['id'], widget.productId, _selectedRating, contentController.text,  widget.orderId);
+    await ReviewController().requestModifyImgReview(imageFile!, AccountState.memberInfo['id'], widget.productId, _selectedRating, contentController.text , widget.reviewNo , widget.orderId);
     if(ReviewInfo.reviewRegister.value == true){
       showSuccessRegisterReview();
     }else{
@@ -168,7 +172,7 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("리뷰 등록 성공!"),
+          title: new Text("리뷰 수정 성공!"),
           content: new Text("소중한 리뷰 감사합니다"),
           actions: <Widget>[
             FlatButton(
@@ -194,8 +198,8 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("리뷰 등록 실패"),
-          content: new Text("죄송합니다 일시적 오류로 등록에 실패했습니다"),
+          title: new Text("리뷰 수정 실패"),
+          content: new Text("죄송합니다 일시적 오류로 수정에 실패했습니다"),
           actions: <Widget>[
             FlatButton(
               child: const Text("닫기"),
@@ -213,4 +217,5 @@ class _ReviewRegisterComponent extends State<ReviewRegisterComponent>{
       },
     );
   }
+
 }
