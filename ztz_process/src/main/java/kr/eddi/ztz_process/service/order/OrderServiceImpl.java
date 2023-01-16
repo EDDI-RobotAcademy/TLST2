@@ -206,7 +206,7 @@ public class OrderServiceImpl implements OrderService {
                 System.out.println("해당하는 개월수가 없습니다");
                 return null;
         }
-        System.out.println("staetDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+        System.out.println("startDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
         System.out.println("endDate : " + endData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
 
         List<Payment> payments = paymentRepository.findByEndData(endData ,member.getId());
