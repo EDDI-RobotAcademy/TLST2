@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public void registerWithImg(ReviewRequest reviewRequest, String thumbnailFileName) {
+    public void registerWithImg(ReviewRequest reviewRequest, MultipartFile image) {
         Optional<Member> maybeMember = memberRepository.findById(reviewRequest.getMemberId());
         Member member = maybeMember.get();
 
@@ -72,6 +72,34 @@ public class ReviewServiceImpl implements ReviewService{
 
         Optional<Product> maybeProduct = productsRepository.findById(reviewRequest.getProductNo());
         Product product = maybeProduct.get();
+
+
+        String thumbnailFileName = image.getOriginalFilename();
+
+        try {
+            log.info("requestUploadFilesWitText() - Make file: " + thumbnailFileName);
+
+            FileOutputStream writer = new FileOutputStream(
+                    "../ztz_web/src/assets/products/uploadImg/" + thumbnailFileName
+            );
+            FileOutputStream appWriter = new FileOutputStream(
+                    "../ztz_app/assets/images/uploadImg/" + thumbnailFileName
+            );
+
+            log.info("디렉토리에 파일 배치 성공");
+
+            writer.write(image.getBytes());
+            appWriter.write(image.getBytes());
+            writer.close();
+            appWriter.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException((e));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
 
 
         Review review = Review.builder()

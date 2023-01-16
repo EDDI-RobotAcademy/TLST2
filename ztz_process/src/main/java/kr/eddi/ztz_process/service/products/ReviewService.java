@@ -10,8 +10,8 @@ import java.util.Map;
 public interface ReviewService {
 
     public void register(ReviewRequest reviewRequest);
-
-    public void registerWithImg(ReviewRequest reviewRequest, String thumbFileName);
+    
+    public void registerWithImg(ReviewRequest reviewRequest, MultipartFile image);
 
     public List<Review> productReviewRead(Long productNo);
 
