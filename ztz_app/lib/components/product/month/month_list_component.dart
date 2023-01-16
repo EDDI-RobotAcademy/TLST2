@@ -81,6 +81,24 @@ class _MonthListComponentState extends State<MonthListComponent> {
                   Container(
                       height: _removableWidgetSize,
                       child: Image(image: AssetImage("assets/images/banner/month_banner.png"),fit: BoxFit.fill,)),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.only(top: 15,left: 15, right: 15),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xffc7d6cd),
+                        boxShadow: [
+                        ],
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 1,
+                        )
+                    ),
+                    child: Text("ZTZ가 선정한 이달의 술을 10% 할인된 가격에 만나보세요!",
+                      style: TextStyle(color: Colors.grey.shade700,)
+                    ),
+                  ),
                   _getStickyWidget(),
                   GridView.count(
                     controller: _subScrollController,
