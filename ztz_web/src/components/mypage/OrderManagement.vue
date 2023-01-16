@@ -23,23 +23,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-if="!paymentList || (Array.isArray(paymentList) && paymentList.length === 0)">
-            <td colspan="6" align="center">
-              주문 내역이 존재하지 않습니다.
-            </td>
-          </tr>
-          <tr v-for="(paymentItem, index) in paymentList" :key="index">
-            <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
-            <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
-            <td>{{ paymentItem.totalPaymentPrice }}</td>
-            <td>{{
-              paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료" :
-                paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료" :
-                  paymentItem.paymentState == "DELIVERY_ONGOING" ? "배송중" :
-                    paymentItem.paymentState == "PART_DELIVERY_ONGOING" ? "부분배송중" :
-                      paymentItem.paymentState == "PAYMENT_CONFIRM" ? "구매확정" :
-                        paymentItem.paymentState == "REFUND_REQUEST" ? "반품신청" :
-                          paymentItem.paymentState == "DELIVERY_COMPLETE" ? "배송완료" : "상태값이 존재하지 않습니다"
+        <tr v-if="!paymentList || (Array.isArray(paymentList) && paymentList.length === 0)">
+          <td colspan="6" align="center">
+            주문 내역이 존재하지 않습니다.
+          </td>
+        </tr>
+        <tr v-for="(paymentItem,index) in paymentList" :key="index">
+          <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
+          <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
+          <td>{{ paymentItem.totalPaymentPrice | numberFormat }}원</td>
+          <td>{{
+              paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료":
+                  paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료":
+                      paymentItem.paymentState == "DELIVERY_ONGOING" ? "배송중":
+                          paymentItem.paymentState == "PART_DELIVERY_ONGOING" ? "부분배송중":
+                              paymentItem.paymentState == "PAYMENT_CONFIRM" ? "구매확정":
+                                  paymentItem.paymentState == "REFUND_REQUEST" ? "반품신청":
+                                      paymentItem.paymentState == "DELIVERY_COMPLETE" ? "배송완료": "상태값이 존재하지 않습니다"
             }}</td>
             <td>{{ paymentItem.regData }}</td>
             <td>
@@ -53,9 +53,12 @@
     </v-card>
 
     <template>
-      <v-dialog v-model="showOrderDetail" width="800">
-        <order-detail-form :paymentId="this.paymentId" :paymentListIndex="this.paymentListIndex"
-          @confirmPurchase="confirmPurchase" @returnProduct="returnProduct" />
+      <v-dialog v-model="showOrderDetail" width="1000">
+        <order-detail-form :paymentId="this.paymentId"
+                           :paymentListIndex="this.paymentListIndex"
+                           @confirmPurchase="confirmPurchase"
+                           @returnProduct="returnProduct"
+        />
       </v-dialog>
     </template>
   </div>
