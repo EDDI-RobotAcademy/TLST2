@@ -61,10 +61,11 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                   Container(
                     padding: EdgeInsets.only(left: 15),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           padding: EdgeInsets.only(top: 10,bottom: 5),
-                          width: 100,
+                          width: 300,
                           child: Text(productName,textAlign: TextAlign.left,style: defaultTextStyle(),),
                         ),
                         Text(subTitle,style: mediumGrayTextStyle(),),
@@ -80,7 +81,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
             ),
             Divider(thickness: 1),
             Container(
-              padding: EdgeInsets.only(left: 15),
+              padding: EdgeInsets.only(left: 20, right: 20),
               width: size.width,
               child: Column(
                 children: [
@@ -88,9 +89,10 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                       padding: EdgeInsets.only(top: 10,bottom: 10),
                       width:size.width ,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("🚛 배송비",textAlign: TextAlign.left,style: MediumBlackTextStyle()),
-                          SizedBox(width: size.width-(size.width/1.7),),
+                          // SizedBox(width: size.width-(size.width/1.7),),
                           Text("ztz는 모든 배송비가 무료!",textAlign: TextAlign.right,style: MediumBlackTextStyle())
                         ],
                       )
@@ -99,6 +101,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                       padding: EdgeInsets.only(top: 10,bottom: 10),
                       width:size.width ,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("🎁 상품가격",textAlign: TextAlign.left,style: MediumBlackTextStyle()),
                           SizedBox(width: size.width-(size.width/2.4),),
@@ -110,6 +113,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                       padding: EdgeInsets.only(top: 10,bottom: 10),
                       width:size.width ,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                               padding: EdgeInsets.only(right: size.width-(size.width/2.3)),
@@ -123,9 +127,10 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
             ),
             Divider(thickness: 1),
             Container(
-                padding: EdgeInsets.only(left: 15,top: 5,bottom: 5),
+                padding: EdgeInsets.only(left: 20,top: 5,bottom: 10, right: 20),
                 width: size.width,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("총 결제금액" ,style: lageBlackTextStyle(),),
                     Container(
@@ -148,7 +153,11 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                     child: Text("장바구니",style: xMediumWhiteTextStyle(),),
                     style: defaultElevatedButtonStyle((size.width/2)-10,50),),
                   SizedBox(width: 10,),
-                  ElevatedButton(onPressed: (){}, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
+                  ElevatedButton(
+                      onPressed: (){
+                        CartController().order();
+                        //Get.to(() => OrderPage());
+                  }, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
               ),
             )

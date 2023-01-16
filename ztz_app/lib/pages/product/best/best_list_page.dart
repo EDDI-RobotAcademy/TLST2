@@ -1,57 +1,56 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ztz_app/components/product/best/best_list_component.dart';
 import 'package:ztz_app/components/product/product_list/product_list_appbar.dart';
 
-import '../../components/product/product_list/product_list_component.dart';
-
-class ProductListPage extends StatefulWidget {
-  const ProductListPage({Key? key, required this.drinkItemIndex}) : super(key: key);
-
-  final int drinkItemIndex;
+class BestListPage extends StatefulWidget {
+  const BestListPage({Key? key}) : super(key: key);
 
   @override
-  State<ProductListPage> createState() => _ProductListPage();
+  State<BestListPage> createState() => _BestListPageState();
 }
 
-class _ProductListPage extends State<ProductListPage> {
+class _BestListPageState extends State<BestListPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: widget.drinkItemIndex,
       length: 7,
+      initialIndex: 0,
       child: Scaffold(
-          appBar: ProductListAppbar(title: "상품 정보"),
+          appBar: ProductListAppbar(title: "베스트"),
           body: const TabBarView(
             children: [
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "전체보기",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "소주증류주",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "리큐르",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "막걸리",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "약주청주",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "과실주",
                   )),
               SafeArea(
-                  child: ProductListComponent(
+                  child: BestListComponent(
                     drinkItem: "기타주류",
                   )),
             ],
-          )),
+          )
+      ),
     );
   }
 }

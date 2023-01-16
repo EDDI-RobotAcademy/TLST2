@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ztz_app/pages/order/cart.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 import '../../../utility/text_styles.dart';
 
 class ProductListAppbar extends StatelessWidget implements PreferredSizeWidget{
-  ProductListAppbar({Key?key}) :super(key:key);
+  ProductListAppbar({Key?key, required this.title}) :super(key:key);
+
+  final String title;
 
   @override
   // TODO: implement preferredSize
@@ -20,6 +24,7 @@ class ProductListAppbar extends StatelessWidget implements PreferredSizeWidget{
             padding: const EdgeInsets.only(top:6),
             child: IconButton(onPressed: (){
               //장바구니 라우터 연결
+              Get.to(() => Cart());
             }, icon: Icon(Icons.shopping_cart_outlined,color: Colors.black,)),
           )
         ],
@@ -36,7 +41,7 @@ class ProductListAppbar extends StatelessWidget implements PreferredSizeWidget{
         backgroundColor: Colors.white,
         title: Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 8),
-          child: Text("상품 정보",style: xMediumBlackTextStyle(),),
+          child: Text(title,style: xMediumBlackTextStyle(),),
         ),
         bottom: const TabBar(
             isScrollable : true,

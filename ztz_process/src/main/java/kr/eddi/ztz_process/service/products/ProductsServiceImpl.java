@@ -71,6 +71,16 @@ public class ProductsServiceImpl implements ProductsService{
         return repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
     }
 
+    public List<Product> recommendListByView() {
+        int limit = 5;
+        List<Product> tmpList =  repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
+        List<Product> productList = new ArrayList<>();
+        for (int i = 0; i < limit; i++) {
+            productList.add(tmpList.get(i));
+        }
+        return productList;
+    }
+
     @Override
     public Product getProductInfo(Long productNo) {
         Optional<Product> maybeProduct = repository.findById(productNo);
@@ -353,6 +363,37 @@ public class ProductsServiceImpl implements ProductsService{
 
     @Override
     public List<Product> monthLocalList(Local local) {
-        return repository.filterMonthLocal(local);
+        return repository.findMonthByLocal(local);
     }
+
+    @Override
+    public List<Product> bestLocalList(Local local) {
+        return repository.findBestByLocal(local);
+    }
+
+    @Override
+    public List<Product> bestLocalAndAlcoholList(ProductLocalAndTypeRequest request) {
+        try {
+            AlcoholType alcoholType = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
+            Local local = Local.valueOfLocalName(request.getLocalName());
+            List<Product> productList = repository.findBestByLocalAndType(alcoholType, local);
+
+            if (productList.equals(Optional.empty())) {
+                log.info("해당하는 상품을 찾을 수 없습니다.");
+                return null;
+            } else {
+                return productList;
+            }
+        } catch (Exception e) {
+            log.info("베스트 상품 지역 알콜 조회 오류" + e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Product> bestAlcoholList(AlcoholType alcoholType) {
+        return repository.findBestByAlcoholType(alcoholType);
+    }
+
+
 }

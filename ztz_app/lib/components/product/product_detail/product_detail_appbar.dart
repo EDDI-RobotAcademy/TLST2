@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ztz_app/pages/order/cart.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 import '../../../controller/product/product_infos/product_info.dart';
@@ -25,6 +27,7 @@ class ProductDetailAppbar extends StatelessWidget implements PreferredSizeWidget
           padding: const EdgeInsets.only(top:6),
           child: IconButton(onPressed: (){
             //장바구니 라우터 연결
+            Get.to(() => Cart());
             }, icon: Icon(Icons.shopping_cart_outlined,color: Colors.black,)),
         )
       ],

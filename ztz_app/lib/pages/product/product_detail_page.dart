@@ -124,7 +124,7 @@ class _ProductDetailPage extends State<ProductDetailPage>{
                                 context: context,
                                 builder: (BuildContext context){
                                   return Container(
-                                      height: 370,
+                                      height: 400,
                                       child: ProductBuyModalComponent()
                                   );
                                 }

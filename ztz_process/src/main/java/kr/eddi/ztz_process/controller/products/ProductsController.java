@@ -68,6 +68,11 @@ public class ProductsController {
         return productsService.listByView();
     }
 
+    @PostMapping("/list/view/recommend")
+    public List<Product> recommendListByView() {
+        return productsService.recommendListByView();
+    }
+
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
         log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
@@ -127,10 +132,37 @@ public class ProductsController {
 
     @GetMapping(path = "/list/month/{localName}")
     public List<Product> localMonthList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터:" +localName);
+        log.info("받은 지역데이터 - 이달의 술:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
         return productsService.monthLocalList(filterLocal);
+    }
+
+    @GetMapping(path = "/list/best/{localName}")
+    public List<Product> localBestList(@PathVariable("localName") String localName) {
+        log.info("받은 지역데이터 - 베스트:" +localName);
+        String tmp = localName;
+        Local filterLocal = Local.valueOfLocalName(tmp);
+
+        return productsService.bestLocalList(filterLocal);
+    }
+
+    @PostMapping("/list/best/by-local-type")
+    public List<Product> localAndTypeBestList(@RequestBody ProductLocalAndTypeRequest request){
+        log.info("지역과 타입으로 베스트 상품 조회");
+        log.info("지역 = " + request.getLocalName());
+        log.info("타입 = " + request.getAlcoholType());
+
+        return productsService.bestLocalAndAlcoholList(request);
+    }
+
+    @PostMapping("/alcoholList/best/{alcoholType}")
+    public List<Product> alcoholBestList(@PathVariable("alcoholType") String alcoholType) {
+        log.info("받은 알코올타입 - 베스트:" +alcoholType);
+        String tmp = alcoholType;
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+
+        return productsService.bestAlcoholList(filterAlcohol);
     }
 }

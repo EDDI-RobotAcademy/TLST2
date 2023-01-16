@@ -8,26 +8,29 @@ import 'package:ztz_app/pages/product/product_detail_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
-class MonthListComponent extends StatefulWidget {
-  const MonthListComponent({Key? key}) : super(key: key);
+class BestListComponent extends StatefulWidget {
+  const BestListComponent({Key? key, required this.drinkItem}) : super(key: key);
+
+  final String drinkItem;
 
   @override
-  State<MonthListComponent> createState() => _MonthListComponentState();
+  State<BestListComponent> createState() => _BestListComponentState();
 }
 
-class _MonthListComponentState extends State<MonthListComponent> {
+class _BestListComponentState extends State<BestListComponent> {
 
-  List<String> _localList = ['전체지역','서울경기','강원','충청','경상','전라','제주'];
-  String _selectedLocal = '전체지역';
-  double _removableWidgetSize = 150;
   bool isLoading = false;
+  List<String> _localList = ['전체지역','서울경기','강원','충청','경상','전라','제주'];
+  var _selectedLocal = '전체지역';
+  double _removableWidgetSize = 150;
   bool _isStickyOnTop = false;
 
   ScrollController _mainScrollController = ScrollController();
   ScrollController _subScrollController = ScrollController();
 
-
+  @override
   void initState() {
+    super.initState();
     _mainScrollController.addListener(() {
       if (_mainScrollController.offset >= _removableWidgetSize &&
           !_isStickyOnTop) {
@@ -39,12 +42,33 @@ class _MonthListComponentState extends State<MonthListComponent> {
         setState(() {});
       }
     });
-    getMonthProduct();
-    super.initState();
+    setProduct();
   }
 
-  void getMonthProduct() async{
-    await ProductController().requestMonthProductFromSpring();
+  void setProduct() async {
+    switch (widget.drinkItem) {
+      case "전체보기":
+        await ProductController().requestBestProductFromSpring();
+        break;
+      case "소주증류주":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+      case "리큐르":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+      case "막걸리":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+      case "약주청주":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+      case "과실주":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+      case "기타주류":
+        await ProductController().requestBestProductByAlcoholType(widget.drinkItem);
+        break;
+    }
     setState(() {
       isLoading = true;
     });
@@ -62,8 +86,8 @@ class _MonthListComponentState extends State<MonthListComponent> {
         ),
       );
     } else {
-      return Container(
-        child: gridList(),// 로딩 되면 나오는 위젯
+      return Container( // 로딩 되면 나오는 위젯
+        child: gridList(),
       );
     }
   }
@@ -80,25 +104,7 @@ class _MonthListComponentState extends State<MonthListComponent> {
                 children: [
                   Container(
                       height: _removableWidgetSize,
-                      child: Image(image: AssetImage("assets/images/banner/month_banner.png"),fit: BoxFit.fill,)),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.only(top: 15,left: 15, right: 15),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0xffc7d6cd),
-                        boxShadow: [
-                        ],
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 1,
-                        )
-                    ),
-                    child: Text("ZTZ가 선정한 이달의 술을 10% 할인된 가격에 만나보세요!",
-                      style: TextStyle(color: Colors.grey.shade700,)
-                    ),
-                  ),
+                      child: Image(image: AssetImage("assets/images/banner/best_banner.jpg"),fit: BoxFit.fill,)),
                   _getStickyWidget(),
                   GridView.count(
                     controller: _subScrollController,
@@ -107,18 +113,18 @@ class _MonthListComponentState extends State<MonthListComponent> {
                     crossAxisCount: 2,
                     scrollDirection: Axis.vertical,
                     childAspectRatio: MediaQuery.of(context).size.height / 1500,
-                    children: List.generate(ProductInfo.productList.length, (index) =>
+                    children: List.generate(ProductInfo.bestProductList.length, (index) =>
                         Padding(
                           padding: const EdgeInsets.only(left: 10),
                           child: ProductCard(
-                            brand: ProductInfo.productList[index]['brand'],
-                            price: ProductInfo.productList[index]['price'],
+                            brand: ProductInfo.bestProductList[index]['brand'],
+                            price: ProductInfo.bestProductList[index]['price'],
                             onTap: () {
                               selectProductCard(index);
                             },
-                            title: ProductInfo.productList[index]['name'],
-                            image: ProductInfo.productList[index]['productInfo']['thumbnailFileName'],
-                            monthCheck: ProductInfo.productList[index]['monthAlcoholCheck'],
+                            title: ProductInfo.bestProductList[index]['name'],
+                            image: ProductInfo.bestProductList[index]['productInfo']['thumbnailFileName'],
+                            monthCheck: ProductInfo.bestProductList[index]['monthAlcoholCheck'],
                           ),
                         )
                     ),
@@ -132,6 +138,7 @@ class _MonthListComponentState extends State<MonthListComponent> {
       ],
     );
   }
+
   Container _getStickyWidget() {
     Size size = MediaQuery.of(context).size;
     return Container(
@@ -139,7 +146,7 @@ class _MonthListComponentState extends State<MonthListComponent> {
         padding: EdgeInsets.only(left: 30 , top: 5, bottom: 5),
         child: Row(
           children: [
-            Text("총" + ProductInfo.productList.length.toString() +"개",style: MediumBlackTextStyle(),),
+            Text("총" + ProductInfo.bestProductList.length.toString() +"개",style: MediumBlackTextStyle(),),
             SizedBox(
               width: size.width - (size.width / 2.5),
             ),
@@ -159,10 +166,18 @@ class _MonthListComponentState extends State<MonthListComponent> {
                 setState(() {
                   isLoading = false;
                   _selectedLocal = value!;
-                  if(_selectedLocal == "전체지역"){
-                    getMonthProduct();
+                  if(widget.drinkItem == "전체보기"){
+                    if(_selectedLocal == "전체지역"){
+                      setProduct();
+                    }else{
+                      requestBestProductByLocal(_selectedLocal);
+                    }
                   }else{
-                    requestMonthProductByLocal(_selectedLocal);
+                    if(_selectedLocal == "전체지역"){
+                      setProduct();
+                    }else{
+                      requestBestProductByLocalAndType(widget.drinkItem , _selectedLocal);
+                    }
                   }
                 });
               },
@@ -172,23 +187,31 @@ class _MonthListComponentState extends State<MonthListComponent> {
     );
   }
 
-  void requestMonthProductByLocal(localName) async {
-    await ProductController().requestMonthProductByLocal(localName);
+  void requestBestProductByLocal(localName) async {
+    await ProductController().requestBestProductByLocal(localName);
     setState(() {
       isLoading = true;
     });
   }
 
+  void requestBestProductByLocalAndType(alcoholType , localName) async {
+    await ProductController().requestBestProductByLocalAndAlcoholType(alcoholType , localName);
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+
   void selectProductCard(int index) async {
     await ProductController().requestProductDetailToSpring(
-        ProductInfo.productList[index]['productNo']);
+        ProductInfo.bestProductList[index]['productNo']);
     await ReviewController().requestReviewAverageToSpring(
-        ProductInfo.productList[index]['productNo']);
+        ProductInfo.bestProductList[index]['productNo']);
     await ReviewController().requestProductReviewToSpring(
-        ProductInfo.productList[index]['productNo']);
+        ProductInfo.bestProductList[index]['productNo']);
     Get.to(
         ProductDetailPage(
-          productNo: ProductInfo.productList[index]['productNo'],
+          productNo: ProductInfo.bestProductList[index]['productNo'],
         ),
         //next page class
         duration: Duration(milliseconds: 500),
@@ -199,4 +222,8 @@ class _MonthListComponentState extends State<MonthListComponent> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

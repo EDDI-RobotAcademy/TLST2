@@ -144,6 +144,24 @@ class ProductController{
       debugPrint("이달의 술 지역 오류 발생 " + e.toString());
     }
   }
+  requestRecommendProductFromSpring() async {
+    try {
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/list/view/recommend'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (requestProductResponse.statusCode == 200) {
+        debugPrint("추천 상품 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.recommendProductList.clear();
+        ProductInfo.recommendProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      } else {
+        debugPrint("추천 상품 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    } catch(e) {
+      debugPrint("추천 상품 오류 발생 " + e.toString());
+    }
+
+  }
 
   requestBestProductFromSpring() async {
     try {
@@ -160,6 +178,64 @@ class ProductController{
       }
     } catch(e) {
       debugPrint("베스트 상품 오류 발생 " + e.toString());
+    }
+  }
+
+  requestBestProductByAlcoholType(alcoholType) async {
+    try{
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/alcoholList/best/$alcoholType'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("베스트 알코올 타입 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.bestProductList.clear();
+        ProductInfo.bestProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("베스트 알코올 타입 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+
+    }catch(e){
+      debugPrint("베스트 알코올 타입 오류 발생 " + e.toString());
+    }
+  }
+
+  requestBestProductByLocal(localName) async {
+    try{
+      var requestProductResponse = await http.get(
+        Uri.http(httpUri, 'ztz/products/list/best/$localName'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("베스트 지역 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.bestProductList.clear();
+        ProductInfo.bestProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("베스트 지역 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("베스트 지역 오류 발생 " + e.toString());
+    }
+  }
+
+  requestBestProductByLocalAndAlcoholType(alcoholType , localName) async {
+    var data = {'alcoholType' : alcoholType , 'localName' : localName};
+    var body = json.encode(data);
+    try{
+      var requestProductResponse = await http.post(
+          Uri.http(httpUri, 'ztz/products/list/best/by-local-type'),
+          headers: {"Content-Type": "application/json"},
+          body: body
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("베스트 지역과 타입 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.bestProductList.clear();
+        ProductInfo.bestProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("베스트 지역과 타입 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("베스트 지역과 타입 오류 발생 " + e.toString());
     }
   }
 }

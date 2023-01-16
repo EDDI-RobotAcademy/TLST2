@@ -30,7 +30,15 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     Product findProductByProductNo(Long productNo);
 
     @Query("select p from Product p where p.monthAlcoholCheck = true and p.classification.local = :local")
-    List<Product> filterMonthLocal(Local local);
+    List<Product> findMonthByLocal(Local local);
 
+    @Query("select p from Product p where p.classification.local = :local order by p.view desc ")
+    List<Product> findBestByLocal(Local local);
+
+    @Query("select p from Product p where p.classification.alcoholType =:alcohol_type and p.classification.local =:local order by p.view desc")
+    List<Product> findBestByLocalAndType(AlcoholType alcohol_type , Local local);
+
+    @Query("select p from Product p where p.classification.alcoholType = :alcoholType order by p.view desc ")
+    List<Product> findBestByAlcoholType(AlcoholType alcoholType);
 
 }
