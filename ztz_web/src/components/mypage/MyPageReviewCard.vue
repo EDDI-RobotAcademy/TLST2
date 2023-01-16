@@ -45,6 +45,7 @@
                 background-color="#205C37"
                 color="#205C37"
                 readonly
+                half-increments
                 dense/>
           </v-card-text>
           <v-card-text>

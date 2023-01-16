@@ -295,6 +295,7 @@ export default {
   position: relative;
   margin-top: 40px;
   margin-left: 5%;
+  width: 180px;
 }
 .item-info .c2 {
   position: relative;
@@ -306,6 +307,7 @@ export default {
   position: relative;
   margin-top: 60px;
   margin-left: 10%;
+  width: 90px;
 }
 .item-info .r2 {
   position: relative;

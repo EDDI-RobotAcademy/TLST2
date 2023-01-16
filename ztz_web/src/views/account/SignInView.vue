@@ -63,7 +63,8 @@ export default {
             }
           })
           .catch((res) => {
-            alert(res.response.data.message)
+            console.log(res.response.data.message)
+            alert("아이디 혹은 비밀번호가 존재하지 않거나 틀렸습니다!")
           })
       } else {
         alert("이미 로그인되어 있습니다.")
