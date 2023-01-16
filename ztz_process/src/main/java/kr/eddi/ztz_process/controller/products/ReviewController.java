@@ -112,32 +112,7 @@ public class ReviewController {
         log.info("파일 리스트" + image);
         log.info("파일 정보" + reviewRequest);
 
-        String thumbnailFileName = image.getOriginalFilename();
-
-        try {
-            log.info("requestUploadFilesWitText() - Make file: " +
-                    image.getOriginalFilename());
-            FileOutputStream writer = new FileOutputStream(
-                    "../ztz_web/src/assets/products/uploadImg/" + image.getOriginalFilename()
-            );
-
-            FileOutputStream appWriter = new FileOutputStream(
-                    "../ztz_app/assets/images/uploadImg/" + image.getOriginalFilename()
-            );
-            log.info("디렉토리에 파일 배치 성공");
-
-            writer.write(image.getBytes());
-            appWriter.write(image.getBytes());
-
-            writer.close();
-            appWriter.close();
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException((e));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        reviewService.modifyWithImg(reviewNo, reviewRequest, thumbnailFileName);
+        reviewService.modifyWithImg(reviewNo, reviewRequest, image);
     }
     
 }
