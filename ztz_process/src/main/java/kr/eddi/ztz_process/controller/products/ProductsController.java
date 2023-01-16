@@ -68,6 +68,11 @@ public class ProductsController {
         return productsService.listByView();
     }
 
+    @PostMapping("/list/view/recommend")
+    public List<Product> recommendListByView() {
+        return productsService.recommendListByView();
+    }
+
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
         log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
