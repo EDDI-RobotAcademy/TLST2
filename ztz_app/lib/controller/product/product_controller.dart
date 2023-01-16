@@ -101,4 +101,58 @@ class ProductController{
       debugPrint("오류 발생 " + e.toString());
     }
   }
+
+  requestMonthProductFromSpring() async {
+    try {
+      var monthProductResponse = await http.get(
+        Uri.http(httpUri, 'ztz/products/monthAlcohol/list'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (monthProductResponse.statusCode == 200) {
+        debugPrint("이달의 술 결과: " + utf8.decode(monthProductResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
+        ProductInfo.productList = jsonDecode(utf8.decode(monthProductResponse.bodyBytes));
+      } else {
+        debugPrint("이달의 술 통신 오류 " + monthProductResponse.statusCode.toString());
+      }
+    } catch(e) {
+      debugPrint("이달의 술 오류 발생 " + e.toString());
+    }
+  }
+
+  requestMonthProductByLocal(localName) async {
+    try{
+      var requestProductResponse = await http.get(
+        Uri.http(httpUri, 'ztz/products/list/month/$localName'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("이달의 술 지역 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.productList.clear();
+        ProductInfo.productList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("이달의 술 지역 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("이달의 술 지역 오류 발생 " + e.toString());
+    }
+  }
+
+  requestBestProductFromSpring() async {
+    try {
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/list/view'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (requestProductResponse.statusCode == 200) {
+        debugPrint("베스트 상품 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.bestProductList.clear();
+        ProductInfo.bestProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      } else {
+        debugPrint("베스트 상품 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    } catch(e) {
+      debugPrint("베스트 상품 오류 발생 " + e.toString());
+    }
+  }
 }

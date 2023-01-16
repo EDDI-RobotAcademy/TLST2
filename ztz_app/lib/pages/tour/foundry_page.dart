@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
-
-import '../../components/layout/menu_app_bar.dart';
+import 'package:ztz_app/components/layout/white_cart_app_bar.dart';
 import '../../components/tour/foundry_list_component.dart';
 
 class FoundryPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _FoundryPage extends State<FoundryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:MenuAppBar(title: "양조장",),
+        appBar:WhiteCartAppBar(title: "양조장",),
         body: SingleChildScrollView(
           child:Column(
             children:[

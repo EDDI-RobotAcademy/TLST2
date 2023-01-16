@@ -76,6 +76,7 @@ class _ToDaysRecommendComponent extends State<ToDaysRecommendComponent>{
                 },
                 title: ProductInfo.productList[index]['name'],
                 image: ProductInfo.productList[index]['productInfo']['thumbnailFileName'],
+                monthCheck: ProductInfo.productList[index]['monthAlcoholCheck'],
               ),
             )
         )

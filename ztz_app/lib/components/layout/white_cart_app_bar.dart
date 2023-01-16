@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ztz_app/pages/order/cart.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
-class WhiteMenuAppBar extends StatelessWidget with PreferredSizeWidget {
-  const WhiteMenuAppBar({Key? key, required this.title}) : super(key: key);
+class WhiteCartAppBar extends StatelessWidget implements PreferredSizeWidget{
+  const WhiteCartAppBar({Key? key, required this.title}) : super(key: key);
 
   final String title;
-
 
   @override
   Size get preferredSize => Size.fromHeight(50);
 
-  // 하얀색 앱 바 + 검은색 글자 + 장바구니 버튼 없음
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -22,6 +22,17 @@ class WhiteMenuAppBar extends StatelessWidget with PreferredSizeWidget {
       title: Text(title, style: blackBoldTextStyle(16)),
       centerTitle: true,
       backgroundColor: Colors.white,
+      actions: <Widget>[
+        IconButton(
+            onPressed: () {
+              //장바구니 라우터 연결
+              Get.to(() => Cart());
+            },
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              color: Colors.black,
+            )),
+      ],
       leading: InkWell(
         onTap: (){
           Navigator.pop(context);

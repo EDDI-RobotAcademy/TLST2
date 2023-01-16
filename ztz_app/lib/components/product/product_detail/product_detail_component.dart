@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:ztz_app/components/product/product_detail/best_recommend_component.dart';
 import 'package:ztz_app/components/product/product_detail/product_info_component.dart';
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 import '../../../controller/product/product_infos/product_info.dart';
 import '../../../utility/text_styles.dart';
-import '../../main_page_components/todays_recommend_component.dart';
+
 class ProductDetailComponent extends StatefulWidget{
   const ProductDetailComponent ({Key?key, required this.productNo}) : super(key: key);
 
@@ -85,9 +86,16 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
             margin: EdgeInsets.only(top:20, left: 15 , bottom: 20),
             child: SizedBox(
               width: size.width,
-              child: Text( numberFormat.format(ProductInfo.productPrice) +'원', textAlign: TextAlign.left, style: TextStyle(
-              fontFamily: "NanumSquareNeo-bRg",fontSize: 20
-              ),),
+              child: Row(
+                children: [
+                  ProductInfo.monthCheck ? Text(" 10% ",
+                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20,))
+                      : Text(""),
+                  Text( numberFormat.format(ProductInfo.productPrice) +'원', textAlign: TextAlign.left, style: TextStyle(
+                  fontFamily: "NanumSquareNeo-bRg",fontSize: 20
+                  ),),
+                ],
+              ),
             ),
           ),
           const Divider(thickness : 1),
@@ -142,7 +150,7 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
             margin: EdgeInsets.only(top:12 , bottom: 5,left: 3),
             child: Text("💜 이런 상품은 어떠신가요?",style: productTitleTextStyle(),textAlign: TextAlign.left,),
           ),
-          ToDaysRecommendComponent(),
+          BestRecommendComponent(),
           SizedBox(height: 20,),
           const Divider(thickness : 12),
           ProductInfoComponent()//Text(ProductInfo.productImagesName.toString()),
