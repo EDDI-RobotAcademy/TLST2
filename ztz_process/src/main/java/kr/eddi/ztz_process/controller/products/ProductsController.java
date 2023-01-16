@@ -27,8 +27,9 @@ public class ProductsController {
 
     @PostMapping(path = "/list")
     public List<Product> productsList(String keyword) {
+        log.info("키워드 = " + keyword );
 
-        if (keyword == null|| keyword.length() == 0){
+        if (keyword == null|| keyword.length() == 0 || keyword ==""){
             return productsService.list();
         }else {
             return productsService.search(keyword);
