@@ -11,9 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -328,7 +330,33 @@ public class ProductsServiceImpl implements ProductsService{
         }
     }
 
-    public void remove(Long productNo){
+    public void remove(Long productNo) {
+        Optional<Product> maybeProduct = repository.findById(productNo);
+        String thumbnailFileName = maybeProduct.get().getProductInfo().getThumbnailFileName();
+        List<String> maybeProductFileName = maybeProduct.get().getProductInfo().getProductImagesName();
+
+        try {
+            File webFile = new File("../ztz_web/src/assets/products/uploadImg/"
+                    + URLDecoder.decode(thumbnailFileName, "UTF-8"));
+            webFile.delete();
+            File appFile = new File("../ztz_app/assets/images/uploadImg/"
+                    + URLDecoder.decode(thumbnailFileName, "UTF-8"));
+            appFile.delete();
+
+            for (String productFileName : maybeProductFileName) {
+                File webProductFile = new File("../ztz_web/src/assets/products/uploadImg/"
+                        + URLDecoder.decode(productFileName, "UTF-8"));
+                webProductFile.delete();
+                File appProductFile = new File("../ztz_app/assets/images/uploadImg/"
+                        + URLDecoder.decode(productFileName, "UTF-8"));
+                appProductFile.delete();
+            }
+
+        } catch (Exception e) {
+            log.info("원본 파일 삭제 오류");
+            e.printStackTrace();
+        }
+
         repository.deleteById(productNo);
     }
 
