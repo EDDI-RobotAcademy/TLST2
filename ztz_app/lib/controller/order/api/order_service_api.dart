@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:ztz_app/components/reivew/photo_review_component.dart';
 import 'package:ztz_app/controller/order/cart_controller.dart';
 import 'package:ztz_app/controller/order/order_controller.dart';
 

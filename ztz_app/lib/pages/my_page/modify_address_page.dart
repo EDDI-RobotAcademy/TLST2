@@ -10,6 +10,8 @@ import 'package:ztz_app/utility/button_style.dart';
 import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
+import '../../controller/order/order_controller.dart';
+
 class ModifyAddressPage extends StatefulWidget {
   const ModifyAddressPage({Key? key}) : super(key: key);
 
@@ -164,6 +166,7 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
                 style:defaultElevatedButtonStyle(380,55),
                 onPressed: (){
                   modifyAddressFunction();
+                  _conveyModifyAddress();
                 },
                 child: Text("저장", style: whiteBoldTextStyle(16),
                 ),
@@ -187,7 +190,12 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
     street = model.address! + ' ' +  model.buildingName!;
     zipcode = model.zonecode!;
   }
-
+  _conveyModifyAddress() {
+    OrderController.city.value = city;
+    OrderController.street.value = street;
+    OrderController.addressDetail.value = addressDetailController.text;
+    OrderController.zipcode.value = zipcode;
+  }
   // 배송지 수정 함수
   modifyAddressFunction() async {
     ModifyAddressInfo modifyAddressInfo = ModifyAddressInfo(

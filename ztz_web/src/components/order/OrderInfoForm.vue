@@ -155,7 +155,7 @@ export default {
           this.$set(this.sendInfo.orderCnt, i, this.$store.state.orderList.orderSave.selectList[i].count);
           this.$set(this.sendInfo.orderPrice, i, (this.$store.state.orderList.orderSave.selectList[i].product.price * this.$store.state.orderList.orderSave.selectList[i].count));
 
-          this.orderCartItemNo[i] = this.$store.state.orderList.orderSave.selectList[i].cartItemNo
+          this.orderCartItemNo[i] = this.$store.state.orderList.orderSave.selectList[i].itemNo
         }
       }
     },

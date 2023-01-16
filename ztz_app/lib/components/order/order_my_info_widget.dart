@@ -32,10 +32,10 @@ class _OrderMyInfoState extends State<OrderMyInfo> {
       street = AccountState.memberProfile['address']['street'];
       addressDetail = AccountState.memberProfile['address']['addressDetail'];
       zipcode = AccountState.memberProfile['address']['zipcode'];
-      OrderController.city = AccountState.memberProfile['address']['city'];
-      OrderController.street = AccountState.memberProfile['address']['street'];
-      OrderController.addressDetail = AccountState.memberProfile['address']['addressDetail'];
-      OrderController.zipcode = AccountState.memberProfile['address']['zipcode'];
+      OrderController.city.value = AccountState.memberProfile['address']['city'];
+      OrderController.street.value = AccountState.memberProfile['address']['street'];
+      OrderController.addressDetail.value = AccountState.memberProfile['address']['addressDetail'];
+      OrderController.zipcode.value = AccountState.memberProfile['address']['zipcode'];
     });
   }
 
@@ -80,6 +80,7 @@ class _OrderMyInfoState extends State<OrderMyInfo> {
               ),
             ),
             child:Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +94,10 @@ class _OrderMyInfoState extends State<OrderMyInfo> {
                     )
                   ],
                 ),
-                Text('$city $street $addressDetail $zipcode', textAlign: TextAlign.left),
+                Obx(() => Text(
+                    '${OrderController.address}',
+                    textAlign: TextAlign.left),
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: 1,

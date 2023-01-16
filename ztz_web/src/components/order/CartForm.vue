@@ -64,12 +64,29 @@
     </div>
 <!--    장바구니 리스트 끝-->
 <!--    총합계 부분-->
-    <div class="row" style="margin-top: 60px; margin-left: 30px; font-size: 25px; font-weight: bold;">
-      <p class="col-sm-4" style="text-align: right; color: #205c37">총 합계</p>
-      <div class="col-sm-8" align="center" style=" color: #205c37">
+
+    <div class="row" style="width: 510px; margin: 50px auto 0; font-size: 20px; font-weight: bold;">
+      <p style="width:200px; text-align: left; color: #555">선택한 상품 총액</p>
+      <div style="width:250px; margin-left:60px ;text-align: right;  color: #555">
         <p>{{ this.totalPrice | numberFormat }} 원</p>
       </div>
     </div>
+    <div class="row" style="width: 510px; margin: 5px auto; font-size: 20px; font-weight: bold;">
+      <p style="width:200px; text-align: left; color: #555">배송비</p>
+      <div style="width:250px; margin-left:60px;text-align: right; color: #555">
+        <p v-if="this.totalPrice > 49999">0 원</p>
+        <p v-else>3,000 원</p>
+      </div>
+    </div>
+    <div class="row" style="width: 510px;  margin: 5px auto; font-size: 25px; font-weight: bold;">
+      <p style="width:200px; text-align: left; color: #205c37">총 합계</p>
+      <div style="width:250px; margin-left:60px ;text-align: right;  color: #205c37">
+        <p v-if="this.totalPrice > 49999">{{ this.totalPrice | numberFormat }} 원</p>
+        <p v-else>{{ this.totalPrice + 3000 | numberFormat }} 원</p>
+      </div>
+    </div>
+
+
     <div align="center" style="margin-top: 20px">
       <ButtonWhite
           @click="btnSelectPurchase"
