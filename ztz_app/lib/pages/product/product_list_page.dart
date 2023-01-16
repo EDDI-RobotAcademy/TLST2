@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/components/product/product_list/product_list_appbar.dart';
 
-import '../../components/layout/menu_app_bar.dart';
 import '../../components/product/product_list/product_list_component.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _ProductListPage extends State<ProductListPage> {
       initialIndex: widget.drinkItemIndex,
       length: 7,
       child: Scaffold(
-          appBar: ProductListAppbar(),
+          appBar: ProductListAppbar(title: "상품 정보"),
           body: const TabBarView(
             children: [
               SafeArea(
