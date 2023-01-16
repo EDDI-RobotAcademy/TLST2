@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:ztz_app/components/product/product_detail/best_recommend_component.dart';
+import 'package:ztz_app/components/product/product_detail/product_recommend_component.dart';
 import 'package:ztz_app/components/product/product_detail/product_info_component.dart';
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
@@ -150,7 +150,7 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
             margin: EdgeInsets.only(top:12 , bottom: 5,left: 3),
             child: Text("💜 이런 상품은 어떠신가요?",style: productTitleTextStyle(),textAlign: TextAlign.left,),
           ),
-          BestRecommendComponent(),
+          ProductRecommendComponent(),
           SizedBox(height: 20,),
           const Divider(thickness : 12),
           ProductInfoComponent()//Text(ProductInfo.productImagesName.toString()),

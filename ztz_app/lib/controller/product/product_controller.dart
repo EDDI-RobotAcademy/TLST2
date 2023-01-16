@@ -144,6 +144,24 @@ class ProductController{
       debugPrint("이달의 술 지역 오류 발생 " + e.toString());
     }
   }
+  requestRecommendProductFromSpring() async {
+    try {
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/list/view/recommend'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (requestProductResponse.statusCode == 200) {
+        debugPrint("추천 상품 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.recommendProductList.clear();
+        ProductInfo.recommendProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      } else {
+        debugPrint("추천 상품 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    } catch(e) {
+      debugPrint("추천 상품 오류 발생 " + e.toString());
+    }
+
+  }
 
   requestBestProductFromSpring() async {
     try {

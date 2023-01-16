@@ -5,15 +5,15 @@ import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 import 'package:ztz_app/controller/reivew/review_controller.dart';
 import 'package:ztz_app/pages/product/product_detail_page.dart';
 
-class BestRecommendComponent extends StatefulWidget {
-  const BestRecommendComponent({Key? key}) : super(key: key);
+class ProductRecommendComponent extends StatefulWidget {
+  const ProductRecommendComponent({Key? key}) : super(key: key);
 
   @override
-  State<BestRecommendComponent> createState() => _BestRecommendComponentState();
+  State<ProductRecommendComponent> createState() => _ProductRecommendComponentState();
 }
 
-class _BestRecommendComponentState extends State<BestRecommendComponent> {
-  var bestProductList = [];
+class _ProductRecommendComponentState extends State<ProductRecommendComponent> {
+  var recommendProductList = [];
 
   @override
   void initState() {
@@ -22,16 +22,16 @@ class _BestRecommendComponentState extends State<BestRecommendComponent> {
   }
 
   void setBestProduct() async {
-    await ProductController().requestBestProductFromSpring();
+    await ProductController().requestRecommendProductFromSpring();
     setState(() {
-      bestProductList = ProductInfo.bestProductList;
+      recommendProductList = ProductInfo.recommendProductList;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: bestProductList.length == 0 ? showNullList() : showBestList(),
+      child: recommendProductList.length == 0 ? showNullList() : showBestList(),
     );
   }
 
@@ -51,19 +51,19 @@ class _BestRecommendComponentState extends State<BestRecommendComponent> {
       scrollDirection: Axis.horizontal,
       child: Row(
           children: List.generate(
-              bestProductList.length,
+              recommendProductList.length,
               (index) => Padding(
                     padding: EdgeInsets.zero,
                     child: ProductCard(
-                      brand: bestProductList[index]['brand'],
-                      price: bestProductList[index]['price'],
+                      brand: recommendProductList[index]['brand'],
+                      price: recommendProductList[index]['price'],
                       onTap: () {
                         selectProductCard(index);
                       },
-                      title: bestProductList[index]['name'],
-                      image: bestProductList[index]['productInfo']
+                      title: recommendProductList[index]['name'],
+                      image: recommendProductList[index]['productInfo']
                           ['thumbnailFileName'],
-                      monthCheck: bestProductList[index]['monthAlcoholCheck'],
+                      monthCheck: recommendProductList[index]['monthAlcoholCheck'],
                     ),
                   ))),
     );
@@ -71,13 +71,13 @@ class _BestRecommendComponentState extends State<BestRecommendComponent> {
 
   selectProductCard(index) async {
     await ProductController()
-        .requestProductDetailToSpring(bestProductList[index]['productNo']);
+        .requestProductDetailToSpring(recommendProductList[index]['productNo']);
     await ReviewController()
-        .requestReviewAverageToSpring(bestProductList[index]['productNo']);
+        .requestReviewAverageToSpring(recommendProductList[index]['productNo']);
     await ReviewController()
-        .requestProductReviewToSpring(bestProductList[index]['productNo']);
+        .requestProductReviewToSpring(recommendProductList[index]['productNo']);
 
     Navigator.pushReplacement(context, MaterialPageRoute(
-            builder: (context) => ProductDetailPage(productNo: bestProductList[index]['productNo'])));
+            builder: (context) => ProductDetailPage(productNo: recommendProductList[index]['productNo'])));
   }
 }
