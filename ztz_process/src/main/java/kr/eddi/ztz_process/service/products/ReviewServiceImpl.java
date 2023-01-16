@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.net.URLDecoder;
 import java.util.*;
 
 @Slf4j
@@ -95,6 +97,24 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public void deleteReview(Long reviewNo) {
+        Optional<Review> maybeReview = reviewRepository.findById(reviewNo);
+        String fileName = maybeReview.get().getThumbnailFileName();
+
+        if (fileName != null) {
+            log.info("삭제할 파일 이름" + fileName);
+
+            try {
+                File webfile = new File("../ztz_web/src/assets/products/uploadImg/" + URLDecoder.decode(fileName, "UTF-8"));
+                webfile.delete();
+
+                File appfile = new File("../ztz_app/assets/images/uploadImg/" + URLDecoder.decode(fileName, "UTF-8"));
+                appfile.delete();
+
+            } catch (Exception e) {
+                log.info("원본 파일 삭제 오류 발생");
+                e.printStackTrace();
+            }
+        }
         reviewRepository.deleteById(reviewNo);
     }
 
