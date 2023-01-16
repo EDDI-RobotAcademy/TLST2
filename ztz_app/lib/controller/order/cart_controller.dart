@@ -81,7 +81,6 @@ class CartController extends GetxController{
   }
 
 
-
   increment(int index){
     reactiveCartList[index]['count'] ++;
     int amount =
@@ -149,6 +148,7 @@ class CartController extends GetxController{
             'thumbnail': reactiveCartList[i]['product']['productInfo']['thumbnailFileName']
           };
           orderData.addAll({tmpData});
+          reactiveCartList.removeAt(i);
         }
       }
     }

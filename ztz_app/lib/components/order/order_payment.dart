@@ -9,6 +9,7 @@ import 'package:iamport_flutter/model/payment_data.dart';
 import 'package:ztz_app/components/layout/menu_app_bar.dart';
 import 'package:ztz_app/components/order/order_payment_result.dart';
 import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/controller/order/cart_controller.dart';
 import 'package:ztz_app/controller/order/order_controller.dart';
 
 
@@ -28,6 +29,12 @@ class _OrderPayment extends State<OrderPayment> {
       '${OrderController.street} '
       '${OrderController.addressDetail} '
       '${OrderController.zipcode} ';
+
+  void emptyCart() {
+    for(int i = 0; i < orderItems.length; i++) {
+      CartController().reqDeleteItem(orderItems[i]['itemNo']);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +73,7 @@ class _OrderPayment extends State<OrderPayment> {
       /* [필수입력] 콜백 함수 */
       callback: (Map<String, String> result) {
         Get.to(() => OrderPaymentResult(), arguments: [result, orderItems]);
-        // Navigator.pushReplacement(
-        //   context, MaterialPageRoute(
-        //     builder: (context) => OrderPaymentResult(orderItems: orderItems, result: result,)),
-        // );
+        emptyCart();
         debugPrint("결제완료 전: $result['success']");
       },
     );

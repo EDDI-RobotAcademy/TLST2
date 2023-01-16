@@ -18,10 +18,11 @@ class OrderController{
     "부재 시 경비실에 놔주세요",
   ];
   static var deliveryMessage = '';
-  static String city = "";
-  static String street = "";
-  static String addressDetail = "";
-  static String zipcode = "";
+  static RxString city = "".obs;
+  static RxString street = "".obs;
+  static RxString addressDetail = "".obs;
+  static RxString zipcode = "".obs;
+  static get address => '${city.value} ${street.value} ${addressDetail.value} ${zipcode.value}';
 
   requestPaymentListFromSpring(token) async {
     var data = {'token' : token};
