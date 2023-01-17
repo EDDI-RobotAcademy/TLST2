@@ -24,6 +24,7 @@ import {
     REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING,
     REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
     REQUEST_FAVORITE_PRODUCTS_FROM_SPRING
+    REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -520,4 +521,34 @@ export default {
                 commit(REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING, res.data);
             })
     }
+
+    reqAllRecommendedKeyword({commit}) {
+        return axios.get('http://localhost:7777/ztz/search/all-keywords-list')
+        .then((res) => {
+                commit(REQUEST_ALL_RECOMMENDED_KEYWORD_LIST, res.data)
+        })
+    },
+    reqChangeStatusKeyword({commit}, payload) {
+        const selectedKeywords = payload
+        return axios.post('http://localhost:7777/ztz/search/select', {selectedKeywords})
+        .then((res) => {
+                commit(RESPONSE_MY_REQUEST, res.data)
+        })
+    },
+    reqAddKeyword({commit}, payload) {
+        const enterKeyword = payload
+        console.log("저장 요청시 보내는 데이터 형태: " + enterKeyword)
+        return axios.post('http://localhost:7777/ztz/search/save', {enterKeyword})
+        .then((res) => {
+                commit(RESPONSE_MY_REQUEST, res.data)
+        })
+    },
+    reqDeleteKeyword({commit}, payload) {
+        console.log("삭제 요청시 보내는 데이터 형태: " + payload)
+        const selectedKeywords = payload
+        return axios.post('http://localhost:7777/ztz/search/delete', {selectedKeywords})
+        .then((res) => {
+                commit(RESPONSE_MY_REQUEST, res.data)
+        })
+    },
 }
