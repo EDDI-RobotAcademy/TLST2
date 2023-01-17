@@ -136,8 +136,8 @@ import { mapState, mapActions } from "vuex";
 </script>
 
 <style scoped>
-.keywordList {display: flex; justify-content: flex-start; margin: 0; padding:0;}
-.keywordList li {width: 300px; height: 150px;margin-right:20px; border-radius: 30px;}
+.keywordList {display: flex; justify-content: flex-start; margin: 0; padding:0;  flex-wrap: wrap;}
+.keywordList li {width: 260px; height: 80px;margin-right:20px; border-radius: 30px;}
 .keywordList li :nth-child(4) {margin-right:0;}
 .use-status {margin:0; padding: 2px 10px; font-size:13px; line-height:20px; border-radius: 50px;background-color: #c7d6cd; color:#2C4636;}
 .enterKeyword {  padding: 5px 10px 6px; margin-top:-6px; margin-left:20px; margin-right: 10px;  border: 1px solid #ddd; border-radius: 4px;}

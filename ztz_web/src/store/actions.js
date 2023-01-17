@@ -23,7 +23,7 @@ import {
     REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING,
     REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING,
     REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
-    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING
+    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
     REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
 } from "./mutation-types";
 
@@ -520,7 +520,7 @@ export default {
             .then((res) => {
                 commit(REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING, res.data);
             })
-    }
+    },
 
     reqAllRecommendedKeyword({commit}) {
         return axios.get('http://localhost:7777/ztz/search/all-keywords-list')
