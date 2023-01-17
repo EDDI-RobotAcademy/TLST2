@@ -39,7 +39,7 @@
         </div>
         <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">판매가</p>
-          <p class="col-sm-8" style="text-align: right">{{ product.price | numberFormat }} 원</p>
+          <p class="col-sm-8" style="text-align: right"><span v-if="product.monthAlcoholCheck" style="color: red" >10% &nbsp; </span>{{ product.price | numberFormat }} 원</p>
         </div>
         <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">배송비</p>

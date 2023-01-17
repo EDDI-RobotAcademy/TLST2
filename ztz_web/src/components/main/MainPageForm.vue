@@ -75,10 +75,12 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
   width: 1200px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 0px 0;
+
 }
 
 
