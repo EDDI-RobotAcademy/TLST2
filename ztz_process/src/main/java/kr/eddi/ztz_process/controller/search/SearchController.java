@@ -1,5 +1,7 @@
 package kr.eddi.ztz_process.controller.search;
 
+import kr.eddi.ztz_process.controller.search.request.AddKeywordRequest;
+import kr.eddi.ztz_process.controller.search.request.KeywordListRequest;
 import kr.eddi.ztz_process.entity.search.RecommendedKeywords;
 import kr.eddi.ztz_process.service.search.SearchService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,7 @@ public class SearchController {
 
     @GetMapping("/all-keywords-list")
     public List<RecommendedKeywords> recommendedKeywordList() {
+        log.info("모든 추천키워드 리스트 요청");
         return service.returnEntireKeywordList();
     }
 
@@ -47,19 +50,18 @@ public class SearchController {
     }
 
     @PostMapping("/save")
-    public String saveKeyword() {
-        return service.saveKeyword("블루");
+    public String saveKeyword(@RequestBody AddKeywordRequest addKeywordRequest) {
+        log.info("저장" + addKeywordRequest.getEnterKeyword());
+        return service.saveKeyword(addKeywordRequest.getEnterKeyword());
     }
 
-    @DeleteMapping("/delete")
-    public void removeKeyword () {
-        List<Long> delete = List.of(1L);
-        service.deleteKeyword(delete);
+    @PostMapping("/delete")
+    public void removeKeyword (@RequestBody KeywordListRequest keywordListRequest) {
+        service.deleteKeyword(keywordListRequest.getSelectedKeywords());
     }
 
     @PostMapping("/select")
-    public String selectUseKeyword() {
-        List<Long> select = List.of(1L);
-        return service.selectKeyword(select);
+    public String selectUseKeyword(@RequestBody KeywordListRequest keywordListRequest)  {
+        return service.selectKeyword(keywordListRequest.getSelectedKeywords());
     }
 }
