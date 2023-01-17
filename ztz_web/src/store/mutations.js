@@ -25,6 +25,8 @@ import {
     REQUEST_ORDER_FROM_SPRING,
     REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING,
     REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING,
+    REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
+    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING
 } from "./mutation-types"
 
 export default {
@@ -106,5 +108,9 @@ export default {
     [REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING](state, passingData){
         state.reviewInfo = passingData
     },
+    [ REQUEST_MY_FAVORITE_LIST_FROM_SPRING](state, passingData){
+        state.myFavoriteList = passingData
+    },
+
 }
 

@@ -42,6 +42,7 @@ export default {
         { menu: "배송지관리", tab: "MyPageDeliverySection" },
         { menu: "주문관리", tab: "OrderManagement" },
         { menu: "리뷰관리", tab: "MyPageReviewForm" },
+        { menu: "찜한상품", tab: "MyFavoriteForm" },
         { menu: "예약관리", tab: "MyReservationDetailSection" },
         { menu: "회원정보변경", tab: "MyPageProfileModify" },
       ],
