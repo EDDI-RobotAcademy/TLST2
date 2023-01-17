@@ -8,9 +8,15 @@
           contain
           max-width="1200px"
           max-height="500px"
-          :src="require('@/assets/banner/banner_05.png')">
+          :src="require('@/assets/banner/month_banner.png')">
       </v-img>
     </div>
+    <div class="item-title">
+      <div>
+        <span>전체 상품 {{ products.length }}개</span>
+      </div>
+    </div>
+    <v-divider style="border-width: 1px; border-color: black"></v-divider>
     <div>
       <month-drink-product-list :products="products"/>
     </div>
@@ -52,6 +58,12 @@ export default {
 
 .month-banner {
   margin-top: 20px;
+}
+
+.item-title {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0 10px 0;
 }
 
 </style>
