@@ -41,4 +41,12 @@ public interface ProductsRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.classification.alcoholType = :alcoholType order by p.view desc ")
     List<Product> findBestByAlcoholType(AlcoholType alcoholType);
 
+    @Query("select p from Product p where p.classification.local = :local order by p.favoriteNum desc ")
+    List<Product> findFavoriteByLocal(Local local);
+
+    @Query("select p from Product p where p.classification.alcoholType =:alcohol_type and p.classification.local =:local order by p.favoriteNum desc")
+    List<Product> findFavoriteByLocalAndType(AlcoholType alcohol_type , Local local);
+
+    @Query("select p from Product p where p.classification.alcoholType = :alcoholType order by p.favoriteNum desc ")
+    List<Product> findFavoriteByAlcoholType(AlcoholType alcoholType);
 }

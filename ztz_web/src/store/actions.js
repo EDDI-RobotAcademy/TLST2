@@ -22,6 +22,8 @@ import {
     REQUEST_ORDER_FROM_SPRING,
     REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING,
     REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING,
+    REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
+    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -486,12 +488,31 @@ export default {
     },
     reqSaveFavoriteToSpring({commit}, payload) {
         const {memberId, productNo, favoriteType} = payload
-        console.log("좋아요 상품 : " + payload.productNo + payload.productNo + payload.favoriteType)
+        console.log("좋아요 상품 : " + payload.memberId + payload.productNo + payload.favoriteType)
         return axios.post("http://localhost:7777/ztz/products/favorite/changeFavoriteStatus", {memberId, productNo, favoriteType})
             .then((res) => {
                 commit(REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING, res.data);
             });
     },
+
+    reqMyFavoriteListToSpring({commit}, payload) {
+        const token = payload
+        console.log("찜한 상품 조회 멤버 토큰 : " + payload)
+        return axios.post("http://localhost:7777/ztz/products/favorite/myFavorite", {token:token})
+            .then((res) => {
+                commit(REQUEST_MY_FAVORITE_LIST_FROM_SPRING, res.data);
+            });
+    },
+
+    reqFavoriteProductsFromSpring({commit}) {
+        console.log('메인페이지 좋아요 상품 리스트')
+
+        return axios.post('http://localhost:7777/ztz/products/list/favorite')
+            .then((res) => {
+                commit(REQUEST_FAVORITE_PRODUCTS_FROM_SPRING, res.data)
+            })
+    },
+
     reqProductReviewAvgFromSpring({commit}, productNo) {
         console.log(productNo + "번 상품 리뷰 평점과 개수 불러오기")
         return axios.post(`http://localhost:7777/ztz/products/review/read/average/${productNo}`)

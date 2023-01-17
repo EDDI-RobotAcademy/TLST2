@@ -6,6 +6,7 @@ class ProductInfo extends GetxController{
   static late var bestProductList = [];
   static late var searchedProductList = [];
   static late var recommendProductList = [];
+  static late var favoriteProductList = [];
 
   static late int productNo;
   static late String productName;

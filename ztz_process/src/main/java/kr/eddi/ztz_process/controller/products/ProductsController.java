@@ -73,6 +73,11 @@ public class ProductsController {
         return productsService.recommendListByView();
     }
 
+    @PostMapping("/list/favorite")
+    public List<Product> listByFavorite() {
+        return productsService.listByFavorite();
+    }
+
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
         log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
@@ -164,5 +169,32 @@ public class ProductsController {
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 
         return productsService.bestAlcoholList(filterAlcohol);
+    }
+
+    @GetMapping(path = "/list/favorite/{localName}")
+    public List<Product> localFavoriteList(@PathVariable("localName") String localName) {
+        log.info("받은 지역데이터 - 좋아요:" +localName);
+        String tmp = localName;
+        Local filterLocal = Local.valueOfLocalName(tmp);
+
+        return productsService.favoriteLocalList(filterLocal);
+    }
+
+    @PostMapping("/list/favorite/by-local-type")
+    public List<Product> localAndTypeFavoriteList(@RequestBody ProductLocalAndTypeRequest request){
+        log.info("지역과 타입으로 좋아요 상품 조회");
+        log.info("지역 = " + request.getLocalName());
+        log.info("타입 = " + request.getAlcoholType());
+
+        return productsService.favoriteLocalAndAlcoholList(request);
+    }
+
+    @PostMapping("/alcoholList/favorite/{alcoholType}")
+    public List<Product> alcoholFavoriteList(@PathVariable("alcoholType") String alcoholType) {
+        log.info("받은 알코올타입 - 좋아요:" +alcoholType);
+        String tmp = alcoholType;
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+
+        return productsService.favoriteAlcoholList(filterAlcohol);
     }
 }

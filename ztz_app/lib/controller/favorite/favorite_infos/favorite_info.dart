@@ -6,6 +6,8 @@ class FavoriteInfo extends GetxController{
   static late int favoriteNum;
   static late bool productFavoriteFlag;
 
+  static late var myFavoriteList = [];
+
 
   void setFavoriteInfo(){
     favoriteNum = favoriteStatus['favoriteNum'];

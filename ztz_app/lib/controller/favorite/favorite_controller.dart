@@ -30,4 +30,25 @@ class FavoriteController extends GetxController{
       debugPrint("오류 발생 " + e.toString());
     }
   }
+
+  requestMyFavoriteToSpring(token) async{
+
+    var data = {'token' : token};
+    var body = json.encode(data);
+    try{
+      var requestFavoriteResponse = await http.post(
+        Uri.http(httpUri,'ztz/products/favorite/myFavorite'),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      debugPrint(requestFavoriteResponse.statusCode.toString());
+      if(requestFavoriteResponse.statusCode == 200){
+        debugPrint("나의 찜 상품 : " + utf8.decode(requestFavoriteResponse.bodyBytes).toString());
+        FavoriteInfo.myFavoriteList = jsonDecode(utf8.decode(requestFavoriteResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }
