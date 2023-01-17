@@ -6,7 +6,9 @@ import kr.eddi.ztz_process.controller.products.request.ProductRequest;
 import kr.eddi.ztz_process.entity.products.AlcoholType;
 import kr.eddi.ztz_process.entity.products.Local;
 import kr.eddi.ztz_process.entity.products.Product;
+import kr.eddi.ztz_process.repository.search.KeywordRepository;
 import kr.eddi.ztz_process.service.products.ProductsService;
+import kr.eddi.ztz_process.service.search.SearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,13 +27,19 @@ public class ProductsController {
     @Autowired
     ProductsService productsService;
 
+    @Autowired
+    SearchService searchService;
+
+    @Autowired
+    KeywordRepository keywordRepository;
     @PostMapping(path = "/list")
     public List<Product> productsList(String keyword) {
-        log.info("키워드 = " + keyword );
+        log.info("키워드 = " + keyword);
 
         if (keyword == null|| keyword.length() == 0 || keyword ==""){
             return productsService.list();
         }else {
+            searchService.registerOrAddCntKeyWord(keyword);
             return productsService.search(keyword);
         }
     }
