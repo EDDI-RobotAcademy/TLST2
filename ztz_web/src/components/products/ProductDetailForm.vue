@@ -19,6 +19,19 @@
           {{'#'+ tastes }}&nbsp;&nbsp;
           </div>
         </v-row>
+        <div class="item-rate">
+          <v-row>
+            <v-rating
+                :value = reviewInfo[0].average
+                background-color="grey"
+                color="yellow darken-1"
+                half-increments
+                dense>
+            </v-rating>
+            <p> &nbsp; {{reviewInfo[0].average}}</p>
+            <p> &nbsp; / 리뷰 {{reviewInfo[0].reviewCnt}} 개</p>
+          </v-row>
+        </div>
         <v-divider></v-divider>
         <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">제조사</p>
@@ -26,7 +39,7 @@
         </div>
         <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">판매가</p>
-          <p class="col-sm-8" style="text-align: right">{{ product.price | numberFormat }} 원</p>
+          <p class="col-sm-8" style="text-align: right"><span v-if="product.monthAlcoholCheck" style="color: red" >10% &nbsp; </span>{{ product.price | numberFormat }} 원</p>
         </div>
         <div class="row" style="margin: 10px 0; font-size: 18px">
           <p class="col-sm-4">배송비</p>
@@ -166,6 +179,10 @@ export default {
     productFavoriteInfo :{
       type: Object,
       required: true,
+    },
+    reviewInfo: {
+      type: Array,
+      required: true,
     }
   },
   methods: {
@@ -212,8 +229,7 @@ export default {
       } else{
         alert("로그인이 필요한 기능입니다.")
       }
-
-    }
+    },
   },
   beforeUpdate() {
     this.totalPrice = this.product.price * this.quantity
@@ -260,6 +276,10 @@ export default {
 
 .item-detail {
   margin-top: 50px;
+}
+
+.item-rate {
+  margin: 20px 10px
 }
 
 

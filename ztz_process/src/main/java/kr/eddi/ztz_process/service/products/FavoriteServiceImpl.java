@@ -8,11 +8,15 @@ import kr.eddi.ztz_process.entity.products.Product;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.repository.products.FavoriteRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
+import kr.eddi.ztz_process.service.security.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+
+import static kr.eddi.ztz_process.utility.order.validationToken.validationToken;
 
 @Slf4j
 @Service
@@ -26,6 +30,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    private RedisService redisService;
 
 
     @Override
@@ -142,5 +149,13 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favoriteResponse;
     }
 
+    @Override
+    public List<Favorite> myFavoriteProductList(String token){
+        String returnToken = validationToken(token);
+        Long id = redisService.getValueByKey(returnToken);
+        log.info("짬한상품 조회 멤버 아이디: " +id);
+        log.info("짬한상품 조회 리스트" + favoriteRepository.findByFavoriteByMemberId(id).toString() );
+        return favoriteRepository.findByFavoriteByMemberId(id);
+    }
 }
 

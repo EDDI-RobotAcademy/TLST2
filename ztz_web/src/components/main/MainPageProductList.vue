@@ -11,7 +11,7 @@
               style="text-decoration: none"
               :to="{ name: 'ProductDetailView',
                                 params: { productNo: product.productNo.toString() }}">
-            <v-card width="200px" height="380px" elevation="1" style="margin: 10px">
+            <v-card width="200px" height="380px" elevation="0" style="margin: 10px" flat>
               <v-card-text style="padding: 10px 0 10px 0">
                 <v-img
                     :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
@@ -21,7 +21,7 @@
               <div class="product-info">
                 <p style="color: #568869; font-size: 12px">{{ product.brand }}</p>
                 <p>{{ product.name }}</p>
-                <p style="color: black; font-weight: bold">{{ product.price | numberFormat }} 원</p>
+                <p style="color: black; font-weight: bold"><span v-if="product.monthAlcoholCheck" style="color: red" >10% &nbsp; </span>{{ product.price | numberFormat }} 원</p>
               </div>
             </v-card>
           </router-link>
@@ -53,7 +53,7 @@ export default {
 }
 
 .product .product-info {
-  margin: 0 0 0 20px;
+  margin: 0 0 0 ;
 }
 
 .product .product-info p {

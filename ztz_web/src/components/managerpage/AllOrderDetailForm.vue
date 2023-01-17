@@ -57,7 +57,7 @@
             </v-col>
           </v-row>
         </td>
-        <td>{{ item.orderPrice}}</td>
+        <td>{{ item.orderPrice | numberFormat }}원</td>
         <td>{{ item.orderCnt }}</td>
         <td>
           {{

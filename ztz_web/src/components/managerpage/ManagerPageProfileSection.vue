@@ -19,7 +19,7 @@
                     상품 매출액
                 </p>
                 <p class="content-text">
-                    {{this.$store.state.salesAmount}}원
+                    {{this.$store.state.salesAmount | numberFormat }} 원
                 </p>
             </li>
             <li>
@@ -35,7 +35,7 @@
                     예약내역
                 </p>
                 <p class="content-text">
-                    {{this.$store.state.myReservationList.length}}건
+                    {{this.$store.state.myReservationList.length}} 건
                 </p>
             </li>
         </ul>

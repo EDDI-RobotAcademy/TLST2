@@ -73,6 +73,7 @@ public class ProductsServiceImpl implements ProductsService{
         return repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
     }
 
+    @Override
     public List<Product> recommendListByView() {
         int limit = 5;
         List<Product> tmpList =  repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
@@ -81,6 +82,10 @@ public class ProductsServiceImpl implements ProductsService{
             productList.add(tmpList.get(i));
         }
         return productList;
+    }
+    @Override
+    public List<Product> listByFavorite(){
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "favoriteNum"));
     }
 
     @Override
@@ -263,10 +268,12 @@ public class ProductsServiceImpl implements ProductsService{
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
-        // 실제 파일 frontend 이미지 폴더 경로에 저장
+        // 실제 파일 frontend 이미지 폴더 경로에 저장 - 이전에 저장된 원본 파일 삭제
+
         try {
             //1. 썸네일 변경 있을 시
             if(thumbnail!= null ){
+
                 for (MultipartFile multipartFile: thumbnail) {
                     log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
                     String thumbnailRandomName = now.format(dtf);
@@ -286,6 +293,18 @@ public class ProductsServiceImpl implements ProductsService{
                     writer1.close();
                     appWriter1.close();
                 }
+
+                // 이전에 저장된 원본 파일 삭제
+                String oldThumbnailName = product.getProductInfo().getThumbnailFileName();
+
+                File webFile = new File("../ztz_web/src/assets/products/uploadImg/"
+                        + URLDecoder.decode(oldThumbnailName, "UTF-8"));
+                webFile.delete();
+                File appFile = new File("../ztz_app/assets/images/uploadImg/"
+                        + URLDecoder.decode(oldThumbnailName, "UTF-8"));
+                appFile.delete();
+
+
             //2. 썸네일 변경 없을 시
             }else{
                 productInfo.setThumbnailFileName(product.getProductInfo().getThumbnailFileName());
@@ -293,6 +312,7 @@ public class ProductsServiceImpl implements ProductsService{
 
             //1. 상세사진 변경 있을 시
             if(fileList!= null){
+
                 List<String> imageList = new ArrayList<>();
 
                 for (MultipartFile multipartFile: fileList) {
@@ -315,7 +335,20 @@ public class ProductsServiceImpl implements ProductsService{
                     appWriter2.close();
                 }
                 productInfo.setProductImagesName(imageList);
-            //2. 상세사진 변경 없을 시
+
+                // 이전에 저장된 원본 파일은 삭제
+                List<String> oldProductFileName = product.getProductInfo().getProductImagesName();
+
+                for (String productFileName : oldProductFileName) {
+                    File webProductFile = new File("../ztz_web/src/assets/products/uploadImg/"
+                            + URLDecoder.decode(productFileName, "UTF-8"));
+                    webProductFile.delete();
+                    File appProductFile = new File("../ztz_app/assets/images/uploadImg/"
+                            + URLDecoder.decode(productFileName, "UTF-8"));
+                    appProductFile.delete();
+                }
+
+                //2. 상세사진 변경 없을 시
             }else {
                 productInfo.setProductImagesName(product.getProductInfo().getProductImagesName());
             }
@@ -423,5 +456,34 @@ public class ProductsServiceImpl implements ProductsService{
         return repository.findBestByAlcoholType(alcoholType);
     }
 
+
+    @Override
+    public List<Product> favoriteLocalList(Local local) {
+        return repository.findFavoriteByLocal(local);
+    }
+
+    @Override
+    public List<Product> favoriteLocalAndAlcoholList(ProductLocalAndTypeRequest request) {
+        try {
+            AlcoholType alcoholType = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
+            Local local = Local.valueOfLocalName(request.getLocalName());
+            List<Product> productList = repository.findFavoriteByLocalAndType(alcoholType, local);
+
+            if (productList.equals(Optional.empty())) {
+                log.info("해당하는 상품을 찾을 수 없습니다.");
+                return null;
+            } else {
+                return productList;
+            }
+        } catch (Exception e) {
+            log.info("좋아요순 지역 알콜 조회 오류" + e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Product> favoriteAlcoholList(AlcoholType alcoholType) {
+        return repository.findFavoriteByAlcoholType(alcoholType);
+    }
 
 }

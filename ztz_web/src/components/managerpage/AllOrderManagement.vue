@@ -25,7 +25,7 @@
         <tr v-else v-for="(paymentItem, index) in paymentList" :key="index">
           <td class="pa-0" align="center">{{ paymentItem.merchant_uid }}</td>
           <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
-          <td>{{ paymentItem.totalPaymentPrice }}</td>
+          <td>{{ paymentItem.totalPaymentPrice | numberFormat }}원</td>
           <td>{{
               paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료":
                   paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료":
@@ -47,7 +47,7 @@
     </v-card>
 
     <template>
-      <v-dialog v-model="showOrderDetail" width="800">
+      <v-dialog v-model="showOrderDetail" width="1000">
         <all-order-detail-form :paymentId="this.paymentId"
                                :paymentListIndex="this.paymentListIndex"
                                @startDelivery="startDelivery"

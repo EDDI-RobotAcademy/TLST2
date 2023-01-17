@@ -62,7 +62,7 @@
               </v-col>
             </v-row>
           </td>
-          <td>{{ item.orderPrice }}</td>
+          <td>{{ item.orderPrice | numberFormat }}원</td>
           <td>{{ item.orderCnt }}</td>
           <td>
             {{
@@ -235,6 +235,6 @@ export default {
   font-size: 12px;
   max-height: 20px;
   max-width: 6px;
-  margin-left: 600px;
+  margin-left: 800px;
 }
 </style>
