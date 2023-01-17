@@ -8,6 +8,7 @@ import 'package:ztz_app/utility/text_styles.dart';
 
 import '../../controller/product/product_infos/product_info.dart';
 import '../../controller/reivew/review_controller.dart';
+import '../../controller/search/search_controller.dart';
 import '../../pages/product/product_detail_page.dart';
 import '../../utility/button_style.dart';
 import '../../utility/colors.dart';
@@ -23,8 +24,8 @@ class ProductSearchComponent extends StatefulWidget {
 
 class _ProductSearchComponent extends State<ProductSearchComponent> {
   late TextEditingController searchTextController;
-
   List recommendKeyword = ["선물세트", "사과막걸리" , "블루문" , "달달" , "오늘의 술" ];
+  List getRecommendKeyword = SearchController.reactiveKeywordList;
 
   late FocusNode searchTextFocus = FocusNode();
   bool isFocus = false;
@@ -135,15 +136,15 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
                 padding: EdgeInsets.only(top: 15 , bottom: 20),
                 child : Wrap(
                     direction: Axis.horizontal,
-                    children: List.generate(recommendKeyword.length, (index) =>
+                    children: List.generate(getRecommendKeyword.length, (index) =>
                         Container(
                           height: 30,
                           margin: const EdgeInsets.only(right: 7 , bottom: 10),
                           child: ElevatedButton(
                               style: searchElevatedButtonStyle(),
                               onPressed: (){
-                                _searchSubmitted(recommendKeyword[index]);
-                              }, child: Text(recommendKeyword[index] , style: TextStyle(fontSize: 13 , color: ColorStyle.mainColor, fontWeight: FontWeight.w400),)),
+                                _searchSubmitted(getRecommendKeyword[index]['recommendedKeyword']);
+                              }, child: Text(getRecommendKeyword[index]['recommendedKeyword'] , style: TextStyle(fontSize: 13 , color: ColorStyle.mainColor, fontWeight: FontWeight.w400),)),
                         )
                     )
                 )
