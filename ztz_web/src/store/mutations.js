@@ -111,6 +111,10 @@ export default {
     [ REQUEST_MY_FAVORITE_LIST_FROM_SPRING](state, passingData){
         state.myFavoriteList = passingData
     },
+    [ REQUEST_FAVORITE_PRODUCTS_FROM_SPRING](state, passingData){
+        state.favoriteProducts= passingData
+    },
+
 
 }
 

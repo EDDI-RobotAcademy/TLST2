@@ -30,6 +30,13 @@
             :products="bestProducts"
         />
       </div>
+
+      <div class="product mt-10">
+        <main-page-product-list
+            title="🍺 다른 회원들이 찜한 ZTZ"
+            :products="favoriteProducts"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -58,18 +65,21 @@ export default {
   methods: {
     ...mapActions([
       'reqProductsFromSpring',
-      'reqBestProductsFromSpring'
+      'reqBestProductsFromSpring',
+      'reqFavoriteProductsFromSpring'
     ]),
   },
   computed: {
     ...mapState([
       'products',
-      'bestProducts'
+      'bestProducts',
+      'favoriteProducts'
     ])
   },
   mounted() {
     this.reqProductsFromSpring()
     this.reqBestProductsFromSpring()
+    this.reqFavoriteProductsFromSpring()
   },
 }
 </script>
@@ -78,7 +88,7 @@ export default {
 
 .container {
   width: 1200px;
-  margin: 50px auto;
+  margin: 0px auto;
   padding: 0px 0;
 
 }

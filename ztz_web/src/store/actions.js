@@ -504,6 +504,15 @@ export default {
             });
     },
 
+    reqFavoriteProductsFromSpring({commit}) {
+        console.log('메인페이지 좋아요 상품 리스트')
+
+        return axios.post('http://localhost:7777/ztz/products/list/favorite')
+            .then((res) => {
+                commit(REQUEST_FAVORITE_PRODUCTS_FROM_SPRING, res.data)
+            })
+    },
+
     reqProductReviewAvgFromSpring({commit}, productNo) {
         console.log(productNo + "번 상품 리뷰 평점과 개수 불러오기")
         return axios.post(`http://localhost:7777/ztz/products/review/read/average/${productNo}`)

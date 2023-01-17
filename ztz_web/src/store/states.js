@@ -27,4 +27,5 @@ export default {
   productFavoriteInfo: {},
   reviewInfo: [],
   myFavoriteList: [],
+  favoriteProducts: []
 };
