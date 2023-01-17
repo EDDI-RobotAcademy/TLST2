@@ -1,11 +1,15 @@
 package kr.eddi.ztz_process.controller.products;
 
+import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.controller.products.request.FavoriteInfo;
 import kr.eddi.ztz_process.controller.products.response.FavoriteResponse;
+import kr.eddi.ztz_process.entity.products.Favorite;
 import kr.eddi.ztz_process.service.products.FavoriteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -24,5 +28,12 @@ public class FavoriteController {
         String favoriteType = favoriteInfo.getFavoriteType();
 
         return service.favoriteStatus(memberId, boardNo, favoriteType);
+    }
+
+    @PostMapping("/myFavorite")
+    public List<Favorite> myFavoriteProductList (@RequestBody MemberLoggedInTokenForm memberLoggedInTokenForm) {
+        log.info("찜한 상품- 멤버 아이디: "+ memberLoggedInTokenForm.getToken());
+
+        return service.myFavoriteProductList(memberLoggedInTokenForm.getToken());
     }
 }
