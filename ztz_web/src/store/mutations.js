@@ -26,7 +26,8 @@ import {
     REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING,
     REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING,
     REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
-    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING
+    REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
+    REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
 } from "./mutation-types"
 
 export default {
@@ -114,7 +115,8 @@ export default {
     [ REQUEST_FAVORITE_PRODUCTS_FROM_SPRING](state, passingData){
         state.favoriteProducts= passingData
     },
-
-
+    [REQUEST_ALL_RECOMMENDED_KEYWORD_LIST](state, passingData){
+        state.allRecommendedKeywordList = passingData
+    }
 }
 
