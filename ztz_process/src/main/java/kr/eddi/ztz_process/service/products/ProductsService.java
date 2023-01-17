@@ -19,6 +19,9 @@ public interface ProductsService {
     public List<Product> alcoholList(AlcoholType filterAlcohol);
     public List<Product> listByView();
     public List<Product> recommendListByView();
+
+    public List<Product> listByFavorite();
+
     public Product getProductInfo(Long productNo);
 
     public void registerProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductRequest productRequest);
@@ -36,4 +39,11 @@ public interface ProductsService {
     public List<Product> bestLocalAndAlcoholList(ProductLocalAndTypeRequest request);
 
     public List<Product> bestAlcoholList(AlcoholType alcoholType);
+
+    public List<Product> favoriteLocalList(Local local);
+
+    public List<Product> favoriteLocalAndAlcoholList(ProductLocalAndTypeRequest request);
+
+    public List<Product> favoriteAlcoholList(AlcoholType alcoholType);
+
 }
