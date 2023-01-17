@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ztz_app/components/search/popular_keyword_component.dart';
 import 'package:ztz_app/controller/product/product_controller.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
 import '../../controller/product/product_infos/product_info.dart';
 import '../../controller/reivew/review_controller.dart';
 import '../../controller/search/search_controller.dart';
+import '../../controller/search/search_service_api.dart';
 import '../../pages/product/product_detail_page.dart';
 import '../../utility/button_style.dart';
 import '../../utility/colors.dart';
@@ -28,18 +31,59 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
   List getRecommendKeyword = SearchController.reactiveKeywordList;
 
   late FocusNode searchTextFocus = FocusNode();
+  List<String> showKeyword = [];
+  List<String> searchedKeyword = [];
+  bool isSearchedKeyword = false;
   bool isFocus = false;
   bool isSearch = false;
   bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
+    setInitKeyword();
     searchTextController = TextEditingController(text: !isSearch? null:searchTextController.text);
     searchTextFocus.addListener(() {
       setState(() {
         isFocus = searchTextFocus.hasFocus;
       });
     });
+  }
+
+  @override
+  void dispose(){
+    setDisposeKeyword();
+    super.dispose();
+  }
+
+
+  void setInitKeyword() async {
+    await SearchService().requestPopularSearchKeyword();
+    final prefs = await SharedPreferences.getInstance();
+    searchedKeyword = prefs.getStringList("keywords") ?? [];
+    setState(() {
+      showKeyword = List.from(searchedKeyword.reversed);
+      isSearchedKeyword = true;
+    });
+  }
+
+  void setPreferenceKeyword() async{
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("keywords", showKeyword);
+  }
+
+  void setDisposeKeyword() async{
+    showKeyword = List.from(showKeyword.reversed);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList("keywords", showKeyword);
+  }
+
+  void addRecentKeyword(keyword) async {
+
+    if(showKeyword.length == 10){
+      showKeyword.removeAt(9);
+    }
+    showKeyword.insert(0, keyword);
   }
 
   @override
@@ -87,12 +131,16 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
 
   void _searchSubmitted(keyword) async {
     await ProductController().requestAllProductToSpring(keyword);
+    addRecentKeyword(searchTextController.text);
+    setPreferenceKeyword();
     setState(() {
       searchTextController.text = keyword;
       isSearch = true;
       isLoading = true;
       isFocus = false;
     });
+    await SearchService().requestPopularSearchKeyword();
+
   }
 
 
@@ -112,8 +160,8 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
               height: 50,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(recommendKeyword.length, (index) =>
+                child: showKeyword.isEmpty ?null :Row(
+                  children: List.generate(showKeyword.length, (index) =>
                       Container(
                         height: 30,
                         margin: const EdgeInsets.only(left: 5.0),
@@ -124,8 +172,8 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
                               backgroundColor: MaterialStateProperty.all(Colors.white),
                             ),
                             onPressed: (){
-                              _searchSubmitted(recommendKeyword[index]);
-                            }, child: Text(recommendKeyword[index] , style: TextStyle(fontSize: 13 , color: Colors.black , fontWeight: FontWeight.w400),)),
+                              _searchSubmitted(showKeyword[index]);
+                            }, child: Text(showKeyword[index] , style: TextStyle(fontSize: 13 , color: Colors.black , fontWeight: FontWeight.w400),)),
                       )
                   ),
                 ),
@@ -151,6 +199,8 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
             ),
             SizedBox(height: 20,),
             Text("인기 검색어" , style: blackBoldTextStyle(16)),
+            SizedBox(height: 18,),
+            PopularKeywordComponent()
           ],
         ),
       ),
