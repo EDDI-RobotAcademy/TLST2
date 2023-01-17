@@ -20,24 +20,6 @@ public class SearchController {
     @Autowired
     SearchService service;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/all-keywords-list")
     public List<RecommendedKeywords> recommendedKeywordList() {
         log.info("모든 추천키워드 리스트 요청");
@@ -64,4 +46,10 @@ public class SearchController {
     public String selectUseKeyword(@RequestBody KeywordListRequest keywordListRequest)  {
         return service.selectKeyword(keywordListRequest.getSelectedKeywords());
     }
+    @PostMapping("/read/top/ten")
+    public List<String> readTopTenKeyword(){
+        log.info("readTopTenKeyword");
+        return service.readTopTenKeyword();
+    }
+
 }

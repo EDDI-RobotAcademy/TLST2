@@ -7,13 +7,6 @@ import java.util.List;
 public interface SearchService {
 
 
-
-
-
-
-
-
-
     //모든 추천 키워드 반환(관리자용)
     List<RecommendedKeywords> returnEntireKeywordList();
     //선
@@ -22,4 +15,8 @@ public interface SearchService {
     String selectKeyword(List<Long> keywordIdList);
     String saveKeyword(String keyword);
     String deleteKeyword(List<Long>  keywordIdList);
+    public void registerOrAddCntKeyWord(String searchedKeyword);
+
+    public List<String> readTopTenKeyword();
+
 }
