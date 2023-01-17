@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 
 class ProductController{
-  static const httpUri = '192.168.0.8:7777';
+  static const httpUri = '192.168.200.168:7777';
   requestAllProductToSpring(keyword) async{
     var data = {'keyword' : keyword};
     try{
@@ -238,4 +238,82 @@ class ProductController{
       debugPrint("베스트 지역과 타입 오류 발생 " + e.toString());
     }
   }
+
+  requestFavoriteProductFromSpring() async {
+    try {
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/list/favorite'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (requestProductResponse.statusCode == 200) {
+        debugPrint("좋아요 상품 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.favoriteProductList.clear();
+        ProductInfo.favoriteProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      } else {
+        debugPrint("좋아요 상품 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    } catch(e) {
+      debugPrint("좋아요 상품 오류 발생 " + e.toString());
+    }
+  }
+
+  requestFavoriteProductByAlcoholType(alcoholType) async {
+    try{
+      var requestProductResponse = await http.post(
+        Uri.http(httpUri, 'ztz/products/alcoholList/favorite/$alcoholType'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("좋아요 알코올 타입 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.favoriteProductList.clear();
+        ProductInfo.favoriteProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("좋아요 알코올 타입 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+
+    }catch(e){
+      debugPrint("좋아요 알코올 타입 오류 발생 " + e.toString());
+    }
+  }
+
+  requestFavoriteProductByLocal(localName) async {
+    try{
+      var requestProductResponse = await http.get(
+        Uri.http(httpUri, 'ztz/products/list/favorite/$localName'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("좋아요 지역 요청 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.favoriteProductList.clear();
+        ProductInfo.favoriteProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("좋아요 지역 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("좋아요 지역 오류 발생 " + e.toString());
+    }
+  }
+
+  requestFavoriteProductByLocalAndAlcoholType(alcoholType , localName) async {
+    var data = {'alcoholType' : alcoholType , 'localName' : localName};
+    var body = json.encode(data);
+    try{
+      var requestProductResponse = await http.post(
+          Uri.http(httpUri, 'ztz/products/list/favorite/by-local-type'),
+          headers: {"Content-Type": "application/json"},
+          body: body
+      );
+      if(requestProductResponse.statusCode == 200){
+        debugPrint("좋아요 지역과 타입 결과 : " + utf8.decode(requestProductResponse.bodyBytes).toString());
+        ProductInfo.favoriteProductList.clear();
+        ProductInfo.favoriteProductList = jsonDecode(utf8.decode(requestProductResponse.bodyBytes));
+      }else{
+        debugPrint("좋아요 지역과 타입 통신 오류 " + requestProductResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("좋아요 지역과 타입 오류 발생 " + e.toString());
+    }
+  }
+
+
 }
