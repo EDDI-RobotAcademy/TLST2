@@ -114,7 +114,7 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
                       padding: EdgeInsets.only(left: 63),
                       child: SizedBox(
                           width: size.width - size.width/2,
-                          child: Text(ProductInfo.deliveryFee.toString() + "원" , textAlign: TextAlign.left,)),
+                          child: Text("5만원 이상 구매 시 무료" , textAlign: TextAlign.left,)),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 63),

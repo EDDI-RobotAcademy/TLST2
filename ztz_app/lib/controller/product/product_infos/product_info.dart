@@ -15,7 +15,6 @@ class ProductInfo extends GetxController{
   static late String thumbnailFileName;
   static late String description;
   static late int productPrice;
-  static late int deliveryFee;
   static late bool monthCheck;
   static late var taste = [];
   static late var productImagesName = [];
@@ -28,7 +27,6 @@ class ProductInfo extends GetxController{
     thumbnailFileName = product['productInfo']['thumbnailFileName'];
     description = product['productInfo']['description'];
     productPrice = product['price'];
-    deliveryFee = product['deliveryFee'];
     taste = product['productInfo']['taste'];
     productImagesName = product['productInfo']['productImagesName'];
     monthCheck = product['monthAlcoholCheck'];
