@@ -7,7 +7,6 @@ import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
 import 'package:ztz_app/controller/favorite/favorite_controller.dart';
 import '../../../controller/favorite/favorite_infos/favorite_info.dart';
 import '../../../controller/product/product_controller.dart';
-import '../../../controller/product/product_infos/product_info.dart';
 import '../../../controller/reivew/review_controller.dart';
 import '../../../pages/product/product_detail_page.dart';
 import '../../../utility/colors.dart';
@@ -86,11 +85,11 @@ class _MyFavoriteProductComponent extends State<MyFavoriteProductComponent> {
     );
   }
   selectProductCard(index) async {
-    await ProductController().requestProductDetailToSpring(ProductInfo.productList[index]['productNo']);
-    await ReviewController().requestReviewAverageToSpring(ProductInfo.productList[index]['productNo']);
-    await ReviewController().requestProductReviewToSpring(ProductInfo.productList[index]['productNo']);
+    await ProductController().requestProductDetailToSpring(FavoriteInfo.myFavoriteList[index]['product']['productNo']);
+    await ReviewController().requestReviewAverageToSpring(FavoriteInfo.myFavoriteList[index]['product']['productNo']);
+    await ReviewController().requestProductReviewToSpring(FavoriteInfo.myFavoriteList[index]['product']['productNo']);
     Get.to(
-        ProductDetailPage(productNo: ProductInfo.productList[index]['productNo'],), //next page class
+        ProductDetailPage(productNo: FavoriteInfo.myFavoriteList[index]['product']['productNo'],), //next page class
         duration: Duration(milliseconds: 500), //duration of transitions, default 1 sec
         transition: Transition.rightToLeft,//transition effect
         popGesture : true // 슬라이드로 뒤로가기

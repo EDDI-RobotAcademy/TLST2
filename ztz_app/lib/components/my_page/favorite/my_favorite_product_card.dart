@@ -86,11 +86,14 @@ import '../../../utility/text_styles.dart';
                         maxLines: 1,
                       ),
                       SizedBox(height: 10),
-                      Text(
-                        "${widget.title}",
-                        style: TextStyle(fontSize: 17),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          "${widget.title}",
+                          style: TextStyle(fontSize: 17),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                       SizedBox(height: 10),
                       Row(
