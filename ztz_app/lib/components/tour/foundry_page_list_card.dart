@@ -17,50 +17,46 @@ class FoundryPageListCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        // width: double.infinity,
-        padding: EdgeInsets.all(10),
-        margin:  EdgeInsets.only(top: 10, bottom: 10),
-
-        decoration: BoxDecoration(
-        ),
-        child: Row(
-          children: [
-            Column(
-              children: [
-                SizedBox(width: 5,)
-              ],
-            ),
-            Column(
-              children: [
-                Image(image: AssetImage("assets/images/foundryImg/${image}"), width: 170, height: 170,),
-              ]
-            ),
-            Column(
-              children: [
-              SizedBox(width: 10,)
-            ],
-            ),
-             Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Text("$name", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w700), ),
-                SizedBox(height: 15,),
-                Text("$address", style: MediumBlackTextStyle(), ),
-                SizedBox(height: 15,),
-                Text("$content", style: xMediumBlackTextStyle(), ),
-                SizedBox(height: 15,),
-                Text("$tel" ),
-                ]
-              // SizedBox(height: 8,),
+          padding: EdgeInsets.all(10),
+          margin:  EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Image(
+                  image: AssetImage("assets/images/foundryImg/${image}"),
+                  width: size.width,
+                  height: 170,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
-          ],
-        ),
-      ),
+              Container(
+                child: foundryInfo(),
+              )
+            ],
+          )),
       // onTap:,
       //클릭 이벤트
+    );
+  }
+
+  Widget foundryInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 5,),
+        Text("$name", style:TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+        SizedBox(height: 5,),
+        Text("$address", style: MediumBlackTextStyle(), ),
+        SizedBox(height: 5,),
+        Text("$content", style: xMediumBlackTextStyle(), ),
+        SizedBox(height: 5,),
+        Text("$tel" ),
+      ],
     );
   }
 }
