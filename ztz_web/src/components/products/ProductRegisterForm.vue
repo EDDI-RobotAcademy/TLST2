@@ -102,16 +102,6 @@
                   v-model="price">
               </v-text-field>
 
-              <v-col cols="2" align="center"><h4>배송비</h4></v-col>
-
-              <v-text-field
-                  style="width: 200px"
-                  type="number"
-                  outlined color="grey darken-1"
-                  dense
-                  placeholder="배송비를 입력해주세요(단위: 원)"
-                  v-model="deliveryFee">
-              </v-text-field>
             </v-row>
 
           </v-col>
@@ -232,7 +222,6 @@ export default {
       subtitle:'',
       description:'',
       price:'',
-      deliveryFee:'',
       uploadPreImageUrl:[],
       uploadPreThumbnailUrl:[],
 
@@ -274,7 +263,6 @@ export default {
           brand: this.brand,
           name: this.name,
           price: this.price,
-          deliveryFee:this.deliveryFee,
           type: this.alcohol,
           local: this.region,
           taste: this.taste,
