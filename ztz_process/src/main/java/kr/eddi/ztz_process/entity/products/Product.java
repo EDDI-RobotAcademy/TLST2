@@ -20,9 +20,6 @@ public class Product {
     @Column(nullable = false)
     private Integer price;
 
-    @Column(nullable = false)
-    private Integer deliveryFee;
-
     @Column
     private Integer view = 0;
 
@@ -37,11 +34,10 @@ public class Product {
     @Embedded
     private ProductInfo productInfo;
 
-    public Product(String brand, String name, int price, int deliveryFee, Classification classification,ProductInfo productInfo) {
+    public Product(String brand, String name, int price, Classification classification,ProductInfo productInfo) {
         this.brand = brand;
         this.name = name;
         this.price = price;
-        this.deliveryFee = deliveryFee;
         this.classification = classification;
         this.productInfo = productInfo;
     }
