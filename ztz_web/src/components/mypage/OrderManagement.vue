@@ -1,7 +1,6 @@
 <template>
-  <div class="mt-5 ml-5">
+  <div class="mt-10 ml-5">
     <div class="head-area">
-      <p class=" head-text">주문관리</p>
       <button-white small width="64px" style="padding: 0 16px 0 10px; font-size: 13px" btn-name="3개월"
         @click="rangepayment('3개월')" />
       <button-white small width="64px" style="padding: 0 16px 0 10px; font-size: 13px" btn-name="6개월"

@@ -6,7 +6,8 @@ import 'package:ztz_app/controller/order/order_controller.dart';
 import 'package:ztz_app/controller/order/order_infos/order_info.dart';
 import 'package:ztz_app/controller/reivew/review_controller.dart';
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
-import 'package:ztz_app/pages/account/login_page.dart';
+import 'package:ztz_app/controller/tour/foundry_infos/foundry_info.dart';
+import 'package:ztz_app/controller/tour/reservation_controller.dart';
 import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/my_page/modify_address_page.dart';
 import 'package:ztz_app/pages/my_page/order_management/order_management_page.dart';
@@ -32,6 +33,7 @@ class _MyPageFormState extends State<MyPageForm> {
   var username = "";
   late var orderCnt;
   late var reviewCnt;
+  late var reservationCnt;
   late var myPageProfileList;
 
   @override
@@ -46,14 +48,16 @@ class _MyPageFormState extends State<MyPageForm> {
         .requestMyPageReviewToSpring(AccountState.memberInfo['id']);
     await OrderController().requestPaymentListFromSpring(widget.token);
     await MemberApi().requestMemberProfileFromSpring(AccountState.accountGet.token.value);
+    await ReservationController().requestMyReservationToSpring(widget.token);
     setState(() {
       username = AccountState.memberInfo['username'];
       orderCnt = OrderInfo.paymentList.length;
       reviewCnt = ReviewInfo.memberReviews.length;
+      reservationCnt = FoundryInfo.reservationList.length;
       myPageProfileList = [
         {'title': "주문 내역", 'count': orderCnt},
         {'title': "리뷰 내역", 'count': reviewCnt},
-        {'title': "예약 내역", 'count': 0},
+        {'title': "예약 내역", 'count': reservationCnt},
       ];
     });
   }

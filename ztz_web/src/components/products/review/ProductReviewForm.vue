@@ -14,8 +14,8 @@
           <p style="font-size: 20px" v-else>리뷰 평점 {{ totalRate }}</p>
           <v-rating
               :value="totalRate"
-              background-color="#205C37"
-              color="#205C37"
+              background-color="grey"
+              color="yellow darken-1"
               half-increments
               dense
               readonly

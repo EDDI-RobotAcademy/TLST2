@@ -71,7 +71,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                         Text(subTitle,style: mediumGrayTextStyle(),),
                         Container(
                             padding: EdgeInsets.only(top: 10,bottom: 10),
-                            width: 100,
+                            width: 140,
                             child: Text(ProductInfo.taste.toString(),textAlign: TextAlign.left,style: xSmallPinkTextStyle(),)),
                       ],
                     ),

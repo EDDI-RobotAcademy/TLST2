@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ztz_app/components/main_page_components/todays_recommend_component.dart';
 import 'package:ztz_app/pages/product/best/best_list_page.dart';
+import 'package:ztz_app/pages/product/favorite/favorite_product_list_page.dart';
 import 'package:ztz_app/pages/product/month/month_list_page.dart';
 import 'package:ztz_app/pages/product/product_list_page.dart';
 import 'package:ztz_app/utility/colors.dart';
@@ -28,7 +29,7 @@ class _MainComponent extends State<MainComponent>{
   {'title': "이달의 술", 'image': "assets/images/banner/submenu2.png", 'page': MonthListPage()},
   {'title': "양조장", 'image': "assets/images/banner/submenu3.png", 'page': FoundryPage()},
   {'title': "베스트", 'image': "assets/images/banner/submenu4.png", 'page': BestListPage()},
-  {'title': "좋아요", 'image': "assets/images/banner/submenu5.png", 'page': ProductListPage( drinkItemIndex: 0)},
+  {'title': "좋아요", 'image': "assets/images/banner/submenu5.png", 'page': FavoriteProductListPage(drinkItemIndex: 0)},
   ];
 
   @override

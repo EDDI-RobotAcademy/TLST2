@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:ztz_app/controller/tour/foundry_infos/foundry_info.dart';
 import 'package:ztz_app/controller/tour/reservation_controller.dart';
+import 'package:ztz_app/pages/my_page/reservation_management/my_reservation_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 import '../../../controller/account/sign_up_infos/account_state.dart';
-import '../../../pages/home_page.dart';
 import '../../../pages/my_page/reservation_management/my_reservation_modify_detail_page.dart';
 import '../../../pages/tour/reservation_payment.dart';
 
@@ -336,9 +336,14 @@ class _MyReservationListCard extends State<MyReservationListCard> {
             FlatButton(
               child: const Text("Close"),
               onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        HomePage()), (route) => false);
+                // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                //     builder: (BuildContext context) =>
+                //         HomePage()), (route) => false);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyReservationPage()),
+                ).then((value) => setState(() {}));
               },
             ),
           ],
@@ -359,9 +364,14 @@ class _MyReservationListCard extends State<MyReservationListCard> {
             FlatButton(
               child: const Text("Close"),
               onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        HomePage()), (route) => false);
+                // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                //     builder: (BuildContext context) =>
+                //         HomePage()), (route) => false);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyReservationPage()),
+                ).then((value) => setState(() {}));
               },
             ),
           ],
