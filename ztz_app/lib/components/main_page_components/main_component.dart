@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ztz_app/components/main_page_components/todays_recommend_component.dart';
 import 'package:ztz_app/pages/product/best/best_list_page.dart';
@@ -6,6 +7,7 @@ import 'package:ztz_app/pages/product/month/month_list_page.dart';
 import 'package:ztz_app/pages/product/product_list_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 
+import '../../controller/search/search_controller.dart';
 import '../../pages/tour/foundry_page.dart';
 import '../../utility/text_styles.dart';
 import 'main_foundry_list_component.dart';
@@ -20,7 +22,7 @@ class MainComponent extends StatefulWidget {
 
 class _MainComponent extends State<MainComponent>{
   static final signInStorage = new FlutterSecureStorage();
-
+  SearchController searchController = Get.put(SearchController());
   var subMenuList = [
   {'title': "전통주", 'image': "assets/images/banner/submenu1.png", 'page': ProductListPage( drinkItemIndex: 0)},
   {'title': "이달의 술", 'image': "assets/images/banner/submenu2.png", 'page': MonthListPage()},
