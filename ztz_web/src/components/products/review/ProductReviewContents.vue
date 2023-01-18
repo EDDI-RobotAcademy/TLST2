@@ -6,8 +6,8 @@
           <p>{{ review.regDate }}</p>
           <v-rating
               :value="review.rate"
-              background-color="#205C37"
-              color="#205C37"
+              background-color="grey"
+              color="yellow darken-1"
               half-increments
               readonly
               dense

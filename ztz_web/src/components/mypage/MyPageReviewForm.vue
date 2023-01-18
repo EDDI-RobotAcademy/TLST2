@@ -1,10 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="ml-11">
-        <h2>상품 리뷰</h2>
-      </div>
-      <div class="mr-5" align="right">
+      <div class="mt-16 mr-5" align="right">
         <p>총 {{ this.reviews.length }}개의 작성된 리뷰가 있습니다.</p>
       </div>
     </div>
