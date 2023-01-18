@@ -88,11 +88,14 @@ class _CartListItemState extends State<CartListItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SizedBox(height: 8),
-                        Text(
-                          CartController.reactiveCartList[index]['product']['name'],
-                          style: productInCartNameTextStyle(),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            CartController.reactiveCartList[index]['product']['name'],
+                            style: productInCartNameTextStyle(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                         SizedBox(height: 10),
                        Text(
