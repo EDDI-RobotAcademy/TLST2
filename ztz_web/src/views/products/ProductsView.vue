@@ -1,23 +1,27 @@
 <template>
   <div class="wrap productWrap">
     <div class="list-filter-area">
-      <p>모든 상품</p>
-      <div class="local-filter">
-        <ul>
-          <li>
-            <button @click="allProduct">All</button>
-          </li>
-        </ul>
-        <ul>
-          <li v-for="(local, index) in localMenu" :key="index">
-            <button @click="acquireFilteredProducts(index)" :value="index">{{ local }}</button>
-          </li>
-        </ul>
-      </div>
+      <v-list flat>
+        <v-list-item-group
+          v-model="selectedItem"
+          color="#205C37"
+          style="display: flex; font-weight: 500"
+        >
+          <v-list-item
+            v-for="(local, index) in localMenu"
+            :key="index"
+            @click="acquireFilteredProducts(index)"
+            style="padding: 0 0 0 20px"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="local"> </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </div>
 
     <product-list :products="products"></product-list>
-
   </div>
 </template>
 
@@ -33,41 +37,39 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     ProductCard,
-    ProductList
+    ProductList,
   },
   data() {
-    return{
-      localMenu : ["서울경기","강원","충청","경상","전라","제주"],
-    }
+    return {
+      selectedItem: 1,
+      localMenu: ["서울경기", "강원", "충청", "경상", "전라", "제주"],
+    };
   },
   computed: {
-    ...mapState([
-      'products', 'resMember'
-    ]),
+    ...mapState(["products", "resMember"]),
   },
   mounted() {
-    this.reqProductsFromSpring()
-    if(this.$store.state.isAuthenticated === true) {
-      let token = window.localStorage.getItem('userInfo')
-      this.reqMemberInfoToSpring(token)
+    this.reqProductsFromSpring();
+    if (this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem("userInfo");
+      this.reqMemberInfoToSpring(token);
     }
-    console.log('products')
+    console.log("products");
   },
   methods: {
     ...mapActions([
-      'reqProductsFromSpring',
-      'reqFilteredProductsFromSpring',
-      'reqMemberInfoToSpring'
+      "reqProductsFromSpring",
+      "reqFilteredProductsFromSpring",
+      "reqMemberInfoToSpring",
     ]),
     async acquireFilteredProducts(index) {
-      console.log("spring에서 아이템을 가져옵니다. : " + this.localMenu[index])
-      let localName = this.localMenu[index]
-      await this.reqFilteredProductsFromSpring(localName)
+      console.log("spring에서 아이템을 가져옵니다. : " + this.localMenu[index]);
+      let localName = this.localMenu[index];
+      await this.reqFilteredProductsFromSpring(localName);
     },
-    allProduct(){
-      this.reqProductsFromSpring()
-    }
+    allProduct() {
+      this.reqProductsFromSpring();
+    },
   },
-
-}
+};
 </script>

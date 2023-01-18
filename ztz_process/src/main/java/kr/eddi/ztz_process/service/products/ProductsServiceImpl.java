@@ -111,7 +111,6 @@ public class ProductsServiceImpl implements ProductsService{
         product.setName(productRequest.getName());
         product.setBrand(productRequest.getBrand());
         product.setPrice(productRequest.getPrice());
-        product.setDeliveryFee(productRequest.getDeliveryFee());
 
         //2. classfication 저장
         product.setClassification(registerClassification(productRequest.getLocal(), productRequest.getType()));
@@ -252,7 +251,6 @@ public class ProductsServiceImpl implements ProductsService{
         product.setName(productModifyRequest.getName());
         product.setBrand(productModifyRequest.getBrand());
         product.setPrice(productModifyRequest.getPrice());
-        product.setDeliveryFee(productModifyRequest.getDeliveryFee());
 
         //2. classfication 저장
         product.setClassification(registerClassification(productModifyRequest.getLocal(), productModifyRequest.getType()));

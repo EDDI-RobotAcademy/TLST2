@@ -9,7 +9,6 @@ public class ProductRequest {
     private String brand;
     private String name;
     private int price;
-    private int deliveryFee;
 
 // classification
     private String type;
