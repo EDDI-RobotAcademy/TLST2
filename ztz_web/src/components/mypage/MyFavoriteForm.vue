@@ -1,8 +1,7 @@
 <template>
-  <div class="mt-5 ml-5">
+  <div class="mt-10 ml-5">
     <div>
       <div class="head-area">
-        <p class=" head-text">찜한 상품</p>
         <div align="right" class="mr-3 mb-3">총 {{ this.$store.state.myFavoriteList.length }} 건</div>
       </div>
     </div>
@@ -129,7 +128,8 @@ export default {
 .item-info .c1{
   position: relative;
   margin-top: 40px;
-  margin-left: 10%;
+  margin-left: 5%;
+  width: 200px;
 }
 
 .item-info .r1 {

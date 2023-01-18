@@ -1,11 +1,9 @@
 <template>
-  <div class="mt-5 ml-5">
-    <div class="head-area " >
-      <p class=" head-text">배송관리</p>
-    </div>
-
+  <div class="mt-10 ml-5">
     <div>
-      <p class="ma-0" style="font-size: 12px">기본 배송지</p>
+      <div style="border: #cccccc">
+        <p class="ma-0" style="font-size: 14px">기본 배송지</p>
+      </div>
       {{ this.$store.state.resMemberProfile.address.street }}
       {{ this.$store.state.resMemberProfile.address.addressDetail }}
       ({{ this.$store.state.resMemberProfile.address.zipcode }})
