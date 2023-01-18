@@ -2,12 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ztz_app/pages/tour/foundry_page.dart';
 
 import '../../../controller/account/member_api.dart';
 import '../../../controller/account/sign_up_infos/account_state.dart';
 import '../../../controller/tour/foundry_infos/foundry_info.dart';
 import '../../../controller/tour/reservation_controller.dart';
-import '../../../pages/home_page.dart';
 import '../../../utility/colors.dart';
 
 
@@ -269,9 +269,14 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
             FlatButton(
               child: const Text("Close"),
               onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        HomePage()), (route) => false);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoundryPage()),
+                ).then((value) => setState(() {}));
+                // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                //     builder: (BuildContext context) =>
+                //         HomePage()), (route) => false);
               },
             ),
           ],
@@ -292,9 +297,14 @@ class _ReservationFormComponent extends State<ReservationFormComponent> {
             FlatButton(
               child: const Text("Close"),
               onPressed: (){
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        HomePage()), (route) => false);
+                // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                //     builder: (BuildContext context) =>
+                //         HomePage()), (route) => false);
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FoundryPage()),
+                ).then((value) => setState(() {}));
               },
             ),
           ],

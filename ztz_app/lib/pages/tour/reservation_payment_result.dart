@@ -152,7 +152,10 @@ class _ReservationPaymentResult extends State<ReservationPaymentResult> {
                       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                       //     builder: (BuildContext context) =>
                       //         MyReservationPage()), (route) => false);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+                      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              HomePage()), (route) => false);
                     },
                     child: Text("메인으로", style: TextStyle(fontSize: 12, color: ColorStyle.mainColor),)),
               ),
@@ -174,7 +177,11 @@ class _ReservationPaymentResult extends State<ReservationPaymentResult> {
                       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                       //     builder: (BuildContext context) =>
                       //         MyReservationPage()), (route) => false);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MyReservationPage()));
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyReservationPage()),
+                      ).then((value) => setState(() {}));
                     },
                     child: Text("예약현황", style: TextStyle(fontSize: 12),)),
               ),
