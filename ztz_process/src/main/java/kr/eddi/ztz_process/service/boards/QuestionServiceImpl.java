@@ -74,7 +74,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         questionBoard.setTitle(boardsRequest.getTitle());
         questionBoard.setContent(boardsRequest.getContent());
-        questionBoard.setWriter(boardsRequest.getWriter());
+//        questionBoard.setWriter(boardsRequest.getWriter());
         questionBoard.setMember(maybeMember.get());
         questionBoard.setBoardCategory(boardCategory);
 

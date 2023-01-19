@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       comment: '',
-      userNumber: this.$store.state.resMember.id, // 변수 지정 -> Request로 보냄
+      memberId: this.$store.state.resMember.id, // 변수 지정 -> Request로 보냄
       commentWriter: this.$store.state.resMember.username
     }
   },
@@ -44,8 +44,8 @@ export default {
     onSubmitRegister() {
       this.commentWriter = this.$store.state.resMember.username
       this.userNumber = this.$store.state.resMember.id
-        const {comment, commentWriter, userNumber} = this
-        this.$emit('submit', {comment, commentWriter, userNumber})
+        const {comment, memberId} = this
+        this.$emit('submit', {comment, memberId})
     },
   }
 }

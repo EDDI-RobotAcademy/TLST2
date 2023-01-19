@@ -22,8 +22,8 @@ public class QuestionComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionCommentNo;
 
-    @Column
-    private String commentWriter;
+//    @Column
+//    private String commentWriter;
 
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)

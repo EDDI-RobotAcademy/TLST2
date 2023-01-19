@@ -35,7 +35,7 @@ public class QuestionCommentController {
     public void questionCommentRegister(@RequestBody CommentRequest commentRequest) { // URL 보낼거면 CommentRequest 양식에 맞게 보내셈!
         log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
         log.info(commentRequest.getComment());
-        log.info(commentRequest.getCommentWriter()); // commentWriter의 데이터를 가져온걸 확인
+//        log.info(commentRequest.getCommentWriter()); // commentWriter의 데이터를 가져온걸 확인
 //        log.info(commentRequest.getQuestion_no());
 //        log.info(commentRequest.getMember_no());
         questionCommentService.questionCommentRegister(commentRequest);
