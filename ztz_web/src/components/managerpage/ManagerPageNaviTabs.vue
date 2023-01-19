@@ -42,6 +42,7 @@ export default {
         { menu: "주문관리", tab: "AllOrderManagement" },
         { menu: "상품관리", tab: "ProductManagementList" },
         { menu: "키워드관리", tab: "RecommendedKeywordSection" },
+        { menu: "문의관리", tab: "AllQuestionManagement" },
         { menu: "예약관리", tab: "AllReservationDetailSection" },
         { menu: "회원정보변경", tab: "MyPageProfileModify" },
       ],
