@@ -569,5 +569,11 @@ export default {
                 commit(REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING, res.data);
             })
     },
+    reqModifyQuestionCommentToSpring(_, payload) {
+        console.log("댓글 수정")
+        const {questionCommentNo, comment, questionNo, memberId} = payload
+        return axios.put(`http://localhost:7777/ztz/boards/question/comment/modify/${questionCommentNo}`,
+            {comment : comment, question_no : questionNo, member_no : memberId})
+    }
 
 }
