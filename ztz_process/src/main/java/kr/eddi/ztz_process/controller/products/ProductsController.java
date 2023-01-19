@@ -44,6 +44,53 @@ public class ProductsController {
         }
     }
 
+    @PostMapping(path = "/list/flutter")
+    public List<Product> productsFirst(String keyword) {
+        log.info("키워드 = " + keyword);
+
+        if (keyword == null|| keyword.length() == 0 || keyword ==""){
+            return productsService.firstPageProduct(); // 필터 없이 첫 페이지 네이션
+        }else {
+            searchService.registerOrAddCntKeyWord(keyword);
+            return productsService.firstPageSearchProduct(keyword); // 검색 첫 페이지 네이션
+        }
+    }
+
+    @PostMapping("/list/next/flutter")
+    public List<Product> productsNext(
+            @RequestParam("productNo") Long productNo,
+            @RequestParam("keyword") String keyword
+    ) {
+        log.info("키워드 = " + keyword);
+
+        if (keyword == null|| keyword.length() == 0 || keyword ==""){
+            return productsService.nextPageProduct(productNo); // 필터 없이 처음 이후 페이지 네이션
+        }else {
+            searchService.registerOrAddCntKeyWord(keyword);
+            return productsService.nextPageSearchProduct(productNo,keyword); // 검색 처음 이후 페이지 네이션
+        }
+    }
+    @GetMapping(path = "/list/flutter/{localName}")
+    public List<Product> localProductsFirstList(@PathVariable("localName") String localName) {
+        log.info("받은 지역데이터:" +localName);
+        String tmp = localName;
+        Local filterLocal = Local.valueOfLocalName(tmp);
+
+        return productsService.firstPageLocalProduct(filterLocal); // 지역 필터 첫번째
+    }
+
+    @GetMapping(path = "/list/next/flutter/{localName}")
+    public List<Product> localProductsNextList(
+            @RequestParam("productNo") Long productNo,
+            @PathVariable("localName") String localName
+    ) {
+        log.info("받은 지역데이터:" +localName);
+        String tmp = localName;
+        Local filterLocal = Local.valueOfLocalName(tmp);
+
+        return productsService.nextPageLocalProduct(productNo,filterLocal); // 지역 필터 처음 이후
+    }
+
     @GetMapping(path = "/list/{localName}")
     public List<Product> localProductsList(@PathVariable("localName") String localName) {
         log.info("받은 지역데이터:" +localName);
@@ -53,6 +100,31 @@ public class ProductsController {
         return productsService.list(filterLocal);
     }
 
+    @PostMapping("/list/by-local-type/flutter")
+    public List<Product> localAndTypeFirstProductList(@RequestBody ProductLocalAndTypeRequest request){
+        log.info("지역과 타입으로 상품 조회");
+        log.info("지역 = " + request.getLocalName());
+        log.info("타입 = " + request.getAlcoholType());
+        Local filterLocal = Local.valueOfLocalName(request.getLocalName());
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
+
+        return productsService.firstPageAlcoholTypeAndLocalProduct(filterAlcohol,filterLocal); // 모든 필터 첫 페이지 네이션
+    }
+
+    @PostMapping("/list/by-local-type/next/flutter")
+    public List<Product> localAndTypeNextProductList(
+            @RequestParam("productNo") Long productNo,
+            @RequestBody ProductLocalAndTypeRequest request
+    ){
+        log.info("지역과 타입으로 상품 조회");
+        log.info("지역 = " + request.getLocalName());
+        log.info("타입 = " + request.getAlcoholType());
+        Local filterLocal = Local.valueOfLocalName(request.getLocalName());
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
+
+        return productsService.nextPageAlcoholTypeAndLocalProduct(productNo,filterAlcohol,filterLocal); // 다음 필터 페이지 네이션
+    }
+
     @PostMapping("/list/by-local-type")
     public List<Product> localAndTypeProductList(@RequestBody ProductLocalAndTypeRequest request){
         log.info("지역과 타입으로 상품 조회");
@@ -60,6 +132,27 @@ public class ProductsController {
         log.info("타입 = " + request.getAlcoholType());
 
         return productsService.list(request);
+    }
+
+    @PostMapping("/alcoholList/flutter/{alcoholType}")
+    public List<Product> alcoholProductFirstList(@PathVariable("alcoholType") String alcoholType) {
+        log.info("받은 알코올타입:" +alcoholType);
+        String tmp = alcoholType;
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+
+        return productsService.firstPageAlcoholTypeProduct(filterAlcohol); // 알콜타입으로 첫 페이지 네이션
+    }
+
+    @PostMapping("/alcoholList/next/flutter/{alcoholType}")
+    public List<Product> alcoholProductNextList(
+            @RequestParam("productNo") Long productNo,
+            @PathVariable("alcoholType") String alcoholType
+    ) {
+        log.info("받은 알코올타입:" +alcoholType);
+        String tmp = alcoholType;
+        AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
+
+        return productsService.nextPageAlcoholTypeProduct(productNo,filterAlcohol); // 알콜 타입으로 처음이후 페이지 네이션
     }
 
     @PostMapping("/alcoholList/{alcoholType}")
