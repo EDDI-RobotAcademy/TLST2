@@ -34,6 +34,7 @@ class _OrderPayment extends State<OrderPayment> {
     for(int i = 0; i < orderItems.length; i++) {
       CartController().reqDeleteItem(orderItems[i]['itemNo']);
     }
+    CartController().fetchData();
   }
 
   @override

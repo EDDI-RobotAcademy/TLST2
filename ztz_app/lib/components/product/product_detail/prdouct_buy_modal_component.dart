@@ -7,6 +7,7 @@ import 'package:ztz_app/utility/colors.dart';
 import '../../../controller/order/cart_controller.dart';
 import '../../../controller/product/product_infos/product_info.dart';
 import '../../../pages/order/cart.dart';
+import '../../../pages/order/order.dart';
 import '../../../utility/button_style.dart';
 import '../../../utility/text_styles.dart';
 
@@ -33,6 +34,8 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
     productPrice = ProductInfo.productPrice;
     productNo = ProductInfo.productNo;
   }
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -148,15 +151,15 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                   ElevatedButton(
                     onPressed: (){
                       CartController().reqAddItem(productNo, selectedAmount);
-                      Get.to(() => Cart());
+                      _showDialog();
+
                     },
                     child: Text("장바구니",style: xMediumWhiteTextStyle(),),
                     style: defaultElevatedButtonStyle((size.width/2)-10,50),),
                   SizedBox(width: 10,),
                   ElevatedButton(
                       onPressed: (){
-                        CartController().order();
-                        //Get.to(() => OrderPage());
+                        order();
                   }, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
               ),
@@ -200,6 +203,54 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
           ),
         ],
       ),
+    );
+  }
+  void order() {
+    var orderData = [];
+    var priceData = [];
+    var totalAmount = selectedAmount * productPrice;
+    var deliveryFee = (selectedAmount * productPrice) > 49999 ? 0 : 3000;
+    var sum = totalAmount + deliveryFee;
+    var tmpData = {
+      'itemNo': 1000001,
+      'productNo':productNo,
+      'productName' : productName,
+      'count': selectedAmount,
+      'selectedProductAmount': totalAmount,
+      'thumbnail':image
+    };
+
+    orderData.addAll({tmpData});
+    priceData.add(totalAmount);
+    priceData.add(deliveryFee);
+    priceData.add(sum);
+
+    Get.to(()=> OrderPage(),arguments:[orderData, priceData]);
+  }
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("카트에 담았습니다."),
+          content: new Text("카트로 이동하시겠습니까?"),
+          actions: <Widget>[
+            new TextButton(
+              child: new Text("이동"),
+              onPressed: () {
+                Get.to(() => Cart());
+              },
+            ),
+            new TextButton(
+              child: new Text("취소"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

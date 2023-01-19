@@ -53,7 +53,11 @@ public class CartController {
     @DeleteMapping(path = "/{itemNo}", headers = "Token")
     public String deleteItem (@PathVariable("itemNo") Long itemNo, @RequestHeader("Token") String token) {
         log.info("선택된 단일 항목 삭()" + itemNo + " : " + token );
-        service.deleteCartItem(itemNo, token);
+        if(itemNo == 1000001) {
+            log.info("direct 구매 ");
+        } else {
+            service.deleteCartItem(itemNo, token);
+        }
         return "1";
     }
 
