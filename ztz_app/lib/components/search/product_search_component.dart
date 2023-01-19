@@ -27,7 +27,7 @@ class ProductSearchComponent extends StatefulWidget {
 
 class _ProductSearchComponent extends State<ProductSearchComponent> {
   late TextEditingController searchTextController;
-  List recommendKeyword = ["선물세트", "사과막걸리" , "블루문" , "달달" , "오늘의 술" ];
+
   List getRecommendKeyword = SearchController.reactiveKeywordList;
 
   late FocusNode searchTextFocus = FocusNode();
@@ -131,7 +131,7 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
 
   void _searchSubmitted(keyword) async {
     await ProductController().requestAllProductToSpring(keyword);
-    addRecentKeyword(searchTextController.text);
+    addRecentKeyword(keyword);
     setPreferenceKeyword();
     setState(() {
       searchTextController.text = keyword;
