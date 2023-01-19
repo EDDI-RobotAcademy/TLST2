@@ -45,11 +45,6 @@ export default {
       required: true
     }
   },
-  filters: {
-    nameFormat(val) {
-      return String(val).replace(/(?<=.{1})./gi, "*");
-    }
-  },
 }
 </script>
 

@@ -22,6 +22,9 @@ import AddressForm from "@/components/common/AddressForm"
 Vue.filter('numberFormat', function (val) {
   return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 })
+Vue.filter('nameFormat', function (val) {
+  return String(val).replace(/.(?=.$)/u, "*");
+})
 Vue.use(VueCarousel)
 Vue.use(VuePaginate)
 Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
