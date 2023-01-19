@@ -18,6 +18,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>{
     List<Item> findCartListByMemberId(Long memberId);
     @Query("select i from Item i join fetch i.cart c join fetch i.product p where i.itemNo = :itemNo")
     Item findItemByItemNo (Long itemNo);
-
+    @Query("select i from Item i join fetch i.cart c join fetch i.product p where p.productNo = :productNo")
+    List<Item> findItemByProductNo (Long productNo);
 }
 

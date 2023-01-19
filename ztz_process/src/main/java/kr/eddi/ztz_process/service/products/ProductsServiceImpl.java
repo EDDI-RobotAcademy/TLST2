@@ -3,8 +3,14 @@ package kr.eddi.ztz_process.service.products;
 import kr.eddi.ztz_process.controller.products.request.ProductLocalAndTypeRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductModifyRequest;
 import kr.eddi.ztz_process.controller.products.request.ProductRequest;
+import kr.eddi.ztz_process.entity.order.Item;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
 import kr.eddi.ztz_process.entity.products.*;
+import kr.eddi.ztz_process.repository.order.ItemRepository;
+import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
+import kr.eddi.ztz_process.repository.products.FavoriteRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
+import kr.eddi.ztz_process.repository.products.ReviewRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +38,19 @@ public class ProductsServiceImpl implements ProductsService{
     final Integer nextPageSize  = 4;
     @Autowired
     ProductsRepository repository;
+
+    @Autowired
+    FavoriteRepository favoriteRepository;
+
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    OrderInfoRepository orderInfoRepository;
+
     @Override
     public List<Product> list() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "productNo"));
@@ -392,6 +411,31 @@ public class ProductsServiceImpl implements ProductsService{
             e.printStackTrace();
         }
 
+        List<Favorite> favoriteList = favoriteRepository.findAllFavoriteByProductNo(productNo);
+
+        for (Favorite favorite : favoriteList) {
+            favoriteRepository.delete(favorite);
+        }
+
+        List<Item> itemList = itemRepository.findItemByProductNo(productNo);
+
+        for (Item item : itemList) {
+            itemRepository.delete(item);
+        }
+
+        List<Review> reviewList = reviewRepository.findByProductNo(productNo);
+
+        for (Review review : reviewList) {
+            reviewRepository.delete(review);
+        }
+
+        List<OrderInfo> orderInfoList = orderInfoRepository.findByProductNo(productNo);
+
+        for (OrderInfo orderInfo: orderInfoList) {
+            orderInfoRepository.delete(orderInfo);
+        }
+
+        //리뷰, order_info
         repository.deleteById(productNo);
     }
 
