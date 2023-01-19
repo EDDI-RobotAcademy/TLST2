@@ -220,9 +220,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, memberId, categoryType} = payload
+        const {title, content, memberId, categoryType, pageCategoryType, boardAuthorityType} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, memberId, categoryType})
+            {title, content, memberId, categoryType, pageCategoryType, boardAuthorityType})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
@@ -233,10 +233,10 @@ export default {
     requestQuestionModifyToSpring({}, payload) {
         console.log('requestQuestionModifyToSpring()')
 
-        const {title, content, questionNo, memberId, categoryType} = payload
+        const {title, content, questionNo, memberId, categoryType, pageCategoryType, boardAuthorityType} = payload
 
         return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
-            {title, content, memberId, categoryType})
+            {title, content, memberId, categoryType , pageCategoryType, boardAuthorityType})
             .then(() => {
                 alert('수정 완료했습니다!')
             })
@@ -272,7 +272,7 @@ export default {
         return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
             { comment : comment, question_no : questionNo, member_no : memberId})
             .then(() => {
-                alert('댓글 등록 성공')
+                alert('댓글 등록을 완료하였습니다.')
             })
     },
     // 댓글 삭제
@@ -574,6 +574,9 @@ export default {
         const {questionCommentNo, comment, questionNo, memberId} = payload
         return axios.put(`http://localhost:7777/ztz/boards/question/comment/modify/${questionCommentNo}`,
             {comment : comment, question_no : questionNo, member_no : memberId})
+            .then(() => {
+                alert('댓글을 수정하였습니다.')
+            })
     }
 
 }
