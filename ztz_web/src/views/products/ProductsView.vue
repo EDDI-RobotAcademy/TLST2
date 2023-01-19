@@ -71,20 +71,20 @@ export default {
       await this.reqFilteredProductsFromSpring(localName);
       const alcoholType = this.$store.state.selectAlcoholType
       if(alcoholType =="all"){
-        console.log("모든 알콜타입에서 지역 조회" + localName)
+        console.log("모든 알코올 타입에서 특정 지역에 대한 조회" + localName)
         await this.reqFilteredProductsFromSpring(localName)
       } else{
-        console.log("받은 알코올타입과 지역 조회" + localName + alcoholType)
+        console.log("특정 알코올 타입에서 특정 지역에 대한 조회" + localName + alcoholType)
         await this.reqFilteredLocalAndAlcoholProductsFromSpring({alcoholType, localName})
       }
     },
     async allLocalProduct(){
       const alcoholType = this.$store.state.selectAlcoholType
       if(alcoholType =="all"){
-        console.log("모든 알콜타입에서 모든 지역상품 조회")
+        console.log("모든 알코올 타입에서 모든 지역에 대한 조회")
         await this.reqProductsFromSpring()
       } else{
-        console.log("받은 알코올 타입- 모든 지역 조회" + alcoholType)
+        console.log("특정 알코올 타입에서 모든 지역에 대한 조회" + alcoholType)
         await this.reqFilteredAlcoholProductsFromSpring(alcoholType)
       }
     }
