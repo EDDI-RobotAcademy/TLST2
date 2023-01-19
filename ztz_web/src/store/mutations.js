@@ -29,7 +29,8 @@ import {
     REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
     REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
     REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING,
-    SAVE_SELECT_ALCOHOLTYPE
+    SAVE_SELECT_ALCOHOLTYPE,
+    REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING,
 } from "./mutation-types"
 
 export default {
@@ -126,5 +127,10 @@ export default {
     [SAVE_SELECT_ALCOHOLTYPE](state, passingData){
         state.selectAlcoholType = passingData
     },
+    [ REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING ](state, passingData) {
+        state.questionBoards = passingData
+    }
+
+
 }
 

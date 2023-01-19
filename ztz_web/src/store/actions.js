@@ -26,6 +26,7 @@ import {
     REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
     REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
     REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING,
+    REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING,
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -560,4 +561,13 @@ export default {
                 commit(RESPONSE_MY_REQUEST, res.data)
         })
     },
+    reqMemberQuestionBoardFromSpring({commit}, token) {
+        console.log("1:1 문의")
+        return axios.post('http://localhost:7777/ztz/boards/question/list/member',
+            { token: token })
+            .then((res) => {
+                commit(REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING, res.data);
+            })
+    },
+
 }
