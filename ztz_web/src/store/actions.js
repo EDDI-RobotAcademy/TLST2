@@ -219,9 +219,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, writer} = payload
+        const {title, content, writer, memberId, categoryType} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, writer})
+            {title, content, writer, memberId, categoryType})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
@@ -232,10 +232,10 @@ export default {
     requestQuestionModifyToSpring({}, payload) {
         console.log('requestQuestionModifyToSpring()')
 
-        const {title, content, questionNo, writer, regDate} = payload
+        const {title, content, questionNo, writer, memberId, categoryType} = payload
 
         return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
-            {title, content, writer, regDate})
+            {title, content, writer, memberId, categoryType})
             .then(() => {
                 alert('수정 완료했습니다!')
             })
@@ -475,7 +475,7 @@ export default {
             .then(() => {
             })
     },
-       // eslint-disable-next-line no-empty-pattern
+    // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
     const {productNo, count, token} = payload
     console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
@@ -485,8 +485,6 @@ export default {
         .then(() => {
         })
     },
-    
-    // eslint-disable-next-line no-empty-pattern
     reqReadRangePaymentList({ commit }, payload) {
         const { token, readData } = payload
 

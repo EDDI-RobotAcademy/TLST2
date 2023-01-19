@@ -38,56 +38,62 @@ export default {
   components: {
     // eslint-disable-next-line vue/no-unused-components
     ProductCard,
-    ProductList,
+    ProductList
   },
   data() {
-    return {
-      selectedItem: 1,
-      localMenu: ["서울경기", "강원", "충청", "경상", "전라", "제주"],
-    };
+    return{
+      localMenu : ["서울경기","강원","충청","경상","전라","제주"],
+      selectFlag: false
+    }
   },
   computed: {
-    ...mapState(["products", "resMember", "selectAlcoholType"]),
+    ...mapState([
+      'products', 'resMember', 'selectAlcoholType'
+    ]),
   },
   mounted() {
-    this.reqProductsFromSpring();
-    if (this.$store.state.isAuthenticated === true) {
-      let token = window.localStorage.getItem("userInfo");
-      this.reqMemberInfoToSpring(token);
+    if(this.$store.state.isAuthenticated === true) {
+      let token = window.localStorage.getItem('userInfo')
+      this.reqMemberInfoToSpring(token)
     }
-    console.log("products");
+    console.log('products')
   },
   methods: {
     ...mapActions([
-      "reqProductsFromSpring",
-      "reqFilteredProductsFromSpring",
-      "reqMemberInfoToSpring",
-      "reqFilteredLocalAndAlcoholProductsFromSpring",
-      "reqFilteredAlcoholProductsFromSpring",
+      'reqProductsFromSpring',
+      'reqFilteredProductsFromSpring',
+      'reqMemberInfoToSpring',
+      'reqFilteredLocalAndAlcoholProductsFromSpring',
+      'reqFilteredAlcoholProductsFromSpring'
     ]),
     async acquireFilteredProducts(index) {
-      console.log("spring에서 아이템을 가져옵니다. : " + this.localMenu[index])
-      let localName = this.localMenu[index]
-      await this.reqFilteredProductsFromSpring(localName);
-      const alcoholType = this.$store.state.selectAlcoholType
-      if(alcoholType =="all"){
-        console.log("모든 알코올 타입에서 특정 지역에 대한 조회" + localName)
-        await this.reqFilteredProductsFromSpring(localName)
+      this.selectFlag = !this.selectFlag
+      if(this.selectFlag){
+        console.log("spring에서 아이템을 가져옵니다. : " + this.localMenu[index])
+        let localName = this.localMenu[index]
+        const alcoholType = this.$store.state.selectAlcoholType
+        if(alcoholType =="all"){
+          console.log("모든 알콜타입에서 지역 조회" + localName)
+          await this.reqFilteredProductsFromSpring(localName)
+        } else{
+          console.log("받은 알코올타입과 지역 조회" + localName + alcoholType)
+          await this.reqFilteredLocalAndAlcoholProductsFromSpring({alcoholType, localName})
+        }
       } else{
-        console.log("특정 알코올 타입에서 특정 지역에 대한 조회" + localName + alcoholType)
-        await this.reqFilteredLocalAndAlcoholProductsFromSpring({alcoholType, localName})
+        this.allLocalProduct()
       }
     },
     async allLocalProduct(){
       const alcoholType = this.$store.state.selectAlcoholType
       if(alcoholType =="all"){
-        console.log("모든 알코올 타입에서 모든 지역에 대한 조회")
+        console.log("모든 알콜타입에서 모든 지역상품 조회")
         await this.reqProductsFromSpring()
       } else{
-        console.log("특정 알코올 타입에서 모든 지역에 대한 조회" + alcoholType)
+        console.log("받은 알코올 타입- 모든 지역 조회" + alcoholType)
         await this.reqFilteredAlcoholProductsFromSpring(alcoholType)
       }
     }
   },
+
 }
 </script>

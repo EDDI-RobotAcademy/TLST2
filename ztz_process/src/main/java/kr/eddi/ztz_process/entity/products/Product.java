@@ -26,7 +26,7 @@ public class Product {
     @Column
     private Integer favoriteNum = 0;
 
-    @Column
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
     Boolean monthAlcoholCheck = false;
 
     @Embedded
