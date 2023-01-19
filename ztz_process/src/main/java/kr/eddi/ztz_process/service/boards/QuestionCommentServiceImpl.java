@@ -58,6 +58,14 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
         questionCommentRepository.save(questionComment);
     }
 
+    @Override
+    public void modifyQuestionComment(Long questionCommentNo, CommentRequest commentRequest) {
+        Optional<QuestionComment> maybeComment = questionCommentRepository.findById(questionCommentNo);
+        QuestionComment questionComment = maybeComment.get();
+
+        questionComment.setComment(commentRequest.getComment());
+        questionCommentRepository.save(questionComment);
+    }
     // 댓글 삭제
     @Override
     public void questionCommentRemove(Long questionCommentNo) {
