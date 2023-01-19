@@ -1,7 +1,6 @@
 <template>
   <div class="reservationForm">
     <div>
-      <p>{{ item.reservationId }}</p>
       <p>{{ foundryName }}</p>
     </div>
     <v-form @submit.prevent="onReservationSubmit" ref="form">
@@ -136,7 +135,7 @@ export default {
         foundryName,
         numberOfMember,
         reservationDate,
-        phoneNumber,
+        contactNumber,
         token,
       } = this;
       this.$emit("submit", {
@@ -144,16 +143,16 @@ export default {
         foundryName,
         numberOfMember,
         reservationDate,
-        phoneNumber,
+        contactNumber,
         token,
       });
     },
 
     qtyDecrease() {
-      if (this.numberOfMember > 0) {
+      if (this.numberOfMember > this.item.foundry.minMember) {
         this.numberOfMember--;
       } else {
-        this.numberOfMember = 0;
+        this.numberOfMember = this.item.foundry.minMember;
       }
     },
     qtyIncrease() {
@@ -174,7 +173,7 @@ export default {
 </script>
 <style>
 .input-error {
-  display: float;
+  /*display: float;*/
   font-size: 11px;
   color: red;
 }

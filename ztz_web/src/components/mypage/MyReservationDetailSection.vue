@@ -75,6 +75,7 @@
                 width="86px"
                 style="padding: 0 16px 0 10px"
                 @click="goModifyForm(reservation)"
+                v-show="reservation.paymentReservation.paymentState === false"
                 btn-name="예약수정"
               />
             </div>
