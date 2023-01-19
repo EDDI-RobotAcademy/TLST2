@@ -21,10 +21,11 @@ class ProductListComponent extends StatefulWidget {
 
 class _ProductListComponent extends State<ProductListComponent> {
 
+  bool isSubLoading = true;
   bool isLoading = false;
   List<String> _localList = ['전체지역','서울경기','강원','충청','경상','전라','제주'];
   var _selectedLocal = '전체지역';
-  ScrollController _mainScrollController = ScrollController();
+  ScrollController _mainScrollController = ScrollController(initialScrollOffset: 5.0);
   ScrollController _subScrollController = ScrollController();
 
   double _removableWidgetSize = 150;
@@ -73,6 +74,7 @@ class _ProductListComponent extends State<ProductListComponent> {
         setState(() {});
       }
     });
+    _mainScrollController.addListener(_scrollListener);
     setProduct();
   }
 
@@ -130,7 +132,15 @@ class _ProductListComponent extends State<ProductListComponent> {
                           ),
                         )
                     ),
-                  )
+                  ),
+                  !isSubLoading ? Padding( // 로딩시 나오는 동그라미 동글동글
+                    padding: EdgeInsets.all(50),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: ColorStyle.mainColor,
+                      ),
+                    ),
+                  ):SizedBox()
                 ],
               ),
               if (_isStickyOnTop) _getStickyWidget()
@@ -139,6 +149,48 @@ class _ProductListComponent extends State<ProductListComponent> {
         ),
       ],
     );
+  }
+
+  _scrollListener() async {
+    if (_mainScrollController.offset >=
+        _mainScrollController.position.maxScrollExtent &&
+        !_mainScrollController.position.outOfRange) {
+
+      setState(() {
+        isSubLoading = false;
+      });
+      var productLen = ProductInfo.productList.length;
+      var lastProductNo = ProductInfo.productList[productLen - 1]['productNo'];
+
+      debugPrint("lastProductNo" + lastProductNo.toString());
+
+      if(widget.drinkItem == "전체보기"){
+        if(_selectedLocal == "전체지역"){
+          // 전체 타입에 전체 지역 - 전체 추가
+          debugPrint("전체 타입에 전체 지역 - 전체 추가");
+          await ProductController().requestNextPageProduct("",lastProductNo);
+        }else{
+          // 전체 타입에 특정 지역 - 지역 필터
+          debugPrint("전체 타입에 특정 지역 - 지역 필터");
+          await ProductController().requestNextPageLocalProduct(_selectedLocal,lastProductNo);
+        }
+      }else{
+        if(_selectedLocal == "전체지역"){
+          // 특정 타입에 전체 지역 - 타입 필터
+          debugPrint("특정 타입에 전체 지역 - 타입 필터");
+          await ProductController().requestNextPageAlcoholTypeProduct(widget.drinkItem,lastProductNo);
+        }else{
+          // 특정 타입에 특정 지역 - 타입 지역 필터
+          debugPrint("특정 타입에 특정 지역 - 타입 지역 필터");
+          await ProductController().requestNextPageAlcoholTypeAndLocalProduct(widget.drinkItem,_selectedLocal,lastProductNo);
+        }
+      }
+
+      debugPrint("스크롤 테스트");
+      setState(() {
+        isSubLoading = true;
+      });
+    }
   }
 
   Container _getStickyWidget() {
