@@ -114,10 +114,10 @@ export default {
       await this.$router.push({name: 'QuestionListView'})
     },
     async onSubmitRegister( payload ) {
-      const { comment, commentWriter, userNumber } = payload
+      const { comment, userNumber } = payload
       const questionNo = this.questionNo
       console.log("댓글 등록" + questionNo)
-      await this.requestQuestionCommentRegisterToSpring( { comment, commentWriter, questionNo, userNumber} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
+      await this.requestQuestionCommentRegisterToSpring( { comment, questionNo, userNumber} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
       await this.$router.push({
         name: 'QuestionReadView', params: { questionNo: this.questionNo }
       })

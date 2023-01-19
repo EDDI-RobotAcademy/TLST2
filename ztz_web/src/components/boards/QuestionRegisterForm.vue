@@ -72,9 +72,9 @@ export default {
 
     onSubmit() {
       if (this.title !='' && this.content != '') {
-        const {title, writer, content, categoryType} = this
+        const {title, content, categoryType} = this
         const memberId = this.resMember.id
-        this.$emit('submit', {title, writer, content, memberId, categoryType})
+        this.$emit('submit', {title, content, memberId, categoryType})
       } else {
         alert("빈칸 없이 작성해주세요!")
       }
