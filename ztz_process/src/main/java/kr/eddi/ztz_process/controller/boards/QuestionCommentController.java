@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.boards;
 
+import kr.eddi.ztz_process.controller.boards.request.CommentRequest;
 import kr.eddi.ztz_process.entity.boards.QuestionComment;
 import kr.eddi.ztz_process.service.boards.QuestionCommentService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +33,9 @@ public class QuestionCommentController {
     }
 
     @PostMapping("/register")
-    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) { // URL 보낼거면 CommentRequest 양식에 맞게 보내셈!
+    public void questionCommentRegister(@RequestBody CommentRequest commentRequest) {
         log.info("questionCommentRegister()" + commentRequest.getQuestion_no());
         log.info(commentRequest.getComment());
-//        log.info(commentRequest.getCommentWriter()); // commentWriter의 데이터를 가져온걸 확인
-//        log.info(commentRequest.getQuestion_no());
-//        log.info(commentRequest.getMember_no());
         questionCommentService.questionCommentRegister(commentRequest);
     }
 

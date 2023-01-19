@@ -1,6 +1,6 @@
 package kr.eddi.ztz_process.service.boards;
 
- import kr.eddi.ztz_process.controller.boards.CommentRequest;
+ import kr.eddi.ztz_process.controller.boards.request.CommentRequest;
 import kr.eddi.ztz_process.entity.boards.QuestionComment;
 
 import java.util.List;

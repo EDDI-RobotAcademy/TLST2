@@ -22,11 +22,23 @@ public class QuestionBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionNo;
 
+    //1대1 문의, 상품문의 게시판 타입
+    @JoinColumn(name = "page_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private PageCategory pageCategory;
+
+    //게시글 내 문의 카테고리
+    @JoinColumn(name = "category_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private BoardCategory boardCategory;
+
+    //공개, 비공개 권한
+    @JoinColumn(name = "authority_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private BoardAuthority boardAuthority;
+
     @Column(length = 128, nullable = false)
     private String title;
-
-//    @Column(length = 32, nullable = false)
-//    private String writer;
 
     @Lob
     private String content;
@@ -39,9 +51,6 @@ public class QuestionBoard {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @JoinColumn(name = "category_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private BoardCategory boardCategory;
 
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-mm-dd")
