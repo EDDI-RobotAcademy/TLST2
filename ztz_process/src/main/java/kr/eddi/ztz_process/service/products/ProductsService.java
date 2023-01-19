@@ -46,4 +46,25 @@ public interface ProductsService {
 
     public List<Product> favoriteAlcoholList(AlcoholType alcoholType);
 
+
+    //페이지 네이션
+    public List<Product> firstPageProduct();
+
+    public List<Product> nextPageProduct(Long productNo);
+
+    public List<Product> firstPageSearchProduct(String keyword);
+
+    public List<Product> nextPageSearchProduct(Long productNo , String keyword);
+
+    public List<Product> firstPageLocalProduct(Local local);
+
+    public List<Product> nextPageLocalProduct(Long productNo ,Local local);
+
+    public List<Product> firstPageAlcoholTypeProduct(AlcoholType alcoholType);
+
+    public List<Product> nextPageAlcoholTypeProduct(Long productNo ,AlcoholType alcoholType);
+
+    public List<Product> firstPageAlcoholTypeAndLocalProduct(AlcoholType alcoholType , Local local);
+
+    public List<Product> nextPageAlcoholTypeAndLocalProduct(Long productNo ,AlcoholType alcoholType , Local local);
 }

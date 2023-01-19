@@ -5,12 +5,12 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/product/product_infos/product_info.dart';
 
 class ProductController{
-  static const httpUri = '192.168.200.168:7777';
+  static const httpUri = '192.168.0.8:7777';
   requestAllProductToSpring(keyword) async{
     var data = {'keyword' : keyword};
     try{
       var requestProductListResponse = await http.post(
-        Uri.http(httpUri,'ztz/products/list' , data),
+        Uri.http(httpUri,'ztz/products/list/flutter' , data),
         headers: {"Content-Type": "application/json"},
       );
 
@@ -73,7 +73,7 @@ class ProductController{
   requestProductByLocal(localName) async {
     try{
       var requestProductResponse = await http.get(
-        Uri.http(httpUri, 'ztz/products/list/$localName'),
+        Uri.http(httpUri, 'ztz/products/list/flutter/$localName'),
         headers: {"Content-Type": "application/json"},
       );
       if(requestProductResponse.statusCode == 200){
@@ -93,7 +93,7 @@ class ProductController{
     var body = json.encode(data);
     try{
       var requestProductResponse = await http.post(
-        Uri.http(httpUri, 'ztz/products/list/by-local-type'),
+        Uri.http(httpUri, 'ztz/products/list/by-local-type/flutter'),
         headers: {"Content-Type": "application/json"},
         body: body
       );
@@ -315,5 +315,93 @@ class ProductController{
     }
   }
 
+  requestNextPageProduct(keyword , productNo) async {
+    var data = {'keyword' : keyword ,'productNo' : productNo.toString()};
+    try{
+      var requestProductListResponse = await http.post(
+        Uri.http(httpUri,'ztz/products/list/next/flutter' , data),
+        headers: {"Content-Type": "application/json"},
+      );
 
+      debugPrint(requestProductListResponse.statusCode.toString());
+      if(requestProductListResponse.statusCode == 200){
+
+        if(keyword == ""){
+          debugPrint("추가 페이지 조회 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+          ProductInfo.productList += jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
+        }else{
+          debugPrint("검색 키워드 : " + keyword);
+          debugPrint("검색 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+          ProductInfo.searchedProductList += jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
+        }
+
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestNextPageLocalProduct(localName , productNo) async {
+    var data = {'productNo' : productNo.toString()};
+
+    try{
+      var requestProductListResponse = await http.post(
+        Uri.http(httpUri,'ztz/products/list/next/flutter/$localName' , data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if(requestProductListResponse.statusCode == 200){
+        debugPrint("추가 페이지 조회 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+        ProductInfo.productList += jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류" + requestProductListResponse.statusCode.toString());
+      }
+
+
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestNextPageAlcoholTypeProduct(alcoholType , productNo) async {
+    var data = {'productNo' : productNo.toString()};
+
+    try{
+      var requestProductListResponse = await http.post(
+        Uri.http(httpUri,'ztz/products/alcoholList/next/flutter/$alcoholType' , data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if(requestProductListResponse.statusCode == 200){
+        debugPrint("추가 페이지 조회 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+        ProductInfo.productList += jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류" + requestProductListResponse.statusCode.toString());
+      }
+
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+
+  requestNextPageAlcoholTypeAndLocalProduct(alcoholType,localName , productNo) async {
+    var data = {'productNo' : productNo.toString() , 'localName' : localName , 'alcoholType' : alcoholType};
+
+    try{
+      var requestProductListResponse = await http.post(
+        Uri.http(httpUri,'ztz/products/list/by-local-type/next/flutter' , data),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if(requestProductListResponse.statusCode == 200){
+        debugPrint("추가 페이지 조회 결과 : " + utf8.decode(requestProductListResponse.bodyBytes).toString());
+        ProductInfo.productList += jsonDecode(utf8.decode(requestProductListResponse.bodyBytes));
+      }else{
+        debugPrint("통신 오류" + requestProductListResponse.statusCode.toString());
+      }
+
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
 }

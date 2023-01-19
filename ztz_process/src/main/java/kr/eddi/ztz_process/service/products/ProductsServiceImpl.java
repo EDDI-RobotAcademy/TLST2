@@ -7,6 +7,7 @@ import kr.eddi.ztz_process.entity.products.*;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,9 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class ProductsServiceImpl implements ProductsService{
+
+    final Integer firstPageSize  = 8;
+    final Integer nextPageSize  = 4;
     @Autowired
     ProductsRepository repository;
     @Override
@@ -484,4 +488,46 @@ public class ProductsServiceImpl implements ProductsService{
         return repository.findFavoriteByAlcoholType(alcoholType);
     }
 
+
+    //페이지 네이션
+    @Override
+    public List<Product> firstPageProduct(){
+      return repository.firstProducts(Pageable.ofSize(firstPageSize));
+    };
+    @Override
+    public List<Product> nextPageProduct(Long productNo){
+        return repository.nextProducts(Pageable.ofSize(nextPageSize),productNo);
+    };
+    @Override
+    public List<Product> firstPageSearchProduct(String keyword){
+        return repository.findSearchFirstItems(keyword,keyword,Pageable.ofSize(firstPageSize));
+    };
+    @Override
+    public List<Product> nextPageSearchProduct(Long productNo , String keyword){
+        return repository.findSearchNextItems(keyword,keyword,Pageable.ofSize(nextPageSize),productNo);
+    };
+    @Override
+    public List<Product> firstPageLocalProduct(Local local){
+        return repository.filterLocalFirstItems(local , Pageable.ofSize(firstPageSize));
+    };
+    @Override
+    public List<Product> nextPageLocalProduct(Long productNo ,Local local){
+        return repository.filterLocalNextItems(local , Pageable.ofSize(nextPageSize),productNo);
+    };
+    @Override
+    public List<Product> firstPageAlcoholTypeProduct(AlcoholType alcoholType){
+        return repository.filterTypeFirstItems(alcoholType , Pageable.ofSize(firstPageSize));
+    };
+    @Override
+    public List<Product> nextPageAlcoholTypeProduct(Long productNo ,AlcoholType alcoholType){
+        return repository.filterTypeNextItems(alcoholType , Pageable.ofSize(nextPageSize) , productNo);
+    };
+    @Override
+    public List<Product> firstPageAlcoholTypeAndLocalProduct(AlcoholType alcoholType , Local local){
+        return repository.findByLocalAndTypeFirstItems(alcoholType,local,Pageable.ofSize(firstPageSize));
+    };
+    @Override
+    public List<Product> nextPageAlcoholTypeAndLocalProduct(Long productNo ,AlcoholType alcoholType , Local local){
+        return repository.findByLocalAndTypeNextItems(alcoholType,local,Pageable.ofSize(nextPageSize),productNo);
+    };
 }
