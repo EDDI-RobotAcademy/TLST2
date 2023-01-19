@@ -73,8 +73,9 @@ export default {
     btnModifyComment() {
       this.showModifyComment = true
     },
-    btnDeleteComment() {
-      this.requestDeleteQuestionCommentToSpring(this.questionComments[0].questionCommentNo)
+    async btnDeleteComment() {
+      await this.requestDeleteQuestionCommentToSpring(this.questionComments[0].questionCommentNo)
+      await this.$router.go(this.$router.currentRoute)
     }
   },
   mounted() {

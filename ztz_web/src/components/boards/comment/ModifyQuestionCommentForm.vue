@@ -67,13 +67,13 @@ export default {
         'reqModifyQuestionCommentToSpring'
 
     ]),
-    modifyComment() {
+    async modifyComment() {
       const memberId = this.resMember.id
       const questionNo = this.questionBoard.questionNo
       const questionCommentNo = this.questionComment.questionCommentNo
       const {comment} = this
-      this.reqModifyQuestionCommentToSpring({memberId, questionNo, comment, questionCommentNo})
-
+      await this.reqModifyQuestionCommentToSpring({memberId, questionNo, comment, questionCommentNo})
+      await this.$router.go(this.$router.currentRoute)
 
     }
   },
