@@ -18,6 +18,11 @@ import {mapActions, mapState} from "vuex";
 export default {
   name: "ProductDetailView",
   components: {ProductDetailForm},
+  data(){
+    return{
+      isCompeleteDelete: false
+    }
+  },
   props: {
     productNo: {
       type: String,
@@ -49,6 +54,7 @@ export default {
 
   methods: {
     ...mapActions([
+      'reqProductsFromSpring',
       'requestProductFromSpring',
       'reqAddCartToSpring',
       'reqMemberInfoToSpring',
@@ -74,7 +80,11 @@ export default {
     async deleteProduct(payload){
       const productNo = payload
       await this.requestDeleteProductToSpring(productNo);
-      await this.$router.push({ name: 'ProductsView' })
+      await this.reqProductsFromSpring();
+      this.isCompeleteDelete = true
+      if(this.isCompeleteDelete){
+        await this.$router.push({ name: 'ProductsView' })
+      }
     },
     async saveFavorite(payload){
       let token = window.localStorage.getItem('userInfo')
