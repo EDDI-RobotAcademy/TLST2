@@ -29,4 +29,5 @@ export default {
   myFavoriteList: [],
   favoriteProducts: [],
   allRecommendedKeywordList: [],
+  selectAlcoholType: "",
 };

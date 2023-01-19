@@ -18,6 +18,7 @@
 
           <div class="nav" v-for="(item, idx) in nav" :key="idx">
             <v-row>
+<!--              이달의 술, 양조장-->
               <v-col class="nav-item mb-2" v-if="!item.children">
                 <router-link
                     style="text-decoration: none;"
@@ -28,17 +29,19 @@
 <!--              전통주-->
               <v-col class="nav-item" v-else>
                 <span @mouseover="mouseover" @mouseleave="mouseleave">
+              <!--전통주 메인 메뉴-->
                   <router-link
                       style="text-decoration: none;"
-                      :to="item.link" @click.native="btnNoSearch">
+                      :to="item.link" @click.native="allProducts">
                     <p>{{ item.name }}</p>
                   </router-link>
                   <ul class="dropdown"
                       :class="{ isOpen }"
                   >
+              <!--전통주 서브메뉴-->
                     <li v-for="(child, idx) in item.children" :key="idx" >
                       <router-link :to="item.link" class="dropdown-router" @click.native="filterAlcoholType(idx)">
-                        <p>{{ child.name }}</p>
+                      <p>{{ child.name }}</p>
                       </router-link>
                     </li>
                   </ul>
@@ -182,8 +185,14 @@ export default {
     },
     async filterAlcoholType(index){
       console.log("상품 필터 알콜메뉴명:" + this.nav[0].children[index].name )
+      await this.$store.commit('SAVE_SELECT_ALCOHOLTYPE', this.nav[0].children[index].name)
       let alcoholType = this.nav[0].children[index].name
       await this.reqFilteredAlcoholProductsFromSpring(alcoholType)
+    },
+    async allProducts(){
+      await this.$store.commit('SAVE_SELECT_ALCOHOLTYPE', 'all')
+      await this.reqProductsFromSpring()
+      this.showSearch = false
     },
     btnSearch(){
       this.showSearch = true

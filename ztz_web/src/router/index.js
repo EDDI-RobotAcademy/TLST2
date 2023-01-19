@@ -55,6 +55,7 @@ const routes = [
     path: "/product",
     name: "ProductsView",
     component: ProductsView,
+    props: true,
   },
   {
     path: "/product/:productNo",

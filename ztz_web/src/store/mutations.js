@@ -28,6 +28,8 @@ import {
     REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
     REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
     REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
+    REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING,
+    SAVE_SELECT_ALCOHOLTYPE
 } from "./mutation-types"
 
 export default {
@@ -117,6 +119,12 @@ export default {
     },
     [REQUEST_ALL_RECOMMENDED_KEYWORD_LIST](state, passingData){
         state.allRecommendedKeywordList = passingData
-    }
+    },
+    [REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING](state, passingData){
+        state.products = passingData
+    },
+    [SAVE_SELECT_ALCOHOLTYPE](state, passingData){
+        state.selectAlcoholType = passingData
+    },
 }
 
