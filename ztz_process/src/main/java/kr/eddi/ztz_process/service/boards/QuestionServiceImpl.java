@@ -1,18 +1,13 @@
 package kr.eddi.ztz_process.service.boards;
 
-import kr.eddi.ztz_process.controller.boards.BoardsRequest;
-import kr.eddi.ztz_process.entity.boards.BoardCategory;
-import kr.eddi.ztz_process.entity.boards.BoardCategoryType;
-import kr.eddi.ztz_process.entity.boards.QuestionBoard;
-import kr.eddi.ztz_process.entity.boards.QuestionComment;
+import kr.eddi.ztz_process.controller.boards.request.BoardsRequest;
+import kr.eddi.ztz_process.entity.boards.*;
 import kr.eddi.ztz_process.entity.member.Member;
-import kr.eddi.ztz_process.repository.boards.QuestionCommentRepository;
-import kr.eddi.ztz_process.repository.boards.QuestionRepository;
+import kr.eddi.ztz_process.repository.boards.*;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
 import kr.eddi.ztz_process.service.security.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +31,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     BoardCategoryRepository categoryRepository;
 
+    @Autowired
+    PageCategoryRepository pageCategoryRepository;
+
+    @Autowired
+    BoardAuthorityRepository authorityRepository;
 
     // 질문게시판 리스트 UI
     @Override
@@ -70,14 +70,19 @@ public class QuestionServiceImpl implements QuestionService {
 
         BoardCategory boardCategory = new BoardCategory(registerBoardCategory(boardsRequest.getCategoryType()));
 
+        PageCategory  pageCategory = new PageCategory(registerPageCategory(boardsRequest.getPageCategoryType()));
+
+        BoardAuthority boardAuthority = new BoardAuthority(registerBoardAuthority(boardsRequest.getBoardAuthorityType()));
+
         Optional<Member> maybeMember = memberRepository.findById(boardsRequest.getMemberId());
 
         questionBoard.setTitle(boardsRequest.getTitle());
         questionBoard.setContent(boardsRequest.getContent());
-//        questionBoard.setWriter(boardsRequest.getWriter());
+
         questionBoard.setMember(maybeMember.get());
         questionBoard.setBoardCategory(boardCategory);
-
+        questionBoard.setPageCategory(pageCategory);
+        questionBoard.setBoardAuthority(boardAuthority);
         questionRepository.save(questionBoard);
     }
 
@@ -111,6 +116,40 @@ public class QuestionServiceImpl implements QuestionService {
         return categoryType;
     }
 
+    public PageCategoryType registerPageCategory(String pageCategoryTypeRequest) {
+        String inputPageCategory = pageCategoryTypeRequest;
+
+        PageCategoryType pageCategoryType = null;
+
+        switch (inputPageCategory) {
+            case "1대1문의":
+                pageCategoryType = PageCategoryType.PERSONAL_QUESTION;
+                break;
+            case "상품문의":
+                pageCategoryType = PageCategoryType.PRODUCT_QUESTION;
+                break;
+        }
+        log.info(pageCategoryType.toString());
+        return pageCategoryType;
+    }
+
+    public BoardAuthorityType registerBoardAuthority(String boardAuthorityTypeRequest) {
+        String inputAuthority = boardAuthorityTypeRequest;
+
+        BoardAuthorityType boardAuthorityType = null;
+
+        switch (inputAuthority) {
+            case "비공개":
+                boardAuthorityType = BoardAuthorityType.PRIVATE_AUTHORITY;
+                break;
+            case "공개":
+                boardAuthorityType = BoardAuthorityType.PUBLIC_AUTHORITY;
+                break;
+        }
+        log.info(boardAuthorityType.toString());
+        return boardAuthorityType;
+    }
+
      // 질문게시판 게시물 수정
     @Override
     public void modify(Long questionNo, BoardsRequest boardsRequest) {
@@ -123,12 +162,26 @@ public class QuestionServiceImpl implements QuestionService {
         boardCategory.setCategoryType(registerBoardCategory(boardsRequest.getCategoryType()));
         categoryRepository.save(boardCategory);
 
+        // 페이지 카테고리 지정
+        Optional<PageCategory> maybePageCategory = pageCategoryRepository.findById(questionBoard.getPageCategory().getId());
+        PageCategory pageCategory = maybePageCategory.get();
+        pageCategory.setPageCategoryName(registerPageCategory(boardsRequest.getPageCategoryType()));
+        pageCategoryRepository.save(pageCategory);
+
+        // 읽기권한 지정
+        Optional<BoardAuthority> maybeAuthority = authorityRepository.findById(questionBoard.getBoardAuthority().getId());
+        BoardAuthority boardAuthority = maybeAuthority.get();
+        boardAuthority.setBoardAuthorityName(registerBoardAuthority(boardsRequest.getBoardAuthorityType()));
+        authorityRepository.save(boardAuthority);
+
         if (maybeBoard.equals(Optional.empty())) {
             log.info("해당하는 questionBoard 없음!");
         } else {
             questionBoard.setTitle(boardsRequest.getTitle());
             questionBoard.setContent(boardsRequest.getContent());
             questionBoard.setBoardCategory(boardCategory);
+            questionBoard.setPageCategory(pageCategory);
+            questionBoard.setBoardAuthority(boardAuthority);
             questionRepository.save(questionBoard);
         }
     }
@@ -146,9 +199,13 @@ public class QuestionServiceImpl implements QuestionService {
 
         Optional<QuestionBoard> maybeBoard = questionRepository.findById(questionNo);
         Long categoryId = maybeBoard.get().getBoardCategory().getId();
+        Long pageId = maybeBoard.get().getPageCategory().getId();
+        Long authorityId = maybeBoard.get().getBoardAuthority().getId();
 
         questionRepository.deleteById(questionNo); // 보드를 먼저 삭제 후
 
         categoryRepository.deleteById(categoryId); // 카테고리 삭제 가능
+        pageCategoryRepository.deleteById(pageId);
+        authorityRepository.deleteById(authorityId);
     }
 }

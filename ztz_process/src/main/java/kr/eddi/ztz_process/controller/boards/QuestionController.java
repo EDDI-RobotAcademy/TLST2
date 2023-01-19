@@ -1,5 +1,6 @@
 package kr.eddi.ztz_process.controller.boards;
 
+import kr.eddi.ztz_process.controller.boards.request.BoardsRequest;
 import kr.eddi.ztz_process.controller.member.form.MemberLoggedInTokenForm;
 import kr.eddi.ztz_process.entity.boards.QuestionBoard;
 import kr.eddi.ztz_process.service.boards.QuestionService;

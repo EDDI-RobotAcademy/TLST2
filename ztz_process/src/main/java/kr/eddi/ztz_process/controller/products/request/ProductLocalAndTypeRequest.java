@@ -1,7 +1,5 @@
 package kr.eddi.ztz_process.controller.products.request;
 
-import kr.eddi.ztz_process.entity.products.AlcoholType;
-import kr.eddi.ztz_process.entity.products.Local;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
