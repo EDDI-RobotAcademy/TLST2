@@ -45,7 +45,7 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
         Optional<Member> maybeMember = memberRepository.findById(commentRequest.getMember_no()); // Request를 토대로 찾은 멤버를 세팅 및 저장
         Member member = maybeMember.get();
         QuestionComment questionComment = new QuestionComment();
-        questionComment.setCommentWriter(commentRequest.getCommentWriter());
+//        questionComment.setCommentWriter(commentRequest.getCommentWriter());
         questionComment.setComment(commentRequest.getComment());
         questionComment.setMember(member); // Member
         Optional<QuestionBoard> maybeBoard = questionRepository.findById(commentRequest.getQuestion_no());
