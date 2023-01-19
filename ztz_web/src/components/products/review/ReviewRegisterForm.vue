@@ -19,8 +19,8 @@
           <v-rating
               v-model="rate"
               :value="rate"
-              background-color="#205C37"
-              color="#205C37"
+              background-color="grey"
+              color="yellow darken-1"
               half-increments
               x-large
               hover

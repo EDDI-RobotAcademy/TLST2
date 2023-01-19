@@ -1,8 +1,5 @@
 <template>
   <div class="mt-5 ml-5">
-    <div class="head-area">
-      <p class="head-text">회원정보변경</p>
-    </div>
     <div class="white" style="font-family: Arial">
       <v-row justify="center">
         <v-col cols="auto" style="padding-bottom: 90px">

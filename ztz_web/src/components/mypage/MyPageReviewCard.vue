@@ -16,7 +16,7 @@
             </router-link>
           </v-col>
           <v-col>
-            <p style="font-size: 14px">주문 번호 : </p>
+            <p style="font-size: 14px">주문 번호 : {{ review.orderInfo.payment.merchant_uid }}</p>
             <p style="font-size: 14px">상품명 : {{ review.product.name }}</p>
           </v-col>
         </v-row>
@@ -42,8 +42,8 @@
             <p>{{ review.regDate }}</p>
             <v-rating
                 :value="review.rate"
-                background-color="#205C37"
-                color="#205C37"
+                background-color="grey"
+                color="yellow darken-1"
                 readonly
                 half-increments
                 dense/>

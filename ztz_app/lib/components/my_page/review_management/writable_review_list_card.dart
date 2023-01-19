@@ -47,7 +47,9 @@ class _WritableReviewListCard extends State<WritableReviewListCard>{
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.productName , ),
+              SizedBox(
+                width: 150,
+                child: Text(widget.productName, maxLines: 1, overflow: TextOverflow.ellipsis,)),
               Padding(
                 padding: const EdgeInsets.only(top: 10 , bottom: 10),
                 child: Row(
@@ -67,9 +69,22 @@ class _WritableReviewListCard extends State<WritableReviewListCard>{
               ),
             ],
           ),
-          OutlinedButton(onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ReviewRegisterPage(productName: widget.productName, productId: widget.productId, orderID: widget.orderID,)));
-          }, child: Text("리뷰작성" ,style: blackTextStyle(14),) , style: defaultOutlinedButtonStyle(90, 8))
+          OutlinedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ReviewRegisterPage(
+                              productName: widget.productName,
+                              productId: widget.productId,
+                              orderID: widget.orderID,
+                            )));
+              },
+              child: Text(
+                "리뷰작성",
+                style: blackTextStyle(14),
+              ),
+              style: defaultOutlinedButtonStyle(90, 8))
         ],
       ),
     );

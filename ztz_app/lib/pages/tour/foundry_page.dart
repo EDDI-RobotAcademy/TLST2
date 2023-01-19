@@ -26,7 +26,8 @@ class _FoundryPage extends State<FoundryPage> {
               Container(
                 width: double.infinity,
                   margin: EdgeInsets.only(top:0 , bottom: 12),
-                  child: Image(image: AssetImage("assets/images/banner/second_banner3_1.jpg"), )
+                  // child: Image(image: AssetImage("assets/images/banner/second_banner3_1.jpg"), height: 200,width: 100, fit: BoxFit.fitWidth,)
+                  child: Image(image: AssetImage("assets/images/banner/second_banner4.jpg"))
               ),
               FoundryListComponent(),
             ]
