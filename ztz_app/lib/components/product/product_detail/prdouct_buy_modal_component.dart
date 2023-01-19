@@ -7,6 +7,7 @@ import 'package:ztz_app/utility/colors.dart';
 import '../../../controller/order/cart_controller.dart';
 import '../../../controller/product/product_infos/product_info.dart';
 import '../../../pages/order/cart.dart';
+import '../../../pages/order/order.dart';
 import '../../../utility/button_style.dart';
 import '../../../utility/text_styles.dart';
 
@@ -32,6 +33,29 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
     subTitle = ProductInfo.subTitle;
     productPrice = ProductInfo.productPrice;
     productNo = ProductInfo.productNo;
+  }
+
+  void order() {
+    var orderData = [];
+    var priceData = [];
+    var totalAmount = selectedAmount * productPrice;
+    var deliveryFee = (selectedAmount * productPrice) > 49999 ? 0 : 3000;
+    var sum = totalAmount + deliveryFee;
+    var tmpData = {
+      'itemNo': 1000001,
+      'productNo':productNo,
+      'productName' : productName,
+      'count': selectedAmount,
+      'selectedProductAmount': totalAmount,
+      'thumbnail':image
+    };
+
+    orderData.addAll({tmpData});
+    priceData.add(totalAmount);
+    priceData.add(deliveryFee);
+    priceData.add(sum);
+
+    Get.to(()=> OrderPage(),arguments:[orderData, priceData]);
   }
   @override
   Widget build(BuildContext context) {
@@ -155,8 +179,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                   SizedBox(width: 10,),
                   ElevatedButton(
                       onPressed: (){
-                        CartController().order();
-                        //Get.to(() => OrderPage());
+                        order();
                   }, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
               ),
