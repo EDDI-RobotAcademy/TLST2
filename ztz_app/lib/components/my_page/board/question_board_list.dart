@@ -175,7 +175,6 @@ class _QuestionBoardListState extends State<QuestionBoardList> {
                 ),
               ),
             ],
-
           ),
         ],
       ),
