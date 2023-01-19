@@ -33,7 +33,7 @@
                 max-width="200px"
                 contain/>
             <div class="noImage" v-else>
-              No Image
+              등록된 사진이 없습니다
             </div>
           </div>
         </v-col>
