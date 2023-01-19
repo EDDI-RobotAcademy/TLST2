@@ -25,6 +25,7 @@ import {
     REQUEST_MY_FAVORITE_LIST_FROM_SPRING,
     REQUEST_FAVORITE_PRODUCTS_FROM_SPRING,
     REQUEST_ALL_RECOMMENDED_KEYWORD_LIST,
+    REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING,
 } from "./mutation-types";
 
 // npm install axios --save-dev
@@ -48,6 +49,14 @@ export default {
         return axios.get(`http://localhost:7777/ztz/products/list/${localName}`)
             .then((res) => {
                 commit(REQUEST_FILTERED_PRODUCT_FROM_SPRING, res.data)
+            })
+    },
+    reqFilteredLocalAndAlcoholProductsFromSpring({commit}, payload) {
+        const { alcoholType, localName } = payload
+        console.log("메소드 spring 호출 전 알코올 타입과 지역 조회" + payload.alcoholType + payload.localName)
+        return axios.post(`http://localhost:7777/ztz/products/list/by-local-type`, {alcoholType, localName})
+            .then((res) => {
+                commit(REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING, res.data)
             })
     },
     requestProductFromSpring({commit}, productNo) {
@@ -210,9 +219,9 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
         console.log('requestCreateQuestionContentsToSpring()')
-        const {title, content, writer, memberId, categoryType} = payload
+        const {title, content, writer} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer})
             .then(() => {
                 alert('등록 완료했습니다!')
             })
@@ -223,10 +232,10 @@ export default {
     requestQuestionModifyToSpring({}, payload) {
         console.log('requestQuestionModifyToSpring()')
 
-        const {title, content, questionNo, writer, memberId, categoryType} = payload
+        const {title, content, questionNo, writer, regDate} = payload
 
         return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
-            {title, content, writer, memberId, categoryType})
+            {title, content, writer, regDate})
             .then(() => {
                 alert('수정 완료했습니다!')
             })
@@ -466,7 +475,7 @@ export default {
             .then(() => {
             })
     },
-    // eslint-disable-next-line no-empty-pattern
+       // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
     const {productNo, count, token} = payload
     console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
@@ -476,6 +485,8 @@ export default {
         .then(() => {
         })
     },
+    
+    // eslint-disable-next-line no-empty-pattern
     reqReadRangePaymentList({ commit }, payload) {
         const { token, readData } = payload
 
