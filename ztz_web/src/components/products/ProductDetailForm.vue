@@ -26,6 +26,7 @@
                 background-color="grey"
                 color="yellow darken-1"
                 half-increments
+                readonly
                 dense>
             </v-rating>
             <p> &nbsp; {{reviewInfo[0].average}}</p>
