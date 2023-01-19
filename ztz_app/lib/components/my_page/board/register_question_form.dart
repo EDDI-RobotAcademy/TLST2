@@ -19,7 +19,7 @@ class RegisterQuestionForm extends StatefulWidget {
 
 class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
   int memberId = AccountState.memberInfo['id'];
-  String writer = AccountState.memberInfo['username'];
+  // String writer = AccountState.memberInfo['username'];
 
   List<String> categoryList = [
     '주문/결제문의',
@@ -119,7 +119,7 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
   registerQuestionFunction() async {
     RegisterQuestionInfo registerQuestionInfo = RegisterQuestionInfo(
         titleController.text,
-        writer,
+        // writer,
         contentController.text,
         memberId,
         selectedCategory);

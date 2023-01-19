@@ -14,7 +14,10 @@ public interface QuestionCommentService {
     // 댓글 등록
     public void questionCommentRegister(CommentRequest commentRequest);
 
+    public void modifyQuestionComment(Long questionCommentNo, CommentRequest commentRequest);
+
     // 댓글 삭제
     public void questionCommentRemove(Long questionCommentNo);
+
 
 }

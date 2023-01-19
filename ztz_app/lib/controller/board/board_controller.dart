@@ -12,7 +12,7 @@ class BoardController {
       RegisterQuestionInfo registerQuestionInfo) async {
     var data = {
       'title': registerQuestionInfo.title,
-      'writer': registerQuestionInfo.writer,
+      // 'writer': registerQuestionInfo.writer,
       'content': registerQuestionInfo.content,
       'memberId': registerQuestionInfo.memberId,
       'categoryType': registerQuestionInfo.categoryType
@@ -102,7 +102,7 @@ class BoardController {
     try {
       var data = {
         'title': registerQuestionInfo.title,
-        'writer': registerQuestionInfo.writer,
+        // 'writer': registerQuestionInfo.writer,
         'content': registerQuestionInfo.content,
         'memberId': registerQuestionInfo.memberId,
         'categoryType': registerQuestionInfo.categoryType

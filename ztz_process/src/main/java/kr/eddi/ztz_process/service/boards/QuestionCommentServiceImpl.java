@@ -48,17 +48,35 @@ public class QuestionCommentServiceImpl implements QuestionCommentService {
 //        questionComment.setCommentWriter(commentRequest.getCommentWriter());
         questionComment.setComment(commentRequest.getComment());
         questionComment.setMember(member); // Member
+        // 댓글 등록 시 게시판 답변 상태 변경
         Optional<QuestionBoard> maybeBoard = questionRepository.findById(commentRequest.getQuestion_no());
         QuestionBoard board = maybeBoard.get();
+        board.setAnswerState("답변완료");
+        questionRepository.save(board);
         questionComment.setQuestionBoard(board);
 
         questionCommentRepository.save(questionComment);
     }
 
+    @Override
+    public void modifyQuestionComment(Long questionCommentNo, CommentRequest commentRequest) {
+        Optional<QuestionComment> maybeComment = questionCommentRepository.findById(questionCommentNo);
+        QuestionComment questionComment = maybeComment.get();
+
+        questionComment.setComment(commentRequest.getComment());
+        questionCommentRepository.save(questionComment);
+    }
     // 댓글 삭제
     @Override
     public void questionCommentRemove(Long questionCommentNo) {
-        questionCommentRepository.deleteById(Long.valueOf(questionCommentNo));
-
+        // 댓글 삭제 시 게시판 답변 상태 변경
+        Optional<QuestionComment> maybeComment = questionCommentRepository.findById(questionCommentNo);
+        QuestionComment questionComment = maybeComment.get();
+        Optional<QuestionBoard> maybeBoard = Optional.ofNullable(questionRepository.findBoardById(questionComment.getQuestionBoard().getQuestionNo()));
+        QuestionBoard questionBoard = maybeBoard.get();
+        questionBoard.setAnswerState("답변대기");
+        questionRepository.save(questionBoard);
+        // 댓글 삭제
+        questionCommentRepository.deleteById(questionCommentNo);
     }
 }

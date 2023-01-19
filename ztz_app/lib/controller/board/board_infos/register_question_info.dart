@@ -1,6 +1,6 @@
 class RegisterQuestionInfo {
   final String title;
-  final String writer;
+  // final String writer;
   final String content;
   final int memberId;
   final String categoryType;
@@ -9,7 +9,7 @@ class RegisterQuestionInfo {
 
   RegisterQuestionInfo(
       this.title,
-      this.writer,
+      // this.writer,
       this.content,
       this.memberId,
       this.categoryType

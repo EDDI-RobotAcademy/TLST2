@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!questionComments || (Array.isArray(questionComments) && questionComments.length === 0)">
-      <v-row justify="end" v-if="!this.resMember.managerCheck">
+      <v-row justify="end">
         <div class="mr-3">
           <button @click="btnModifyBoard">수정</button>
           <template>
@@ -14,17 +14,6 @@
           <button @click="btnDeleteBoard">삭제</button>
         </div>
       </v-row>
-      <v-row justify="end" v-else>
-        <div class="mr-3">
-          <button @click="btnRegisterComment">답변등록</button>
-<!--          <button-white btn-name="답변등록"/>-->
-          <template>
-            <v-dialog v-model="showRegisterComment" max-width="1000">
-              <register-question-comment-form :question-board="questionBoard"/>
-            </v-dialog>
-          </template>
-        </div>
-      </v-row>
     </div>
     <div v-else>
       <v-row>
@@ -33,7 +22,9 @@
             max-width="20px"
             max-height="20px"
             contain></v-img>
-        <pre class="ml-3" style="font-family: naver2">{{ this.questionComments[0].comment }}</pre>
+        <pre class="ml-3" style="font-family: naver2">{{ this.questionComments[0].comment }}
+          <p style="color: gray; font-size: 13px">{{ this.questionComments[0].regDate}}</p>
+        </pre>
       </v-row>
     </div>
   </div>
@@ -43,11 +34,10 @@
 <script>
 import {mapActions, mapState} from "vuex";
 import ModifyQuestionBoardForm from "@/components/boards/ModifyQuestionBoardForm";
-import RegisterQuestionCommentForm from "@/components/boards/comment/RegisterQuestionCommentForm";
 
 export default {
   name: "MyPageQuestionComment",
-  components: {RegisterQuestionCommentForm, ModifyQuestionBoardForm},
+  components: {ModifyQuestionBoardForm},
   data () {
     return {
       showModifyBoard: false,
@@ -69,9 +59,6 @@ export default {
       await this.requestDeleteQuestionToSpring(this.questionBoard.questionNo)
       await this.$router.go(this.$router.currentRoute)
     },
-    btnRegisterComment() {
-      this.showRegisterComment = true
-    }
   },
   mounted() {
     this.requestQuestionCommentListFromSpring(this.questionBoard.questionNo)
@@ -79,7 +66,6 @@ export default {
   computed: {
     ...mapState([
         'questionComments',
-        'resMember'
     ])
   }
 }

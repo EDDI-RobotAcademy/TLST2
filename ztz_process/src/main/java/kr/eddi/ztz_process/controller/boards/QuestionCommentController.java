@@ -41,6 +41,14 @@ public class QuestionCommentController {
         questionCommentService.questionCommentRegister(commentRequest);
     }
 
+    @PutMapping("/modify/{questionCommentNo}")
+    public void modifyQuestionComment(@PathVariable("questionCommentNo") Long questionCommentNo,
+                                      @RequestBody CommentRequest commentRequest) {
+        log.info("modifyComment");
+
+        questionCommentService.modifyQuestionComment(questionCommentNo, commentRequest);
+    }
+
     @DeleteMapping("/{questionCommentNo}")
     public void questionCommentRemove (@PathVariable("questionCommentNo") Long questionCommentNo) {
         log.info("questionBoardRemove()");
