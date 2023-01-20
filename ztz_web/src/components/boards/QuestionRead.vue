@@ -17,7 +17,7 @@
           작성자
         </th>
         <td>
-          <input type="text" :value="questionBoard.writer" readonly>
+          <input type="text" :value="questionBoard.member.username" readonly>
         </td>
       </tr>
       <tr>
@@ -48,7 +48,7 @@ export default {
       type: Object,
       required: true,
     }
-  }
+  },
 }
 </script>
 

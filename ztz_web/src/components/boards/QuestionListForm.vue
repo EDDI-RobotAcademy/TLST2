@@ -33,7 +33,7 @@
             </router-link>
           </td>
           <td align="left">
-            {{ questionBoard.writer }}
+            {{ questionBoard.member.username }}
           </td>
           <td align="center">
             {{ questionBoard.createDateTime }}
