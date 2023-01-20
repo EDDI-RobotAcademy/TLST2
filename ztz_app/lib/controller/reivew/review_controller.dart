@@ -37,6 +37,7 @@ class ReviewController {
       );
       if (reviewResponse.statusCode == 200) {
         debugPrint("결과 : " + utf8.decode(reviewResponse.bodyBytes).toString());
+        ReviewInfo.reviewAverageAndCnt.clear();
         ReviewInfo.reviewAverageAndCnt =
             jsonDecode(utf8.decode(reviewResponse.bodyBytes));
       } else {
