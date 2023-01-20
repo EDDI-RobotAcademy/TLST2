@@ -31,9 +31,6 @@ export default {
     ...mapActions([
       'requestProductFromSpring', 'requestProductLocalAndTypeFromSpring',
     ]),
-      onSubmit(){
-
-    }
   },
 
 }
