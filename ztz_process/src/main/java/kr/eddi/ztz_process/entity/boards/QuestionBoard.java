@@ -36,7 +36,6 @@ public class QuestionBoard {
     @Column
     private String answerState = "답변대기";
 
-    @JsonIgnore
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

@@ -2,6 +2,7 @@ package kr.eddi.ztz_process.service.boards;
 
 import kr.eddi.ztz_process.controller.boards.request.BoardsRequest;
 import kr.eddi.ztz_process.entity.boards.*;
+import kr.eddi.ztz_process.entity.boards.product_question.BoardAuthorityType;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.repository.boards.*;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
@@ -31,8 +32,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     BoardCategoryRepository categoryRepository;
 
-    @Autowired
-    PageCategoryRepository pageCategoryRepository;
 
     @Autowired
     BoardAuthorityRepository authorityRepository;
@@ -108,23 +107,6 @@ public class QuestionServiceImpl implements QuestionService {
         }
         log.info(categoryType.toString());
         return categoryType;
-    }
-
-    public PageCategoryType registerPageCategory(String pageCategoryTypeRequest) {
-        String inputPageCategory = pageCategoryTypeRequest;
-
-        PageCategoryType pageCategoryType = null;
-
-        switch (inputPageCategory) {
-            case "1대1문의":
-                pageCategoryType = PageCategoryType.PERSONAL_QUESTION;
-                break;
-            case "상품문의":
-                pageCategoryType = PageCategoryType.PRODUCT_QUESTION;
-                break;
-        }
-        log.info(pageCategoryType.toString());
-        return pageCategoryType;
     }
 
     public BoardAuthorityType registerBoardAuthority(String boardAuthorityTypeRequest) {
