@@ -3,27 +3,27 @@
     <v-form v-bind="$attrs" @submit.prevent="onAddressSubmit" ref="form">
 
         <div class="d-flex">
-          <v-text-field v-model="zipcode" outlined disabled label="우편번호" required color="black"/>
+          <v-text-field v-model="zipcode" outlined disabled dense label="우편번호" required color="black"/>
         <button-white
             text
             large
             class="mt-0 ml-5 mr-0"
             btn-name="주소 찾기"
-            style="font-size: 13px; height: 55px;"
+            style="font-size: 13px; height: 40px;"
             @click="callDaumAddressApi" outlined>
         </button-white>
         </div>
 
       <div class="d-flex">
-        <v-text-field v-model="city" label="도시" outlined disabled required color="black"/>
+        <v-text-field v-model="city" label="도시" outlined disabled required dense color="black"/>
       </div>
 
       <div class="d-flex">
-        <v-text-field v-model="street" label="도로명" outlined disabled required color="black"/>
+        <v-text-field v-model="street" label="도로명" outlined disabled required dense color="black"/>
       </div>
 
       <div class="d-flex">
-        <v-text-field v-model="addressDetail" label="상세주소" outlined required color="black"/>
+        <v-text-field v-model="addressDetail" label="상세주소" outlined required dense color="black"/>
       </div>
 
     </v-form>

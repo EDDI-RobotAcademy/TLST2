@@ -3,7 +3,6 @@
     <v-divider class="mt-3 mb-3" @submit.prevent="ProductInfoSubmit" />
     <p align="left">상품 정보</p>
 
-    <v-card class="product-info-card" outlined>
       <v-simple-table border="1">
         <thead>
           <tr>
@@ -15,7 +14,7 @@
         <tbody v-if="this.orderList.orderSave.directOrderCheck">
           <tr v-for="item in orderList" :key="item.tmpCartItemOrderNo">
             <td>
-              <v-row class="mt-5 mb-3">
+              <v-row class="mt-5 mb-3 ml-10">
                 <img
                   :src="
                     require(`@/assets/products/uploadImg/${item.product.productInfo.thumbnailFileName}`)
@@ -25,8 +24,18 @@
                 <p class="product-info mt-7 ml-2">{{ item.product.name }}</p>
               </v-row>
             </td>
-            <td class="product-info">{{ item.quantity }}개</td>
-            <td class="product-info">{{ item.product.price }}원</td>
+            <td class="product-info">{{ item.quantity}}개</td>
+            <td v-if="item.product.monthAlcoholCheck" class="product-info">
+              <span style="width: 61px; display: inline-block; text-align: right">
+                {{ item.product.price * item.quantity  | numberFormat}}원
+              </span><br>
+              <span>
+                <del style="color: #BDBDBD; width: 60px; display: inline-block; font-size: 12px; text-align: right">
+                  {{ (item.product.price /0.9) * item.quantity  | numberFormat}}원
+                </del>
+              </span>
+            </td>
+            <td v-else class="product-info">{{ item.product.price  | numberFormat}}원</td>
           </tr>
         </tbody>
 
@@ -40,17 +49,25 @@
                   "
                   style="width: 60px"
                 />
-                <p class="product-info mt-7 ml-2">{{ item.product.name }}</p>
+                <p class="product-info mt-7 ml-8">{{ item.product.name }}</p>
               </v-row>
             </td>
             <td class="product-info">{{ item.count }}개</td>
-            <td class="product-info">
-              {{ item.product.price * item.count }}원
+            <td v-if="item.product.monthAlcoholCheck == true" class="product-info">
+              <span style="width: 61px; display: inline-block; text-align: right">
+                {{ item.product.price * item.count  | numberFormat}}원</span><br>
+              <span>
+                <del style="color: #BDBDBD; width: 60px; display: inline-block; font-size: 12px; text-align: right">
+                  {{ item.product.price * item.count /0.9  | numberFormat}}원
+                </del>
+              </span>
+            </td>
+            <td v-else class="product-info">
+              {{ item.product.price * item.count  | numberFormat}}원
             </td>
           </tr>
         </tbody>
       </v-simple-table>
-    </v-card>
 
     <ul class="product-explanation">
       <li>
@@ -103,12 +120,12 @@ export default {
 
 <style scoped>
 .product-explanation {
-  font-size: 9px;
-  color: #c9c9c9;
-  font-weight: lighter;
+  margin-top: 17px;
+  font-size: 15px;
+  color: gray;
 }
 .product-info-card .product-info {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
 }
 </style>
