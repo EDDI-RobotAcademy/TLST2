@@ -2,7 +2,6 @@ package kr.eddi.ztz_process.service.boards;
 
 import kr.eddi.ztz_process.controller.boards.request.BoardsRequest;
 import kr.eddi.ztz_process.entity.boards.*;
-import kr.eddi.ztz_process.entity.boards.product_question.BoardAuthorityType;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.repository.boards.*;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
@@ -31,10 +30,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     BoardCategoryRepository categoryRepository;
-
-
-    @Autowired
-    BoardAuthorityRepository authorityRepository;
 
     // 질문게시판 리스트 UI
     @Override
@@ -73,7 +68,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         questionBoard.setTitle(boardsRequest.getTitle());
         questionBoard.setContent(boardsRequest.getContent());
-
+        questionBoard.setPrivateCheck(boardsRequest.getPrivateCheck());
         questionBoard.setMember(maybeMember.get());
         questionBoard.setBoardCategory(boardCategory);
         questionRepository.save(questionBoard);
@@ -109,22 +104,22 @@ public class QuestionServiceImpl implements QuestionService {
         return categoryType;
     }
 
-    public BoardAuthorityType registerBoardAuthority(String boardAuthorityTypeRequest) {
-        String inputAuthority = boardAuthorityTypeRequest;
-
-        BoardAuthorityType boardAuthorityType = null;
-
-        switch (inputAuthority) {
-            case "비공개":
-                boardAuthorityType = BoardAuthorityType.PRIVATE_AUTHORITY;
-                break;
-            case "공개":
-                boardAuthorityType = BoardAuthorityType.PUBLIC_AUTHORITY;
-                break;
-        }
-        log.info(boardAuthorityType.toString());
-        return boardAuthorityType;
-    }
+//    public BoardAuthorityType registerBoardAuthority(String boardAuthorityTypeRequest) {
+//        String inputAuthority = boardAuthorityTypeRequest;
+//
+//        BoardAuthorityType boardAuthorityType = null;
+//
+//        switch (inputAuthority) {
+//            case "비공개":
+//                boardAuthorityType = BoardAuthorityType.PRIVATE_AUTHORITY;
+//                break;
+//            case "공개":
+//                boardAuthorityType = BoardAuthorityType.PUBLIC_AUTHORITY;
+//                break;
+//        }
+//        log.info(boardAuthorityType.toString());
+//        return boardAuthorityType;
+//    }
 
      // 질문게시판 게시물 수정
     @Override
@@ -143,6 +138,7 @@ public class QuestionServiceImpl implements QuestionService {
         } else {
             questionBoard.setTitle(boardsRequest.getTitle());
             questionBoard.setContent(boardsRequest.getContent());
+            questionBoard.setPrivateCheck(boardsRequest.getPrivateCheck());
             questionBoard.setBoardCategory(boardCategory);
             questionRepository.save(questionBoard);
         }

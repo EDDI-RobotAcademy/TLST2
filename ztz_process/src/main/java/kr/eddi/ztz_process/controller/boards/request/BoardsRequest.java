@@ -8,4 +8,5 @@ public class BoardsRequest {
     private String content;
     private Long memberId;
     private String categoryType;
+    private Boolean privateCheck;
 }
