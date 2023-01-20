@@ -18,4 +18,7 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
     @Query("select f from Favorite f join fetch f.product fp  join fetch f.member fm where fm.id= :member_id and f.likeFlag = true" )
     List<Favorite> findByFavoriteByMemberId(Long member_id);
+
+    @Query("select f from Favorite f where f.member.id= :member_id" )
+    List<Favorite> findByFavoriteAllByMemberId(Long member_id);
 }
