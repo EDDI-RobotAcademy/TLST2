@@ -122,9 +122,7 @@ export default {
         const {title, content, categoryType} = this
         const questionNo = this.questionBoard.questionNo
         const memberId = this.resMember.id
-        const pageCategoryType = "1대1문의"
-        const boardAuthorityType = "공개"
-        this.requestQuestionModifyToSpring({questionNo, title, content, categoryType, pageCategoryType, boardAuthorityType, memberId})
+        this.requestQuestionModifyToSpring({questionNo, title, content, categoryType, memberId})
         await this.$router.go(this.$router.currentRoute)
       }
     },

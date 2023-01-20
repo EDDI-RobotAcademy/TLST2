@@ -65,17 +65,9 @@ export default {
       expanded: [],
       singleExpand: true,
       boardHeaders: [
-        {
-          text: '번호',
-          align: 'start',
-          sortable: false,
-          value: 'questionNo',
-          width: 150
-        },
         {text: '제목', value: 'title'},
         {text: '작성일', value: 'createDateTime', width: 200},
-        // eslint-disable-next-line no-constant-condition
-        {text: '답변상태', value: 'answerState'},
+        {text: '답변상태', value: 'answerState', width: 200},
         {text: '', value: 'data-table-expand'},
       ],
       showRegisterBoard: false,
