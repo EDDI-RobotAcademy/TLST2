@@ -107,9 +107,7 @@ export default {
       } else {
         const {title, content, categoryType} = this
         const memberId = this.resMember.id
-        const pageCategoryType = "1대1문의"
-        const boardAuthorityType = "공개"
-        await this.requestCreateQuestionContentsToSpring({title, content, categoryType, pageCategoryType, boardAuthorityType, memberId})
+        await this.requestCreateQuestionContentsToSpring({title, content, categoryType, memberId})
         await this.$router.go(this.$router.currentRoute)
 
       }
