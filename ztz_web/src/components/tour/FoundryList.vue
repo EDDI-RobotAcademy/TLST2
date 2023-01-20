@@ -1,4 +1,5 @@
 <template>
+
   <ul class="foundry-list-box">
     <li
       v-if="!foundrys || (Array.isArray(foundrys) && foundrys.length === 0)"
@@ -30,15 +31,16 @@
           </p>
         </div>
       </div>
-      <button v-on:click="goReservation(foundry)" v-show="isLoggedIn">
+      <button v-on:click="goReservation(foundry)" v-show="activeConfirm">
         예약하기
       </button>
     </li>
   </ul>
+
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "FoundryList",
   props: {
@@ -47,12 +49,17 @@ export default {
     },
   },
   computed: {
-    ...mapState(["isAuthenticated"]),
+    ...mapState(["isAuthenticated","resMember"]),
   },
   mounted() {
     if (this.$store.state.isAuthenticated === true) {
-      console.log("로그인 상태");
+      let token = window.localStorage.getItem("userInfo");
+      this.reqMemberInfoToSpring(token);
       this.isLoggedIn = true;
+      this.isManager = this.$store.state.resMember.managerCheck
+      if(this.isLoggedIn === true && this.isManager === false) {
+        this.activeConfirm = true
+      }
     } else {
       console.log("로그인 필요");
     }
@@ -61,9 +68,14 @@ export default {
     return {
       show: false,
       isLoggedIn: false,
+      isManager :false,
+      activeConfirm : false,
     };
   },
   methods: {
+    ...mapActions([
+      "reqMemberInfoToSpring",
+    ]),
     goReservation(foundry) {
       this.$store.commit("REQUEST_FOUNDRY_INFO", foundry);
       this.$router.push({ name: "ReservationView" });

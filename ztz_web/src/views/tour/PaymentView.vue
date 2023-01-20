@@ -9,7 +9,7 @@
                 <li>
                     <p>
                         <span>예약자 </span>
-                        {{ myReservationInfo.username }} 
+                        {{ myReservationInfo.member.username }} 
                     </p>
                     <p>
                         <span>예약일자 </span>
@@ -54,7 +54,7 @@
 import "@/css/initialization.css";
 import { mapActions, mapState } from "vuex";
 const IMP = window.IMP;
-IMP.init("imp51435132");
+IMP.init("imp67851243");
 
 export default {
     name: "PaymentView",
@@ -89,8 +89,6 @@ export default {
         ]),
 
         payment() {
-            console.log("paymentBtn - 실행")
-
             IMP.request_pay({ // param
                 pg: "html5_inicis",
                 pay_method: "card",
@@ -100,7 +98,8 @@ export default {
                 buyer_email: this.myReservationInfo.member.email,
                 buyer_name: this.myReservationInfo.member.username,
                 buyer_tel: this.myReservationInfo.member.phoneNumber,
-
+                buyer_addr: "임시" ,
+                buyer_postcode: "41312"
             }, rsp => { // callback
                 if (rsp.success) {
                     const payload = this.paymentDetail
@@ -119,4 +118,3 @@ export default {
     }
 };
 </script>
-  
