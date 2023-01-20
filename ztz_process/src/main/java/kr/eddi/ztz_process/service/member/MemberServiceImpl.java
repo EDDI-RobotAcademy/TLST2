@@ -1,8 +1,26 @@
 package kr.eddi.ztz_process.service.member;
 
 import jakarta.persistence.Basic;
+import kr.eddi.ztz_process.entity.boards.QuestionBoard;
+import kr.eddi.ztz_process.entity.boards.QuestionComment;
 import kr.eddi.ztz_process.entity.member.*;
+import kr.eddi.ztz_process.entity.order.Cart;
+import kr.eddi.ztz_process.entity.order.Item;
+import kr.eddi.ztz_process.entity.order.OrderInfo;
+import kr.eddi.ztz_process.entity.order.Payment;
+import kr.eddi.ztz_process.entity.products.Favorite;
+import kr.eddi.ztz_process.entity.products.Review;
+import kr.eddi.ztz_process.entity.tour.Reservation;
+import kr.eddi.ztz_process.repository.boards.QuestionCommentRepository;
+import kr.eddi.ztz_process.repository.boards.QuestionRepository;
 import kr.eddi.ztz_process.repository.member.*;
+import kr.eddi.ztz_process.repository.order.CartRepository;
+import kr.eddi.ztz_process.repository.order.ItemRepository;
+import kr.eddi.ztz_process.repository.order.OrderInfoRepository;
+import kr.eddi.ztz_process.repository.order.PaymentRepository;
+import kr.eddi.ztz_process.repository.products.FavoriteRepository;
+import kr.eddi.ztz_process.repository.products.ReviewRepository;
+import kr.eddi.ztz_process.repository.tour.ReservationRepository;
 import kr.eddi.ztz_process.service.member.request.MemberAddressRequest;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
 //import kr.eddi.ztz_process.service.member.request.MemberModifyRequest;
@@ -13,10 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -24,7 +39,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
-
+    @Autowired
+    private PaymentRepository paymentRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+    @Autowired
+    private QuestionCommentRepository questionCommentRepository;
+    @Autowired
+    private FavoriteRepository favoriteRepository;
     @Autowired
     private AuthenticationRepository authenticationRepository;
 
@@ -34,16 +58,22 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private ManagerCodeRepository managerCodeRepository;
 
+    @Autowired
+    private OrderInfoRepository orderInfoRepository;
 
     @Autowired
     private RedisService redisService;
 
     @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
     private MemberProfileRepository memberProfileRepository;
-
+    @Autowired
+    private ItemRepository itemRepository;
     @Autowired
     private AuthorityRepository authorityRepository;
-
+    @Autowired
+    private CartRepository cartRepository;
     @Override
     public Boolean emailValidation(String email) {
         Optional<Member> maybeMember = memberRepository.findByEmail(email);
@@ -126,8 +156,51 @@ public class MemberServiceImpl implements MemberService {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
 
-        authorityRepository.delete(member.getAuthority());
+        //리뷰 삭제
+        List<Review> reviewList = reviewRepository.findByMemberId(member.getId());
+        for (int i = 0; i <reviewList.size(); i++) {
+            reviewRepository.delete(reviewList.get(i));
+        }
+        //주문정보 삭제
+        List<OrderInfo> orderInfoList = orderInfoRepository.findByMemberId(member.getId());
+        for (int i = 0; i <orderInfoList.size(); i++) {
+            orderInfoRepository.delete(orderInfoList.get(i));
+        }
+        //결제정보 삭제
+        List<Payment> paymentList = paymentRepository.findAllByMemberId(member.getId());
+        for (int i = 0; i <paymentList.size(); i++) {
+            paymentRepository.delete(paymentList.get(i));
+        }
+        //찜삭제
+        List<Favorite> favoriteList = favoriteRepository.findByFavoriteAllByMemberId(member.getId());
+        for (int i = 0; i <favoriteList.size(); i++) {
+            favoriteRepository.delete(favoriteList.get(i));
+        }
+        //예약삭제
+        List<Reservation> reservationList = reservationRepository.findByMemberId(member.getId());
+        for (int i = 0; i <reservationList.size(); i++) {
+            reservationRepository.delete(reservationList.get(i));
+        }
+        //문의 댓글 삭제
+        //문의 삭제
+        List<QuestionBoard> questionBoardList = questionRepository.findByMemberId(member.getId());
+        for (int i = 0; i <questionBoardList.size(); i++) {
+            QuestionComment questionComment = questionCommentRepository.findByQuestionNo(questionBoardList.get(i).getQuestionNo());
+            questionCommentRepository.delete(questionComment);
+            questionRepository.delete(questionBoardList.get(i));
+        }
+        //장바구니 삭제
+        Optional<Cart> maybeCart = cartRepository.findByMemberId(member.getId());
+        if(maybeCart.isPresent()){
+            List<Item> itemList = itemRepository.findCartListByMemberId(member.getId());
+            for (int i = 0; i <itemList.size(); i++) {
+                itemRepository.delete(itemList.get(i));
+            }
+            cartRepository.delete(maybeCart.get());
+        }
+
         memberRepository.delete(member);
+        authorityRepository.delete(member.getAuthority());
     }
 
     @Override

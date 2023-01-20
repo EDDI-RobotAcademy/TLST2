@@ -8,9 +8,9 @@
           style="display: flex; font-weight: 500"
         >
           <v-list-item
-            v-for="(local, index) in localMenu"
+            v-for="(local, index) in localFlag.localMenu"
             :key="index"
-            @click="acquireFilteredProducts(index)"
+            @click="test(index)"
             style="padding: 0 0 0 20px"
           >
             <v-list-item-content>
@@ -42,8 +42,12 @@ export default {
   },
   data() {
     return{
-      localMenu : ["서울경기","강원","충청","경상","전라","제주"],
-      selectFlag: false
+      localFlag : {
+        localMenu :["서울경기","강원","충청","경상","전라","제주"],
+        selectFlag :[false ,false ,false ,false ,false ,false]
+      },
+      // localMenu : ["서울경기","강원","충청","경상","전라","제주"],
+      // selectFlag: false
     }
   },
   computed: {
@@ -66,6 +70,30 @@ export default {
       'reqFilteredLocalAndAlcoholProductsFromSpring',
       'reqFilteredAlcoholProductsFromSpring'
     ]),
+    async test(index){
+      console.log("하긴함?")
+
+      if(this.localFlag.selectFlag[index] == true){
+        console.log("여기?")
+        this.localFlag.selectFlag[index] = false;
+        this.allLocalProduct()
+      }else{
+        console.log("아님여기?")
+        for (let i = 0; i < this.localFlag.selectFlag.length; i++) {
+          this.localFlag.selectFlag[i] = false;
+        }
+        this.localFlag.selectFlag[index] = true;
+        let localName = this.localFlag.localMenu[index]
+        const alcoholType = this.$store.state.selectAlcoholType
+        if(alcoholType =="all"){
+          console.log("모든 알콜타입에서 지역 조회" + localName)
+          await this.reqFilteredProductsFromSpring(localName)
+        } else{
+          console.log("받은 알코올타입과 지역 조회" + localName + alcoholType)
+          await this.reqFilteredLocalAndAlcoholProductsFromSpring({alcoholType, localName})
+        }
+      }
+    },
     async acquireFilteredProducts(index) {
       this.selectFlag = !this.selectFlag
       if(this.selectFlag){

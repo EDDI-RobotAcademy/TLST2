@@ -169,8 +169,32 @@ public class ReviewServiceImpl implements ReviewService{
         String oldFileName = review.getThumbnailFileName();
         String newFileName = image.getOriginalFilename();
 
-        if (newFileName != oldFileName) {
+        if( oldFileName == null){
+            try{
+                log.info("requestUploadFilesWitText() - Make file: " +
+                        newFileName);
+                FileOutputStream writer = new FileOutputStream(
+                        "../ztz_web/src/assets/products/uploadImg/" + newFileName
+                );
 
+                FileOutputStream appWriter = new FileOutputStream(
+                        "../ztz_app/assets/images/uploadImg/" + newFileName
+                );
+                log.info("디렉토리에 파일 배치 성공");
+
+                writer.write(image.getBytes());
+                appWriter.write(image.getBytes());
+
+                writer.close();
+                appWriter.close();
+
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException((e));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }else if(newFileName != oldFileName) {
             try {
                 log.info("삭제할 파일 이름: " + oldFileName);
                 File webfile = new File("../ztz_web/src/assets/products/uploadImg/" + URLDecoder.decode(oldFileName, "UTF-8"));
