@@ -1,30 +1,27 @@
 <template>
   <v-container>
-    <table class="boards" v-if="!questionComments || (Array.isArray(questionComments) && questionComments.length === 0)">
+    <table class="boards"
+           v-if="!questionComments || (Array.isArray(questionComments) && questionComments.length === 0)">
       현재 등록된 댓글이 없습니다!
     </table>
     <table class="boards" v-else v-for="questionComment in questionComments" :key="questionComment.questionCommentNo"
            style="border: solid thin">
-      <thead>
-      <tr>
-        <div>
-          {{ questionComment.commentWriter }}
-        </div>
-
-      </tr>
-      </thead>
       <tbody>
       <!--      댓글 리스트-->
       <tr>
-        <v-row class="comment">
-          {{ questionComment.comment }}
-          <!--        댓글 삭제-->
-          <div v-if="questionComment.member.id === resMember.id" >
-            <v-btn @click="onCommentDelete(questionComment.questionCommentNo)" color="#205C37" class="comment-btn" rounded depressed small v-on="on">
-              삭제
-            </v-btn>
-          </div>
-        </v-row>
+        <div class="comment">
+          <v-row>
+            <pre style="font-family: naver2; height: fit-content">{{ questionComment.comment }}
+            </pre>
+          </v-row>
+          <v-row>
+            <p class="mt-2">{{ questionComment.regDate }}</p>
+          </v-row>
+          <!--          <v-row v-if="resMember.managerCheck" justify="end" class="mr-5 mb-5">-->
+          <!--            <button @click="modifyComment" class="mr-3">수정</button>-->
+          <!--            <button @click="onCommentDelete(questionComment.questionCommentNo)">삭제</button>-->
+          <!--          </v-row>-->
+        </div>
       </tr>
       </tbody>
     </table>
@@ -41,7 +38,8 @@ export default {
     return {
       commentWriter: this.$store.state.resMember.username,
       deleteDialog: false,
-      deleteCommentTitle:"댓글 삭제",
+      deleteCommentTitle: "댓글 삭제",
+      showModifyComment: false
     }
   },
   props: {
@@ -62,6 +60,9 @@ export default {
       await this.requestDeleteQuestionCommentToSpring(questionCommentsNo);
       await this.$router.push({name: 'QuestionListView'})
     },
+    modifyComment() {
+      this.showModifyComment = true
+    }
   },
 }
 </script>
@@ -72,19 +73,23 @@ table.boards {
   text-align: left;
   line-height: 1.5;
   border: 1px solid;
-  width: 570px;
+  width: 600px;
   table-layout: fixed;
 }
+
 table.boards thead {
   background: darkseagreen;
   font-weight: bold;
 }
-.boards .comment{
-  padding-left: 15px;
+
+.boards .comment {
+  padding-left: 20px;
   padding-top: 15px;
-  padding-bottom: 15px;
+  margin: 10px;
+
 }
-.boards .comment .comment-btn{
+
+.boards .comment .comment-btn {
   padding-left: 15px;
   color: white;
   margin-left: 370px;
