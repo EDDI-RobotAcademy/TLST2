@@ -2,7 +2,7 @@
   <div style="overflow-x: hidden;">
     <v-card>
       <p class="pl-3 pt-5">상세 주문 정보
-        <v-btn class="cancel-btn" v-if="paymentList[paymentListIndex].paymentState != 'PAYMENT_REFUND'"
+        <v-btn class="cancel-btn" v-if="paymentList[paymentListIndex].paymentState == 'PAYMENT_COMPLETE'"
                @click="refundBtn(paymentList[paymentListIndex].totalPaymentPrice)">결제 취소
         </v-btn>
       </p>
@@ -68,11 +68,16 @@
             {{
               item.orderState == "PAYMENT_COMPLETE" ? "결제완료" :
                   item.orderState == "PAYMENT_REFUND" ? "환불완료" :
-                      item.orderState == "DELIVERY_ONGOING" ? "배송중" :
-                          item.orderState == "DELIVERY_COMPLETE" ? "배송완료" :
-                              item.orderState == "PAYMENT_CONFIRM" ? "구매확정" :
-                                  item.orderState == "REFUND_REQUEST" ? "반품신청" :
-                                      "지정된 상태값이 없습니다"
+                      item.orderState == "DELIVERY_START" ? "배송시작" :
+                          item.orderState == "PART_DELIVERY_ONGOING" ? "부분배송중" :
+                              item.orderState == "DELIVERY_ONGOING" ? "배송중" :
+                                  item.orderState == "DELIVERY_COMPLETE" ? "배송완료" :
+                                      item.orderState == "PAYMENT_CONFIRM" ? "구매확정" :
+                                          item.orderState == "REFUND_REQUEST" ? "반품신청" :
+                                              item.orderState == "WRITE_REVIEW" ? "리뷰작성 완료" :
+                                                  item.orderState == "PART_WRITE_REVIEW" ? "일부리뷰 작성 완료" :
+                                                      item.orderState == "ABLE_WRITE_REVIEW" ? "리뷰작성가능" :
+                                              "지정된 상태값이 없습니다"
             }}
           </td>
           <td>
@@ -94,7 +99,8 @@
           <td>
             <!--          리뷰메소드 연결 필요-->
             <button-white v-if="item.orderState == 'PAYMENT_CONFIRM'||item.orderState =='REFUND_REQUEST'"
-                          class="review-btn ma-2" btn-name="리뷰 작성" @click="showReviewDialog(item.product.productNo , item.orderID)"/>
+                          class="review-btn ma-2" btn-name="리뷰 작성"
+                          @click="showReviewDialog(item.product.productNo , item.orderID)"/>
             <button-white v-else
                           :disabled="true"
                           class="review-btn ma-2" btn-name="리뷰 작성"/>
@@ -185,7 +191,7 @@ export default {
       this.refundDialog = true
       this.allRefund = true
     },
-    async showReviewDialog(productNo , orderNo) {
+    async showReviewDialog(productNo, orderNo) {
       this.reviewDialog = true
       await this.requestProductFromSpring(productNo)
       await this.reqOrderInfoById(orderNo)

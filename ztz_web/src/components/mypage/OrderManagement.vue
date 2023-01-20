@@ -32,13 +32,18 @@
           <td class="pl-9">{{ paymentItem.orderedCnt }}</td>
           <td>{{ paymentItem.totalPaymentPrice | numberFormat }}원</td>
           <td>{{
-              paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료":
-                  paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료":
-                      paymentItem.paymentState == "DELIVERY_ONGOING" ? "배송중":
-                          paymentItem.paymentState == "PART_DELIVERY_ONGOING" ? "부분배송중":
-                              paymentItem.paymentState == "PAYMENT_CONFIRM" ? "구매확정":
-                                  paymentItem.paymentState == "REFUND_REQUEST" ? "반품신청":
-                                      paymentItem.paymentState == "DELIVERY_COMPLETE" ? "배송완료": "상태값이 존재하지 않습니다"
+              paymentItem.paymentState == "PAYMENT_COMPLETE" ? "결제완료" :
+                  paymentItem.paymentState == "PAYMENT_REFUND" ? "환불완료" :
+                      paymentItem.paymentState == "DELIVERY_START" ? "배송시작" :
+                          paymentItem.paymentState == "PART_DELIVERY_ONGOING" ? "부분배송중" :
+                              paymentItem.paymentState == "DELIVERY_ONGOING" ? "배송중" :
+                                  paymentItem.paymentState == "DELIVERY_COMPLETE" ? "배송완료" :
+                                      paymentItem.paymentState == "PAYMENT_CONFIRM" ? "구매확정" :
+                                          paymentItem.paymentState == "REFUND_REQUEST" ? "반품신청" :
+                                              paymentItem.paymentState == "WRITE_REVIEW" ? "리뷰작성 완료" :
+                                                  paymentItem.paymentState == "PART_WRITE_REVIEW" ? "일부리뷰 작성 완료" :
+                                                      paymentItem.paymentState == "ABLE_WRITE_REVIEW" ? "리뷰작성가능" :
+                                                          "지정된 상태값이 없습니다"
             }}</td>
             <td>{{ paymentItem.regData }}</td>
             <td>

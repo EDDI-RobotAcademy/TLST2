@@ -20,7 +20,7 @@
         <p class="member-info">회원 본인은 구매 조건, 주문 내용 및 결제에 동의 합니다.</p>
       </v-row>
       <ul type="none" class="refund-explanation">
-        <li>개인 정보 수집 및 이용 동의 <a @click="showCollectionCardMethod">자세히</a> </li>
+        <li>개인 정보 수집 및 이용 동의 <a @click="showCollectionCardMethod" style="color: #205C37">자세히</a> </li>
         <v-card v-if="showCollectionCard" class="explanationCard">
           <strong>개인정보</strong> 수집 및 이용 동의<br>
           1. 수집목적<br>
@@ -34,7 +34,7 @@
           본 개인정보 수집 및 이용 등에 동의하지 않을 권리가 있습니다. 다만, 필수항목에 동의를 하지 않을경우 거래가 제한될 수 있습니다.<br>
         </v-card>
 
-        <li>개인정보 제3자 제공 동의 <a @click="showFurnishCardMethod">자세히</a> </li>
+        <li>개인정보 제3자 제공 동의 <a @click="showFurnishCardMethod" style="color: #205C37">자세히</a> </li>
         <v-card v-if="showFurnishCard" class="explanationCard">
           <p>무신사의 회원계정으로 상품 및 서비스를 구매하고자 할 경우,<br> (주)무신사는 거래 당사자간 원활한 의사소통 및 배송,
             상담 등 거래이행을 위하여 필요한 최소한의 개인정보만을 무신사 입점업체 판매자 및 배송업체에 아래와 같이 공유하고 있습니다.</p>
@@ -48,7 +48,7 @@
 
         </v-card>
 
-        <li>전자결제대행 이용 동의 <a @click="showPaymentCardMethod">자세히</a> </li>
+        <li>전자결제대행 이용 동의 <a @click="showPaymentCardMethod" style="color: #205C37">자세히</a> </li>
         <v-card v-if="showPaymentCard" class="explanationCard">
           <strong>개인정보</strong> 수집 및 이용 동의<br>
           1. 수집목적<br>
@@ -66,8 +66,24 @@
       <v-divider class="mt-1 mb-3"/>
 
       <v-row class="member-row" >
-        <p class="member-tool" align="left">총금액</p>
+        <p class="member-tool" align="left">상품 금액</p>
         <p class="member-info">{{ this.TotalPaymentAmount | numberFormat }}원</p>
+      </v-row>
+
+      <v-divider class="mt-1 mb-3"/>
+
+      <v-row class="member-row" >
+        <p class="member-tool" align="left">배송비</p>
+        <p v-if="this.TotalPaymentAmount >= 50000" class="member-info">{{ 0 | numberFormat }}원</p>
+        <p v-else class="member-info">{{ 3000 | numberFormat }}원</p>
+      </v-row>
+
+      <v-divider class="mt-1 mb-3"/>
+
+      <v-row class="member-row" >
+        <p class="member-tool" align="left">총금액</p>
+        <p v-if="this.TotalPaymentAmount >= 50000" class="member-info">{{ this.TotalPaymentAmount | numberFormat }}원</p>
+        <p v-else class="member-info">{{ this.TotalPaymentAmount + 3000 | numberFormat }}원</p>
       </v-row>
 
     </v-card>
@@ -84,7 +100,7 @@ export default {
     return{
       showCollectionCard:false,
       showFurnishCard:false,
-      showPaymentCard:false
+      showPaymentCard:false,
     }
   },
   methods:{
@@ -112,17 +128,17 @@ export default {
   margin-left: 20px;
 }
 .member-info-card .member-row .member-tool{
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   width: 170px;
   margin-right: 0px;
   padding-right: 0px;
 }
 .member-info-card .member-row .member-info{
-  font-size: 12px;
+  font-size: 14px;
 }
 .refund-explanation{
-  font-size: 12px;
+  font-size: 14px;
   font-weight: lighter;
   margin-left: 165px;
 }
