@@ -14,7 +14,7 @@ public interface QuestionRepository extends JpaRepository<QuestionBoard, Long> {
     @Query("select qb from QuestionBoard qb join fetch qb.boardCategory join fetch qb.member where qb.questionNo = :questionNo")
     QuestionBoard findBoardById(Long questionNo);
 
-    @Query("select qb from QuestionBoard qb join fetch qb.boardCategory order by qb.questionNo desc ")
+    @Query("select qb from QuestionBoard qb join fetch qb.boardCategory join fetch qb.member order by qb.questionNo desc ")
     List<QuestionBoard> findAllBy();
 
 
