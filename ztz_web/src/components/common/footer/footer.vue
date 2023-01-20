@@ -2,7 +2,7 @@
   <footer>
     <nav class="footer-nav">
         <div class ="mr-0" v-if="this.$store.state.isAuthenticated && this.$store.state.resMember.managerCheck">
-           <v-row>
+           <v-row style="padding: 10px">
             <router-link style="text-decoration: none; font-weight: bold; " to="/question-list" >
               <li>Q&A</li>
             </router-link>
