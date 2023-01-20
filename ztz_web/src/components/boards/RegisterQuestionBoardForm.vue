@@ -46,11 +46,17 @@
                 :placeholder="contentInfo"
                 v-model="content"
                 outlined>
-
             </v-textarea>
-            <p align="left" style="color:gray">
+            <p align="left" style="font-size:14px; color:gray">
               * 상품과 무관한 내용이거나 음란 및 불법적인 내용은 통보없이 삭제될 수 있습니다.
             </p>
+            <div align="center">
+              <v-checkbox
+                  label="비밀글로 문의하기"
+                  color="#205C37"
+                  v-model="privateCheck">
+              </v-checkbox>
+            </div>
           </v-col>
         </v-row>
         <v-row align="center">
@@ -90,7 +96,7 @@ export default {
       categoryType: '',
       title: '',
       content: '',
-      boardAuthorityType: ''
+      privateCheck: false,
     }
   },
   methods: {
@@ -105,11 +111,10 @@ export default {
       } else if (this.content == '') {
         alert('내용을 작성해주세요')
       } else {
-        const {title, content, categoryType} = this
+        const {title, content, categoryType, privateCheck} = this
         const memberId = this.resMember.id
-        await this.requestCreateQuestionContentsToSpring({title, content, categoryType, memberId})
+        await this.requestCreateQuestionContentsToSpring({title, content, categoryType, privateCheck, memberId})
         await this.$router.go(this.$router.currentRoute)
-
       }
     }
   },
@@ -140,7 +145,6 @@ export default {
 }
 
 .board-items p {
-  margin-top: 10px;
   margin-right: 50px;
 }
 

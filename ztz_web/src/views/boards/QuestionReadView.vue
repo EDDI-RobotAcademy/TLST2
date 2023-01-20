@@ -1,15 +1,21 @@
 <template>
   <v-container>
-    <div align="center">
-      <div>
+    <div align="center" class="mt-8">
+      <div style="text-align: center; margin-bottom: 10px">
+        <h1>Q&A</h1>
+      </div>
+      <div class="mt-10">
         <question-read v-if="questionBoard" :questionBoard="questionBoard"/>
         <p v-else>Loading .......</p>
       </div>
-      <div v-if="this.$store.state.resMember.username == this.questionBoard.writer">
+      <div v-if="questionBoard.member.id == resMember.id">
         <!--  게시물 수정   -->
-        <router-link :to="{ name: 'QuestionModifyView', params: { questionNo } }">
-          <button-white depressed btn-name="수정"/>&nbsp;
-        </router-link>
+          <button-white depressed btn-name="수정" @click="modifyBoard"/>
+        <template>
+          <v-dialog v-model="showModifyBoard" max-width="1000">
+            <modify-question-board-form :question-board="questionBoard"/>
+          </v-dialog>
+        </template>
         <!--  게시물 삭제   -->
         <v-dialog v-model="deleteDialog" persisten max-width="400">
           <template v-slot:activator="{on}">
@@ -39,9 +45,7 @@
       </div>
       <div v-else>
         <router-link :to="{ name: 'QuestionListView' }">
-          <v-btn class="green white--text" rounded depressed small>
-            돌아가기
-          </v-btn>
+          <button-green depressed btn-name="돌아가기"/>
         </router-link>
       </div>
       <br/>
@@ -49,23 +53,23 @@
       <!--  댓글 삭제    /-->
       <table class="boards">
         <tr>
-          <div>
-            <h1>댓글</h1>
+          <div class="ml-3">
+            <h2>답변</h2>
           </div>
           <div class="comment">
             <question-comment-list :questionComments="questionComments"/>
           </div>
         </tr>
       </table>
-      <div>
-        <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
-        <question-comment-register-form
-            @submit="onSubmitRegister"
-            v-if="this.$store.state.isAuthenticated
-            && this.$store.state.resMember.managerCheck
-            && this.questionComments.length == 0"
-        />
-      </div>
+<!--      <div>-->
+<!--        &lt;!&ndash;  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 &ndash;&gt;-->
+<!--        <question-comment-register-form-->
+<!--            @submit="onSubmitRegister"-->
+<!--            v-if="this.$store.state.isAuthenticated-->
+<!--            && this.$store.state.resMember.managerCheck-->
+<!--            && this.questionComments.length == 0"-->
+<!--        />-->
+<!--      </div>-->
     </div>
   </v-container>
 </template>
@@ -74,19 +78,21 @@
 import {mapActions, mapState} from "vuex";
 import QuestionRead from "@/components/boards/QuestionRead";
 import QuestionCommentList from "@/components/boards/comment/QuestionCommentList";
-import QuestionCommentRegisterForm from "@/components/boards/comment/QuestionCommentRegisterForm";
+import ModifyQuestionBoardForm from "@/components/boards/ModifyQuestionBoardForm";
 
 export default {
   name: "QuestionReadView",
   data() {
     return {
       deleteTitle:"게시글 삭제",
+      deleteDialog: false,
+      showModifyBoard: false,
     }
   },
   components: {
+    ModifyQuestionBoardForm,
     QuestionRead,
     QuestionCommentList,
-    QuestionCommentRegisterForm,
   },
   props: {
     questionNo: {
@@ -122,6 +128,12 @@ export default {
         name: 'QuestionReadView', params: { questionNo: this.questionNo }
       })
     },
+    modifyBoard() {
+      this.showModifyBoard = true
+    },
+    cancelBtn() {
+      this.deleteDialog = false
+    }
   },
   created() {
     this.requestQuestionFromSpring(this.questionNo)
@@ -147,7 +159,6 @@ table.boards {
   border-collapse: collapse;
   text-align: left;
   line-height: 1.5;
-  border: 1px solid #ccc;
   margin: 20px 10px;
 }
 

@@ -36,6 +36,10 @@ public class QuestionBoard {
     @Column
     private String answerState = "답변대기";
 
+    // 게시글 공개 비공개
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private Boolean privateCheck;
+
     @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;

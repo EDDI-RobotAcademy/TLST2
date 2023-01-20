@@ -5,7 +5,7 @@
         :items="questionBoards"
         :single-expand="singleExpand"
         :expanded.sync="expanded"
-        item-key="title"
+        item-key="questionNo"
         show-expand
     >
       <template v-slot:expanded-item="{ headers, item }">
@@ -58,7 +58,6 @@ export default {
         {
           text: '번호',
           align: 'start',
-          sortable: false,
           value: 'questionNo',
           width: 150
         },

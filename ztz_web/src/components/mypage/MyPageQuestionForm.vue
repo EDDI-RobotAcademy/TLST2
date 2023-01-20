@@ -5,9 +5,14 @@
         :items="questionBoards"
         :single-expand="singleExpand"
         :expanded.sync="expanded"
-        item-key="title"
+        item-key="questionNo"
         show-expand
     >
+
+<!--      <template v-slot:[`item.title`]={item}>-->
+<!--        {{ item.title == 'dfsf'? '안녕' : '아니네'}}-->
+<!--      </template>-->
+
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length" style="background-color: #f5f5f5">
           <div class="question-board">
