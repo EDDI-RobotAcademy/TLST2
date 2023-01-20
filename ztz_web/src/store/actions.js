@@ -148,8 +148,7 @@ export default {
           });
     },
     reqSaveMyPaymentReservationDetail({ commit }, payload) {
-        return axios
-          .post(`http://localhost:7777/ztz/tour/my-reservation/payment`, payload)
+        return axios.post(`http://localhost:7777/ztz/tour/my-reservation/payment`, payload)
           .then((res) => {
             commit(RESPONSE_MY_REQUEST, res.data);
           });
