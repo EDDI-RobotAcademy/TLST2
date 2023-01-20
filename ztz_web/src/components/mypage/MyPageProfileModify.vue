@@ -126,6 +126,7 @@ export default {
     const new_password = this.new_password;
     console.log("멤버 id 확인" + memberId);
     this.reqMyPageProfileModifyFromSpring({ phoneNumber, manager_code, present_password, new_password, memberId })
+    this.$router.go(0);
     }
   }
 }
