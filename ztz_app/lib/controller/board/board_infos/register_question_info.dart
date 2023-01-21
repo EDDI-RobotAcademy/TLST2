@@ -4,6 +4,7 @@ class RegisterQuestionInfo {
   final String content;
   final int memberId;
   final String categoryType;
+  final bool privateCheck;
 
   static bool registerQuestionResult = false;
 
@@ -12,7 +13,8 @@ class RegisterQuestionInfo {
       // this.writer,
       this.content,
       this.memberId,
-      this.categoryType
+      this.categoryType,
+      this.privateCheck
       );
 
 }
