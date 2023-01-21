@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ztz_app/controller/order/api/order_service_api.dart';
+import 'package:ztz_app/pages/home_page.dart';
 import 'package:ztz_app/pages/main_page/main_page.dart';
 import 'package:ztz_app/pages/my_page/my_page.dart';
 
@@ -145,7 +146,9 @@ class _OrderPaymentResultState extends State<OrderPaymentResult> {
                           padding: EdgeInsets.all(0)
                       ),
                       onPressed: () {
-                        Get.to(() => MainPage());
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                HomePage()), (route) => false);
                       },
                       child: Text("메인으로", style: TextStyle(fontSize: 12, color: ColorStyle.mainColor),)),
                 ),
