@@ -63,11 +63,16 @@
           {{
             item.orderState == "PAYMENT_COMPLETE" ? "결제완료" :
                 item.orderState == "PAYMENT_REFUND" ? "환불완료" :
-                    item.orderState == "DELIVERY_ONGOING" ? "배송중" :
-                        item.orderState == "DELIVERY_COMPLETE" ? "배송완료" :
-                            item.orderState == "PAYMENT_CONFIRM" ? "구매확정" :
-                                item.orderState == "REFUND_REQUEST" ? "반품신청" :
-                                    "지정된 상태값이 없습니다"
+                    item.orderState == "DELIVERY_START" ? "배송시작" :
+                        item.orderState == "PART_DELIVERY_ONGOING" ? "부분배송중" :
+                            item.orderState == "DELIVERY_ONGOING" ? "배송중" :
+                                item.orderState == "DELIVERY_COMPLETE" ? "배송완료" :
+                                    item.orderState == "PAYMENT_CONFIRM" ? "구매확정" :
+                                        item.orderState == "REFUND_REQUEST" ? "반품신청" :
+                                            item.orderState == "WRITE_REVIEW" ? "리뷰작성 완료" :
+                                                item.orderState == "PART_WRITE_REVIEW" ? "일부리뷰 작성 완료" :
+                                                    item.orderState == "ABLE_WRITE_REVIEW" ? "리뷰작성가능" :
+                                                        "지정된 상태값이 없습니다"
           }}
         </td>
         <td>
