@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ztz_app/controller/account/member_api.dart';
 import 'package:ztz_app/controller/account/member_modify_infos/modify_profile_info.dart';
 import 'package:ztz_app/utility/button_style.dart';
@@ -144,6 +145,15 @@ class _ProfileModifyComponent extends State<ProfileModifyComponent> {
                     });
                   }),
             ),
+            Padding(
+              padding: EdgeInsets.only(left: size.width - 110),
+              child: TextButton(
+                child:Text("회원탈퇴" ,style: TextStyle(color: ColorStyle.mainColor),),
+                onPressed :(){
+                  showCheckWithdrawalMember();
+                }
+              ),
+            ),
             ElevatedButton(
                 style: defaultElevatedButtonStyle(size.width - 10, 20),
                 onPressed: () {
@@ -252,6 +262,52 @@ class _ProfileModifyComponent extends State<ProfileModifyComponent> {
               child: const Text("Close"),
               onPressed: () {
                 Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showCheckWithdrawalMember() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("정말 탈퇴 하실건가요?"),
+          content: Text("탈퇴 하시면 기존 주문 정보는 모두 삭제 됩니다."),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("탈퇴하기"),
+              onPressed: () async {
+                await MemberApi().requestWithdrawalMemberToSpring(AccountState.accountGet.token.string);
+                AccountState().isLogin = false.obs;
+                await AccountState.signInStorage.deleteAll();
+                Navigator.pop(context);
+                showSuccessWithdrawal();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showSuccessWithdrawal() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: const Text("탈퇴가 완료되었습니다"),
+          content: Text("그동안 저희 전통주를 이용해주셔서 감사합니다."),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text("확인"),
+              onPressed: () async {
+                await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
               },
             ),
           ],
