@@ -22,7 +22,7 @@ class PhotoReviewComponent extends StatelessWidget{
       width: size.width,
       child: Column(
         children: [
-          Image.asset("assets/images/item2.jpg"),
+          Image.asset("assets/images/uploadImg/$thumbnailFileName"),
           SizedBox(height: 15,),
           ListTile(
             title: Column(
