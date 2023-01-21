@@ -79,7 +79,11 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
   }
 
   void addRecentKeyword(keyword) async {
-
+    for(int i=0; i < showKeyword.length; i++){
+      if(showKeyword[i] == keyword){
+        showKeyword.removeAt(i);
+      }
+    }
     if(showKeyword.length == 10){
       showKeyword.removeAt(9);
     }
@@ -140,6 +144,7 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
       isFocus = false;
     });
     await SearchService().requestPopularSearchKeyword();
+    searchTextFocus.unfocus();
 
   }
 
