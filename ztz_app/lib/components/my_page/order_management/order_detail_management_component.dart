@@ -226,7 +226,16 @@ class _OrderDetailManagementComponent extends State<OrderDetailManagementCompone
                                                   : orderState ==
                                                           "DELIVERY_START"
                                                       ? "배송시작"
-                                                      : "상태값이 존재하지 않습니다",
+                                                      : orderState ==
+                                                              "WRITE_REVIEW"
+                                                          ? "리뷰작성 완료"
+                                                          : orderState ==
+                                                                  "PART_WRITE_REVIEW"
+                                                              ? "일부 리뷰작성 완료"
+                                                              : orderState ==
+                                                                      "ABLE_WRITE_REVIEW"
+                                                                  ? "리뷰작성 가능"
+                                                                  : "상태값이 존재하지 않습니다.",
                       style: smallBlackTextStyle(),
                     ),
                     orderState == "DELIVERY_COMPLETE"
@@ -439,7 +448,7 @@ class _OrderDetailManagementComponent extends State<OrderDetailManagementCompone
                       SizedBox(
                         height: 8,
                       ),
-                      Text(OrderInfo.orderInfoList[0]['member']['username']),
+                      Text("ZTZ 전통주"),
                       SizedBox(
                         height: 8,
                       ),

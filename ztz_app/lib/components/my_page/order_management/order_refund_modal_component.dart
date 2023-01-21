@@ -106,7 +106,8 @@ class _OrderRefundModalComponent extends State<OrderRefundModalComponent>{
               child: const Text("확인"),
               onPressed: () {
                 OrderInfo.refundResult = false.obs;
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage() ));
+                Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+                // Replacement(context, MaterialPageRoute(builder: (context) => HomePage() ));
               },
             ),
           ],

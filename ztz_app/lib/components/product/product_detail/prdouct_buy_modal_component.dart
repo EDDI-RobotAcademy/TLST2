@@ -239,6 +239,7 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
             new TextButton(
               child: new Text("이동"),
               onPressed: () {
+                Navigator.pop(context);
                 Get.to(() => Cart());
               },
             ),

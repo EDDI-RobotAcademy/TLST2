@@ -50,7 +50,8 @@ class _ProductReviewComponent extends State<ProductReviewComponent>{
                         productName: ReviewInfo.productReviews[index]['product']['name'],
                         regDate: ReviewInfo.productReviews[index]['regDate'],
                         thumbnailFileName: ReviewInfo.productReviews[index]['thumbnailFileName'] ?? "NoImage",
-                        rate: 4.0, isWrittenByBuyer:  ReviewInfo.productReviews[index]['member']['id'] == AccountState.memberInfo['id']  ? true:false,
+                        rate: ReviewInfo.productReviews[index]['rate'],
+                        isWrittenByBuyer:  ReviewInfo.productReviews[index]['member']['id'] == AccountState.memberInfo['id']  ? true:false,
                         deleteReview: () {
                           ReviewController().requestDeleteReview(ReviewInfo.productReviews[index]['reviewNo']);
                         },

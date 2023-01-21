@@ -43,6 +43,7 @@ class _LoginComponent extends State<LoginComponent>{
       showSuccessLogin();
     }else{
       // 로그인 실패 알람
+      showFailLogin();
     }
   }
 
@@ -135,7 +136,7 @@ class _LoginComponent extends State<LoginComponent>{
         // return object of type Dialog
         return AlertDialog(
           title: new Text("로그인 실패"),
-          content: new Text("로그인에 실패 하였습니다."),
+          content: new Text("아이디 또는 비밀번호를 다시 확인해주세요"),
           actions: <Widget>[
             FlatButton(
               child: const Text("Close"),

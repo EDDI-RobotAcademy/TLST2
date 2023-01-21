@@ -6,6 +6,7 @@ import 'package:ztz_app/controller/board/board_infos/board_info.dart';
 import 'package:ztz_app/controller/board/board_infos/register_question_info.dart';
 import 'package:ztz_app/pages/my_page/board/question_board_page.dart';
 import 'package:ztz_app/utility/button_style.dart';
+import 'package:ztz_app/utility/colors.dart';
 import 'package:ztz_app/utility/text_field_decoration.dart';
 import 'package:ztz_app/utility/text_styles.dart';
 
@@ -19,6 +20,9 @@ class ModifyQuestionForm extends StatefulWidget {
 }
 
 class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
+
+  bool isLoading = false;
+
   int memberId = AccountState.memberInfo['id'];
   // String writer = AccountState.memberInfo['username'];
   String selectedCategory = '';
@@ -60,6 +64,7 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
       title = BoardInfo.questionBoard['title'];
       content = BoardInfo.questionBoard['content'];
       privateCheck = BoardInfo.questionBoard['privateCheck'];
+      isLoading = true;
     });
   }
 
@@ -92,77 +97,88 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: WhiteMenuAppBar(title: "1:1문의 수정"),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(child: Text("문의 유형"), height: 28),
-                TextFormField(
-                  readOnly: true,
-                  controller: categoryController..text = selectedCategory,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Colors.black, width: 2.0)),
-                      suffixIcon: Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black,
-                      ),
-                      hintText: "유형을 선택해주세요"),
-                  onTap: () {
-                    showModal(context);
-                  },
-                ),
-                SizedBox(height: 30),
-                SizedBox(child: Text("문의 내용"), height: 28),
-                TextFormField(
-                    controller: titleController..text = title,
-                    decoration: textFieldDecoration("제목을 입력해주세요")),
-                SizedBox(height: 10),
-                TextFormField(
-                    minLines: 6,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    controller: contentController..text = content,
-                    decoration: textFieldDecoration("문의하실 내용을 입력해주세요")),
-                SizedBox(height: 20),
-                SizedBox(
-                  child: Text(
-                    "상품과 무관한 내용이거나 음란 및 불법적인 내용은 통보없이 삭제될 수 있습니다.",
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                ),
-                SizedBox(height: 10),
-                privateCheckBox(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  style: defaultElevatedButtonStyle(380, 55),
-                  child: Text(
-                    "등록하기",
-                    style: whiteTextStyle(16),
-                  ),
-                  onPressed: () {
-                    if (selectedCategory == '') {
-                      showTextDialog("문의 유형을 선택해주세요");
-                    } else if (titleController.text == '') {
-                      showTextDialog("제목을 입력해주세요");
-                    } else if (contentController.text == '') {
-                      showTextDialog("내용을 입력해주세요");
-                    } else {
-                      //문의 수정
-                      modifyQuestionFunction();
-                    }
-                  },
-                ),
-              ],
-            ),
+    if (!isLoading) { // 로딩 판단 유무
+      return const Padding( // 로딩시 나오는 동그라미 동글동글
+        padding: EdgeInsets.all(100),
+        child: Center(
+          child: CircularProgressIndicator(
+            color: ColorStyle.mainColor,
           ),
-        ));
+        ),
+      );
+    } else {
+      return Scaffold(
+          appBar: WhiteMenuAppBar(title: "1:1문의 수정"),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(child: Text("문의 유형"), height: 28),
+                  TextFormField(
+                    readOnly: true,
+                    controller: categoryController..text = selectedCategory,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.black, width: 2.0)),
+                        suffixIcon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black,
+                        ),
+                        hintText: "유형을 선택해주세요"),
+                    onTap: () {
+                      showModal(context);
+                    },
+                  ),
+                  SizedBox(height: 30),
+                  SizedBox(child: Text("문의 내용"), height: 28),
+                  TextFormField(
+                      controller: titleController..text = title,
+                      decoration: textFieldDecoration("제목을 입력해주세요")),
+                  SizedBox(height: 10),
+                  TextFormField(
+                      minLines: 6,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      controller: contentController..text = content,
+                      decoration: textFieldDecoration("문의하실 내용을 입력해주세요")),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    child: Text(
+                      "상품과 무관한 내용이거나 음란 및 불법적인 내용은 통보없이 삭제될 수 있습니다.",
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  privateCheckBox(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    style: defaultElevatedButtonStyle(380, 55),
+                    child: Text(
+                      "등록하기",
+                      style: whiteTextStyle(16),
+                    ),
+                    onPressed: () {
+                      if (selectedCategory == '') {
+                        showTextDialog("문의 유형을 선택해주세요");
+                      } else if (titleController.text == '') {
+                        showTextDialog("제목을 입력해주세요");
+                      } else if (contentController.text == '') {
+                        showTextDialog("내용을 입력해주세요");
+                      } else {
+                        //문의 수정
+                        modifyQuestionFunction();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ));
+    }
   }
 
   Widget privateCheckBox() {

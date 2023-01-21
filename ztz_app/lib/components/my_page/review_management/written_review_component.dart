@@ -72,7 +72,7 @@ class _WrittenReviewComponent extends State<WrittenReviewComponent> {
                                 regDate: ReviewInfo.memberReviews[index]['regDate'],
                                 thumbnailFileName: ReviewInfo.memberReviews[index]['thumbnailFileName'] ??
                                     "NoImage",
-                                rate: 4.0,
+                                rate: ReviewInfo.memberReviews[index]['rate'],
                                 isWrittenByBuyer: true,
                                 deleteReview: () {
                                   ReviewController().requestDeleteReview(
