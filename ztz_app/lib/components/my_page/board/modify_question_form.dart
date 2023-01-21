@@ -20,10 +20,11 @@ class ModifyQuestionForm extends StatefulWidget {
 
 class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
   int memberId = AccountState.memberInfo['id'];
-  String writer = AccountState.memberInfo['username'];
+  // String writer = AccountState.memberInfo['username'];
   String selectedCategory = '';
   String title = '';
   String content = '';
+  late bool privateCheck;
 
   List<String> categoryList = [
     '주문/결제문의',
@@ -58,6 +59,7 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
       selectedCategory = findSelectedCategory();
       title = BoardInfo.questionBoard['title'];
       content = BoardInfo.questionBoard['content'];
+      privateCheck = BoardInfo.questionBoard['privateCheck'];
     });
   }
 
@@ -135,7 +137,9 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
+                privateCheckBox(),
+                SizedBox(height: 10),
                 ElevatedButton(
                   style: defaultElevatedButtonStyle(380, 55),
                   child: Text(
@@ -161,13 +165,31 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
         ));
   }
 
+  Widget privateCheckBox() {
+    return Row(
+      children: [
+        Checkbox(
+            value: privateCheck,
+            onChanged: (bool? value) {
+              setState(() {
+                privateCheck = value!;
+                print(value);
+                print(privateCheck);
+              });
+            }),
+        Text("비밀글로 문의하기")
+      ],
+    );
+  }
+
   void modifyQuestionFunction() async {
     RegisterQuestionInfo registerQuestionInfo = RegisterQuestionInfo(
         titleController.text,
-        writer,
+        // writer,
         contentController.text,
         memberId,
-        selectedCategory);
+        selectedCategory,
+        privateCheck);
     await BoardController()
         .requestModifyQuestionToSpring(widget.questionNo, registerQuestionInfo);
     if (BoardInfo.modifyQuestionResult) {
@@ -180,7 +202,6 @@ class _ModifyQuestionFormState extends State<ModifyQuestionForm> {
       showTextDialog("수정을 실패했습니다.");
     }
   }
-
 
   void showModal(context) {
     showModalBottomSheet(

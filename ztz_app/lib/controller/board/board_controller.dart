@@ -6,8 +6,8 @@ import 'package:ztz_app/controller/board/board_infos/board_info.dart';
 import 'package:ztz_app/controller/board/board_infos/register_question_info.dart';
 
 class BoardController {
-  static const httpUri = '172.30.1.54:7777';
-
+  // static const httpUri = '172.30.1.54:7777';
+  static const httpUri = '172.30.1.65:7777';
   requestRegisterQuestionToSpring(
       RegisterQuestionInfo registerQuestionInfo) async {
     var data = {
@@ -15,7 +15,8 @@ class BoardController {
       // 'writer': registerQuestionInfo.writer,
       'content': registerQuestionInfo.content,
       'memberId': registerQuestionInfo.memberId,
-      'categoryType': registerQuestionInfo.categoryType
+      'categoryType': registerQuestionInfo.categoryType,
+      'privateCheck' : registerQuestionInfo.privateCheck
     };
     var body = json.encode(data);
     debugPrint(body);
@@ -105,7 +106,8 @@ class BoardController {
         // 'writer': registerQuestionInfo.writer,
         'content': registerQuestionInfo.content,
         'memberId': registerQuestionInfo.memberId,
-        'categoryType': registerQuestionInfo.categoryType
+        'categoryType': registerQuestionInfo.categoryType,
+        'privateCheck': registerQuestionInfo.privateCheck
       };
       var body = json.encode(data);
       debugPrint(body);

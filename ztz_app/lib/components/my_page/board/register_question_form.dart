@@ -20,6 +20,7 @@ class RegisterQuestionForm extends StatefulWidget {
 class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
   int memberId = AccountState.memberInfo['id'];
   // String writer = AccountState.memberInfo['username'];
+  bool privateCheck = false;
 
   List<String> categoryList = [
     '주문/결제문의',
@@ -89,7 +90,9 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
+              privateCheckBox(),
+              SizedBox(height: 10),
               ElevatedButton(
                 style: defaultElevatedButtonStyle(380, 55),
                 child: Text(
@@ -116,13 +119,31 @@ class _RegisterQuestionFormState extends State<RegisterQuestionForm> {
     );
   }
 
+  Widget privateCheckBox() {
+    return Row(
+      children: [
+        Checkbox(
+            value: privateCheck,
+            onChanged: (bool? value) {
+              setState(() {
+                privateCheck = value!;
+                print(value);
+                print(privateCheck);
+              });
+            }),
+        Text("비밀글로 문의하기")
+      ],
+    );
+  }
+
   registerQuestionFunction() async {
     RegisterQuestionInfo registerQuestionInfo = RegisterQuestionInfo(
         titleController.text,
         // writer,
         contentController.text,
         memberId,
-        selectedCategory);
+        selectedCategory,
+        privateCheck);
     await BoardController()
         .requestRegisterQuestionToSpring(registerQuestionInfo);
     if(RegisterQuestionInfo.registerQuestionResult) {
