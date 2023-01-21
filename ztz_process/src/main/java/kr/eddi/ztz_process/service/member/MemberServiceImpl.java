@@ -185,8 +185,10 @@ public class MemberServiceImpl implements MemberService {
         //문의 삭제
         List<QuestionBoard> questionBoardList = questionRepository.findByMemberId(member.getId());
         for (int i = 0; i <questionBoardList.size(); i++) {
-            QuestionComment questionComment = questionCommentRepository.findByQuestionNo(questionBoardList.get(i).getQuestionNo());
-            questionCommentRepository.delete(questionComment);
+            Optional<QuestionComment> maybeQuestionComment = questionCommentRepository.findOptionalByQuestionNo(questionBoardList.get(i).getQuestionNo());
+            if(maybeQuestionComment.isPresent()){
+                questionCommentRepository.delete(maybeQuestionComment.get());
+            }
             questionRepository.delete(questionBoardList.get(i));
         }
         //장바구니 삭제
