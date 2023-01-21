@@ -91,6 +91,7 @@ public class ProductsServiceImpl implements ProductsService{
         return repository.filterType(filterAlcohol);
     }
 
+
     @Override
     public List<Product> listByView() {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
@@ -100,6 +101,9 @@ public class ProductsServiceImpl implements ProductsService{
     public List<Product> recommendListByView() {
         int limit = 5;
         List<Product> tmpList =  repository.findAll(Sort.by(Sort.Direction.DESC, "view"));
+        if (tmpList.size() < 5) {
+            limit = tmpList.size();
+        }
         List<Product> productList = new ArrayList<>();
         for (int i = 0; i < limit; i++) {
             productList.add(tmpList.get(i));
