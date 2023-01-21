@@ -54,7 +54,7 @@ class ProductController{
   requestProductByAlcoholType(alcoholType) async {
     try{
       var requestProductResponse = await http.post(
-        Uri.http(httpUri, 'ztz/products/alcoholList/$alcoholType'),
+        Uri.http(httpUri, 'ztz/products/alcoholList/flutter/$alcoholType'),
         headers: {"Content-Type": "application/json"},
       );
       if(requestProductResponse.statusCode == 200){

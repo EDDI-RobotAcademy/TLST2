@@ -31,7 +31,7 @@ class MainFoundryListCard extends StatelessWidget{
               child: Image(image: AssetImage("assets/images/foundryImg/${image}"), width: 150, height: 150,),
             ),
             SizedBox(height: 8,),
-            Text("$name", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700) ),
+            Text("$name",overflow: TextOverflow.ellipsis, maxLines: 1, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700) ),
             SizedBox(height: 5,),
             Container(
               height: 20,

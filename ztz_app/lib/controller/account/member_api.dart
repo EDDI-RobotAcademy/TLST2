@@ -114,4 +114,23 @@ class MemberApi{
       debugPrint("오류 발생: " + e.toString());
     }
   }
+
+  requestWithdrawalMemberToSpring(token) async {
+    try{
+      var withdrawalResponse = await http.delete(
+        Uri.http(httpUri, 'ztz/member/withdrawal'),
+        headers: {"Content-Type": "application/json" , 'Token' : token},
+      );
+
+      if(withdrawalResponse.statusCode == 200){
+        debugPrint("회원 탈퇴 결과: " + utf8.decode(withdrawalResponse.bodyBytes).toString());
+        return true;
+      }else{
+        debugPrint("통신 오류: " + withdrawalResponse.statusCode.toString());
+        return false;
+      }
+    }catch(e){
+    debugPrint("오류 발생: " + e.toString());
+    }
+  }
 }
