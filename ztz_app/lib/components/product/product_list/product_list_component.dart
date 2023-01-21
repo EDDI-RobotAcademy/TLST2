@@ -96,6 +96,7 @@ class _ProductListComponent extends State<ProductListComponent> {
     }
   }
 
+
   Widget gridList() {
     return Column(
       children: [
@@ -152,45 +153,49 @@ class _ProductListComponent extends State<ProductListComponent> {
   }
 
   _scrollListener() async {
-    if (_mainScrollController.offset >=
-        _mainScrollController.position.maxScrollExtent &&
-        !_mainScrollController.position.outOfRange) {
 
-      setState(() {
-        isSubLoading = false;
-      });
-      var productLen = ProductInfo.productList.length;
-      var lastProductNo = ProductInfo.productList[productLen - 1]['productNo'];
+    if( ProductInfo.productList.length >= 8){
+      if (_mainScrollController.offset >=
+          _mainScrollController.position.maxScrollExtent &&
+          !_mainScrollController.position.outOfRange) {
 
-      debugPrint("lastProductNo" + lastProductNo.toString());
+        setState(() {
+          isSubLoading = false;
+        });
+        var productLen = ProductInfo.productList.length;
+        var lastProductNo = ProductInfo.productList[productLen - 1]['productNo'];
 
-      if(widget.drinkItem == "전체보기"){
-        if(_selectedLocal == "전체지역"){
-          // 전체 타입에 전체 지역 - 전체 추가
-          debugPrint("전체 타입에 전체 지역 - 전체 추가");
-          await ProductController().requestNextPageProduct("",lastProductNo);
+        debugPrint("lastProductNo" + lastProductNo.toString());
+
+        if(widget.drinkItem == "전체보기"){
+          if(_selectedLocal == "전체지역"){
+            // 전체 타입에 전체 지역 - 전체 추가
+            debugPrint("전체 타입에 전체 지역 - 전체 추가");
+            await ProductController().requestNextPageProduct("",lastProductNo);
+          }else{
+            // 전체 타입에 특정 지역 - 지역 필터
+            debugPrint("전체 타입에 특정 지역 - 지역 필터");
+            await ProductController().requestNextPageLocalProduct(_selectedLocal,lastProductNo);
+          }
         }else{
-          // 전체 타입에 특정 지역 - 지역 필터
-          debugPrint("전체 타입에 특정 지역 - 지역 필터");
-          await ProductController().requestNextPageLocalProduct(_selectedLocal,lastProductNo);
+          if(_selectedLocal == "전체지역"){
+            // 특정 타입에 전체 지역 - 타입 필터
+            debugPrint("특정 타입에 전체 지역 - 타입 필터");
+            await ProductController().requestNextPageAlcoholTypeProduct(widget.drinkItem,lastProductNo);
+          }else{
+            // 특정 타입에 특정 지역 - 타입 지역 필터
+            debugPrint("특정 타입에 특정 지역 - 타입 지역 필터");
+            await ProductController().requestNextPageAlcoholTypeAndLocalProduct(widget.drinkItem,_selectedLocal,lastProductNo);
+          }
         }
-      }else{
-        if(_selectedLocal == "전체지역"){
-          // 특정 타입에 전체 지역 - 타입 필터
-          debugPrint("특정 타입에 전체 지역 - 타입 필터");
-          await ProductController().requestNextPageAlcoholTypeProduct(widget.drinkItem,lastProductNo);
-        }else{
-          // 특정 타입에 특정 지역 - 타입 지역 필터
-          debugPrint("특정 타입에 특정 지역 - 타입 지역 필터");
-          await ProductController().requestNextPageAlcoholTypeAndLocalProduct(widget.drinkItem,_selectedLocal,lastProductNo);
-        }
+
+        debugPrint("스크롤 테스트");
+        setState(() {
+          isSubLoading = true;
+        });
       }
-
-      debugPrint("스크롤 테스트");
-      setState(() {
-        isSubLoading = true;
-      });
     }
+
   }
 
   Container _getStickyWidget() {
