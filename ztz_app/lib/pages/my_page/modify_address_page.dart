@@ -220,6 +220,10 @@ class _ModifyAddressPageState extends State<ModifyAddressPage> {
               child: Text("확인"),
               onPressed: () {
                 Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => ModifyAddressPage()),
+                ).then((value) => setState(() {}));
               },
             ),
           ],
