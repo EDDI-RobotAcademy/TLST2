@@ -251,9 +251,10 @@ public class ReviewServiceImpl implements ReviewService{
             if (average.isNaN()) {
                 average = 0.0;
             }
+            average = Double.parseDouble(String.format(Locale.KOREAN, "%.1f", average));
             List<Map<String , Object>> productReview = new ArrayList<>();
             Map<String , Object> reviewAverage = new HashMap<>();
-            reviewAverage.put("average",average);
+            reviewAverage.put("average", average);
             reviewAverage.put("reviewCnt", reviewCnt);
             productReview.add(reviewAverage);
 
