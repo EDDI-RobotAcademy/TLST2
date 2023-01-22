@@ -158,10 +158,10 @@ export default {
     },
 
     async qtyDecrease(item) {
-      if (item.count> 0) {
+      if (item.count> 1) {
         item.count--
       } else {
-        item.count = 0
+        item.count = 1
       }
       var payload =  {
         'itemNo':item.itemNo, 
