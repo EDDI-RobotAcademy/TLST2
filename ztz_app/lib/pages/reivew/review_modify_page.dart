@@ -11,10 +11,14 @@ class ReviewModifyPage extends StatefulWidget{
     required this.productId ,
     required this.reviewNo,
     required this.orderId,
+    required this.content,
+    required this.rate,
+    required this.thumbnailFileName
   }) : super (key: key);
 
-  final String productName;
+  final String productName, content, thumbnailFileName;
   final int productId , reviewNo , orderId;
+  final double rate;
   @override
   State<ReviewModifyPage> createState() => _ReviewModifyPage();
 }
@@ -39,7 +43,16 @@ class _ReviewModifyPage extends State<ReviewModifyPage>{
         elevation: 0,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(child: ReviewModifyComponent(productId: widget.productId, productName: widget.productName, reviewNo: widget.reviewNo, orderId: widget.orderId,)),
+        child: SingleChildScrollView(
+            child: ReviewModifyComponent(
+          productId: widget.productId,
+          productName: widget.productName,
+          reviewNo: widget.reviewNo,
+          orderId: widget.orderId,
+          rate: widget.rate,
+          content: widget.content,
+          thumbnailFileName: widget.thumbnailFileName,
+        )),
       ),
     );
   }
