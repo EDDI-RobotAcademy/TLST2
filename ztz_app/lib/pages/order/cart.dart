@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/pages/account/login_page.dart';
 
 import '../../components/order/cart_list_builder.dart';
 import '../../controller/order/cart_controller.dart';
@@ -130,7 +132,8 @@ class Cart extends StatelessWidget {
                         ),
                     ),
                     onPressed: () {
-                      CartController().order();
+                      AccountState.accountGet.isLogin.value?
+                      CartController().order() : showLoginCheck(context);
                       //Get.to(() => OrderPage());
                     },
                     style: ButtonStyle(
@@ -147,6 +150,27 @@ class Cart extends StatelessWidget {
             ),
           )
       )
+    );
+  }
+
+
+  void showLoginCheck(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("로그인이 필요합니다."),
+          actions: [
+            FlatButton(
+              child: Text("확인"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
