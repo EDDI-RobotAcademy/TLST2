@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/tour/foundry_infos/foundry_info.dart';
 
 class ReservationController extends GetxController{
-  static const httpUri = '192.168.200.197:7777';
+  static const httpUri = '192.168.200.168:7777';
 
   requestAllFoundryToSpring() async{
     try{
@@ -138,6 +138,22 @@ class ReservationController extends GetxController{
       if(requestReserveaionPaymentResponse.statusCode == 200){
         debugPrint("양조장 리스트 결과 : " + utf8.decode(requestReserveaionPaymentResponse.bodyBytes).toString());
         FoundryInfo.reservationPaymentResult = jsonDecode(utf8.decode(requestReserveaionPaymentResponse.bodyBytes));
+      }
+    }catch(e){
+      debugPrint("오류 발생 " + e.toString());
+    }
+  }
+  requestAllReservationToSpring() async{
+    try{
+      var requestFoundryListResponse = await http.get(
+        Uri.http(httpUri,'ztz/tour/allReservationList'),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      debugPrint(requestFoundryListResponse.statusCode.toString());
+      if(requestFoundryListResponse.statusCode == 200){
+        debugPrint("양조장 리스트 결과 : " + utf8.decode(requestFoundryListResponse.bodyBytes).toString());
+        FoundryInfo.reservationList = jsonDecode(utf8.decode(requestFoundryListResponse.bodyBytes));
       }
     }catch(e){
       debugPrint("오류 발생 " + e.toString());
