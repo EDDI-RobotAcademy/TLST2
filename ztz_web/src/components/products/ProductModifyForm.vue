@@ -201,6 +201,7 @@
 
 <script>
 import axios from "axios";
+import {mapActions} from "vuex";
 
 export default {
   name: "ProductModifyForm",
@@ -315,6 +316,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'reqProductsFromSpring',
+    ]),
     handleFileUpload(){
       this.thumbnailFile = this.$refs.thumbnailFile.files
       this.thumbnailPreview =URL.createObjectURL(this.thumbnailFile[0])
@@ -360,6 +364,7 @@ export default {
         await axios.post('http://localhost:7777/ztz/products/modify', formData)
             .then (res => {
               alert(res.data)
+              this.reqProductsFromSpring()
             })
             .catch(res => {
               alert(res.message)
