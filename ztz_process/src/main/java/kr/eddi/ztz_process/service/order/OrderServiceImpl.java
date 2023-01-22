@@ -185,32 +185,59 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Payment> readRangePaymentList(String token , String readData){
-        Long id = redisService.getValueByKey(token);
-        Member member = memberRepository.findByMemberId(id);
-        System.out.println("맴버 번호" + member.getId());
+        if(token != null && token.length() > 0){
+            log.info("일반회원 주문리스트 조회");
+            Long id = redisService.getValueByKey(token);
+            Member member = memberRepository.findByMemberId(id);
+            System.out.println("맴버 번호" + member.getId());
 
-        LocalDateTime nowData = LocalDateTime.now();
-        LocalDateTime endData;
+            LocalDateTime nowData = LocalDateTime.now();
+            LocalDateTime endData;
 
-        switch (readData){
-            case "3개월":
-                endData = LocalDateTime.now().minusDays(1L);
-                break;
-            case "6개월":
-                endData = LocalDateTime.now().minusMonths(6L);
-                break;
-            case "1년":
-                endData = LocalDateTime.now().minusYears(1L);
-                break;
-            default:
-                System.out.println("해당하는 개월수가 없습니다");
-                return null;
+            switch (readData){
+                case "3개월":
+                    endData = LocalDateTime.now().minusDays(1L);
+                    break;
+                case "6개월":
+                    endData = LocalDateTime.now().minusMonths(6L);
+                    break;
+                case "1년":
+                    endData = LocalDateTime.now().minusYears(1L);
+                    break;
+                default:
+                    System.out.println("해당하는 개월수가 없습니다");
+                    return null;
+            }
+            System.out.println("startDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+            System.out.println("endDate : " + endData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+
+            List<Payment> payments = paymentRepository.findByEndData(endData ,member.getId());
+            return payments;
+        } else{
+            log.info("관리자회원 주문리스트 조회");
+            LocalDateTime nowData = LocalDateTime.now();
+            LocalDateTime endData;
+
+            switch (readData){
+                case "3개월":
+                    endData = LocalDateTime.now().minusDays(1L);
+                    break;
+                case "6개월":
+                    endData = LocalDateTime.now().minusMonths(6L);
+                    break;
+                case "1년":
+                    endData = LocalDateTime.now().minusYears(1L);
+                    break;
+                default:
+                    System.out.println("해당하는 개월수가 없습니다");
+                    return null;
+            }
+            System.out.println("startDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+            System.out.println("endDate : " + endData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
+
+            List<Payment> payments = paymentRepository.findAllByEndData(endData);
+            return payments;
         }
-        System.out.println("startDate : " + nowData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
-        System.out.println("endDate : " + endData.format(DateTimeFormatter.ofPattern("yyyy.MM.dd (HH시 mm분)")));
-
-        List<Payment> payments = paymentRepository.findByEndData(endData ,member.getId());
-        return payments;
     }
 
     @Override
@@ -387,7 +414,7 @@ public class OrderServiceImpl implements OrderService {
     }
     public Integer salesAmount() {
         List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
-        log.info("구매완료된 리스트: ");
+        log.info("구매확정 완료된 리스트 매출");
         Integer totalSalesAmount = 0;
 
         for (int i = 0; i < salesOrderInfo.size(); i++) {
