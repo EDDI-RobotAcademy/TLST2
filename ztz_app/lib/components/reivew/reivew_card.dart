@@ -43,8 +43,12 @@ class ReviewCard extends StatelessWidget {
             SizedBox(
               width: 10,
             ),
-            Text(
+            isWrittenByBuyer? Text(
               "작성자 : " + username,
+              textAlign: TextAlign.left,
+              style: MediumBlackTextStyle(),
+            ) : Text(
+              "작성자 : " + username.substring(0) + "**",
               textAlign: TextAlign.left,
               style: MediumBlackTextStyle(),
             ),
