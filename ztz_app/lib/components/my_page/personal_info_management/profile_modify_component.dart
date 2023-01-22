@@ -202,6 +202,7 @@ class _ProfileModifyComponent extends State<ProfileModifyComponent> {
 
   void modifyMemberProfile() async {
     ModifyProfileInfo modifyProfileInfo = ModifyProfileInfo(
+        AccountState.memberInfo['managerCheck'],
         passwordController.text,
         newPasswordController.text,
         phoneNumberController.text,
@@ -215,6 +216,7 @@ class _ProfileModifyComponent extends State<ProfileModifyComponent> {
 
   void modifyManagerProfile() async {
     ModifyProfileInfo modifyProfileInfo = ModifyProfileInfo(
+        AccountState.memberInfo['managerCheck'],
         passwordController.text,
         newPasswordController.text,
         phoneNumberController.text,

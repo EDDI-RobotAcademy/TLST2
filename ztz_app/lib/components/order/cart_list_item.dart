@@ -133,8 +133,12 @@ class _CartListItemState extends State<CartListItem> {
             Icon(Icons.remove,color: ColorStyle.textGray,):Icon(Icons.remove),
             onTap: (){
               setState((){
-                cancelCheckBox();
-                CartController().decrement(index);
+                if(CartController.reactiveCartList[index]['count']!=1){
+                  setState((){
+                    cancelCheckBox();
+                    CartController().decrement(index);
+                  });
+                }
               });
             },
           ),

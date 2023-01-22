@@ -102,7 +102,6 @@ public class MemberController {
         log.info(memberProfile.getId().toString());
         log.info(memberProfile.getMember().toString());
         log.info(memberProfile.getPhoneNumber().toString());
-        log.info(memberProfile.getAddress().toString());
         return memberProfile;
     }
 
@@ -123,8 +122,11 @@ public class MemberController {
         log.info("멤버 ID 확인" + memberModifyRequest.getId());
         log.info("비밀번호 확인" + memberModifyRequest.getPassword());
         log.info("새 비밀번호 확인" + memberModifyRequest.getNew_password());
+        log.info("매니저 체크" + memberModifyRequest.isManagerCheck());
+
         Optional<ManagerCode> maybeManagerCode = managerCodeRepository.findByCode(memberModifyRequest.getManager_code());
-        if (memberModifyRequest.getManager_code() == null || memberModifyRequest.getManager_code().isEmpty()) {
+
+        if(!memberModifyRequest.isManagerCheck()){
             if (!member.isRightPassword(memberModifyRequest.getPassword())) { // password가 아니면
                 return msg = "기존 비밀번호가 맞지 않아 회원정보 변경이 실패하였습니다.";
             } else {
@@ -132,13 +134,20 @@ public class MemberController {
             }
         }
         else {
-            if (!member.isRightPassword(memberModifyRequest.getPassword())) { // password가 아니면
+            if(memberModifyRequest.getManager_code() == null || memberModifyRequest.getManager_code().isEmpty() || memberModifyRequest.getManager_code()== "undefined") {
+                log.info("여기여ㅑ!");
+                return msg = "관리자코드를 입력해주세요";
+            }  else if (!member.isRightPassword(memberModifyRequest.getPassword())) { // password가 아니면
+                log.info("여기도 가나?!");
                 return msg = "기존 비밀번호가 맞지 않아 회원정보 변경이 실패하였습니다.";
             } else if (!maybeManagerCode.isPresent()) {
+                log.info("여기도 가나?2222!");
                 return msg = "관리자 코드가 맞지 않아 회원정보 변경이 실패하였습니다.";
             } else if (!maybeManagerCode.isPresent() && !member.isRightPassword(memberModifyRequest.getPassword())) {
+                log.info("여기도 가나?!3333");
                 return msg = "기존 비밀번호와 관리자 코드가 맞지 않아 회원정보 변경이 실패하였습니다."; // vue쪽에서 받은 ModifyRequest 정보를 받아옴
             } else {
+                log.info("여기도 가나?!444");
                 return service.ModifyMemberProfile(memberModifyRequest); // vue쪽에서 받은 ModifyRequest 정보를 받아
             }
         }

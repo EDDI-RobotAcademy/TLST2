@@ -7,7 +7,7 @@
         </div>
         <question-list-form :questionBoards="questionBoards"/> <!-- 중요 : 앞하고 뒤 무조건 소문자로 시작 -->
       </div>
-      <div style="float: right" class="mr-5 mb-15">
+      <div style="float: right" class="mr-5 mb-15" v-if="!this.$store.state.resMember.managerCheck">
         <button-white
             depressed
             btn-name="문의하기"

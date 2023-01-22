@@ -1,4 +1,5 @@
 class ModifyProfileInfo{
+  final bool managerCheck;
   final String password;
   final String manager_code;
   final String new_password;
@@ -7,6 +8,6 @@ class ModifyProfileInfo{
 
   static String resultMsg = "";
   ModifyProfileInfo(
-       this.password , this.new_password , this.phoneNumber  , this.id , this.manager_code,
+       this.managerCheck, this.password , this.new_password , this.phoneNumber  , this.id , this.manager_code,
       );
 }

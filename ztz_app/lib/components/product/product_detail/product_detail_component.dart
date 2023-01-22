@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:ztz_app/components/product/product_detail/product_recommend_component.dart';
 import 'package:ztz_app/components/product/product_detail/product_info_component.dart';
+import 'package:ztz_app/controller/favorite/favorite_infos/favorite_info.dart';
 import 'package:ztz_app/controller/reivew/review_infos/review_info.dart';
 import 'package:ztz_app/utility/colors.dart';
 
@@ -40,6 +43,7 @@ class _ProductDetailComponent extends State<ProductDetailComponent>{
 
   @override
   Widget build(BuildContext context) {
+    final favoriteInfoController = Get.put(FavoriteInfo());
     Size size = MediaQuery.of(context).size;
     return Form(
       child: Column(

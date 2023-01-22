@@ -73,7 +73,23 @@
             <p>{{ totalPrice | numberFormat }} 원</p>
           </div>
         </div>
-        <div v-if="!this.$store.state.resMember.managerCheck">
+        <div v-if="this.$store.state.isAuthenticated && this.$store.state.resMember.managerCheck">
+          <div align="right" style="margin-top: 20px">
+            <ButtonWhite
+                @click="btnModifyProduct"
+                btn-name="상품정보 수정"
+                width="150px"
+                x-large
+            />
+            <ButtonGreen
+                @click="btnDeleteProduct"
+                btn-name="상품정보 삭제"
+                width="150px"
+                x-large
+            />
+          </div>
+        </div>
+        <div v-else>
           <div align="center" style="margin-top: 20px" >
             <v-btn v-if="!this.productFavoriteInfo.productFavoriteFlag" icon color="#568869" @click="btnFavorite" x-large><v-icon>mdi-heart-outline</v-icon></v-btn>
             <v-btn v-else icon color="red" @click="btnFavorite" x-large><v-icon>mdi-heart</v-icon></v-btn>
@@ -90,22 +106,7 @@
                 x-large
             />
           </div>
-        </div>
-        <div v-else>
-          <div align="right" style="margin-top: 20px">
-            <ButtonWhite
-                @click="btnModifyProduct"
-                btn-name="상품정보 수정"
-                width="150px"
-                x-large
-            />
-            <ButtonGreen
-                @click="btnDeleteProduct"
-                btn-name="상품정보 삭제"
-                width="150px"
-                x-large
-            />
-          </div>
+
         </div>
 
       </div>
@@ -184,10 +185,10 @@ export default {
   },
   methods: {
     qtyDecrease() {
-      if (this.quantity > 0) {
+      if (this.quantity > 1) {
         this.quantity--
       } else {
-        this.quantity = 0
+        this.quantity = 1
       }
     },
     qtyIncrease() {

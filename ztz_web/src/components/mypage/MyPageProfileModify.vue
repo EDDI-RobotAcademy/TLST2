@@ -117,16 +117,18 @@ export default {
     ...mapActions([
       'reqMyPageProfileModifyFromSpring', 'reqMemberInfoToSpring', 'reqMemberProfileInfoToSpring', 'reqManagerProfileInfoToSpring',
     ]),
-    modifyMemberProfile() {
-
+    async modifyMemberProfile() {
+    const managerCheck = this.$store.state.resMember.managerCheck
     const memberId = this.$store.state.resMember.id;
     const phoneNumber = this.phoneNumber;
     const manager_code = this.manager_code;
     const present_password = this.present_password;
     const new_password = this.new_password;
     console.log("멤버 id 확인" + memberId);
-    this.reqMyPageProfileModifyFromSpring({ phoneNumber, manager_code, present_password, new_password, memberId })
-    this.$router.go(0);
+    await this.reqMyPageProfileModifyFromSpring({ managerCheck, phoneNumber, manager_code, present_password, new_password, memberId })
+    await this.$router.go(0)
+    await this.$router.push("/my-page") // 변경 완료하고 바로 마이페이지로 이동!
+
     }
   }
 }

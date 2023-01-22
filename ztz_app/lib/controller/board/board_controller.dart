@@ -6,13 +6,12 @@ import 'package:ztz_app/controller/board/board_infos/board_info.dart';
 import 'package:ztz_app/controller/board/board_infos/register_question_info.dart';
 
 class BoardController {
-  // static const httpUri = '172.30.1.54:7777';
-  static const httpUri = '172.30.1.65:7777';
+  static const httpUri = '192.168.200.168:7777';
+
   requestRegisterQuestionToSpring(
       RegisterQuestionInfo registerQuestionInfo) async {
     var data = {
       'title': registerQuestionInfo.title,
-      // 'writer': registerQuestionInfo.writer,
       'content': registerQuestionInfo.content,
       'memberId': registerQuestionInfo.memberId,
       'categoryType': registerQuestionInfo.categoryType,
@@ -126,6 +125,25 @@ class BoardController {
       }
     } catch (e) {
       debugPrint("question 수정 오류 발생" + e.toString());
+    }
+  }
+  requestAllQuestionBoardListFromSpring() async {
+    try {
+      var questionBoardListResponse = await http.get(
+        Uri.http(httpUri, 'ztz/boards/question/list'),
+        headers: {"Content-Type": "application/json"},
+      );
+      if (questionBoardListResponse.statusCode == 200) {
+        debugPrint("memberQuestionBoard 결과: " +
+            utf8.decode(questionBoardListResponse.bodyBytes).toString());
+        BoardInfo.memberQuestionList =
+            jsonDecode(utf8.decode(questionBoardListResponse.bodyBytes));
+      } else {
+        debugPrint("memberQuestionBoard 통신 오류" +
+            questionBoardListResponse.statusCode.toString());
+      }
+    } catch (e) {
+      debugPrint("questionBoard 오류 발생 " + e.toString());
     }
   }
 }

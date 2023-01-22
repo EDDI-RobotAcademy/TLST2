@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:ztz_app/controller/order/order_infos/order_info.dart';
 
 class OrderController{
-  static const httpUri = '192.168.200.175:7777';
+  static const httpUri = '192.168.200.168:7777';
   static var deliveryMessageList = [
     "문 앞에 두고 가주세요",
     "조심히 안전하게 와주세요",
@@ -42,6 +42,7 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
+
   requestPaymentListByDataFromSpring(token , readData) async {
     var data = {'token' : token , 'readData' : readData};
     var body = json.encode(data);
@@ -64,6 +65,7 @@ class OrderController{
       debugPrint("오류 발생" + e.toString());
     }
   }
+
   requestOrderInfoByPaymentId(paymentId) async {
     try{
       var orderInfoResponse = await http.post(
@@ -166,6 +168,25 @@ class OrderController{
     }
   }
 
+  requestSalesAmount() async {
+    try{
+      var orderInfoResponse = await http.get(
+        Uri.http(httpUri, 'ztz/order/salesAmount'),
+        headers: {"Content-Type": "application/json"},
+      );
 
+      if(orderInfoResponse.statusCode == 200){
+
+        debugPrint("orderInfoResponse 결과: " + utf8.decode(orderInfoResponse.bodyBytes).toString());
+        OrderInfo.salesAmount = jsonDecode(utf8.decode(orderInfoResponse.bodyBytes));
+        // OrderInfo.salesAmount.clear();
+        // OrderInfo.salesAmount = tmpOrderList.obs;
+      }else {
+        debugPrint("orderInfo 통신 오류" + orderInfoResponse.statusCode.toString());
+      }
+    }catch(e){
+      debugPrint("오류 발생" + e.toString());
+    }
+  }
 
 }
