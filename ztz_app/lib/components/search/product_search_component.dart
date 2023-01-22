@@ -42,6 +42,7 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
   void initState() {
     super.initState();
     setInitKeyword();
+    SearchController().fetchData();
     searchTextController = TextEditingController(text: !isSearch? null:searchTextController.text);
     searchTextFocus.addListener(() {
       setState(() {

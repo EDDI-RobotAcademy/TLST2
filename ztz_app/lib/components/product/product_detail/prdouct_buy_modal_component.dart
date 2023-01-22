@@ -183,9 +183,9 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
       child: Row(
         children: [
           InkWell(
-            child: selectedAmount==0 ? Icon(Icons.remove,color: ColorStyle.textGray,):Icon(Icons.remove),
+            child: selectedAmount==1 ? Icon(Icons.remove,color: ColorStyle.textGray,):Icon(Icons.remove),
             onTap: (){
-              if(selectedAmount!=0){
+              if(selectedAmount!=1){
                 setState((){
                   selectedAmount--;
                 });
