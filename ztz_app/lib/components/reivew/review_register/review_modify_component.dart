@@ -19,12 +19,16 @@ class ReviewModifyComponent extends StatefulWidget{
     required this.productName ,
     required this.productId ,
     required this.reviewNo,
-    required this.orderId
+    required this.orderId,
+    required this.rate,
+    required this.content,
+    required this.thumbnailFileName
   }): super(key: key );
 
 
-  final String productName;
+  final String productName, content, thumbnailFileName;
   final int productId, reviewNo , orderId;
+  final double rate;
   @override
   State<ReviewModifyComponent> createState() => _ReviewModifyComponent();
 }
@@ -32,6 +36,7 @@ class ReviewModifyComponent extends StatefulWidget{
 class _ReviewModifyComponent extends State<ReviewModifyComponent>{
   IconData? _selectedIcon;
   double _selectedRating = 0.0;
+  String thumbnailFileName = '';
 
   final _picker = new ImagePicker();
   XFile? imageFile;
@@ -47,6 +52,15 @@ class _ReviewModifyComponent extends State<ReviewModifyComponent>{
       });
     }
   }
+
+  void initState() {
+    super.initState();
+    setState(() {
+      _selectedRating = widget.rate;
+      thumbnailFileName = widget.thumbnailFileName;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -76,7 +90,7 @@ class _ReviewModifyComponent extends State<ReviewModifyComponent>{
               minLines: 10,
               maxLines: null,
               keyboardType: TextInputType.multiline,
-              controller: contentController,
+              controller: contentController..text = widget.content,
               decoration: textFieldDecoration("자세한후기는 다른고객의 구매에 많은 도움이되며,\n"
                   "전통주의 효능이나 효과 등에 오해소지가 있는\n"
                   "내용을 작성시 삭제 혹은 비공개 처리될 수 있습니다.")),
@@ -103,8 +117,10 @@ class _ReviewModifyComponent extends State<ReviewModifyComponent>{
               SizedBox(width: 20,),
               Container(
                 child: imageFile == null
-                    ? null
-                    : SizedBox(width: 80, height: 80,child: Image.file(File(imageFile!.path) , fit: BoxFit.fill)),
+                    ? (thumbnailFileName == "NoImage"
+                        ? null
+                        : SizedBox(width: 80, height: 80, child: Image.asset("assets/images/uploadImg/$thumbnailFileName", fit: BoxFit.fill)))
+                    : SizedBox(width: 80, height: 80, child: Image.file(File(imageFile!.path), fit: BoxFit.fill)),
               ),
             ],
           ),

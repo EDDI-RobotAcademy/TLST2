@@ -128,8 +128,17 @@ class ReviewCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(onPressed: () {
-                  Get.to(() => ReviewModifyPage(productName: productName, productId: productId, reviewNo: reviewNo, orderId: orderId,));
-                }, child: Text("수정" ,style: blackBoldTextStyle(10),)),
+                            Get.to(() => ReviewModifyPage(
+                                  productName: productName,
+                                  productId: productId,
+                                  reviewNo: reviewNo,
+                                  orderId: orderId,
+                                  rate: rate,
+                                  content: content,
+                                  thumbnailFileName: thumbnailFileName,
+                                ));
+                          },
+                          child: Text("수정" ,style: blackBoldTextStyle(10),)),
                 TextButton(onPressed: () {
                   showCheckPassword(context);
 
