@@ -30,7 +30,7 @@
           작성자
         </th>
         <td>
-          {{ questionBoard.member.username }}
+          {{ questionBoard.member.username | nameFormat }}
         </td>
       </tr>
       <tr>

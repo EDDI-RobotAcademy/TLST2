@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr v-if="!questionBoards || (Array.isArray(questionBoards) && questionBoards.length === 0)">
-          <td colspan="4">
+          <td colspan="5">
             현재 등록된 게시물이 없습니다!
           </td>
         </tr>
@@ -55,7 +55,7 @@
             </router-link>
           </td>
           <td align="center">
-            {{ questionBoard.member.username }}
+            {{ questionBoard.member.username | nameFormat }}
           </td>
           <td align="center">
             {{ questionBoard.createDateTime }}
