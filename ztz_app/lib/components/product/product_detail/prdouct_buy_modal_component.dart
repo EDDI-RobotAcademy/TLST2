@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ztz_app/controller/account/sign_up_infos/account_state.dart';
+import 'package:ztz_app/pages/account/login_page.dart';
 import 'package:ztz_app/utility/colors.dart';
 
 import '../../../controller/order/cart_controller.dart';
@@ -159,7 +161,8 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
                   SizedBox(width: 10,),
                   ElevatedButton(
                       onPressed: (){
-                        order();
+                        AccountState.accountGet.isLogin.value?
+                        order() : showLoginCheck(context);
                   }, child: Text("바로 구매",style: xMediumWhiteTextStyle()),style: defaultElevatedButtonStyle((size.width/2)-10,50)),
                 ],
               ),
@@ -247,6 +250,26 @@ class _ProductBuyModalComponent extends State<ProductBuyModalComponent>{
               child: new Text("취소"),
               onPressed: () {
                 Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showLoginCheck(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("로그인이 필요합니다."),
+          actions: [
+            FlatButton(
+              child: Text("확인"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
           ],

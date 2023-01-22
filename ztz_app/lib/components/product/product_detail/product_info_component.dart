@@ -164,7 +164,10 @@ class _ProductInfoComponent extends State<ProductInfoComponent>{
             ),
           ),
           SizedBox(height: 30,),
-          Text(ProductInfo.description),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(ProductInfo.description),
+          ),
             for(int i= 0; i< productImagesName.length ; i++)
             Image(image: AssetImage("assets/images/uploadImg/${productImagesName[i]}"),)
 
