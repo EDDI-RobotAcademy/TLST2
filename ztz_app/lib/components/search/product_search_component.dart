@@ -236,15 +236,17 @@ class _ProductSearchComponent extends State<ProductSearchComponent> {
 
   Widget nonProduct(){
     Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height-300,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.search , size: 60,),
-          SizedBox(height: 10,),
-          Text("검색된 상품이 없습니다."),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        height: size.height-300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search , size: 60,),
+            SizedBox(height: 10,),
+            Text("검색된 상품이 없습니다."),
+          ],
+        ),
       ),
     );
   }

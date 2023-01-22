@@ -187,6 +187,9 @@ export default {
         this.$set(this.sendInfo.memberID, 0, this.$store.state.resMember.id);
         this.$set(this.sendInfo.orderCnt, 0, this.$store.state.orderList.orderSave.quantity);
         this.$set(this.sendInfo.orderPrice, 0, (this.$store.state.orderList.orderSave.product.price * this.$store.state.orderList.orderSave.quantity));
+
+        this.orderCartItemNo[0] = this.$store.state.orderList.orderSave.tmpCartItemOrderNo
+
       }else {
         for (let i = 0; i < this.totalCount; i++) {
           this.$set(this.sendInfo.productID, i, this.$store.state.orderList.orderSave.selectList[i].product.productNo);
