@@ -57,19 +57,19 @@
             <h2>답변</h2>
           </div>
           <div class="comment">
-            <question-comment-list :questionComments="questionComments"/>
+            <question-comment-list
+                :question-board=questionBoard
+                :questionComments="questionComments"/>
           </div>
         </tr>
       </table>
-<!--      <div>-->
-<!--        &lt;!&ndash;  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 &ndash;&gt;-->
-<!--        <question-comment-register-form-->
-<!--            @submit="onSubmitRegister"-->
-<!--            v-if="this.$store.state.isAuthenticated-->
-<!--            && this.$store.state.resMember.managerCheck-->
-<!--            && this.questionComments.length == 0"-->
-<!--        />-->
-<!--      </div>-->
+      <div>
+        <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
+        <question-comment-register-form
+            @submit="onSubmitRegister"
+            v-if="resMember.managerCheck && this.questionComments.length == 0"
+        />
+      </div>
     </div>
   </v-container>
 </template>
@@ -79,6 +79,7 @@ import {mapActions, mapState} from "vuex";
 import QuestionRead from "@/components/boards/QuestionRead";
 import QuestionCommentList from "@/components/boards/comment/QuestionCommentList";
 import ModifyQuestionBoardForm from "@/components/boards/ModifyQuestionBoardForm";
+import QuestionCommentRegisterForm from "@/components/boards/comment/QuestionCommentRegisterForm";
 
 export default {
   name: "QuestionReadView",
@@ -90,6 +91,7 @@ export default {
     }
   },
   components: {
+    QuestionCommentRegisterForm,
     ModifyQuestionBoardForm,
     QuestionRead,
     QuestionCommentList,
@@ -120,10 +122,10 @@ export default {
       await this.$router.push({name: 'QuestionListView'})
     },
     async onSubmitRegister( payload ) {
-      const { comment, userNumber } = payload
+      const { comment, memberId } = payload
       const questionNo = this.questionNo
       console.log("댓글 등록" + questionNo)
-      await this.requestQuestionCommentRegisterToSpring( { comment, questionNo, userNumber} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
+      await this.requestQuestionCommentRegisterToSpring( { comment, questionNo, memberId} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
       await this.$router.push({
         name: 'QuestionReadView', params: { questionNo: this.questionNo }
       })

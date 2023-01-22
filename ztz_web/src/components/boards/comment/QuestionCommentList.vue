@@ -1,11 +1,17 @@
 <template>
   <v-container>
     <table class="boards"
+           style="background-color: #eeeeee; border-radius: 10px"
            v-if="!questionComments || (Array.isArray(questionComments) && questionComments.length === 0)">
-      현재 등록된 댓글이 없습니다!
+      <div style="padding: 10px">
+        <p>현재 등록된 댓글이 없습니다!</p>
+      </div>
     </table>
-    <table class="boards" v-else v-for="questionComment in questionComments" :key="questionComment.questionCommentNo"
-           style="border: solid thin">
+    <table class="boards"
+           style="background-color: #eeeeee; border-radius: 10px"
+           v-else
+           v-for="questionComment in questionComments" :key="questionComment.questionCommentNo"
+    >
       <tbody>
       <!--      댓글 리스트-->
       <tr>
@@ -17,10 +23,17 @@
           <v-row>
             <p class="mt-2">{{ questionComment.regDate }}</p>
           </v-row>
-          <!--          <v-row v-if="resMember.managerCheck" justify="end" class="mr-5 mb-5">-->
-          <!--            <button @click="modifyComment" class="mr-3">수정</button>-->
-          <!--            <button @click="onCommentDelete(questionComment.questionCommentNo)">삭제</button>-->
-          <!--          </v-row>-->
+          <v-row v-if="resMember.managerCheck" justify="end" class="mr-5 mb-5">
+            <button @click="modifyComment" class="mr-3">수정</button>
+            <button @click="onCommentDelete(questionComment.questionCommentNo)">삭제</button>
+          </v-row>
+          <template>
+            <v-dialog v-model="showModifyComment" max-width="1000">
+              <modify-question-comment-form
+                  :question-board="questionBoard"
+                  :question-comment="questionComment"/>
+            </v-dialog>
+          </template>
         </div>
       </tr>
       </tbody>
@@ -31,9 +44,11 @@
 <script>
 
 import {mapActions, mapState} from "vuex";
+import ModifyQuestionCommentForm from "@/components/boards/comment/ModifyQuestionCommentForm";
 
 export default {
   name: "QuestionCommentList",
+  components: {ModifyQuestionCommentForm},
   data() {
     return {
       commentWriter: this.$store.state.resMember.username,
@@ -46,6 +61,9 @@ export default {
     questionComments: {
       type: Array
     },
+    questionBoard: {
+      type: Object
+    }
   },
   computed: {
     ...mapState(['resMember'])
@@ -72,7 +90,7 @@ export default {
 table.boards {
   text-align: left;
   line-height: 1.5;
-  border: 1px solid;
+  /*border: 1px solid;*/
   width: 600px;
   table-layout: fixed;
 }
