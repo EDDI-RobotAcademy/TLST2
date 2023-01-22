@@ -10,6 +10,8 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class MemberModifyRequest {
+
+    private final boolean managerCheck;
     private final String password;
     private final String manager_code;
     private final String new_password;
