@@ -369,7 +369,7 @@ class _OrderDetailManagementComponent extends State<OrderDetailManagementCompone
                       SizedBox(
                         height: 8,
                       ),
-                      Text('0 원'),
+                      Text(OrderInfo.orderInfoList[0]['payment']['totalPaymentPrice'] > 49999 ? '0원' : '3,000원'),
                       SizedBox(
                         height: 8,
                       ),
@@ -377,10 +377,10 @@ class _OrderDetailManagementComponent extends State<OrderDetailManagementCompone
                       SizedBox(
                         height: 8,
                       ),
-                      Text(
-                        numberFormat.format(OrderInfo.orderInfoList[0]
-                                ['payment']['totalPaymentPrice']) +
-                            " 원",
+                      Text(OrderInfo.orderInfoList[0]['payment']['totalPaymentPrice'] > 49999 ?
+                      numberFormat.format(OrderInfo.orderInfoList[0]['payment']['totalPaymentPrice']) +" 원" :
+                      numberFormat.format(OrderInfo.orderInfoList[0]['payment']['totalPaymentPrice'] + 3000) + ' 원'
+                        ,
                         style: blackBoldTextStyle(14),
                       ),
                     ],
