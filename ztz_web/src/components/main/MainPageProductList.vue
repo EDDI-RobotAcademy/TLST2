@@ -6,7 +6,8 @@
     </div>
     <div class="product">
       <carousel :per-page="5" autoplay="true" loop="true">
-        <slide v-for="(product, idx) in products" :key="idx">
+<!--        <slide v-for="(product, idx) in products" :key="idx">-->
+        <slide v-for="(product, idx) in products.slice(0,15)" :key="idx">
           <router-link
               style="text-decoration: none"
               :to="{ name: 'ProductDetailView',
@@ -44,6 +45,7 @@ export default {
 <style scoped>
 
 .title p {
+  margin-top: 40px;
   font-size: 20px;
   font-weight: bold;
 }
