@@ -5,7 +5,6 @@
           리뷰쓰기
         </v-card-title>
         <div>
-          <!-- 리뷰 작성할 상품 추가 예정 -->
           <p>{{ product.name }}</p>
           <v-img
               :src="require(`@/assets/products/uploadImg/${product.productInfo.thumbnailFileName}`)"
@@ -103,7 +102,6 @@ export default {
     ]),
     selectFile(file) {
       this.image = file
-      // 사진 업로드 시 미리보기 기능
       if (!(this.image.length == 0)) {
         const fileData = (data) => {
           this.preview = data
@@ -121,8 +119,6 @@ export default {
     },
     async submit() {
       if (!(this.image.length == 0)) {
-        console.log("이미지 포함 리뷰")
-        //이미지 있는 경우
         let formData = new FormData()
         formData.append('image', this.image);
 
@@ -136,8 +132,6 @@ export default {
         formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
         await this.reqRegisterReviewWithImageToSpring(formData)
       } else {
-        //이미지 없는 경우
-        console.log("이미지 없는 리뷰")
         const {rate, content} = this
         const memberId = this.resMember.id
         const productNo = this.product.productNo

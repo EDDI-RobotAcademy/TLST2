@@ -74,7 +74,6 @@ export default {
     this.reqReadReviewFromSpring(productNo)
   },
   beforeUpdate() {
-    // totalRate 구하기
     let tmpRate = 0
     for (let i = 0; i < this.reviews.length; i++) {
       tmpRate += this.reviews[i].rate
