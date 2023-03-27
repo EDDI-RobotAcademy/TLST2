@@ -4,7 +4,6 @@
       <v-row justify="end">
         <div class="mr-3">
           <button @click="btnRegisterComment">답변등록</button>
-          <!--          <button-white btn-name="답변등록"/>-->
           <template>
             <v-dialog v-model="showRegisterComment" max-width="1000">
               <register-question-comment-form :question-board="questionBoard"/>

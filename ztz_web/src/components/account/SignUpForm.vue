@@ -197,8 +197,6 @@ export default {
       this.street = street;
       this.addressDetail = addressDetail;
       this.zipcode = zipcode;
-
-      console.log(this.city + this.street + this.addressDetail + this.zipcode)
     },
     onSubmit() {
       if (this.$refs.form.validate()) {

@@ -107,7 +107,6 @@ export default {
     if (this.$store.state.isAuthenticated === true) {
       this.token = window.localStorage.getItem("userInfo");
       this.reqMemberInfoToSpring(this.token);
-      console.log(this.token);
       this.booker = this.$store.state.resMember.username;
       this.numberOfMember = this.item.minMember;
     } else {

@@ -10,7 +10,6 @@
           리뷰 수정
         </v-card-title>
         <div>
-          <!-- 리뷰 작성할 상품 추가 예정 -->
           <p>{{ review.product.name }}</p>
           <v-img
               :src="require(`@/assets/products/uploadImg/${review.product.productInfo.thumbnailFileName}`)"
@@ -112,7 +111,6 @@ export default {
     ]),
     selectFile(file) {
       this.image = file
-      // 사진 업로드 시 미리보기 기능
       if (!(this.image.length === 0)) {
         const fileData = (data) => {
           this.preview = data
@@ -130,7 +128,6 @@ export default {
     },
     async submit() {
       if (!(this.image.length === 0)) {
-        console.log("이미지 포함 리뷰 수정")
 
         let formData = new FormData()
         formData.append('image', this.image);
@@ -143,8 +140,6 @@ export default {
         formData.append("info", new Blob([JSON.stringify(fileInfo)], {type: "application/json"}))
         await this.reqModifyReviewWithImgToSpring({formData, reviewNo})
       } else {
-        //이미지 수정 없는 경우
-        console.log("이미지 없이 리뷰 수정")
         const {rate, content} = this
         const reviewNo = this.review.reviewNo
         await this.reqModifyReviewToSpring({reviewNo, rate, content})
@@ -156,22 +151,6 @@ export default {
       this.dialog = false
     },
   },
-  // computed: {
-  //   ...mapState([
-  //     'resMember'
-  //   ])
-  // },
-  // watch: {
-  //   // dialog 상태가 변경되면 실행됨
-  //   dialog: function (val) {
-  //     if (val) {
-  //       this.image = ''
-  //       this.rate = 0
-  //       this.content = ''
-  //       this.preview = ''
-  //     }
-  //   }
-  // }
 }
 </script>
 

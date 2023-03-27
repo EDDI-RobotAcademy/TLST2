@@ -29,13 +29,11 @@ import {
     REQUEST_MEMBER_QUESTION_BOARD_FROM_SPRING,
 } from "./mutation-types";
 
-// npm install axios --save-dev
 import axios from "axios";
 
 export default {
 
     reqProductsFromSpring({commit}, keyword) {
-        console.log('상품 검색 키워드: ' + keyword)
         let url = `http://localhost:7777/ztz/products/list`
         if(keyword != undefined){
             url += '?keyword='+encodeURIComponent(keyword)
@@ -43,7 +41,6 @@ export default {
         return axios.post(url)
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
-                console.log('상품 리스트 조회')
             })
     },
     reqFilteredProductsFromSpring({commit}, localName) {
@@ -54,14 +51,12 @@ export default {
     },
     reqFilteredLocalAndAlcoholProductsFromSpring({commit}, payload) {
         const { alcoholType, localName } = payload
-        console.log("메소드 spring 호출 전 알코올 타입과 지역 조회" + payload.alcoholType + payload.localName)
         return axios.post(`http://localhost:7777/ztz/products/list/by-local-type`, {alcoholType, localName})
             .then((res) => {
                 commit(REQUEST_FILTERED_LOCAL_AND_ALCOHOL_FROM_SPRING, res.data)
             })
     },
     requestProductFromSpring({commit}, productNo) {
-        console.log('productDetailView - product 가져오기' + productNo)
 
         return axios.post(`http://localhost:7777/ztz/products/list/product/${productNo}`)
             .then((res) => {
@@ -74,7 +69,6 @@ export default {
                 commit(REQUEST_FILTERED_ALCOHOL_PRODUCT_FROM_SPRING, res.data)
             })
     },
-
     reqDeleteMemberToSpring({commit}, token) {
         return axios.delete('http://localhost:7777/ztz/member/withdrawal', {
             headers: {token: token}
@@ -87,31 +81,26 @@ export default {
             {token: token})
             .then((res) => {
                 commit(RESPONSE_MEMBER_OBJECT, res.data)
-                console.log("actions :" + res.data)
             })
     },
     reqFoundryListFromSpring({commit}) {
         return axios.get('http://localhost:7777/ztz/tour/list')
             .then((res) => {
                 commit(REQUEST_FOUNDRY_LIST, res.data)
-                console.log(res.data)
             })
     },
-
     reqReservationToSpring({commit}, payload) {
         return axios.post("http://localhost:7777/ztz/tour/reservation", payload)
             .then((res) => {
                 commit(RESPONSE_MY_REQUEST, res.data);
             });
     },
-
     reqMyReservationListToSpring({ commit }, token) {
         return axios
           .get("http://localhost:7777/ztz/tour/my-reservation", {
             headers: { Token: token },
           })
           .then((res) => {
-              console.log("예약리스트 조회")
             commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data);
           });
       },
@@ -120,10 +109,8 @@ export default {
         return axios.get('http://localhost:7777/ztz/tour/allReservationList')
             .then((res) => {
                 commit(REQUEST_MY_RESERVATION_LIST_FROM_SPRING, res.data)
-                console.log(res.data)
             })
     },
-
     reqCancelMyReservation({ commit }, payload) {
         return axios
           .delete(
@@ -134,7 +121,6 @@ export default {
           )
           .then((res) => {
             commit(RESPONSE_MY_REQUEST, res.data);
-            console.log("서버 반환값" + res.data);
           });
       },
     reqModifyReservation({ commit }, payload) {
@@ -158,20 +144,14 @@ export default {
             {token: token})
             .then((res) => {
                 commit(RESPONSE_MEMBER_PROFILE_OBJET, res.data)
-                console.log("profile : " + res.data)
             })
     },
-
     reqRegisterReviewToSpring(_, payload) {
-        console.log('이미지 미포함 리뷰 등록하기')
-
         return axios.post('http://localhost:7777/ztz/products/review/register', payload)
             .then(() => {
             })
     },
     reqRegisterReviewWithImageToSpring(_, payload) {
-        console.log("이미지 포함 리뷰 등록하기")
-
         return axios.post('http://localhost:7777/ztz/products/review/registerWithImg', payload)
             .then((res) => {
                 console.log(res.data)
@@ -181,44 +161,31 @@ export default {
             })
     },
     reqReadReviewFromSpring({commit}, productNo) {
-        console.log(productNo + '번 상품의 리뷰 가져오기')
-
         return axios.post(`http://localhost:7777/ztz/products/review/read/${productNo}`)
             .then((res) => {
                 commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
             })
     },
     reqMyPageReviewFromSpring({commit}, memberId) {
-        console.log('멤버' + memberId + '번의 리뷰 불러오기')
-
         return axios.post(`http://localhost:7777/ztz/products/review/read/myPage/${memberId}`)
             .then((res) => {
                 commit(REQUEST_READ_REVIEW_FROM_SPRING, res.data)
             })
     },
-    // 질문게시판 리스트 UI
     requestQuestionListFromSpring({commit}) {
-        console.log('requestQuestionListFromSpring()')
-
         return axios.get('http://localhost:7777/ztz/boards/question/list')
             .then((res) => {
                 commit(REQUEST_QUESTION_LIST_FROM_SPRING, res.data)
             })
     },
-
-    // 질문게시판 조회(읽기)
     requestQuestionFromSpring({commit}, questionNo) {
-        console.log('requestQuestionFromSpring()')
         return axios.get(`http://localhost:7777/ztz/boards/question/${questionNo}`)
             .then((res) => {
                 commit(REQUEST_QUESTION_FROM_SPRING, res.data)
             })
     },
-
-    // 질문게시판 등록
     // eslint-disable-next-line no-empty-pattern
     requestCreateQuestionContentsToSpring({}, payload) {
-        console.log('requestCreateQuestionContentsToSpring()')
         const {title, content, memberId, categoryType, privateCheck} = payload
         return axios.post('http://localhost:7777/ztz/boards/question/register',
             {title, content, memberId, categoryType, privateCheck})
@@ -226,12 +193,8 @@ export default {
                 alert('등록 완료했습니다!')
             })
     },
-
-    // 질문게시판 수정
     // eslint-disable-next-line no-empty-pattern
     requestQuestionModifyToSpring({}, payload) {
-        console.log('requestQuestionModifyToSpring()')
-
         const {title, content, questionNo, memberId, categoryType, privateCheck} = payload
 
         return axios.put(`http://localhost:7777/ztz/boards/question/${questionNo}`,
@@ -240,62 +203,42 @@ export default {
                 alert('수정 완료했습니다!')
             })
     },
-
-    // 질문게시판 삭제
     // eslint-disable-next-line no-empty-pattern
     requestDeleteQuestionToSpring({}, questionNo) {
-        console.log('requestDeleteQuestionToSpring()')
-
         return axios.delete(`http://localhost:7777/ztz/boards/question/${questionNo}`)
             .then(() => {
                 alert('삭제 완료했습니다!')
             })
     },
-
-    // 댓글 리스트 UI
     requestQuestionCommentListFromSpring ({ commit }, questionNo) {
-        console.log('requestQuestionCommentListFromSpring()')
-
         return axios.get(`http://localhost:7777/ztz/boards/question/comment/${questionNo}`)
             .then((res) => {
                 commit(REQUEST_QUESTION_COMMENT_LIST_FROM_SPRING, res.data)
             })
     },
-
-    // 댓글 리스트 등록
     // eslint-disable-next-line no-empty-pattern
     requestQuestionCommentRegisterToSpring ({ }, payload) {
-        console.log('requestQuestionCommentRegisterToSpring()')
         const { comment, questionNo, memberId } = payload
-        console.log("댓글 등록" + questionNo)
         return axios.post('http://localhost:7777/ztz/boards/question/comment/register',
             { comment : comment, question_no : questionNo, member_no : memberId})
             .then(() => {
                 alert('댓글 등록을 완료하였습니다.')
             })
     },
-    // 댓글 삭제
     // eslint-disable-next-line no-empty-pattern
     requestDeleteQuestionCommentToSpring({}, questionCommentNo) {
-        console.log('requestDeleteQuestionToSpring()')
-
         return axios.delete(`http://localhost:7777/ztz/boards/question/comment/${questionCommentNo}`)
             .then(() => {
                 alert('삭제 완료했습니다!')
             })
     },
-
     reqDeleteReviewToSpring(_, reviewNo) {
-        console.log(reviewNo + "번 리뷰 삭제")
-
         return axios.delete(`http://localhost:7777/ztz/products/review/delete/${reviewNo}`)
             .then(() => {
                 alert('삭제 완료했습니다.')
             })
     },
     reqModifyReviewToSpring(_, payload) {
-        console.log('이미지 없는 리뷰 수정')
-
         const {reviewNo, rate, content} = payload
 
         return axios.put(`http://localhost:7777/ztz/products/review/modify/${reviewNo}`,
@@ -305,10 +248,7 @@ export default {
             })
     },
     reqModifyReviewWithImgToSpring(_, payload) {
-        console.log('이미지 포함 리뷰 수정')
-
         const {formData, reviewNo} = payload
-        console.log(formData)
 
         return axios.put(`http://localhost:7777/ztz/products/review/modifyWithImg/${reviewNo}`, formData)
             .then((res) => {
@@ -319,25 +259,18 @@ export default {
                 console.log(res.message)
             })
     },
-
-    //주문리스트- 상세보기
     reqOrderedListFromSpring({commit}, paymentId) {
         return axios.post(`http://localhost:7777/ztz/order/ReadAllOrder/${paymentId}`)
             .then((res) => {
                 commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data)
-                console.log("reqOrderedListFromSpring : " + res.data)
             })
     },
-
     reqOrderInfoById({commit}, orderInfoId){
         return axios.post(`http://localhost:7777/ztz/order/readOrder/${orderInfoId}`)
             .then((res) => {
                 commit(REQUEST_ORDER_FROM_SPRING, res.data)
-                console.log("reqOrderedListFromSpring : " + res.data)
             })
     },
-
-    //주문리스트 조회
     reqPaymentListFromSpring({commit}, token) {
         return axios.post(`http://localhost:7777/ztz/order/ReadAllPayment`,
             {token: token})
@@ -356,29 +289,23 @@ export default {
                 console.log(res)
             })
     },
-
-    //주문상태변경
     reqChangeOrderStateToSpring({commit, dispatch }, payload){
         const {reqType, orderId, paymentId} = payload
-        console.log("주문상태 체인지: "+reqType+ orderId+ paymentId )
+
         return axios.post(`http://localhost:7777/ztz/order/changeOrderState`, {reqType, orderId, paymentId})
             .then((res) => {
                 commit(REQUEST_ALL_ORDER_LIST_FROM_SPRING, res.data)
                 dispatch('reqPaymentListFromSpring')
-                console.log("주문상태변경: " + res.data)
             })
     },
-
     // eslint-disable-next-line no-empty-pattern
     requestDeleteProductToSpring ({ }, productNo) {
-        console.log('상품 삭제()')
 
         return axios.delete(`http://localhost:7777/ztz/products/${productNo}`)
             .then(() => {
                 alert('상품이 삭제되었습니다.')
             })
     },
-
     // eslint-disable-next-line no-empty-pattern
     reqRegisterOrderToSpring({}, payload){
         const { paymentPrice, merchant_uid , sendInfo , imp_uid, city, street, addressDetail, zipcode ,sendRequest} = payload
@@ -389,16 +316,12 @@ export default {
                 console.log(res)
             })
     },
-
     reqBestProductsFromSpring({commit}) {
-        console.log('메인페이지 베스트 상품 리스트')
-
         return axios.post('http://localhost:7777/ztz/products/list/view')
             .then((res) => {
                 commit(REQUEST_BEST_PRODUCTS_LIST_FROM_SPRING, res.data)
             })
     },
-
     // eslint-disable-next-line no-empty-pattern
     reqCheckMonthAlcoholToSpring({dispatch}, productNo){
         return axios.post(`http://localhost:7777/ztz/products/monthAlcohol/${productNo}`)
@@ -407,14 +330,12 @@ export default {
                 dispatch('reqProductsFromSpring')
             })
     },
-
     reqMonthAlcoholProductsFromSpring({commit}) {
         return axios.get(`http://localhost:7777/ztz/products/monthAlcohol/list`)
             .then((res) => {
                 commit(REQUEST_PRODUCTS_LIST_FROM_SPRING, res.data)
             })
     },
-
     reqSalesAmountToSpring({commit}){
         return axios.get(`http://localhost:7777/ztz/order/salesAmount`)
             .then((res) => {
@@ -425,39 +346,31 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     reqMyPageProfileModifyFromSpring({}, payload) {
         const { managerCheck, phoneNumber, manager_code, present_password, new_password, memberId } = payload;
-        console.log("actions 멤버 id 확인" + payload.memberId);
 
         return axios.post("http://localhost:7777/ztz/member/modify-profile", {
             managerCheck:managerCheck, phoneNumber, manager_code, password : present_password, new_password, id: memberId
         })
             .then((res) => {
                 alert(res.data)
-                console.log("멤버 회원정보 변경:"+res.data)
             })
             .catch((res) => {
                 alert(res.response.data.message)
             })
     },
-
     reqManagerProfileInfoToSpring({commit}, token) {
         return axios.post("http://localhost:7777/ztz/member/manager-profile",
                     {token: token})
                     .then((res) => {
                         commit(REQUEST_MANAGER_PHONENUMBER_FROM_SPRING, res.data)
-                        console.log("profile : " + res.data)
                     })
     },
-
-
     reqMyCartListFromSpring({commit}, token) {
         return axios.get('http://localhost:7777/ztz/order/myCart',{headers: { Token: token },
             }).then((res) => {
                 commit(REQUEST_CART_LIST_FROM_SPRING, res.data)
-                console.log("수정된 리스트 출력" + res.data)
             })
     },
     reqCartItemCountChangeToSpring({commit}, payload) {
-        console.log("payload : " + payload)
         return axios.post("http://localhost:7777/ztz/order/change-item-count", payload)
             .then((res) => {
                 commit(RESPONSE_MY_REQUEST, res.data);
@@ -467,8 +380,6 @@ export default {
     reqDeleteCartItemFromSpring({}, payload) {
         const selectCartItemNo = payload
 
-        console.log('장바구니 아이템 삭제 전')
-
         return axios.post(`http://localhost:7777/ztz/order/delete-items`,
             {selectCartItemNo})
             .then(() => {
@@ -477,7 +388,6 @@ export default {
     // eslint-disable-next-line no-empty-pattern
     reqAddCartToSpring({}, payload) {
     const {productNo, count, token} = payload
-    console.log('장바구니 추가 상품번호: ' + productNo + ' 수량: ' + count)
 
     return axios.post(`http://localhost:7777/ztz/order/add`,
         {productNo, count, token})
@@ -487,8 +397,6 @@ export default {
     reqReadRangePaymentList({ commit }, payload) {
         const { token, readData } = payload
 
-        console.log('월 주문 내역')
-
         return axios.post(`http://localhost:7777/ztz/order/readPayment/byDate`,
             { token, readData })
             .then((res) => {
@@ -497,39 +405,32 @@ export default {
     },
     reqSaveFavoriteToSpring({commit}, payload) {
         const {memberId, productNo, favoriteType} = payload
-        console.log("좋아요 상품 : " + payload.memberId + payload.productNo + payload.favoriteType)
+
         return axios.post("http://localhost:7777/ztz/products/favorite/changeFavoriteStatus", {memberId, productNo, favoriteType})
             .then((res) => {
                 commit(REQUEST_PRODUCT_FAVORITE_INFO_FROM_SPRING, res.data);
             });
     },
-
     reqMyFavoriteListToSpring({commit}, payload) {
         const token = payload
-        console.log("찜한 상품 조회 멤버 토큰 : " + payload)
+
         return axios.post("http://localhost:7777/ztz/products/favorite/myFavorite", {token:token})
             .then((res) => {
                 commit(REQUEST_MY_FAVORITE_LIST_FROM_SPRING, res.data);
             });
     },
-
     reqFavoriteProductsFromSpring({commit}) {
-        console.log('메인페이지 좋아요 상품 리스트')
-
         return axios.post('http://localhost:7777/ztz/products/list/favorite')
             .then((res) => {
                 commit(REQUEST_FAVORITE_PRODUCTS_FROM_SPRING, res.data)
             })
     },
-
     reqProductReviewAvgFromSpring({commit}, productNo) {
-        console.log(productNo + "번 상품 리뷰 평점과 개수 불러오기")
         return axios.post(`http://localhost:7777/ztz/products/review/read/average/${productNo}`)
             .then((res) => {
                 commit(REQUEST_PRODUCT_REVIEW_AVERAGE_FROM_SPRING, res.data);
             })
     },
-
     reqAllRecommendedKeyword({commit}) {
         return axios.get('http://localhost:7777/ztz/search/all-keywords-list')
         .then((res) => {
@@ -545,22 +446,21 @@ export default {
     },
     reqAddKeyword({commit}, payload) {
         const enterKeyword = payload
-        console.log("저장 요청시 보내는 데이터 형태: " + enterKeyword)
+
         return axios.post('http://localhost:7777/ztz/search/save', {enterKeyword})
         .then((res) => {
                 commit(RESPONSE_MY_REQUEST, res.data)
         })
     },
     reqDeleteKeyword({commit}, payload) {
-        console.log("삭제 요청시 보내는 데이터 형태: " + payload)
         const selectedKeywords = payload
+
         return axios.post('http://localhost:7777/ztz/search/delete', {selectedKeywords})
         .then((res) => {
                 commit(RESPONSE_MY_REQUEST, res.data)
         })
     },
     reqMemberQuestionBoardFromSpring({commit}, token) {
-        console.log("1:1 문의")
         return axios.post('http://localhost:7777/ztz/boards/question/list/member',
             { token: token })
             .then((res) => {
@@ -568,7 +468,6 @@ export default {
             })
     },
     reqModifyQuestionCommentToSpring(_, payload) {
-        console.log("댓글 수정")
         const {questionCommentNo, comment, questionNo, memberId} = payload
         return axios.put(`http://localhost:7777/ztz/boards/question/comment/modify/${questionCommentNo}`,
             {comment : comment, question_no : questionNo, member_no : memberId})

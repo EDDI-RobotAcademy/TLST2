@@ -58,9 +58,6 @@ import {mapActions, mapState} from "vuex";
 
 export default {
   name: "ProductManagementList",
-  // props: {
-  //   products: Array
-  // },
   methods: {
     ...mapActions([
       'reqProductsFromSpring', 'reqCheckMonthAlcoholToSpring'

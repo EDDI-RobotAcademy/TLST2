@@ -96,10 +96,8 @@ export default {
   created() {
     this.totalPrice = this.$store.state.orderList.orderSave.totalPrice;
     if (this.orderList.orderSave.directOrderCheck) {
-      //바로 구매일 경우
       this.totalCount = 1;
     } else {
-      //바로 구매아니고 선택 구매, 전체구매일 경우
       this.totalCount = Object.keys(
         this.$store.state.orderList.orderSave.selectList
       ).length;
@@ -109,8 +107,6 @@ export default {
   },
   methods: {
     onProductInfoSubmit() {
-      console.log("왜안함?" + this.totalCount + this.totalPrice);
-
       const { totalCount, totalPrice } = this;
       this.$emit("submit", { totalCount, totalPrice });
     },

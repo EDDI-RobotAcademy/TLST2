@@ -8,7 +8,6 @@
       </v-row>
     </div>
     <v-divider></v-divider>
-<!--장바구니 상품 리스트-->
     <div class="item-info" v-if="!cartList || (Array.isArray(cartList) && cartList.length === 0)">
         <p align="center" class="mt-15 mb-15"> 장바구니 상품이 없습니다.</p>
       <v-divider></v-divider>
@@ -62,8 +61,6 @@
       <v-divider></v-divider>
     </div>
     </div>
-<!--    장바구니 리스트 끝-->
-<!--    총합계 부분-->
 
     <div class="row" style="width: 510px; margin: 50px auto 0; font-size: 20px; font-weight: bold;">
       <p style="width:200px; text-align: left; color: #555">선택한 상품 총액</p>
@@ -115,19 +112,11 @@ export default {
     return {
       totalPrice: 0,
       selectList:[],
-
-      //async용
       orderListCheck: false,
-
-      //바로 구매
       directTotalPrice:0,
       directTmpOrderNo:[],
       directCartList: [],
-
-      //주문페이지 전달용
       selectTotalPrice:0,
-
-      //카트아이템 삭제용
       selectCartItemNo:[]
     }
   },
@@ -136,11 +125,9 @@ export default {
       'cartList'
     ]),
   allSelected: {
-      //getter
       get: function() {
         return this.cartList.length === this.selectList.length;
       },
-      //setter
       set: function(e) {
         this.selectList = e ? this.cartList : [];
       }
@@ -152,8 +139,6 @@ export default {
     ]),
 
     selectItem(price, count){
-      console.log("가격과 수량: " +price +count)
-      console.log("셀렉트 아이템 리스트: " +this.selectList)
       this.totalPrice = this.totalPrice +(price * count)
     },
 
@@ -172,9 +157,7 @@ export default {
       this.res = this.$store.state.resMyRequest;
 
       if (this.res === 1) {
-        console.log("수량 변경 성공");
       } else {
-        console.log("실패")
       }
     },
     async qtyIncrease(item) {
@@ -189,14 +172,9 @@ export default {
       this.res = this.$store.state.resMyRequest;
 
       if (this.res === 1) {
-        console.log("수량 변경 성공");
       } else {
-        console.log("실패")
       }
     },
-    
-
-
     btnDeleteCartItem(){
       let deleteCartMessage = confirm("선택 상품을 삭제하시겠습니까?")
 
@@ -231,7 +209,6 @@ export default {
       }
     },
     async btnSelectPurchase() {
-      //선택 상품 구매
       for (let i = 0; i < this.selectList.length; i++) {
         this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
       }
@@ -247,7 +224,6 @@ export default {
       }
     },
     async btnAllPurchase() {
-      // 전체 상품 구매
       this.selectList = this.cartList
       for (let i = 0; i < this.selectList.length; i++) {
         this.selectTotalPrice = this.selectTotalPrice + (this.selectList[i].product.price * this.selectList[i].count)
@@ -274,7 +250,6 @@ export default {
       this.totalPrice = this.totalPrice + this.selectList[i].product.price * this.selectList[i].count
     }
   },
-  //가격 ,000 원단위 포맷으로 가공
   filters: {
     numberFormat(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");

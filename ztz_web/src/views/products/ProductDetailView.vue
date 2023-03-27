@@ -92,7 +92,6 @@ export default {
       const memberId = this.$store.state.resMember.id
       const productNo = payload.productNo
       const favoriteType = "favoriteLike"
-      console.log("상품페이지:" +memberId+productNo)
       await this.reqSaveFavoriteToSpring({memberId, productNo, favoriteType})
     }
   },

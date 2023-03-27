@@ -105,14 +105,12 @@ export default {
       const reqType ="배송시작"
       const orderId = payload.startDeliveryOrderId
       const paymentId = payload.startDeliveryPaymentId
-      console.log("배송시작 주문상태변수: "+reqType + orderId+ paymentId)
       this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
     },
     finDelivery(payload){
       const reqType ="배송완료"
       const orderId = payload.finDeliveryOrderId
       const paymentId = payload.finDeliveryPaymentId
-      console.log("배송완료 주문상태변수: "+reqType + orderId+ paymentId)
       this.reqChangeOrderStateToSpring({reqType, orderId, paymentId})
     }
   },
