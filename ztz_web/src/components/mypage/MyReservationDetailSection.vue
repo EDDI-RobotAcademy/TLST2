@@ -129,8 +129,6 @@ export default {
         await this.reqCancelMyReservation(payload);
       }
 
-      console.log(this.$store.state.resMyRequest.toString());
-
       if (this.$store.state.resMyRequest === 1) {
         alert("예약 취소 되었습니다.");
         this.$router.go();

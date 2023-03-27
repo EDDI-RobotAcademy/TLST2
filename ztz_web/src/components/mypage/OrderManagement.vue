@@ -108,7 +108,6 @@ export default {
     async showOrderDetails(paymentId, index) {
       this.paymentId = paymentId
       this.paymentListIndex = index
-      console.log("페이먼트리스트 인덱스: " + this.paymentListIndex)
       this.showOrderDetail = true
       await this.reqOrderedListFromSpring(paymentId)
     },

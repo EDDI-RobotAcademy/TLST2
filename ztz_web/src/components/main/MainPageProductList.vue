@@ -5,8 +5,7 @@
       <v-divider></v-divider>
     </div>
     <div class="product">
-      <carousel :per-page="5" autoplay="true" loop="true">
-<!--        <slide v-for="(product, idx) in products" :key="idx">-->
+      <carousel :per-page="5" autoplay="true" loop="true" autoplay-timeout="3000">
         <slide v-for="(product, idx) in products.slice(0,15)" :key="idx">
           <router-link
               style="text-decoration: none"

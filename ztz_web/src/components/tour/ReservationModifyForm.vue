@@ -173,7 +173,6 @@ export default {
 </script>
 <style>
 .input-error {
-  /*display: float;*/
   font-size: 11px;
   color: red;
 }

@@ -35,18 +35,15 @@
                 </tr>
               </table>
             </v-row>
-
           </v-col>
 
           <v-col>
-
             <v-row class="mt-10 ml-1">
               <v-col cols="2"><h4>상품명</h4></v-col>
               <v-text-field outlined color="grey darken-1" placeholder="상품명을 입력해주세요." v-model="name" dense/>
             </v-row>
 
             <v-row class="ml-1">
-
               <v-col cols="2"><h4>브랜드</h4></v-col>
               <v-text-field
                   outlined color="grey darken-1"
@@ -54,7 +51,6 @@
                   placeholder="브랜드를 입력해주세요"
                   v-model="brand">
               </v-text-field>
-
               <v-col cols="2" align="center"><h4>맛</h4></v-col>
               <v-combobox
                   v-model="taste"
@@ -65,7 +61,6 @@
                   outlined
                   dense>
               </v-combobox>
-
             </v-row>
 
             <v-row class="ml-1">
@@ -90,9 +85,7 @@
             </v-row>
 
             <v-row class="ml-1">
-
               <v-col cols="2"><h4>가격</h4></v-col>
-              <!-- 폰트 변경으로 배치가 깨져서 가격, 배송비의 text-field width를 200px으로 변경함 -->
               <v-text-field
                   style="width: 200px"
                   type="number"
@@ -101,9 +94,7 @@
                   placeholder="가격을 입력해주세요(단위: 원)"
                   v-model="price">
               </v-text-field>
-
             </v-row>
-
           </v-col>
         </v-row>
 
@@ -128,7 +119,6 @@
         </v-row>
 
         <v-row class="mt-10">
-
           <v-col cols="2"><h4>상품 상세 사진</h4></v-col>
             <div class="ml-0">
               <v-btn  class="ma-2"
@@ -146,7 +136,6 @@
           <div class="mt-4 ml-2" v-if="!this.multipleFiles.length > 0">
             <p >업로드 시 미리보기 가능합니다</p>
           </div>
-
         </v-row>
 
         <v-row class="mt-10">
@@ -162,21 +151,12 @@
             </tr>
           </table>
         </v-row>
-
-
-        <!-- 등록하기 -->
         <v-row class="justify-center mt-15 mb-5">
           <div>
             <button-white @click="cancel" large style="width: 200px;font-size: 18px" btn-name="취소"/>
             <button-green type="submit" large style="width: 200px;font-size: 18px" btn-name="등록"/>
           </div>
-
         </v-row>
-
-
-
-
-
       </table>
     </v-form>
   </div>
@@ -246,16 +226,12 @@ export default {
     },
 
     async onSubmit () {
-      console.log('상품 등록- registerform')
-
-      //파일 업로드한 경우
       if(!this.multipleFiles.length == 0 && !this.thumbnailFile.length == 0){
         let formData = new FormData()
 
         formData.append('thumbnail', this.thumbnailFile[0] )
 
         for (let idx = 0; idx < this.multipleFiles.length; idx++) {
-          console.log("파일리스트 반복문:"+idx)
           formData.append('fileList', this.multipleFiles[idx])
         }
 
@@ -283,7 +259,6 @@ export default {
             })
 
         this.$router.push({name: 'ManagerView'})
-        //파일 업로드 하지 않은 경우
       } else{
         alert("상품 사진을 업로드해주세요")
 

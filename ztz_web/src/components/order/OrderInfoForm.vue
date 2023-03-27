@@ -91,8 +91,6 @@
 import OrderAgreement from "@/components/order/OrderAgreement";
 const IMP = window.IMP;
 IMP.init("imp67851243");
-//imp20030584
-
 import {mapActions, mapState} from "vuex";
 
 import AddressForm from "@/components/common/AddressForm";
@@ -121,11 +119,10 @@ export default {
       addressDetail: '',
       zipcode: '',
 
-      //추가
       nonDiscountPrice : 0,
       paymentPrice: 0,
       totalCount: 0,
-      //결제 후 장바구니 아이템 삭제용
+
       orderCartItemNo:[],
 
       setDestination: true,
@@ -212,7 +209,6 @@ export default {
         this.zipcode = this.$store.state.resMemberProfile.address.zipcode
 
         alert("기본 주소를 배송지로 설정하였습니다.")
-        console.log(this.city + this.street + this.addressDetail +this.zipcode)
       }
       this.setAddress = !this.setAddress;
       this.setDestination = !this.setDestination;
@@ -224,7 +220,6 @@ export default {
       this.addressDetail = addressDetail;
       this.zipcode = zipcode;
 
-      console.log(this.city + this.street + this.addressDetail +this.zipcode)
     },
     onProductInfoSubmit (payload) {
       const { totalCount, totalPrice } = payload;
@@ -237,13 +232,12 @@ export default {
       }else if(this.selectedRequest == ''){
         alert("배송 요청사항을 입력해주세요")
       }else {
-        console.log("paymentBtn - 실행")
+
 
         this.randomNumber = Math.floor(Math.random()*100000);
 
         for (let i = 0; i < this.usedNum.length; i++) {
           if(this.usedNum[i] == this.randomNumber){
-            console.log(this.usedNum[i])
             continue;
           }
         }
@@ -262,7 +256,6 @@ export default {
           if (rsp.success) {
             let imp_uid = rsp.imp_uid
             this.merchant_uid += this.randomNumber
-            console.log("결제성공")
             this.usedNum.push(this.randomNumber)
 
             this.setSendInfo()
@@ -272,7 +265,6 @@ export default {
 
             this.delSelectedOrderCart()
           } else {
-            console.log("결제실패")
           }
         });
       }
@@ -289,8 +281,6 @@ export default {
     }
   },
   beforeUnmount() {
-    // I switched the example from `destroyed` to `beforeDestroy`
-    // to exercise your mind a bit. This lifecycle method works too.
     this.target.removeEventListener('scroll', this.handleScroll);
   },
   filters: {

@@ -66,7 +66,6 @@ export default {
         let token = window.localStorage.getItem("userInfo");
         // eslint-disable-next-line no-undef
         await this.reqDeleteMemberToSpring(token);
-        console.log(this.$store.state.resMyRequest.toString());
         this.$store.commit("IS_AUTHENTICATED", false);
         localStorage.removeItem("userInfo");
         this.$cookies.remove("user");

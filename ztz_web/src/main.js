@@ -27,7 +27,7 @@ Vue.filter('nameFormat', function (val) {
 })
 Vue.use(VueCarousel)
 Vue.use(VuePaginate)
-Vue.component('MainHeader', MainHeader)  // 글로벌 컴포넌트
+Vue.component('MainHeader', MainHeader)
 Vue.component('MainFooter', MainFooter)
 Vue.component("NewFooter", NewFooter)
 Vue.component('ButtonGreen', ButtonGreen)

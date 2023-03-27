@@ -9,14 +9,14 @@
         <p v-else>Loading .......</p>
       </div>
       <div v-if="questionBoard.member.id == resMember.id">
-        <!--  게시물 수정   -->
+
           <button-white depressed btn-name="수정" @click="modifyBoard"/>
         <template>
           <v-dialog v-model="showModifyBoard" max-width="1000">
             <modify-question-board-form :question-board="questionBoard"/>
           </v-dialog>
         </template>
-        <!--  게시물 삭제   -->
+
         <v-dialog v-model="deleteDialog" persisten max-width="400">
           <template v-slot:activator="{on}">
             <button-green btn-name="삭제" depressed v-on="on"/>
@@ -50,7 +50,6 @@
       </div>
       <br/>
 
-      <!--  댓글 삭제    /-->
       <table class="boards">
         <tr>
           <div class="ml-3">
@@ -64,7 +63,6 @@
         </tr>
       </table>
       <div>
-        <!--  관리자 권한으로 등록할려면 v-if 문 써서 Authenticated, managerCheck 일반 사용자 권한으로 등록할려면 안 써도 된다 -->
         <question-comment-register-form
             @submit="onSubmitRegister"
             v-if="resMember.managerCheck && this.questionComments.length == 0"
@@ -124,8 +122,7 @@ export default {
     async onSubmitRegister( payload ) {
       const { comment, memberId } = payload
       const questionNo = this.questionNo
-      console.log("댓글 등록" + questionNo)
-      await this.requestQuestionCommentRegisterToSpring( { comment, questionNo, memberId} ) // action에서 백엔드 서버 요청, 필요한 데이터들을 보낸다
+      await this.requestQuestionCommentRegisterToSpring( { comment, questionNo, memberId} )
       await this.$router.push({
         name: 'QuestionReadView', params: { questionNo: this.questionNo }
       })

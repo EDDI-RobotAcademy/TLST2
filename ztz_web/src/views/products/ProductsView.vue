@@ -58,7 +58,6 @@ export default {
       let token = window.localStorage.getItem('userInfo')
       this.reqMemberInfoToSpring(token)
     }
-    console.log('products')
   },
   methods: {
     ...mapActions([
@@ -80,10 +79,8 @@ export default {
         let localName = this.localFlag.localMenu[index]
         const alcoholType = this.$store.state.selectAlcoholType
         if(alcoholType =="all"){
-          console.log("모든 알콜타입에서 지역 조회" + localName)
           await this.reqFilteredProductsFromSpring(localName)
         } else{
-          console.log("받은 알코올타입과 지역 조회" + localName + alcoholType)
           await this.reqFilteredLocalAndAlcoholProductsFromSpring({alcoholType, localName})
         }
       }
@@ -91,10 +88,8 @@ export default {
     async allLocalProduct(){
       const alcoholType = this.$store.state.selectAlcoholType
       if(alcoholType =="all"){
-        console.log("모든 알콜타입에서 모든 지역상품 조회")
         await this.reqProductsFromSpring()
       } else{
-        console.log("받은 알코올 타입- 모든 지역 조회" + alcoholType)
         await this.reqFilteredAlcoholProductsFromSpring(alcoholType)
       }
     }

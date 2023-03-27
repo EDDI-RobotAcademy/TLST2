@@ -76,7 +76,6 @@
           }}
         </td>
         <td>
-<!--          상태가 결제완료, 배송중, 배송완료, 반품신청, 구매확정 , 환불완료 -->
           <p v-if="item.orderState == 'PAYMENT_REFUND'">{{orderedList[0].refundReason}}</p>
           <button-white v-else-if="item.orderState == 'PAYMENT_COMPLETE'"
                         class="deliveryBtn" btn-name="배송 시작"
@@ -129,14 +128,12 @@ export default {
       }else{
         const startDeliveryOrderId = orderId
         const startDeliveryPaymentId = paymentId
-        console.log("배송시작 에밋: "+ startDeliveryOrderId+ startDeliveryPaymentId)
         this.$emit('startDelivery', {startDeliveryOrderId, startDeliveryPaymentId})
       }
     },
     finishDelivery(orderId, paymentId){
       const finDeliveryOrderId = orderId
       const finDeliveryPaymentId = paymentId
-      console.log("배송완료 에밋: "+ finDeliveryOrderId+ finDeliveryPaymentId)
       this.$emit('finDelivery', {finDeliveryOrderId, finDeliveryPaymentId})
     }
   }

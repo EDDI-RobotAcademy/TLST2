@@ -90,7 +90,6 @@ export default {
         alert("로그인이 필요한 기능입니다.")
         this.$router.push("/sign-in")
       } else if (this.questionBoards[idx].privateCheck) {
-        console.log("비밀글?")
         alert("비밀글입니다.")
       }
     }

@@ -61,7 +61,7 @@ export default {
         this.activeConfirm = true
       }
     } else {
-      console.log("로그인 필요");
+      alert("로그인이 필요합니다.")
     }
   },
   data() {

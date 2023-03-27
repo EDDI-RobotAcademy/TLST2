@@ -5,7 +5,7 @@
         <div style="text-align: center; margin-bottom: 10px">
           <h1>Q&A</h1>
         </div>
-        <question-list-form :questionBoards="questionBoards"/> <!-- 중요 : 앞하고 뒤 무조건 소문자로 시작 -->
+        <question-list-form :questionBoards="questionBoards"/>
       </div>
       <div style="float: right" class="mr-5 mb-15" v-if="!this.$store.state.resMember.managerCheck">
         <button-white

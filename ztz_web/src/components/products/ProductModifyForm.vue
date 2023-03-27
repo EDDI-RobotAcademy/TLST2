@@ -178,21 +178,12 @@
 
           </table>
         </v-row>
-
-
-        <!-- 등록하기 -->
         <v-row class="justify-center mt-15 mb-5">
           <div>
             <button-white @click="cancel" large style="width: 200px;font-size: 18px" btn-name="취소"/>
             <button-green type="submit" large style="width: 200px;font-size: 18px" btn-name="수정"/>
           </div>
-
         </v-row>
-
-
-
-
-
       </table>
     </v-form>
   </div>
@@ -332,16 +323,12 @@ export default {
     },
 
     async onSubmit () {
-      console.log('상품 수정- modifyform')
-
-      //파일 업로드한 경우
       if(!this.multipleFiles.length == 0 && !this.thumbnailFile.length == 0){
         let formData = new FormData()
 
         formData.append('thumbnail', this.thumbnailFile[0] )
 
         for (let idx = 0; idx < this.multipleFiles.length; idx++) {
-          console.log("파일리스트 반복문:"+idx)
           formData.append('fileList', this.multipleFiles[idx])
         }
 
@@ -371,12 +358,9 @@ export default {
             })
 
         this.$router.push({name: 'ProductsView'})
-        //파일 업로드 하지 않은 경우
       } else{
         alert("상품 사진을 업로드해주세요")
-
       }
-
     },
     thumbnailCancel(){
       this.thumbnailFile = ''
@@ -391,7 +375,6 @@ export default {
     cancel() {
       this.$router.go(-1)
     },
-
   }
 }
 </script>

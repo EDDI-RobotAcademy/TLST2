@@ -54,7 +54,6 @@ export default {
               this.$cookies.set("user", res.data, 3600);
               localStorage.setItem("userInfo", JSON.stringify(res.data))
               this.isLogin = true
-              // 헤더 상단에 회원이름 띄워주기 위함-> 로그인 시 유저토큰 기반으로 유저정보 states에 commit
               this.reqMemberInfoToSpring(JSON.stringify(res.data))
               this.$router.push("/")
 
@@ -72,12 +71,6 @@ export default {
     }
   }
 }
-
-/**
- 저장 → localStorage.setItem(”이름”, 저장할 데이터)
- 가져올 때 → localStorage.getItem (”이름”)
- 삭제 → localStorage.removeItem(”이름”)
- */
 
 </script>
 

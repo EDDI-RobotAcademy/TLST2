@@ -111,7 +111,6 @@
 
       </div>
     </div>
-    <!-- 상품 상세 설명 및 리뷰 -->
     <div class="item-detail">
       <v-tabs
           fixed-tabs
@@ -233,7 +232,6 @@ export default {
     this.totalPrice = this.product.price * this.quantity
   },
   filters: {
-    // 상품 금액 천단위 콤마 찍기
     numberFormat(val) {
       return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }

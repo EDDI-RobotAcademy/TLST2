@@ -90,7 +90,6 @@ import { mapState, mapActions } from "vuex";
             'reqAddKeyword'
             ]),
             selectUseKeyword(){
-                console.log("선택" + this.keywordsList.length)
             },
             deleteKeyword() {
                 let deleteKeyword = confirm("선택한 키워드를 삭제하시겠습니까?")
@@ -98,11 +97,9 @@ import { mapState, mapActions } from "vuex";
                 if(deleteKeyword){
                     for (let i = 0; i < this.keywordsList.length; i++) {
                         this.sendData[i] = this.keywordsList[i].recommendedId
-                        console.log(this.keywordsList[i].recommendedId.toString())
                     }
                 }
                 const payload = this.sendData
-                console.log(this.sendData.toString())
                 
                 this.reqDeleteKeyword(payload)
                 this.$router.go();
@@ -113,11 +110,9 @@ import { mapState, mapActions } from "vuex";
                 if(changeStatus){
                     for (let i = 0; i < this.keywordsList.length; i++) {
                         this.sendData[i] = this.keywordsList[i].recommendedId
-                        console.log(this.keywordsList[i].recommendedId.toString())
                     }
                 }
                 const payload = this.sendData
-                console.log(this.sendData.toString())
                 
                 this.reqChangeStatusKeyword(payload)
                 this.$router.go();
@@ -126,7 +121,6 @@ import { mapState, mapActions } from "vuex";
                 let checkAddKeywordCorrect = confirm("이 키워드를 저장하시겠습니까?")
 
                 if(checkAddKeywordCorrect) {
-                    console.log(this.enterKeyword)
                     this.reqAddKeyword(this.enterKeyword)
                 }
                 this.$router.go();

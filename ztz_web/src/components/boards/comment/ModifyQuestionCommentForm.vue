@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title></v-card-title>
     <div class="comment-title">
-      <p style="font-size: 22px; font-weight: bold">답변등록</p>
+      <p style="font-size: 22px; font-weight: bold">답변수정</p>
     </div>
     <v-divider style="border-color: black; border-width: 1px"></v-divider>
     <div class="comment-container">

@@ -97,7 +97,6 @@
             </v-row>
           </td>
           <td>
-            <!--          리뷰메소드 연결 필요-->
             <button-white v-if="item.orderState == 'PAYMENT_CONFIRM'||item.orderState =='REFUND_REQUEST'"
                           class="review-btn ma-2" btn-name="리뷰 작성"
                           @click="showReviewDialog(item.product.productNo , item.orderID)"/>
@@ -160,7 +159,6 @@ export default {
   },
   methods: {
     ...mapActions(['requestProductFromSpring', 'reqOrderInfoById']),
-    // 배송중 상태인 주문리스트 존재하는 경우 결제취소 버튼 클릭 시 환불불가 메시지 출력
     refundBtn(refundPrice) {
       this.startDeliveryNum = 0
       for (let i = 0; i < this.orderedList.length; i++) {
@@ -174,7 +172,6 @@ export default {
         this.showAllCancelDialog(refundPrice)
       }
     },
-    // 상태가 결제완료, 배송중, 배송완료, 반품신청, 구매확정 , 환불완료
     confirmPurchaseBtn(orderId, paymentId) {
       const confirmPurchaseOrderId = orderId
       const confirmPurchasePaymentId = paymentId

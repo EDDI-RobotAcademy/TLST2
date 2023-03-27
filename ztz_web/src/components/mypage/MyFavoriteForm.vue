@@ -47,8 +47,6 @@
       <v-divider></v-divider>
     </div>
     </div>
-<!--    찜리스트 끝-->
-
   </div>
 </template>
 
@@ -77,7 +75,6 @@ export default {
         'reqMyFavoriteListToSpring', 'reqAddCartToSpring', 'reqMemberInfoToSpring', 'reqSaveFavoriteToSpring'
       ]),
       async addCart(payload){
-        console.log("장바구니 찜에서 담기")
           const productNo = payload
           const count = 1
           let token = window.localStorage.getItem('userInfo')
@@ -105,8 +102,6 @@ export default {
         this.$router.push({name: 'ProductDetailView', params: {productNo: item.product.productNo}})
       }
   },
-
-    //가격 ,000 원단위 포맷으로 가공
     filters: {
       numberFormat(val) {
         return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
