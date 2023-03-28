@@ -15,7 +15,6 @@ import "@/css/products.css"
 import "@/css/mypage.css"
 import "@/css/foundry.css"
 import MainHeader from "@/components/common/header/MainHeader"
-import MainFooter from "@/components/common/footer/MainFooter"
 import NewFooter from "@/components/common/footer/footer.vue"
 import AddressForm from "@/components/common/AddressForm"
 
@@ -28,7 +27,6 @@ Vue.filter('nameFormat', function (val) {
 Vue.use(VueCarousel)
 Vue.use(VuePaginate)
 Vue.component('MainHeader', MainHeader)
-Vue.component('MainFooter', MainFooter)
 Vue.component("NewFooter", NewFooter)
 Vue.component('ButtonGreen', ButtonGreen)
 Vue.component('ButtonWhite', ButtonWhite)

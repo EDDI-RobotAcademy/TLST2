@@ -35,11 +35,11 @@
                     <p style="color: #4d5450">{{ item.name }}</p>
                     <p style="color: #222222; font-weight: bold; font-size: 14px">{{ item.price | numberFormat }} 원</p>
                     </router-link>
-                    <button-green @click="CheckMonthAlcohol(item.productNo)" v-if="!item.monthAlcoholCheck"
+                    <button-green @click="checkMonthAlcohol(item.productNo)" v-if="!item.monthAlcoholCheck"
                                   class="mt-2" small
                                   btn-name="이달의 술 등록"
                                   icon-name="mdi-diamond-stone"/>
-                    <button-white @click="CheckMonthAlcohol(item.productNo)" v-else
+                    <button-white @click="checkMonthAlcohol(item.productNo)" v-else
                                   class="mt-2 ml-0" small
                                   btn-name="이달의 술 해제"
                                   icon-name="mdi-diamond-stone"/>
@@ -66,7 +66,7 @@ export default {
       this.$router.push({name: 'ProductRegisterView'})
       alert("상품등록 페이지로 이동합니다.")
     },
-    CheckMonthAlcohol(productNo){
+    checkMonthAlcohol(productNo){
       this.reqCheckMonthAlcoholToSpring(productNo)
     }
   },

@@ -246,7 +246,7 @@ export default {
           pay_method: "card",
           merchant_uid: this.merchant_uid + this.randomNumber,
           name: "ZTZ 전통주 결제",
-          amount: 100 /*this.paymentPrice*/,
+          amount: 100/*this.paymentPrice*/,
           buyer_email: this.$store.state.resMember.email,
           buyer_name: this.$store.state.resMember.username,
           buyer_tel: this.$store.state.resMemberProfile.phoneNumber,
@@ -265,6 +265,7 @@ export default {
 
             this.delSelectedOrderCart()
           } else {
+            console.log("결제실패")
           }
         });
       }
