@@ -47,5 +47,5 @@ public class MemberProfile {
         this.member = member;
     }
 
-    public void modifyPhoneNumber (String phoneNumber) { this.PhoneNumber = phoneNumber; } // this.PhoneNumber는 db 기록용, phoneNumber는 매개변수
+    public void modifyPhoneNumber (String phoneNumber) { this.PhoneNumber = phoneNumber; }
 }

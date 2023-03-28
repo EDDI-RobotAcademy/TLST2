@@ -12,7 +12,6 @@ public class ResponseOrderInfo {
     private Integer productCnt;
 
     private String productThumbnailRoute;
-    //private MemberAddress memberAddress;
 
     public ResponseOrderInfo(String productName , Integer productPrice, Integer productCnt,String productThumbnailRoute){
         this.productName = productName;

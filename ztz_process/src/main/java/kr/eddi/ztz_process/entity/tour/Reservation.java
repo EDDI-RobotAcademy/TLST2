@@ -1,9 +1,7 @@
 package kr.eddi.ztz_process.entity.tour;
 
 import jakarta.persistence.*;
-import kr.eddi.ztz_process.entity.member.Address;
 import kr.eddi.ztz_process.entity.member.Member;
-import kr.eddi.ztz_process.entity.products.ProductInfo;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

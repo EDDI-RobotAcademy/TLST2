@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.repository.order;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import kr.eddi.ztz_process.entity.order.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

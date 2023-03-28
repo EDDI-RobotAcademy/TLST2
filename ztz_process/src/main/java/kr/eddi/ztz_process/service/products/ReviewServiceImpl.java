@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.service.products;
 
-import com.siot.IamportRestClient.response.payco.OrderStatus;
 import kr.eddi.ztz_process.controller.products.request.ReviewRequest;
 import kr.eddi.ztz_process.entity.member.Member;
 import kr.eddi.ztz_process.entity.order.OrderInfo;
@@ -77,7 +76,6 @@ public class ReviewServiceImpl implements ReviewService{
         String thumbnailFileName = image.getOriginalFilename();
 
         try {
-            log.info("requestUploadFilesWitText() - Make file: " + thumbnailFileName);
 
             FileOutputStream writer = new FileOutputStream(
                     "../ztz_web/src/assets/products/uploadImg/" + thumbnailFileName
@@ -85,8 +83,6 @@ public class ReviewServiceImpl implements ReviewService{
             FileOutputStream appWriter = new FileOutputStream(
                     "../ztz_app/assets/images/uploadImg/" + thumbnailFileName
             );
-
-            log.info("디렉토리에 파일 배치 성공");
 
             writer.write(image.getBytes());
             appWriter.write(image.getBytes());
@@ -97,10 +93,6 @@ public class ReviewServiceImpl implements ReviewService{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
 
         Review review = Review.builder()
                 .member(member)
@@ -133,8 +125,6 @@ public class ReviewServiceImpl implements ReviewService{
         String fileName = maybeReview.get().getThumbnailFileName();
 
         if (fileName != null) {
-            log.info("삭제할 파일 이름" + fileName);
-
             try {
                 File webfile = new File("../ztz_web/src/assets/products/uploadImg/" + URLDecoder.decode(fileName, "UTF-8"));
                 webfile.delete();
@@ -171,8 +161,6 @@ public class ReviewServiceImpl implements ReviewService{
 
         if( oldFileName == null){
             try{
-                log.info("requestUploadFilesWitText() - Make file: " +
-                        newFileName);
                 FileOutputStream writer = new FileOutputStream(
                         "../ztz_web/src/assets/products/uploadImg/" + newFileName
                 );
@@ -180,7 +168,6 @@ public class ReviewServiceImpl implements ReviewService{
                 FileOutputStream appWriter = new FileOutputStream(
                         "../ztz_app/assets/images/uploadImg/" + newFileName
                 );
-                log.info("디렉토리에 파일 배치 성공");
 
                 writer.write(image.getBytes());
                 appWriter.write(image.getBytes());
@@ -204,8 +191,6 @@ public class ReviewServiceImpl implements ReviewService{
                 appfile.delete();
 
 
-                log.info("requestUploadFilesWitText() - Make file: " +
-                        newFileName);
                 FileOutputStream writer = new FileOutputStream(
                         "../ztz_web/src/assets/products/uploadImg/" + newFileName
                 );
@@ -213,7 +198,6 @@ public class ReviewServiceImpl implements ReviewService{
                 FileOutputStream appWriter = new FileOutputStream(
                         "../ztz_app/assets/images/uploadImg/" + newFileName
                 );
-                log.info("디렉토리에 파일 배치 성공");
 
                 writer.write(image.getBytes());
                 appWriter.write(image.getBytes());
@@ -258,7 +242,6 @@ public class ReviewServiceImpl implements ReviewService{
             reviewAverage.put("reviewCnt", reviewCnt);
             productReview.add(reviewAverage);
 
-            System.out.println(reviewAverage.toString());
             return productReview;
         }
     }

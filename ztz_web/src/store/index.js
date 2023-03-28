@@ -11,7 +11,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins:[
     createPersistedState({
-      paths: ['isAuthenticated', 'resMember.username', 'questionComments' , 'orderInfo']
+      paths: ['isAuthenticated']
     })
   ],
   state,

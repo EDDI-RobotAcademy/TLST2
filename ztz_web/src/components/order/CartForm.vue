@@ -156,9 +156,6 @@ export default {
       await this.reqCartItemCountChangeToSpring(payload);
       this.res = this.$store.state.resMyRequest;
 
-      if (this.res === 1) {
-      } else {
-      }
     },
     async qtyIncrease(item) {
       item.count++
@@ -171,9 +168,6 @@ export default {
       await this.reqCartItemCountChangeToSpring(payload);
       this.res = this.$store.state.resMyRequest;
 
-      if (this.res === 1) {
-      } else {
-      }
     },
     btnDeleteCartItem(){
       let deleteCartMessage = confirm("선택 상품을 삭제하시겠습니까?")

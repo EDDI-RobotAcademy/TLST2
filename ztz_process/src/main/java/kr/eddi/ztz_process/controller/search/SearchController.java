@@ -22,7 +22,6 @@ public class SearchController {
 
     @GetMapping("/all-keywords-list")
     public List<RecommendedKeywords> recommendedKeywordList() {
-        log.info("모든 추천키워드 리스트 요청");
         return service.returnEntireKeywordList();
     }
 
@@ -33,7 +32,6 @@ public class SearchController {
 
     @PostMapping("/save")
     public String saveKeyword(@RequestBody AddKeywordRequest addKeywordRequest) {
-        log.info("저장" + addKeywordRequest.getEnterKeyword());
         return service.saveKeyword(addKeywordRequest.getEnterKeyword());
     }
 
@@ -48,7 +46,6 @@ public class SearchController {
     }
     @PostMapping("/read/top/ten")
     public List<String> readTopTenKeyword(){
-        log.info("readTopTenKeyword");
         return service.readTopTenKeyword();
     }
 

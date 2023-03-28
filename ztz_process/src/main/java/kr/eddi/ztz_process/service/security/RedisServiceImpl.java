@@ -15,7 +15,7 @@ public class RedisServiceImpl implements RedisService {
     public void setKeyAndValue( String refreshToken, Long memNo) {
         String memNoToString = String.valueOf(memNo);
         ValueOperations<String, String> value = redisTemplate.opsForValue();
-        value.set(refreshToken, memNoToString, Duration.ofDays(30)); // 리프레시 토큰 30일
+        value.set(refreshToken, memNoToString, Duration.ofDays(30));
     }
 
 
@@ -35,7 +35,6 @@ public class RedisServiceImpl implements RedisService {
         redisTemplate.delete(token);
     }
 
-    //true면 새로운 토큰 발행된 상태 -> false면 새로운 토큰 발행 안된 상태
     public boolean isRefreshTokenExists(String token) {
         return getValueByKey(token) == null;
     }

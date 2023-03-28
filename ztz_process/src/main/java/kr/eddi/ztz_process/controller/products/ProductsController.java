@@ -34,7 +34,6 @@ public class ProductsController {
     KeywordRepository keywordRepository;
     @PostMapping(path = "/list")
     public List<Product> productsList(String keyword) {
-        log.info("키워드 = " + keyword);
 
         if (keyword == null|| keyword.length() == 0 || keyword ==""){
             return productsService.list();
@@ -46,7 +45,6 @@ public class ProductsController {
 
     @PostMapping(path = "/list/flutter")
     public List<Product> productsFirst(String keyword) {
-        log.info("키워드 = " + keyword);
 
         if (keyword == null|| keyword.length() == 0 || keyword ==""){
             return productsService.firstPageProduct(); // 필터 없이 첫 페이지 네이션
@@ -61,7 +59,6 @@ public class ProductsController {
             @RequestParam("productNo") Long productNo,
             @RequestParam("keyword") String keyword
     ) {
-        log.info("키워드 = " + keyword);
 
         if (keyword == null|| keyword.length() == 0 || keyword ==""){
             return productsService.nextPageProduct(productNo); // 필터 없이 처음 이후 페이지 네이션
@@ -72,7 +69,6 @@ public class ProductsController {
     }
     @GetMapping(path = "/list/flutter/{localName}")
     public List<Product> localProductsFirstList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -84,7 +80,6 @@ public class ProductsController {
             @RequestParam("productNo") Long productNo,
             @PathVariable("localName") String localName
     ) {
-        log.info("받은 지역데이터:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -93,7 +88,7 @@ public class ProductsController {
 
     @GetMapping(path = "/list/{localName}")
     public List<Product> localProductsList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터:" +localName);
+
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -102,9 +97,6 @@ public class ProductsController {
 
     @PostMapping("/list/by-local-type/flutter")
     public List<Product> localAndTypeFirstProductList(@RequestBody ProductLocalAndTypeRequest request){
-        log.info("지역과 타입으로 상품 조회");
-        log.info("지역 = " + request.getLocalName());
-        log.info("타입 = " + request.getAlcoholType());
         Local filterLocal = Local.valueOfLocalName(request.getLocalName());
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
 
@@ -116,9 +108,6 @@ public class ProductsController {
             @RequestParam("productNo") Long productNo,
             @RequestBody ProductLocalAndTypeRequest request
     ){
-        log.info("지역과 타입으로 상품 조회");
-        log.info("지역 = " + request.getLocalName());
-        log.info("타입 = " + request.getAlcoholType());
         Local filterLocal = Local.valueOfLocalName(request.getLocalName());
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(request.getAlcoholType());
 
@@ -127,16 +116,12 @@ public class ProductsController {
 
     @PostMapping("/list/by-local-type")
     public List<Product> localAndTypeProductList(@RequestBody ProductLocalAndTypeRequest request){
-        log.info("지역과 타입으로 상품 조회");
-        log.info("지역 = " + request.getLocalName());
-        log.info("타입 = " + request.getAlcoholType());
 
         return productsService.list(request);
     }
 
     @PostMapping("/alcoholList/flutter/{alcoholType}")
     public List<Product> alcoholProductFirstList(@PathVariable("alcoholType") String alcoholType) {
-        log.info("받은 알코올타입:" +alcoholType);
         String tmp = alcoholType;
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 
@@ -148,7 +133,6 @@ public class ProductsController {
             @RequestParam("productNo") Long productNo,
             @PathVariable("alcoholType") String alcoholType
     ) {
-        log.info("받은 알코올타입:" +alcoholType);
         String tmp = alcoholType;
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 
@@ -157,7 +141,6 @@ public class ProductsController {
 
     @PostMapping("/alcoholList/{alcoholType}")
     public List<Product> alcoholProductList(@PathVariable("alcoholType") String alcoholType) {
-        log.info("받은 알코올타입:" +alcoholType);
         String tmp = alcoholType;
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 
@@ -181,19 +164,16 @@ public class ProductsController {
 
     @PostMapping("/list/product/{productNo}")
     public Product getProductInfo(@PathVariable("productNo") Long productNo) {
-        log.info("상품 상세 - 상품 정보 가져오기: " + productNo);
 
         return productsService.getProductInfo(productNo);
     }
 
     @PostMapping("/monthAlcohol/{productNo}")
     public String checkMonthAlcohol(@PathVariable("productNo") Long productNo) {
-        log.info("이달의 술 선정: " + productNo);
         return productsService.checkMonthAlcohol(productNo);
     }
     @GetMapping("/monthAlcohol/list")
     public List<Product> monthAlcoholList() {
-        log.info("이달의 술 리스트 조회");
 
         return productsService.monthAlcoholList();
     }
@@ -205,9 +185,6 @@ public class ProductsController {
             @RequestPart(value = "thumbnail") List<MultipartFile> thumbnail,
             @RequestPart(value = "fileList") List<MultipartFile> fileList,
             @RequestPart(value = "info") ProductRequest productRequest) {
-
-        log.info("상품등록 컨트롤러-파일리스트: " + fileList.toString());
-        log.info("상품등록 컨트롤러-리퀘스트내용: " + productRequest);
 
         productsService.registerProduct(thumbnail, fileList, productRequest);
 
@@ -222,8 +199,6 @@ public class ProductsController {
             @RequestPart(value = "fileList",required = false) List<MultipartFile> fileList,
             @RequestPart(value = "info") ProductModifyRequest productModifyRequest) {
 
-        log.info("상품수정 컨트롤러-리퀘스트내용: " + productModifyRequest);
-
         productsService.modifyProduct(thumbnail, fileList, productModifyRequest);
 
         return "상품이 수정되었습니다.";
@@ -231,14 +206,12 @@ public class ProductsController {
 
     @DeleteMapping("/{productNo}")
     public void removeProduct (@PathVariable("productNo") Long productNo) {
-        log.info("상품 삭제 번호():" + productNo);
 
         productsService.remove(productNo);
     }
 
     @GetMapping(path = "/list/month/{localName}")
     public List<Product> localMonthList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터 - 이달의 술:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -247,7 +220,6 @@ public class ProductsController {
 
     @GetMapping(path = "/list/best/{localName}")
     public List<Product> localBestList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터 - 베스트:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -256,16 +228,11 @@ public class ProductsController {
 
     @PostMapping("/list/best/by-local-type")
     public List<Product> localAndTypeBestList(@RequestBody ProductLocalAndTypeRequest request){
-        log.info("지역과 타입으로 베스트 상품 조회");
-        log.info("지역 = " + request.getLocalName());
-        log.info("타입 = " + request.getAlcoholType());
-
         return productsService.bestLocalAndAlcoholList(request);
     }
 
     @PostMapping("/alcoholList/best/{alcoholType}")
     public List<Product> alcoholBestList(@PathVariable("alcoholType") String alcoholType) {
-        log.info("받은 알코올타입 - 베스트:" +alcoholType);
         String tmp = alcoholType;
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 
@@ -274,7 +241,6 @@ public class ProductsController {
 
     @GetMapping(path = "/list/favorite/{localName}")
     public List<Product> localFavoriteList(@PathVariable("localName") String localName) {
-        log.info("받은 지역데이터 - 좋아요:" +localName);
         String tmp = localName;
         Local filterLocal = Local.valueOfLocalName(tmp);
 
@@ -283,16 +249,12 @@ public class ProductsController {
 
     @PostMapping("/list/favorite/by-local-type")
     public List<Product> localAndTypeFavoriteList(@RequestBody ProductLocalAndTypeRequest request){
-        log.info("지역과 타입으로 좋아요 상품 조회");
-        log.info("지역 = " + request.getLocalName());
-        log.info("타입 = " + request.getAlcoholType());
 
         return productsService.favoriteLocalAndAlcoholList(request);
     }
 
     @PostMapping("/alcoholList/favorite/{alcoholType}")
     public List<Product> alcoholFavoriteList(@PathVariable("alcoholType") String alcoholType) {
-        log.info("받은 알코올타입 - 좋아요:" +alcoholType);
         String tmp = alcoholType;
         AlcoholType filterAlcohol = AlcoholType.valueOfAlcoholName(tmp);
 

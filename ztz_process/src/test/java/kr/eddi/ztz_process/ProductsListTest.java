@@ -39,7 +39,6 @@ public class ProductsListTest {
                 brand,
                 name,
                 price,
-                deliveryFee,
                 cls1,
                 pi1
         );
@@ -57,7 +56,6 @@ public class ProductsListTest {
         product.setName("영덕의 밤");
         product.setBrand("영덕법인");
         product.setPrice(37000);
-        product.setDeliveryFee(0);
         repository.save(product);
     }
 

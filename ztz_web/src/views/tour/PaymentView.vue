@@ -94,7 +94,7 @@ export default {
                 pay_method: "card",
                 merchant_uid: this.paymentDetail.merchant_uid,
                 name: "ZTZ 전통주 결제",
-                amount: 100,
+                amount: 100/*this.paymentDetail.totalPaymentPrice*/,
                 buyer_email: this.myReservationInfo.member.email,
                 buyer_name: this.myReservationInfo.member.username,
                 buyer_tel: this.myReservationInfo.member.phoneNumber,

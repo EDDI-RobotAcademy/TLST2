@@ -176,8 +176,6 @@ public class OrderServiceImpl implements OrderService {
     public List<Payment> readAllPayment(String token) {
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
-        System.out.println("맴버 번호" + member.getId());
-
 
         List<Payment> payments = paymentRepository.findAllByMemberId(member.getId());
         return payments;
@@ -186,10 +184,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Payment> readRangePaymentList(String token , String readData){
         if(token != null && token.length() > 0){
-            log.info("일반회원 주문리스트 조회");
             Long id = redisService.getValueByKey(token);
             Member member = memberRepository.findByMemberId(id);
-            System.out.println("맴버 번호" + member.getId());
 
             LocalDateTime nowData = LocalDateTime.now();
             LocalDateTime endData;
@@ -214,7 +210,6 @@ public class OrderServiceImpl implements OrderService {
             List<Payment> payments = paymentRepository.findByEndData(endData ,member.getId());
             return payments;
         } else{
-            log.info("관리자회원 주문리스트 조회");
             LocalDateTime nowData = LocalDateTime.now();
             LocalDateTime endData;
 
@@ -248,8 +243,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Boolean refundAllOrder(RefundRequest refundRequest) throws IOException {
-        String test_api_key = "2701111347244503";
-        String test_api_secret = "J7xV8xenAUsYtgiuUjwAJNJ7o2Ax4VnSsaABT0G04YDwedek5x0Rzp0e1elG2od4sZTyUzVygtxUUwnp";
+        String test_api_key = "iamport api key";
+
+        String test_api_secret = "iamport api secret key";
         IamportClient client = new IamportClient(test_api_key, test_api_secret);
 
         Optional<Payment> maybePayment = paymentRepository.findById(refundRequest.getRefundPaymentId());
@@ -275,8 +271,6 @@ public class OrderServiceImpl implements OrderService {
         }
         return true;
     }
-
-
 
     public Payment registerPayment(PaymentRegisterRequest paymentRegisterRequest) {
 
@@ -338,10 +332,9 @@ public class OrderServiceImpl implements OrderService {
 
         return setOrderNum;
     }
-
+    @Override
     public List<OrderInfo> changeOrderState(ChangeOrderStateRequest changeOrderStateRequest) {
 
-        //배송시작, 배송완료, 구매확정, 반품신청 4개 reqType
         String reqType = changeOrderStateRequest.getReqType();
         PaymentState setState = null;
         Boolean allSameOrderStateCheck = false;
@@ -361,14 +354,12 @@ public class OrderServiceImpl implements OrderService {
             setState = PaymentState.WRITE_REVIEW;
         }
 
-        // orderinfo는 그냥 각각 배송시작 상태 변경해주기
         Optional<OrderInfo> maybeOrderInfo = orderRepository.findById(changeOrderStateRequest.getOrderId());
         OrderInfo startOrderInfo = maybeOrderInfo.get();
         startOrderInfo.setOrderState(setState);
 
         orderRepository.save(startOrderInfo);
 
-        //위에서 개별적으로 상태변경 후! 만약 if paymentid 동일한 그룹 내 -> "배송중" 상태 몇개인지 반복문 돌리기
         List<OrderInfo> findOrderInfoPaymentList = orderRepository.findByPaymentId(changeOrderStateRequest.getPaymentId());
 
         for (int i = 0; i < findOrderInfoPaymentList.size(); i++) {
@@ -386,9 +377,6 @@ public class OrderServiceImpl implements OrderService {
             allSameOrderStateCheck = true;
         }
 
-
-        //payment - 여기는 여러개 모든 paymentId의 구성요소 orderInfo들이 다 배송시작 된 경우 payment 그룹 상태 변경 -> 배송중
-        //payment 그룹 내 1개라도 배송중인 경우 부분배송 중으로 상태값 변경
         Optional<Payment> maybePayment = paymentRepository.findById(changeOrderStateRequest.getPaymentId());
         Payment payment = maybePayment.get();
 
@@ -414,7 +402,6 @@ public class OrderServiceImpl implements OrderService {
     }
     public Integer salesAmount() {
         List<OrderInfo> salesOrderInfo = orderRepository.findSalesList();
-        log.info("구매확정 완료된 리스트 매출");
         Integer totalSalesAmount = 0;
 
         for (int i = 0; i < salesOrderInfo.size(); i++) {
@@ -429,7 +416,6 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderInfo> reviewWritableList(String token){
         Long id = redisService.getValueByKey(token);
         Member member = memberRepository.findByMemberId(id);
-        System.out.println(member.getId());
         PaymentState paymentConfirm = PaymentState.PAYMENT_CONFIRM;
         PaymentState refundRequest = PaymentState.REFUND_REQUEST;
         List<OrderInfo> orderInfoList = orderRepository.findByPaymentState(paymentConfirm,refundRequest ,member.getId());
