@@ -2,14 +2,9 @@ package kr.eddi.ztz_process.repository.order;
 
 
 import kr.eddi.ztz_process.entity.order.Item;
-import kr.eddi.ztz_process.entity.products.AlcoholType;
-import kr.eddi.ztz_process.entity.products.Local;
-import kr.eddi.ztz_process.entity.products.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
-import java.util.Optional;
 
 
 public interface ItemRepository extends JpaRepository<Item, Long>{

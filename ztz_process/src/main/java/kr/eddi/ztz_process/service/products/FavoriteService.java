@@ -10,6 +10,4 @@ public interface FavoriteService {
 
     public List<Favorite> myFavoriteProductList(String token);
 
-
-
 }

@@ -64,7 +64,6 @@ public class ProductsServiceImpl implements ProductsService{
             List<Product> ProductList = repository.findByLocalAndType(alcoholType,local);
 
             if(ProductList.equals(Optional.empty())){
-                log.info("해당 상품이 존재 하지 않습니다.");
                 return null;
             }else {
                 return ProductList;
@@ -73,7 +72,6 @@ public class ProductsServiceImpl implements ProductsService{
             System.out.println("오류" + e);
             return null;
         }
-
     }
 
     @Override
@@ -119,7 +117,6 @@ public class ProductsServiceImpl implements ProductsService{
     public Product getProductInfo(Long productNo) {
         Optional<Product> maybeProduct = repository.findById(productNo);
         if(productNo.equals(Optional.empty())) {
-            log.info("해당 상품을 가져올 수 없음.");
             return null;
         }
         Product product = maybeProduct.get();
@@ -133,17 +130,13 @@ public class ProductsServiceImpl implements ProductsService{
     @Override
     public void registerProduct(List<MultipartFile> thumbnail, List<MultipartFile> fileList, ProductRequest productRequest) {
 
-        // 1. product 저장
         Product product = new Product();
         product.setName(productRequest.getName());
         product.setBrand(productRequest.getBrand());
         product.setPrice(productRequest.getPrice());
 
-        //2. classfication 저장
         product.setClassification(registerClassification(productRequest.getLocal(), productRequest.getType()));
 
-        //3. productInfo 저장
-        // productInfo-> String thumbnailFileName,List<String> productImagesName,List<String> String taste, String subTitle,String description
         ProductInfo productInfo = new ProductInfo();
         productInfo.setTaste(productRequest.getTaste());
         productInfo.setSubTitle(productRequest.getSubTitle());
@@ -152,20 +145,15 @@ public class ProductsServiceImpl implements ProductsService{
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
-        // 실제 파일 frontend 이미지 폴더 경로에 저장
         try {
-            //1. 썸네일 저장
             for (MultipartFile multipartFile: thumbnail) {
-                log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
+
                 String thumbnailRandomName = now.format(dtf);
                 String thumbnailReName = 't'+thumbnailRandomName + multipartFile.getOriginalFilename();
 
-                //저장 경로 지정 + 파일네임
                 FileOutputStream writer1 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + thumbnailReName);
                 FileOutputStream appWriter1 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + thumbnailReName);
-                log.info("디렉토리에 파일 배치 성공!");
 
-                //파일 저장(저장할때는 byte 형식으로 저장해야 해서 파라미터로 받은 multipartFile 파일들의 getBytes() 메소드 적용해서 저장하는 듯)
                 writer1.write(multipartFile.getBytes());
                 appWriter1.write(multipartFile.getBytes());
 
@@ -175,23 +163,19 @@ public class ProductsServiceImpl implements ProductsService{
                 appWriter1.close();
             }
 
-            //2. 상품 상세사진 저장
                 List<String> imageList = new ArrayList<>();
 
                 for (MultipartFile multipartFile: fileList) {
-                log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
 
                  String fileRandomName = now.format(dtf);
                  String fileReName = 'f' + fileRandomName + multipartFile.getOriginalFilename();
 
                 FileOutputStream writer2 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + fileReName);
                 FileOutputStream appWriter2 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + fileReName);
-                log.info("디렉토리에 파일 배치 성공!");
 
                 writer2.write(multipartFile.getBytes());
                 appWriter2.write(multipartFile.getBytes());
 
-                //이미지리스트 이름 저장
                 imageList.add(fileReName);
 
                 writer2.close();
@@ -206,11 +190,9 @@ public class ProductsServiceImpl implements ProductsService{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
-    public Classification registerClassification(String localRequest, String typeRequest){ //ProductRequest productRequest
+    public Classification registerClassification(String localRequest, String typeRequest){
         String inputLocal = localRequest;
         String inputType = typeRequest;
 
@@ -274,16 +256,11 @@ public class ProductsServiceImpl implements ProductsService{
         }
         Product product = maybeProduct.get();
 
-        // 1. product 저장
         product.setName(productModifyRequest.getName());
         product.setBrand(productModifyRequest.getBrand());
         product.setPrice(productModifyRequest.getPrice());
 
-        //2. classfication 저장
         product.setClassification(registerClassification(productModifyRequest.getLocal(), productModifyRequest.getType()));
-
-        //3. productInfo 저장
-        // productInfo-> String thumbnailFileName,List<String> productImagesName,List<String> String taste, String subTitle,String description
 
         ProductInfo productInfo = new ProductInfo();
         productInfo.setTaste(productModifyRequest.getTaste());
@@ -293,22 +270,17 @@ public class ProductsServiceImpl implements ProductsService{
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
-        // 실제 파일 frontend 이미지 폴더 경로에 저장 - 이전에 저장된 원본 파일 삭제
 
         try {
-            //1. 썸네일 변경 있을 시
             if(thumbnail!= null ){
 
                 for (MultipartFile multipartFile: thumbnail) {
-                    log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
                     String thumbnailRandomName = now.format(dtf);
                     String thumbnailReName = 't' + thumbnailRandomName + multipartFile.getOriginalFilename();
 
-                    //저장 경로 지정 + 파일네임
                     FileOutputStream writer1 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + thumbnailReName);
                     FileOutputStream appWriter1 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + thumbnailReName);
 
-                    log.info("디렉토리에 파일 배치 성공!");
 
                     writer1.write(multipartFile.getBytes());
                     appWriter1.write(multipartFile.getBytes());
@@ -319,7 +291,6 @@ public class ProductsServiceImpl implements ProductsService{
                     appWriter1.close();
                 }
 
-                // 이전에 저장된 원본 파일 삭제
                 String oldThumbnailName = product.getProductInfo().getThumbnailFileName();
 
                 File webFile = new File("../ztz_web/src/assets/products/uploadImg/"
@@ -330,30 +301,24 @@ public class ProductsServiceImpl implements ProductsService{
                 appFile.delete();
 
 
-            //2. 썸네일 변경 없을 시
             }else{
                 productInfo.setThumbnailFileName(product.getProductInfo().getThumbnailFileName());
             }
 
-            //1. 상세사진 변경 있을 시
             if(fileList!= null){
 
                 List<String> imageList = new ArrayList<>();
 
                 for (MultipartFile multipartFile: fileList) {
-                    log.info("requestUploadFilesWithText() - Make file: " + multipartFile.getOriginalFilename());
                     String fileRandomName = now.format(dtf);
                     String fileReName = 'f' + fileRandomName + multipartFile.getOriginalFilename();
 
-                    //저장 경로 지정 + 파일네임
                     FileOutputStream writer2 = new FileOutputStream("../ztz_web/src/assets/products/uploadImg/" + fileReName);
                     FileOutputStream appWriter2 = new FileOutputStream("../ztz_app/assets/images/uploadImg/" + fileReName);
-                    log.info("디렉토리에 파일 배치 성공!");
 
                     writer2.write(multipartFile.getBytes());
                     appWriter2.write(multipartFile.getBytes());
 
-                    //이미지리스트 이름 저장
                     imageList.add(fileReName);
 
                     writer2.close();
@@ -361,7 +326,6 @@ public class ProductsServiceImpl implements ProductsService{
                 }
                 productInfo.setProductImagesName(imageList);
 
-                // 이전에 저장된 원본 파일은 삭제
                 List<String> oldProductFileName = product.getProductInfo().getProductImagesName();
 
                 for (String productFileName : oldProductFileName) {
@@ -373,7 +337,6 @@ public class ProductsServiceImpl implements ProductsService{
                     appProductFile.delete();
                 }
 
-                //2. 상세사진 변경 없을 시
             }else {
                 productInfo.setProductImagesName(product.getProductInfo().getProductImagesName());
             }
@@ -439,7 +402,6 @@ public class ProductsServiceImpl implements ProductsService{
             orderInfoRepository.delete(orderInfo);
         }
 
-        //리뷰, order_info
         repository.deleteById(productNo);
     }
 
@@ -490,7 +452,6 @@ public class ProductsServiceImpl implements ProductsService{
             List<Product> productList = repository.findBestByLocalAndType(alcoholType, local);
 
             if (productList.equals(Optional.empty())) {
-                log.info("해당하는 상품을 찾을 수 없습니다.");
                 return null;
             } else {
                 return productList;
@@ -520,7 +481,6 @@ public class ProductsServiceImpl implements ProductsService{
             List<Product> productList = repository.findFavoriteByLocalAndType(alcoholType, local);
 
             if (productList.equals(Optional.empty())) {
-                log.info("해당하는 상품을 찾을 수 없습니다.");
                 return null;
             } else {
                 return productList;
@@ -537,7 +497,7 @@ public class ProductsServiceImpl implements ProductsService{
     }
 
 
-    //페이지 네이션
+    //앱 스크롤 페이지 네이션
     @Override
     public List<Product> firstPageProduct(){
       return repository.firstProducts(Pageable.ofSize(firstPageSize));

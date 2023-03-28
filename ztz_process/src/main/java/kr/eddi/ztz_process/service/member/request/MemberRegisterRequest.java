@@ -34,7 +34,6 @@ public class MemberRegisterRequest {
         this.password = password;
         this.username= username;
         this.birthdate = birthdate;
-//        this.authorityNo = authorityNo;
         this.authorityName = authorityName;
         this.managerCheck = managerCheck;
         this.city= city;
@@ -49,7 +48,6 @@ public class MemberRegisterRequest {
         this.password = password;
         this.username= username;
         this.birthdate = birthdate;
-//        this.authorityNo = authorityNo;
         this.authorityName = authorityName;
         this.managerCheck = managerCheck;
         this.phoneNumber =phoneNumber;

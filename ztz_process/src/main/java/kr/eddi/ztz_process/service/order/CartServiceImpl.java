@@ -65,7 +65,6 @@ public class CartServiceImpl implements CartService {
     public String changeCartItemCount(ChangeItemCountRequest changeItemCountRequest) {
         Item item = itemRepository.findItemByItemNo(changeItemCountRequest.getItemNo());
 
-        log.info(item.toString());
         item.setCount(changeItemCountRequest.getCount());
         item.setSelectedProductAmount(changeItemCountRequest.getSelectedProductAmount());
 
@@ -79,7 +78,6 @@ public class CartServiceImpl implements CartService {
 
         Optional<Cart> maybeCart = cartRepository.findByMemberId(id);
 
-        //1. 해당 멤버의 장바구니 없는 경우 생성
         if(maybeCart.isEmpty()){
             Optional<Member> maybeMember = memberRepository.findById(id);
             Member member = maybeMember.get();
@@ -89,18 +87,13 @@ public class CartServiceImpl implements CartService {
                     .totalCount(0)
                     .build();
             cartRepository.save(firstCart);
-            log.info("카트 최초 생성");
         } else {
             log.info("이미 해당 회원의 카트가 있음");
         }
 
-
-
-
         List<Item> myCartItems = itemRepository.findCartListByMemberId(id);
         Long productNo = addCartRequest.getProductNo();
         if(!myCartItems.isEmpty()) {
-            log.info("상품 이미 있음");
             Item isExistItem = isExistItemCheck(addCartRequest, id);
             if(isExistItem == null) {
                 Cart cart = cartRepository.findCartByMemberId(id);
@@ -119,7 +112,6 @@ public class CartServiceImpl implements CartService {
             }
 
         } else {
-            //없으면 아래처럼 저장
             Cart cart = cartRepository.findCartByMemberId(id);
             int count = addCartRequest.getCount();
             Product product = productsRepository.findProductByProductNo(productNo);
@@ -129,9 +121,6 @@ public class CartServiceImpl implements CartService {
 
             itemRepository.save(item1);
         }
-
-
-
         return "success";
     }
 
@@ -142,7 +131,6 @@ public class CartServiceImpl implements CartService {
         Long productNo = addCartRequest.getProductNo();
 
         for (Item item : myCartItems) {
-            log.info("내 카트 안의 상품 번호 " + item.getProduct().getProductNo() + "새로 추가할 상품 번호" + productNo);
             if(Objects.equals(item.getProduct().getProductNo(), productNo)) {
                 return item;
             }

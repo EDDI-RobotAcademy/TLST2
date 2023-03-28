@@ -54,8 +54,6 @@ public class ReservationController {
 
     @PostMapping("/my-reservation/payment")
     public String savePaymentDetail(@RequestBody PaymentReservationForm paymentReservationForm){
-        log.info("savePaymentDetail" + paymentReservationForm);
-
         return foundryservice.saveMyReservationPaymentDetail(paymentReservationForm.toPaymentReservationRequest()) ;
     }
 

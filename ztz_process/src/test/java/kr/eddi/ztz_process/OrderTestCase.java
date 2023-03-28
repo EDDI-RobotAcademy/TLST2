@@ -3,8 +3,8 @@ package kr.eddi.ztz_process;
 import kr.eddi.ztz_process.controller.order.form.OrderInfoRegisterForm;
 import kr.eddi.ztz_process.controller.order.request.ChangeOrderStateRequest;
 import kr.eddi.ztz_process.repository.member.MemberRepository;
-import kr.eddi.ztz_process.repository.order.CartItemRepository;
 import kr.eddi.ztz_process.repository.order.CartRepository;
+import kr.eddi.ztz_process.repository.order.ItemRepository;
 import kr.eddi.ztz_process.repository.products.ProductsRepository;
 import kr.eddi.ztz_process.service.order.CartService;
 import kr.eddi.ztz_process.service.order.OrderService;
@@ -32,7 +32,7 @@ public class OrderTestCase {
     CartRepository cartRepository;
 
     @Autowired
-    CartItemRepository cartItemRepository;
+    ItemRepository cartItemRepository;
 
 
     @Autowired
@@ -52,15 +52,6 @@ public class OrderTestCase {
 
         orderService.registerOrderInfo(paymentRegisterRequestList);
         orderService.registerOrderInfo(paymentRegisterRequestList);
-    }
-
-    @Test
-    void CreateCartItemTest(){
-
-        kr.eddi.ztz_process.controller.order.request.AddCartRequest addCartRequest = new kr.eddi.ztz_process.controller.order.request.AddCartRequest(2L, 3L, 3);
-        cartService.addCartItem(addCartRequest);
-
-        System.out.println("장바구니 아이템 저장 테스트");
     }
 
     @Test

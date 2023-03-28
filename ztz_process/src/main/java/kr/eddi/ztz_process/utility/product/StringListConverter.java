@@ -17,7 +17,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public String convertToDatabaseColumn(List<String> attribute) {
         try {
-            // Object to JSON in String
             return mapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException();
@@ -29,7 +28,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
         try {
-            // JSON from String to Object
             return mapper.readValue(dbData, List.class);
         } catch (IOException e) {
             throw new IllegalArgumentException();

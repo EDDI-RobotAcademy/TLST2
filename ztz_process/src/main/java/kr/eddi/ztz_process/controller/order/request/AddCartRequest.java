@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddCartRequest {
-    //private Long memberId;
     private Long productNo;
     private int count;
     private String token;

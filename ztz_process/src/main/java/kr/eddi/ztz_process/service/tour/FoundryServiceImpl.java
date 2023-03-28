@@ -86,7 +86,6 @@ public class FoundryServiceImpl implements FoundryService{
         Reservation reservation = reservationRepository.findByReservationId(reservationId);
         Long reservationPersonId = reservation.getMember().getId();
 
-        //토큰으로 찾은 내 아이디와 예약번호로 찾은 예약의 사용자와 동일한지 확인
         if(userId == reservationPersonId) {
             reservationRepository.deleteById(reservationId);
             return "1";
@@ -127,7 +126,6 @@ public class FoundryServiceImpl implements FoundryService{
     public String saveMyReservationPaymentDetail(PaymentReservationRequest paymentReservationRequest) {
         Reservation reservation = reservationRepository.findByReservationId(paymentReservationRequest.reservationId());
 
-        //결제한 예약건의 사용자와 전달받은 사용자 아이디가 동일하면,
         if(paymentReservationRequest.memberId() == reservation.getMember().getId()) {
 
             PaymentReservation paymentReservation = new PaymentReservation(
@@ -137,7 +135,7 @@ public class FoundryServiceImpl implements FoundryService{
             );
 
             reservation.setPaymentReservation(paymentReservation);
-            log.info(reservation.getPaymentReservation().toString());
+
             reservationRepository.save(reservation);
             return "1";
         }

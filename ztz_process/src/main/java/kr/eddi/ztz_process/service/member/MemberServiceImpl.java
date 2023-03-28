@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.service.member;
 
-import jakarta.persistence.Basic;
 import kr.eddi.ztz_process.entity.boards.QuestionBoard;
 import kr.eddi.ztz_process.entity.boards.QuestionComment;
 import kr.eddi.ztz_process.entity.member.*;
@@ -23,7 +22,6 @@ import kr.eddi.ztz_process.repository.products.ReviewRepository;
 import kr.eddi.ztz_process.repository.tour.ReservationRepository;
 import kr.eddi.ztz_process.service.member.request.MemberAddressRequest;
 import kr.eddi.ztz_process.service.member.request.MemberLoginRequest;
-//import kr.eddi.ztz_process.service.member.request.MemberModifyRequest;
 import kr.eddi.ztz_process.service.member.request.MemberModifyRequest;
 import kr.eddi.ztz_process.service.member.request.MemberRegisterRequest;
 import kr.eddi.ztz_process.service.security.RedisService;
@@ -257,6 +255,7 @@ public class MemberServiceImpl implements MemberService {
         String msg = "";
 
         try {
+
             Member member = memberRepository.findByMemberId(memberModifyRequest.getId());
             MemberProfile memberProfile = memberProfileRepository.findProfileByMemberId(member.getId());
 

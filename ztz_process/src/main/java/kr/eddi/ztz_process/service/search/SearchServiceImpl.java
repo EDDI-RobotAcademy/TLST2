@@ -48,7 +48,6 @@ public class SearchServiceImpl implements SearchService {
         List<String> keywordList = new ArrayList<>();
 
         for (int i = 0; i < keywordEntityList.size(); i++) {
-            System.out.println(keywordEntityList.get(i).getKeyword());
             keywordList.add(keywordEntityList.get(i).getKeyword());
         }
 
@@ -73,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<RecommendedKeywords> returnSelectedKeywordList() {
-        log.info(repository.findByKeywordStatus(true).toString());
+
         return repository.findByKeywordStatus(true);
     }
 

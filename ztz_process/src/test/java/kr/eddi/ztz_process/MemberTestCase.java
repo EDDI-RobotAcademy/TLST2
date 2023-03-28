@@ -30,7 +30,7 @@ public class MemberTestCase {
     @Test
     void memberSignUpTest() {
         MemberRegisterRequest registerRequest = new MemberRegisterRequest(
-                "meme@me.com", "meme", "김미미", 19931106, AuthorityType.MEMBER, false,null,
+                "meme@me.com", "meme", "김미미", 19931106, AuthorityType.MEMBER, false,"ztz2022",
                 "서울특별시","중랑구","면목동","어딘가","010-0000-0000");
         service.signUp(registerRequest);
     }
@@ -57,7 +57,7 @@ public class MemberTestCase {
 
     @Test
     void memberModifyTest() {
-        MemberModifyRequest memberModifyRequest = new MemberModifyRequest("123", "ztz2022", "1234", "010-1234-4321", 1L);
+        MemberModifyRequest memberModifyRequest = new MemberModifyRequest(true, "abc", "ztz2022", "1234", "010-1234-4321", 1L);
         service.ModifyMemberProfile(memberModifyRequest);
     }
 }

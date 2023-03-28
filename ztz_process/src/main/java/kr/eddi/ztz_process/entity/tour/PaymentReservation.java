@@ -1,7 +1,6 @@
 package kr.eddi.ztz_process.entity.tour;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 

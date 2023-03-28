@@ -1,6 +1,5 @@
 package kr.eddi.ztz_process.entity.boards;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import kr.eddi.ztz_process.entity.member.Member;
 import lombok.*;
@@ -9,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,7 +20,6 @@ public class QuestionBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionNo;
 
-    //게시글 내 문의 카테고리
     @JoinColumn(name = "category_id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private BoardCategory boardCategory;
@@ -36,7 +33,6 @@ public class QuestionBoard {
     @Column
     private String answerState = "답변대기";
 
-    // 게시글 공개 비공개
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private Boolean privateCheck;
 
